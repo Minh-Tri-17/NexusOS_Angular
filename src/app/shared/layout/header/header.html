@@ -1,0 +1,264 @@
+<header class="app-topbar" [class]="isScrolled() ? 'topbar-scrolled' : ''">
+  <div class="d-flex align-items-center gap-3">
+    <button
+      class="btn btn-sm btn-light"
+      id="sidebarToggleBtn"
+      title="Toggle Sidebar"
+      (click)="handleToggleCollapsed()"
+    >
+      <i class="fa-solid fa-bars"></i>
+    </button>
+    <div class="topbar-search-box d-none d-sm-block">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input
+        type="text"
+        id="topbarSearchInput"
+        placeholder="Search employees, sales deals, reports..."
+      />
+    </div>
+  </div>
+
+  <div class="topbar-actions">
+    <div class="topbar-action-group">
+      <div class="dropdown d-inline-block">
+        <button
+          class="btn-icon-action"
+          id="langTranslateBtn"
+          type="button"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+          title="Language / Ngôn ngữ"
+        >
+          <i class="fa-solid fa-language"></i>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end lang-dropdown-menu">
+          <li>
+            <div class="dropdown-header">
+              <i class="fa-solid fa-globe me-1"></i> Ngôn ngữ / Language
+            </div>
+          </li>
+          <li><hr class="dropdown-divider my-1" /></li>
+          <li>
+            <a class="dropdown-item active" href="javascript:void(0)" data-lang="vi">
+              <div class="d-flex align-items-center gap-2">
+                <img src="/flag-vn.png" alt="Tiếng Việt" class="lang-flag" />
+                <span class="lang-name">Tiếng Việt</span>
+              </div>
+              <i class="fa-solid fa-check lang-check"></i>
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item" href="javascript:void(0)" data-lang="en">
+              <div class="d-flex align-items-center gap-2">
+                <img src="/flag-us.png" alt="English" class="lang-flag" />
+                <span class="lang-name">English</span>
+              </div>
+              <i class="fa-solid fa-check lang-check"></i>
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item" href="javascript:void(0)" data-lang="jp">
+              <div class="d-flex align-items-center gap-2">
+                <img src="/flag-jp.png" alt="日本語" class="lang-flag" />
+                <span class="lang-name">日本語</span>
+              </div>
+              <i class="fa-solid fa-check lang-check"></i>
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item" href="javascript:void(0)" data-lang="cn">
+              <div class="d-flex align-items-center gap-2">
+                <img src="/flag-cn.png" alt="中文" class="lang-flag" />
+                <span class="lang-name">中文</span>
+              </div>
+              <i class="fa-solid fa-check lang-check"></i>
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item" href="javascript:void(0)" data-lang="fr">
+              <div class="d-flex align-items-center gap-2">
+                <img src="/flag-fr.png" alt="Français" class="lang-flag" />
+                <span class="lang-name">Français</span>
+              </div>
+              <i class="fa-solid fa-check lang-check"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <button
+        class="btn-icon-action"
+        id="themeToggleBtn"
+        title="Switch to Dark Mode"
+        (click)="handleToggleTheme()"
+      >
+        <i class="fa-regular" [class]="themeService.isDark() ? 'fa-sun' : 'fa-moon'"></i>
+      </button>
+
+      <div class="dropdown d-inline-block notif-wrapper">
+        <button
+          class="btn-icon-action"
+          id="notifBellBtn"
+          data-bs-toggle="dropdown"
+          data-bs-auto-close="outside"
+          aria-expanded="false"
+          title="Notifications"
+        >
+          <i class="fa-regular fa-bell"></i>
+          <span class="badge-dot">3</span>
+        </button>
+
+        <div
+          class="dropdown-menu dropdown-menu-end notif-dropdown p-0"
+          aria-labelledby="notifBellBtn"
+          id="nexusNotifDropdownMenu"
+        >
+          <div class="notif-header">
+            <div class="notif-title">
+              <i class="fa-solid fa-bell text-primary"></i> Thông báo
+              <span class="notif-count-badge" id="dropdownUnreadBadge">3 chưa đọc</span>
+            </div>
+            <button type="button" class="notif-action-btn" id="dropdownMarkAllReadBtn">
+              <i class="fa-solid fa-check-double me-1"></i> Đánh dấu đã đọc
+            </button>
+          </div>
+          <div class="notif-body">
+            <div class="notif-item unread" data-notif-id="1">
+              <div class="notif-icon bg-primary-subtle text-primary">
+                <i class="fa-solid fa-user-plus"></i>
+              </div>
+              <div class="notif-content">
+                <div class="notif-item-title">
+                  <span>Nhân viên mới nhập học</span>
+                  <span class="unread-dot"></span>
+                </div>
+                <div class="notif-item-desc">Nguyễn Văn A đã hoàn tất hồ sơ nhân sự.</div>
+                <div class="notif-time"><i class="fa-regular fa-clock me-1"></i>10 phút trước</div>
+              </div>
+            </div>
+            <div class="notif-item unread" data-notif-id="2">
+              <div class="notif-icon bg-warning-subtle text-warning">
+                <i class="fa-solid fa-calendar-check"></i>
+              </div>
+              <div class="notif-content">
+                <div class="notif-item-title">
+                  <span>Đơn xin nghỉ phép mới</span>
+                  <span class="unread-dot"></span>
+                </div>
+                <div class="notif-item-desc">Trần Thị B nộp đơn xin nghỉ phép 2 ngày.</div>
+                <div class="notif-time"><i class="fa-regular fa-clock me-1"></i>30 phút trước</div>
+              </div>
+            </div>
+            <div class="notif-item unread" data-notif-id="3">
+              <div class="notif-icon bg-danger-subtle text-danger">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+              </div>
+              <div class="notif-content">
+                <div class="notif-item-title">
+                  <span>Hợp đồng sắp hết hạn</span>
+                  <span class="unread-dot"></span>
+                </div>
+                <div class="notif-item-desc">5 hợp đồng nhân sự sẽ hết hạn trong 7 ngày tới.</div>
+                <div class="notif-time"><i class="fa-regular fa-clock me-1"></i>1 giờ trước</div>
+              </div>
+            </div>
+            <div class="notif-item" data-notif-id="4">
+              <div class="notif-icon bg-success-subtle text-success">
+                <i class="fa-solid fa-circle-check"></i>
+              </div>
+              <div class="notif-content">
+                <div class="notif-item-title">
+                  <span>Duyệt tăng lương</span>
+                </div>
+                <div class="notif-item-desc">Đề xuất tăng lương Q3 đã được phê duyệt.</div>
+                <div class="notif-time"><i class="fa-regular fa-clock me-1"></i>3 giờ trước</div>
+              </div>
+            </div>
+            <div class="notif-item" data-notif-id="5">
+              <div class="notif-icon bg-info-subtle text-info">
+                <i class="fa-solid fa-bullhorn"></i>
+              </div>
+              <div class="notif-content">
+                <div class="notif-item-title">
+                  <span>Thông báo từ BQT</span>
+                </div>
+                <div class="notif-item-desc">Lịch nghỉ lễ Quốc Khánh 2/9 chính thức.</div>
+                <div class="notif-time"><i class="fa-regular fa-clock me-1"></i>5 giờ trước</div>
+              </div>
+            </div>
+          </div>
+          <div class="notif-footer">
+            <button
+              type="button"
+              class="notif-show-more"
+              data-bs-toggle="modal"
+              data-bs-target="#nexusAllNotifModal"
+              id="openNotifModalBtn"
+            >
+              <span>Xem tất cả thông báo</span>
+              <i class="fa-solid fa-chevron-right fs-xs"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dropdown">
+      <div
+        class="user-profile-menu dropdown-toggle"
+        data-bs-toggle="dropdown"
+        data-bs-display="static"
+        aria-expanded="false"
+      >
+        <div class="avatar-wrapper">
+          <img
+            src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=120&auto=format&fit=crop&q=80"
+            alt="Tristan Nguyen Avatar"
+            class="user-avatar-img"
+          />
+          <span class="avatar-status-online" title="Online"></span>
+        </div>
+        <div class="user-info-text d-none d-md-block">
+          <p class="user-name">Tristan Nguyen</p>
+          <p class="user-role">Administrator</p>
+        </div>
+        <i class="fa-solid fa-chevron-down dropdown-chevron ms-1 text-muted"></i>
+      </div>
+      <ul class="dropdown-menu dropdown-menu-end user-dropdown-menu">
+        <li class="dropdown-header-info">
+          <img
+            src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=120&auto=format&fit=crop&q=80"
+            alt="Tristan Nguyen"
+            class="header-avatar"
+          />
+          <div class="header-details">
+            <div class="header-name">Tristan Nguyen</div>
+            <div class="header-email">tristan.nguyen@nexusost.com</div>
+          </div>
+        </li>
+        <li><hr class="dropdown-divider" /></li>
+        <li>
+          <a class="dropdown-item" href="settings.html">
+            <span class="dropdown-icon-box"><i class="fa-regular fa-user"></i></span>
+            <span class="flex-grow-1">Profile</span>
+          </a>
+        </li>
+        <li>
+          <a class="dropdown-item" href="settings.html">
+            <span class="dropdown-icon-box"><i class="fa-solid fa-sliders"></i></span>
+            <span class="flex-grow-1">Preferences</span>
+          </a>
+        </li>
+        <li><hr class="dropdown-divider" /></li>
+        <li>
+          <a class="dropdown-item dropdown-item-danger text-danger" href="dashboard.html">
+            <span class="dropdown-icon-box danger"
+              ><i class="fa-solid fa-right-from-bracket"></i
+            ></span>
+            <span class="flex-grow-1">Log out</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</header>

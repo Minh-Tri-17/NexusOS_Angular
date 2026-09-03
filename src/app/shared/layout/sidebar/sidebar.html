@@ -1,0 +1,88 @@
+<aside class="app-sidebar" [class]="themeService.isMobileOpen() ? 'show-sidebar' : ''">
+  <div class="sidebar-header">
+    <img src="/logo.png" alt="Nexus Logo" class="brand-logo-img" />
+    <div>
+      <h1 class="brand-title">Nexus</h1>
+      <div class="brand-subtitle">Human Resource & Sales</div>
+    </div>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a href="dashboard.html" class="nav-link">
+      <i class="fa-solid fa-house"></i>
+      <span>Dashboard</span>
+    </a>
+    <a href="employees.html" class="nav-link">
+      <i class="fa-solid fa-user-group"></i>
+      <span>Employees</span>
+    </a>
+    <a href="recruitment.html" class="nav-link">
+      <i class="fa-solid fa-user-plus"></i>
+      <span>Recruitment</span>
+    </a>
+    <a href="leave-request.html" class="nav-link">
+      <i class="fa-solid fa-calendar-minus"></i>
+      <span>Leave Management</span>
+    </a>
+    <div class="nav-item-collapsible">
+      <a
+        class="nav-link collapse-toggle collapsed"
+        data-bs-toggle="collapse"
+        href="#collapseCategories"
+        role="button"
+        aria-expanded="false"
+        aria-controls="collapseCategories"
+      >
+        <i class="fa-solid fa-layer-group"></i>
+        <span>Categories</span>
+        <i class="fa-solid fa-plus toggle-chevron ms-auto"></i>
+      </a>
+      <div class="collapse show" id="collapseCategories">
+        <div class="submenu-list">
+          <div class="submenu-header">Geography</div>
+          <a href="country.html" class="submenu-link active" title="Country">
+            <i class="fa-solid fa-globe"></i>
+            <span>Country</span>
+          </a>
+          <a href="province.html" class="submenu-link" title="Province">
+            <i class="fa-solid fa-map"></i>
+            <span>Province</span>
+          </a>
+          <a href="ward.html" class="submenu-link" title="Ward">
+            <i class="fa-solid fa-location-dot"></i>
+            <span>Ward</span>
+          </a>
+        </div>
+      </div>
+    </div>
+    <a href="settings.html" class="nav-link">
+      <i class="fa-solid fa-gear"></i>
+      <span>Settings</span>
+    </a>
+  </nav>
+
+  <div class="sidebar-footer-graphic">
+    <div class="sidebar-system-status-card">
+      <div class="d-flex align-items-center justify-content-between mb-2">
+        <div class="status-indicator-pill">
+          <span class="live-pulse-dot"></span>
+          <span class="status-text">Operational</span>
+        </div>
+        <span class="version-badge">v2.4.0</span>
+      </div>
+      <div class="status-brand-title">
+        <i class="fa-solid fa-cube brand-icon"></i>
+        <span>NexusOST Enterprise</span>
+      </div>
+      <div class="status-footer-sub">
+        <span>&copy; 2026 Suite</span>
+        <span class="status-dot-sep">&bull;</span>
+        <span class="uptime-tag"><i class="fa-solid fa-bolt me-1"></i>99.9% Uptime</span>
+      </div>
+    </div>
+  </div>
+</aside>
+
+@if (themeService.isMobileOpen()) {
+  <div class="sidebar-backdrop show" (click)="themeService.closeMobileSidebar()"></div>
+}

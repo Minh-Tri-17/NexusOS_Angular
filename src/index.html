@@ -1,13 +1,26 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>NexusOSAngular</title>
-  <base href="/">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-</head>
-<body>
-  <app-root></app-root>
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <title>NexusOS - Angular</title>
+    <base href="/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+
+    <script>
+      (function () {
+        const savedTheme = localStorage.getItem('nexusOS-theme');
+        if (savedTheme === 'dark') document.documentElement.setAttribute('data-theme', savedTheme);
+
+        const savedCollapsed = localStorage.getItem('nexusOS-collapsed');
+        if (savedCollapsed === 'true' && window.innerWidth >= 992)
+          document.documentElement.classList.add('sidebar-collapsed');
+        else if (window.innerWidth >= 992)
+          document.documentElement.classList.remove('sidebar-collapsed');
+      })();
+    </script>
+  </head>
+  <body>
+    <app-root></app-root>
+  </body>
 </html>
