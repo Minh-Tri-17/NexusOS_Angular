@@ -1,0 +1,163 @@
+<div
+  class="modal fade custom-modal"
+  id="countryImportModal"
+  tabindex="-1"
+  aria-labelledby="countryImportModalTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content border-0 shadow-2xl rounded-5 overflow-hidden">
+      <!-- Ambient Radial Glow Backdrop & Top Accent Line -->
+      <div class="modal-bg-glow"></div>
+      <div class="modal-top-accent-bar"></div>
+
+      <!-- Modal Header -->
+      <div
+        class="modal-header border-0 px-4 pt-4 pb-3 position-relative d-flex align-items-start justify-content-between z-1"
+      >
+        <div class="d-flex align-items-center gap-3">
+          <div class="modal-icon-badge" id="importModalHeaderBadge">
+            <i class="fa-solid fa-file-import text-indigo"></i>
+          </div>
+          <div>
+            <div class="modal-eyebrow-tag mb-1" id="importModalHeaderEyebrow">
+              <span class="eyebrow-dot"></span> DATA IMPORT WIZARD
+            </div>
+            <h5
+              class="modal-title fw-bold text-dark mb-0 d-flex align-items-center gap-2"
+              id="countryImportModalTitle"
+            >
+              <i class="fa-solid fa-file-import text-indigo me-1"></i>
+              <span>Import Country Data</span>
+            </h5>
+          </div>
+        </div>
+        <div class="d-flex align-items-center gap-2">
+          <span class="badge-soft badge-indigo d-none d-sm-inline-flex">
+            <i class="fa-solid fa-file-excel"></i> Excel / CSV
+          </span>
+          <button
+            type="button"
+            class="custom-btn-close ms-1"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          >
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Modal Body -->
+      <form id="countryImportForm">
+        <div class="modal-body px-4 py-3 position-relative z-1">
+          <!-- Section 1: File Dropzone -->
+          <div class="form-section-card mb-4">
+            <div class="form-section-header">
+              <div class="d-flex align-items-center gap-2">
+                <i class="fa-solid fa-cloud-arrow-up text-primary"></i>
+                <span class="fw-bold">UPLOAD SOURCE FILE</span>
+              </div>
+              <span class="badge-soft badge-teal">
+                <i class="fa-solid fa-circle-check"></i> Max 10MB
+              </span>
+            </div>
+
+            <!-- Dropzone Area -->
+            <div class="import-dropzone" id="importDropzone">
+              <input type="file" id="importFileInput" accept=".xlsx, .xls, .csv" class="d-none" />
+              <div class="dropzone-icon">
+                <i class="fa-solid fa-cloud-arrow-up"></i>
+              </div>
+              <h6 class="fw-bold mb-1">Click to browse or drag & drop file here</h6>
+              <p class="text-muted small mb-3">
+                Supports Microsoft Excel (.xlsx, .xls) and CSV (.csv) format
+              </p>
+              <button
+                type="button"
+                class="btn btn-sm btn-pastel-indigo px-3 py-2 rounded-3 shadow-xs"
+                id="browseFileBtn"
+              >
+                <i class="fa-solid fa-folder-open me-1"></i> Browse Files
+              </button>
+            </div>
+
+            <!-- Selected File Preview Container (hidden by default) -->
+            <div class="file-preview-card mt-3 d-none" id="importFilePreview">
+              <div class="d-flex align-items-center gap-3 overflow-hidden">
+                <div
+                  class="modal-icon-badge bg-soft-indigo text-indigo flex-shrink-0"
+                  style="width: 40px; height: 40px; font-size: 1.1rem"
+                >
+                  <i class="fa-solid fa-file-excel" id="filePreviewIcon"></i>
+                </div>
+                <div class="text-truncate">
+                  <div class="fw-semibold text-truncate" id="fileNameText">country_data.xlsx</div>
+                  <div class="text-muted small" id="fileSizeText">245 KB</div>
+                </div>
+              </div>
+              <button
+                type="button"
+                class="btn btn-sm btn-outline-danger border-0 rounded-circle p-2 ms-auto"
+                id="removeFileBtn"
+                title="Remove file"
+              >
+                <i class="fa-solid fa-trash-can"></i>
+              </button>
+            </div>
+
+            <!-- Progress Bar Container (hidden by default) -->
+            <div class="import-progress-wrapper mt-3 d-none" id="importProgressContainer">
+              <div class="d-flex align-items-center justify-content-between mb-1">
+                <span class="small fw-semibold text-muted" id="importProgressStatusText"
+                  >Parsing spreadsheet data...</span
+                >
+                <span class="small fw-bold text-indigo" id="importProgressPercentText">0%</span>
+              </div>
+              <div class="progress custom-import-progress">
+                <div
+                  class="progress-bar bg-indigo progress-bar-striped progress-bar-animated rounded-pill"
+                  id="importProgressBar"
+                  role="progressbar"
+                  style="width: 0%"
+                  aria-valuenow="0"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                ></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Modal Footer -->
+        <div
+          class="modal-footer px-4 py-3 border-top-0 d-flex align-items-center justify-content-between modal-footer-custom z-1"
+        >
+          <div class="d-none d-md-flex align-items-center gap-2 text-muted small">
+            <i class="fa-solid fa-shield-halved text-primary opacity-75"></i>
+            <span>Automatic validation</span>
+            <span class="modal-footer-divider"></span>
+            <span class="d-inline-flex align-items-center gap-1"
+              ><kbd class="kbd-badge">ESC</kbd> Close</span
+            >
+          </div>
+          <div class="d-flex align-items-center gap-2 ms-auto">
+            <button
+              type="button"
+              class="btn btn-sm btn-pastel-slate px-3 py-2 rounded-3"
+              data-bs-dismiss="modal"
+            >
+              <i class="fa-solid fa-xmark me-1"></i> Close
+            </button>
+            <button
+              type="submit"
+              class="btn btn-sm btn-pastel-indigo px-4 py-2 rounded-3"
+              id="processImportBtn"
+            >
+              <i class="fa-solid fa-file-import me-1"></i> Start Import
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,7 +1,7 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { CountryApiService } from './services/country-api.service';
 import { CountryModel } from './models/country.model';
-import { PagingRequest } from '../../../core/models/paging.model';
+import { PagingRequest } from '../../../../core/models/paging.model';
 
 @Injectable({
   providedIn: 'root',

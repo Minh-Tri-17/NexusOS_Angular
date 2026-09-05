@@ -8,19 +8,19 @@
   </div>
 
   <nav class="sidebar-nav">
-    <a href="dashboard.html" class="nav-link">
+    <a [routerLink]="['/']" routerLinkActive="active" class="nav-link" title="Dashboard">
       <i class="fa-solid fa-house"></i>
       <span>Dashboard</span>
     </a>
-    <a href="employees.html" class="nav-link">
+    <a href="employees.html" class="nav-link" title="Employees">
       <i class="fa-solid fa-user-group"></i>
       <span>Employees</span>
     </a>
-    <a href="recruitment.html" class="nav-link">
+    <a href="recruitment.html" class="nav-link" title="Recruitment">
       <i class="fa-solid fa-user-plus"></i>
       <span>Recruitment</span>
     </a>
-    <a href="leave-request.html" class="nav-link">
+    <a href="leave-request.html" class="nav-link" title="Leave Management">
       <i class="fa-solid fa-calendar-minus"></i>
       <span>Leave Management</span>
     </a>
@@ -40,7 +40,12 @@
       <div class="collapse show" id="collapseCategories">
         <div class="submenu-list">
           <div class="submenu-header">Geography</div>
-          <a href="country.html" class="submenu-link active" title="Country">
+          <a
+            [routerLink]="['/country']"
+            routerLinkActive="active"
+            class="submenu-link"
+            title="Country"
+          >
             <i class="fa-solid fa-globe"></i>
             <span>Country</span>
           </a>

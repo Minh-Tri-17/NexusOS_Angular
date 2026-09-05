@@ -1,0 +1,84 @@
+<app-summary></app-summary>
+
+<div class="erp-card p-4 shadow-sm rounded-4">
+  <app-toolbar></app-toolbar>
+
+  <app-table>
+    <ng-container table-header>
+      <tr>
+        <th class="col-pin" style="width: 36px; min-width: 36px">
+          <input type="checkbox" id="selectAllList" aria-label="Select all" />
+        </th>
+        <th class="text-center" style="width: 50px">#</th>
+        <th>Code</th>
+        <th>Country Name</th>
+        <th>Capital</th>
+        <th>Region</th>
+        <th>Created By</th>
+        <th>Created At</th>
+        <th>Updated By</th>
+        <th>Updated At</th>
+        <th>Note</th>
+      </tr>
+    </ng-container>
+
+    <ng-container table-body>
+      @for (country of countries(); track country.id; let idx = $index) {
+        <tr>
+          <td class="col-pin">
+            <input type="checkbox" class="country-row-cb" aria-label="{{ country.countryName }}" />
+          </td>
+          <td class="td-cell text-center">{{ fromRecord() + idx }}</td>
+          <td>
+            <span class="badge-soft badge-blue">#{{ country.countryCode }}</span>
+          </td>
+          <td>
+            <div class="fw-semibold text-main">{{ country.countryName }}</div>
+          </td>
+          <td>
+            <span class="text-muted small">
+              <i class="fa-solid fa-location-dot text-primary"></i>{{ country.capital }}</span
+            >
+          </td>
+          <td>
+            <span class="badge-soft" [class]="badgeColors[idx % badgeColors.length]">
+              <i class="fa-solid fa-globe-asia"></i>{{ country.region }}</span
+            >
+          </td>
+          <td>
+            <span class="text-muted small">
+              <i class="fa-regular fa-user"></i>{{ country.createdBy }}</span
+            >
+          </td>
+          <td>
+            <span class="text-muted small">{{ country.createdAt | date }}</span>
+          </td>
+          <td>
+            <span class="text-muted small">
+              <i class="fa-regular fa-user"></i>{{ country.updatedBy }}</span
+            >
+          </td>
+          <td>
+            <span class="text-muted small">{{ country.updatedAt | date }}</span>
+          </td>
+          <td>
+            <span class="text-muted small fst-italic">{{ country.note }}</span>
+          </td>
+        </tr>
+      }
+    </ng-container>
+  </app-table>
+
+  <app-pagination
+    [(pageIndex)]="pageIndex"
+    [(pageSize)]="pageSize"
+    [totalRecord]="totalRecord()"
+    [recordRange]="recordRange()"
+    [pageCount]="pageCount()"
+  ></app-pagination>
+</div>
+
+<app-import></app-import>
+<app-export></app-export>
+
+<app-editor-modal></app-editor-modal>

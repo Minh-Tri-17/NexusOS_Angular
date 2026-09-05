@@ -1,0 +1,160 @@
+<!-- Linear-Tier Unified Command Dock: Search, Smart Filter Toggle & Action Buttons -->
+<div
+  class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-3 pb-3 filter-toolbar-border"
+>
+  <!-- Left Controls: Global Search, Filter Matrix Toggle & Reset -->
+  <div class="d-flex flex-wrap align-items-center gap-2">
+    <!-- Search Input Box -->
+    <div class="position-relative" style="min-width: 240px">
+      <i
+        class="fa-solid fa-magnifying-glass position-absolute top-50 start-0 translate-middle-y ms-3 filter-search-icon"
+      ></i>
+      <input
+        type="text"
+        class="form-control form-control-sm ps-5 pe-3 rounded-3 filter-input"
+        placeholder="Search country, code..."
+      />
+    </div>
+
+    <!-- Filter Matrix Toggle Button -->
+    <button
+      class="btn btn-sm btn-pastel-slate d-inline-flex align-items-center gap-2 px-3 rounded-3"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#smartFilterMatrixCollapse"
+      aria-expanded="false"
+      aria-controls="smartFilterMatrixCollapse"
+      id="toggleFilterBarBtn"
+    >
+      <i class="fa-solid fa-sliders text-primary"></i> Filter
+      <span class="badge-soft badge-blue ms-1" id="activeFilterCountBadge">3</span>
+    </button>
+  </div>
+
+  <!-- Right: Quick Action Buttons (CRUD & Data IO) -->
+  <div class="d-flex align-items-center gap-2 flex-wrap ms-auto">
+    <!-- Record CRUD Group -->
+    <div class="d-flex align-items-center gap-2">
+      <button
+        class="btn btn-sm btn-pastel-green d-inline-flex align-items-center gap-2 px-3 py-2 rounded-3 shadow-xs"
+        id="addCountryBtn"
+      >
+        <i class="fa-solid fa-plus"></i> Create
+      </button>
+      <button
+        class="btn btn-sm btn-pastel-orange d-inline-flex align-items-center gap-2 px-3 py-2 rounded-3 shadow-xs"
+        id="editCountryBtn"
+      >
+        <i class="fa-solid fa-pen-to-square"></i> Edit
+      </button>
+      <button
+        class="btn btn-sm btn-pastel-red d-inline-flex align-items-center gap-2 px-3 py-2 rounded-3 shadow-xs"
+        id="deleteCountryBtn"
+      >
+        <i class="fa-solid fa-trash-can"></i> Delete
+      </button>
+    </div>
+
+    <!-- Group Divider -->
+    <div class="action-bar-divider mx-1"></div>
+
+    <!-- Data IO Group -->
+    <div class="d-flex align-items-center gap-2">
+      <button
+        class="btn btn-sm btn-pastel-indigo d-inline-flex align-items-center gap-2 px-3 py-2 rounded-3 shadow-xs"
+        id="importCountryBtn"
+      >
+        <i class="fa-solid fa-file-import"></i> Import
+      </button>
+      <button
+        class="btn btn-sm btn-pastel-indigo d-inline-flex align-items-center gap-2 px-3 py-2 rounded-3 shadow-xs"
+        id="exportCountryBtn"
+      >
+        <i class="fa-solid fa-file-export"></i> Export
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Active Filter Chips Bar (Linear Tag Chips) -->
+<div class="active-filter-chips-bar mb-3">
+  <span class="text-muted small fw-semibold me-1">Active Filters:</span>
+
+  <span class="filter-chip">
+    <i class="fa-solid fa-compass chip-icon"></i> Region:
+    <strong>Asia</strong>
+    <i class="fa-solid fa-xmark chip-remove-btn"></i>
+  </span>
+
+  <span class="filter-chip">
+    <i class="fa-solid fa-star chip-icon"></i> Priority:
+    <strong>High</strong>
+    <i class="fa-solid fa-xmark chip-remove-btn"></i>
+  </span>
+
+  <span class="filter-chip">
+    <i class="fa-solid fa-circle-check chip-icon"></i> Status:
+    <strong>Active</strong>
+    <i class="fa-solid fa-xmark chip-remove-btn"></i>
+  </span>
+
+  <button class="btn btn-link text-muted p-0 border-0 btn-clear-all-chips ms-auto">
+    <i class="fa-solid fa-trash-can me-1"></i> Clear All
+  </button>
+</div>
+
+<!-- Expandable Smart Filter Matrix (Scalable Dropdowns Panel) -->
+<div class="collapse" id="smartFilterMatrixCollapse">
+  <div class="smart-filter-matrix mb-3">
+    <div class="d-flex align-items-center justify-content-between mb-3 pb-2 border-bottom">
+      <span class="fw-bold small text-muted text-uppercase tracking-wider">
+        <i class="fa-solid fa-sliders text-primary me-2"></i>Filter Criteria Matrix
+      </span>
+      <span class="text-muted small">Select criteria to refine results</span>
+    </div>
+    <div class="row g-3">
+      <!-- Region Filter Select -->
+      <div class="col-md-4">
+        <label class="form-label small fw-semibold text-muted">Region / Continent</label>
+        <select class="form-select form-select-sm rounded-3 filter-select w-100">
+          <option selected value="">All Regions</option>
+          <option value="Asia">Asia</option>
+          <option value="Americas">Americas</option>
+          <option value="Europe">Europe</option>
+          <option value="Oceania">Oceania</option>
+        </select>
+      </div>
+
+      <!-- Priority Filter Select -->
+      <div class="col-md-4">
+        <label class="form-label small fw-semibold text-muted">Priority Level</label>
+        <select class="form-select form-select-sm rounded-3 filter-select w-100">
+          <option selected value="">All Priorities</option>
+          <option value="High">High</option>
+          <option value="Standard">Standard</option>
+          <option value="Low">Low</option>
+        </select>
+      </div>
+
+      <!-- Status Filter Select -->
+      <div class="col-md-4">
+        <label class="form-label small fw-semibold text-muted">Operational Status</label>
+        <select class="form-select form-select-sm rounded-3 filter-select w-100">
+          <option selected value="">All Statuses</option>
+          <option value="Active">Active</option>
+          <option value="Inactive">Inactive</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="d-flex align-items-center justify-content-end gap-2 mt-3 pt-2 border-top">
+      <button
+        class="btn btn-sm btn-pastel-cyan px-4 rounded-3"
+        type="button"
+        id="applyCountryFilterBtn"
+      >
+        <i class="fa-solid fa-check me-1"></i> Apply Filter
+      </button>
+    </div>
+  </div>
+</div>
