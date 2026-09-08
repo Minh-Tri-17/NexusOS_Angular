@@ -1,0 +1,18 @@
+<div class="toast-item toast-{{ safeType() }}" role="alert">
+  <div class="toast-accent-bar"></div>
+
+  <div class="toast-icon-box">
+    <i [class]="resolvedIcon()"></i>
+  </div>
+
+  <div class="toast-content">
+    <h6 class="toast-title">{{ title() }}</h6>
+    @if (message()) {
+      <p class="toast-message">{{ message() }}</p>
+    }
+  </div>
+
+  <button type="button" class="toast-close" aria-label="Close" (click)="dismiss()">
+    <i class="fa-solid fa-xmark"></i>
+  </button>
+</div>

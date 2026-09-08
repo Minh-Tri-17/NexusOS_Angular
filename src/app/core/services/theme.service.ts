@@ -8,6 +8,8 @@ export type Theme = typeof BASE_CONSTANTS.lightTheme | typeof BASE_CONSTANTS.dar
   providedIn: 'root',
 })
 export class ThemeService {
+  //#region //@ STATE
+
   private readonly platformId = inject(PLATFORM_ID);
   private readonly document = inject(DOCUMENT);
   private readonly isBrowser = isPlatformBrowser(this.platformId);
@@ -17,6 +19,8 @@ export class ThemeService {
   readonly isMobileOpen = signal<boolean>(false);
   //* computed() dùng để tính toán giá trị dựa trên state khác
   readonly isDark = computed(() => this.currentTheme() === BASE_CONSTANTS.darkTheme);
+
+  //#endregion
 
   //#region Helpers
 

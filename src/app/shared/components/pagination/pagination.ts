@@ -16,6 +16,10 @@ export class Pagination {
   recordRange = input<string>();
   pageCount = input<number>(0);
 
+  //#endregion
+
+  //#region //@ STATE
+
   //* computed() dùng để tính toán giá trị dựa trên state khác
   pages = computed(() => {
     const list = [];
