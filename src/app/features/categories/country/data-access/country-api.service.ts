@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
-
-import { CountryModel } from '../models/country.model';
-import { Result } from '../../../../../core/models/common.model';
-import { API_CONSTANTS } from '../../../../../core/constants/api.constants';
-import { BaseApiService } from '../../../../../core/services/base-api.service';
-import { PagingRequest, PagingResult } from '../../../../../core/models/paging.model';
+import { CountryModel } from './country.model';
+import { Result } from '../../../../core/models/common.model';
+import { API_CONSTANTS } from '../../../../core/constants/api.constants';
+import { BaseApiService } from '../../../../core/services/base-api.service';
+import { PagingRequest, PagingResult } from '../../../../core/models/paging.model';
 
 @Injectable({
   providedIn: 'root',

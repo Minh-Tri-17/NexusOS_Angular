@@ -1,7 +1,33 @@
 <app-summary></app-summary>
 
 <div class="erp-card p-4 shadow-sm rounded-4">
-  <app-toolbar></app-toolbar>
+  <app-toolbar (searchText)="handleSearch($event)" (clearFilters)="handleClearFilter()">
+    <ng-container active-filters>
+      @if (filterRegion()) {
+        <span class="filter-chip">
+          <i class="fa-solid fa-compass chip-icon"></i> Region:
+          <strong>Asia</strong>
+          <i class="fa-solid fa-xmark chip-remove-btn" (click)="filterRegion.set('')"></i>
+        </span>
+      }
+    </ng-container>
+
+    <ng-container filter-matrix>
+      <div class="col-md-2">
+        <label class="form-label small fw-semibold text-muted">Region / Continent</label>
+        <select
+          class="form-select form-select-sm rounded-3 filter-select w-100"
+          [ngModel]="filterRegion()"
+          (ngModelChange)="filterRegion.set($event)"
+        >
+          <option value="">All Regions</option>
+          @for (region of regions; track region) {
+            <option [value]="region">{{ region }}</option>
+          }
+        </select>
+      </div>
+    </ng-container>
+  </app-toolbar>
 
   <app-table>
     <ng-container table-header>

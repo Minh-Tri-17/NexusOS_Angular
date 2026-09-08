@@ -7,9 +7,8 @@ import { env } from '../../../environments/environment';
   providedIn: 'root',
 })
 export class BaseApiService {
-  protected baseUrl = env.apiUrl;
-
-  protected readonly http = inject(HttpClient);
+  private readonly baseUrl = env.apiUrl;
+  private readonly http = inject(HttpClient);
 
   //#region //@ HELPERS
 

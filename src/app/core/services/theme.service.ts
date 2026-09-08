@@ -15,7 +15,7 @@ export class ThemeService {
   readonly currentTheme = signal<Theme>(this.getInitialTheme());
   readonly isCollapsed = signal<boolean>(this.getInitialCollapsed());
   readonly isMobileOpen = signal<boolean>(false);
-
+  //* computed() dùng để tính toán giá trị dựa trên state khác
   readonly isDark = computed(() => this.currentTheme() === BASE_CONSTANTS.darkTheme);
 
   //#region Helpers
@@ -67,6 +67,8 @@ export class ThemeService {
     });
   }
 
+  //#region //@ METHODS
+
   toggleTheme() {
     this.currentTheme.update((theme) =>
       theme === BASE_CONSTANTS.lightTheme ? BASE_CONSTANTS.darkTheme : BASE_CONSTANTS.lightTheme,
@@ -84,4 +86,6 @@ export class ThemeService {
   closeMobileSidebar(): void {
     this.isMobileOpen.set(false);
   }
+
+  //#endregion
 }

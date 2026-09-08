@@ -10,12 +10,12 @@ import { auditTime, fromEvent, Subscription } from 'rxjs';
   styleUrl: './header.scss',
 })
 export class Header {
-  protected themeService = inject(ThemeService);
   private readonly ngZone = inject(NgZone);
   private readonly platformId = inject(PLATFORM_ID);
   private readonly isBrowser = isPlatformBrowser(this.platformId);
   private scrollSub?: Subscription;
 
+  protected themeService = inject(ThemeService);
   readonly isScrolled = signal<boolean>(false);
 
   ngOnInit() {

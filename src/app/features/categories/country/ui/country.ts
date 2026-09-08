@@ -11,11 +11,23 @@ import { CountryFacade } from '../data-access/country.facade';
 import { PagingRequest } from '../../../../core/models/paging.model';
 import { BASE_CONSTANTS } from '../../../../core/constants/base.constant';
 import { FilterOperator, FilterType } from '../../../../core/constants/filter.enum';
-import { CountryFields, CountryModel } from '../data-access/models/country.model';
+import { CountryFields, CountryModel } from '../data-access/country.model';
+import { FormsModule } from '@angular/forms';
+import { Region } from '../data-access/country.enum';
 
 @Component({
   selector: 'app-country',
-  imports: [Summary, Toolbar, Pagination, Table, Import, Export, EditorModal, DatePipe],
+  imports: [
+    Summary,
+    Toolbar,
+    Pagination,
+    Table,
+    Import,
+    Export,
+    EditorModal,
+    DatePipe,
+    FormsModule,
+  ],
   templateUrl: './country.html',
   styleUrl: './country.scss',
 })
@@ -38,6 +50,8 @@ export class Country {
     'badge-teal',
   ];
 
+  regions = Object.values(Region);
+
   pageIndex = signal<number>(1);
   pageSize = signal<number>(20);
   fromRecord = signal<number>(1);
@@ -46,6 +60,8 @@ export class Country {
   totalRecord = signal<number>(0);
   pageCount = signal<number>(0);
   countries = signal<CountryModel[]>([]);
+  searchText = signal<string>('');
+  filterRegion = signal<string>('');
 
   //#endregion
 
@@ -64,30 +80,30 @@ export class Country {
       pageSize: this.pageSize(),
     };
 
-    const searchVal = '';
-    const searchCodeVal = '';
-    const searchIsDeleted = false;
+    const filterText = this.searchText().trim();
+    const filterIsDeleted = false;
+    const filterRegion = this.filterRegion().trim();
 
     filter.filters = [];
 
     filter.filters.push({
       filterName: BASE_CONSTANTS.isDelete,
-      filterValue: searchIsDeleted.toString(),
+      filterValue: filterIsDeleted.toString(),
       filterType: FilterType.Boolean,
     });
 
-    if (searchVal)
+    if (filterText)
       filter.filters.push({
-        filterName: CountryFields.countryName,
-        filterValue: searchVal,
+        filterName: `${CountryFields.countryCode},${CountryFields.countryName}`,
+        filterValue: filterText,
         filterType: FilterType.String,
         filterOperator: FilterOperator.Like,
       });
 
-    if (searchCodeVal)
+    if (filterRegion)
       filter.filters.push({
-        filterName: CountryFields.countryCode,
-        filterValue: searchCodeVal,
+        filterName: CountryFields.region,
+        filterValue: filterRegion,
         filterType: FilterType.String,
         filterOperator: FilterOperator.Like,
       });
@@ -105,7 +121,7 @@ export class Country {
 
   loadListData() {
     const filter = this.buildFilter();
-    this.facade.getPaging(filter).then((res) => {
+    this.facade.getPaging(filter).then((res: any) => {
       this.countries.set(res.result?.items || []);
       this.fromRecord.set(res.result?.fromRecord || 1);
       this.totalRecord.set(res.result?.totalRecord || 0);
@@ -114,6 +130,18 @@ export class Country {
       this.toRecord.set(res.result?.toRecord || 0);
       this.pageCount.set(res.result?.pageCount || 0);
     });
+  }
+
+  handleSearch(searchText: string) {
+    this.searchText.set(searchText);
+    this.pageIndex.set(1);
+    this.loadListData();
+  }
+
+  handleClearFilter() {
+    this.filterRegion.set('');
+    this.pageIndex.set(1);
+    this.loadListData();
   }
 
   //#endregion
