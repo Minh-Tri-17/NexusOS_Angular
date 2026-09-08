@@ -4452,6 +4452,24 @@ svg g.apextree-selected .apextree-sleek-card {
   box-shadow: 0 4px 14px -3px rgba(99, 102, 241, 0.15);
 }
 
+.custom-radio-card.disabled,
+.custom-radio-card:has(.form-check-input:disabled) {
+  opacity: 0.55 !important;
+  cursor: not-allowed !important;
+  pointer-events: none !important;
+  background: rgba(243, 244, 246, 0.6) !important;
+  border-color: var(--bs-border-color, #e5e7eb) !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+.custom-radio-card.disabled:hover,
+.custom-radio-card:has(.form-check-input:disabled):hover {
+  border-color: var(--bs-border-color, #e5e7eb) !important;
+  background: rgba(243, 244, 246, 0.6) !important;
+  transform: none !important;
+}
+
 [data-theme='dark'] .custom-radio-card {
   background: rgba(255, 255, 255, 0.03) !important;
   border-color: var(--border-color, #27272a) !important;

@@ -1,4 +1,4 @@
-<aside class="app-sidebar" [class]="themeService.isMobileOpen() ? 'show-sidebar' : ''">
+<aside class="app-sidebar" [class.show-sidebar]="themeService.isMobileOpen()">
   <div class="sidebar-header">
     <img src="/logo.png" alt="Nexus Logo" class="brand-logo-img" />
     <div>
@@ -12,15 +12,15 @@
       <i class="fa-solid fa-house"></i>
       <span>Dashboard</span>
     </a>
-    <a href="employees.html" class="nav-link" title="Employees">
+    <a [routerLink]="['/']" class="nav-link" title="Employees">
       <i class="fa-solid fa-user-group"></i>
       <span>Employees</span>
     </a>
-    <a href="recruitment.html" class="nav-link" title="Recruitment">
+    <a [routerLink]="['/']" class="nav-link" title="Recruitment">
       <i class="fa-solid fa-user-plus"></i>
       <span>Recruitment</span>
     </a>
-    <a href="leave-request.html" class="nav-link" title="Leave Management">
+    <a [routerLink]="['/']" class="nav-link" title="Leave Management">
       <i class="fa-solid fa-calendar-minus"></i>
       <span>Leave Management</span>
     </a>
@@ -49,18 +49,18 @@
             <i class="fa-solid fa-globe"></i>
             <span>Country</span>
           </a>
-          <a href="province.html" class="submenu-link" title="Province">
+          <a [routerLink]="['/']" class="submenu-link" title="Province">
             <i class="fa-solid fa-map"></i>
             <span>Province</span>
           </a>
-          <a href="ward.html" class="submenu-link" title="Ward">
+          <a [routerLink]="['/']" class="submenu-link" title="Ward">
             <i class="fa-solid fa-location-dot"></i>
             <span>Ward</span>
           </a>
         </div>
       </div>
     </div>
-    <a href="settings.html" class="nav-link">
+    <a [routerLink]="['/']" class="nav-link">
       <i class="fa-solid fa-gear"></i>
       <span>Settings</span>
     </a>

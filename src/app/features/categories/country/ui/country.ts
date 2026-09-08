@@ -62,6 +62,7 @@ export class Country {
   countries = signal<CountryModel[]>([]);
   searchText = signal<string>('');
   filterRegion = signal<string>('');
+  selectedIds = signal<Set<string>>(new Set());
 
   //#endregion
 
@@ -143,6 +144,38 @@ export class Country {
     this.pageIndex.set(1);
     this.loadListData();
   }
+
+  isSelected(id: string): boolean {
+    return this.selectedIds().has(id);
+  }
+
+  handleToggleSelect(id: string, event: Event) {
+    const checked = (event.target as HTMLInputElement).checked;
+    const currentIds = new Set(this.selectedIds());
+
+    checked ? currentIds.add(id) : currentIds.delete(id);
+
+    this.selectedIds.set(currentIds);
+  }
+
+  isSelectedAll(): boolean {
+    const list = this.countries();
+    return list.length > 0 && list.every((item) => this.selectedIds().has(item.id));
+  }
+
+  handleToggleSelectAll(event: Event) {
+    const checked = (event.target as HTMLInputElement).checked;
+    const currentIds = new Set(this.selectedIds());
+
+    if (checked) this.countries().forEach((item) => currentIds.add(item.id));
+    else this.countries().forEach((item) => currentIds.delete(item.id));
+
+    this.selectedIds.set(currentIds);
+  }
+
+  exportFn = (filter: PagingRequest): Promise<Blob> => {
+    return this.facade.export(filter);
+  };
 
   //#endregion
 }

@@ -77,7 +77,7 @@
       @for (page of pages(); track page; let idx = $index) {
         <button
           class="app-page-btn"
-          [class]="page === pageIndex() ? 'active' : ''"
+          [class.active]="page === pageIndex()"
           [attr.data-page]="page"
           [attr.aria-current]="page === pageIndex() ? 'page' : null"
           (click)="handlePageIndexChange(page)"
