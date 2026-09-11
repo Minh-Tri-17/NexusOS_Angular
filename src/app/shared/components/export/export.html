@@ -1,6 +1,8 @@
 <app-modal modalId="exportModal">
   <ng-container modal-eyebrow> DATA EXPORT WIZARD </ng-container>
+
   <ng-container modal-title> Export Data </ng-container>
+
   <ng-container modal-header-extra>
     <span class="badge-soft badge-indigo d-none d-sm-inline-flex">
       <i class="fa-solid fa-file-excel"></i> Excel / CSV
@@ -127,7 +129,6 @@
           <div class="progress custom-import-progress">
             <div
               class="progress-bar bg-indigo progress-bar-striped progress-bar-animated rounded-pill"
-              id="exportProgressBar"
               role="progressbar"
               aria-valuemin="0"
               aria-valuemax="100"
@@ -139,6 +140,7 @@
       }
     </div>
   </ng-container>
+
   <ng-container modal-footer>
     <div class="d-none d-md-flex align-items-center gap-2 text-muted small">
       <i class="fa-solid fa-shield-halved text-primary opacity-75"></i>

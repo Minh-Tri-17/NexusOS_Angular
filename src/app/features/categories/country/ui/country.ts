@@ -177,5 +177,9 @@ export class Country {
     return this.facade.export(filter);
   };
 
+  importFn = (file: File): Promise<any> => {
+    return this.facade.import(file);
+  };
+
   //#endregion
 }

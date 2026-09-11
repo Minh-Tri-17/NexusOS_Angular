@@ -147,11 +147,16 @@ export class Export {
       this.animateProgress(80, 'Processing file...');
       await this.delay(400);
 
-      this.downloadBlob(blob);
-      this.animateProgress(100, 'Export completed!');
-      await this.delay(800);
+      if (!blob || blob.size === 0) {
+        this.animateProgress(0, 'Export failed. Please try again.');
+        await this.delay(3000);
+      } else {
+        this.downloadBlob(blob);
+        this.animateProgress(100, 'Export completed!');
+        await this.delay(500);
+      }
     } catch (error) {
-      this.animateProgress(90, 'Export failed. Please try again.');
+      this.animateProgress(0, 'Export failed. Please try again.');
       await this.delay(3000);
     } finally {
       this.isExporting.set(false);

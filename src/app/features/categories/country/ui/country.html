@@ -40,6 +40,8 @@
         <button
           type="button"
           class="btn btn-sm btn-pastel-indigo d-inline-flex align-items-center gap-2 px-3 py-2 rounded-3 shadow-xs"
+          data-bs-toggle="modal"
+          data-bs-target="#importModal"
         >
           <i class="fa-solid fa-file-import"></i> Import
         </button>
@@ -158,7 +160,7 @@
   ></app-pagination>
 </div>
 
-<app-import></app-import>
+<app-import [importFn]="importFn" (importSuccess)="loadListData()"></app-import>
 <app-export
   [exportFn]="exportFn"
   [currentFilter]="buildFilter()"
