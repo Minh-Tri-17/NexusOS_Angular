@@ -63,11 +63,13 @@ export class Country {
   searchText = signal<string>('');
   filterRegion = signal<string>('');
   selectedIds = signal<Set<string>>(new Set());
+  filterIsDelete = signal<boolean>(false);
 
   //#endregion
 
   constructor() {
     effect(() => {
+      this.searchText();
       this.loadListData();
     });
   }
@@ -82,7 +84,7 @@ export class Country {
     };
 
     const filterText = this.searchText().trim();
-    const filterIsDeleted = false;
+    const filterIsDeleted = this.filterIsDelete();
     const filterRegion = this.filterRegion().trim();
 
     filter.filters = [];
@@ -140,6 +142,8 @@ export class Country {
   }
 
   handleClearFilter() {
+    this.filterIsDelete.set(false);
+    this.searchText.set('');
     this.filterRegion.set('');
     this.pageIndex.set(1);
     this.loadListData();
@@ -171,6 +175,20 @@ export class Country {
     else this.countries().forEach((item) => currentIds.delete(item.id));
 
     this.selectedIds.set(currentIds);
+  }
+
+  handleDeleteSelected() {
+    const idsArray = Array.from(this.selectedIds());
+    if (idsArray.length === 0) return;
+
+    if (!this.filterIsDelete())
+      this.facade.softDelete(idsArray.join(',')).then(() => {
+        this.loadListData();
+      });
+    else
+      this.facade.hardDelete(idsArray.join(',')).then(() => {
+        this.loadListData();
+      });
   }
 
   exportFn = (filter: PagingRequest): Promise<Blob> => {

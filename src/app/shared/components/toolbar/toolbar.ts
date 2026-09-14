@@ -1,4 +1,4 @@
-import { Component, output } from '@angular/core';
+import { Component, model, output } from '@angular/core';
 
 @Component({
   selector: 'app-toolbar',
@@ -9,7 +9,8 @@ import { Component, output } from '@angular/core';
 export class Toolbar {
   //#region //@ PROPS
 
-  searchText = output<string>();
+  searchText = model<string>('');
+  filterIsDelete = model<boolean>(false);
   clearFilters = output<void>();
 
   //#endregion
@@ -17,11 +18,15 @@ export class Toolbar {
   //#region //@ METHODS
 
   handleSearch(value: string) {
-    this.searchText.emit(value);
+    this.searchText.set(value);
   }
 
   handleClearFilters() {
     this.clearFilters.emit();
+  }
+
+  handleToggleShowDelete() {
+    this.filterIsDelete.update((val) => !val);
   }
 
   //#endregion
