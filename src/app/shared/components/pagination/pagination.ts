@@ -31,6 +31,37 @@ export class Pagination {
     return list;
   });
 
+  visiblePages = computed<(number | string)[]>(() => {
+    const total = this.pageCount();
+    const current = this.pageIndex();
+    const delta = 1;
+
+    if (total <= 7) {
+      return Array.from({ length: total }, (_, i) => i + 1);
+    }
+
+    const range: number[] = [];
+
+    for (let i = Math.max(2, current - delta); i <= Math.min(total - 1, current + delta); i++) {
+      range.push(i);
+    }
+
+    const pages: (number | string)[] = [1];
+    if (current - delta > 2) {
+      pages.push('...');
+    }
+
+    pages.push(...range);
+
+    if (current + delta < total - 1) {
+      pages.push('...');
+    }
+
+    pages.push(total);
+
+    return pages;
+  });
+
   //#endregion
 
   //#region //@ METHODS

@@ -74,16 +74,20 @@
     </button>
 
     <div class="d-flex align-items-center gap-1" id="countryPageNumbersGroup">
-      @for (page of pages(); track page; let idx = $index) {
-        <button
-          class="app-page-btn"
-          [class.active]="page === pageIndex()"
-          [attr.data-page]="page"
-          [attr.aria-current]="page === pageIndex() ? 'page' : null"
-          (click)="handlePageIndexChange(page)"
-        >
-          {{ page }}
-        </button>
+      @for (page of visiblePages(); track $index) {
+        @if (page === '...') {
+          <span class="px-2 text-muted user-select-none">...</span>
+        } @else {
+          <button
+            class="app-page-btn"
+            [class.active]="page === pageIndex()"
+            [attr.data-page]="page"
+            [attr.aria-current]="page === pageIndex() ? 'page' : null"
+            (click)="handlePageIndexChange(page)"
+          >
+            {{ page }}
+          </button>
+        }
       }
     </div>
 
