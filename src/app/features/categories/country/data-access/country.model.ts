@@ -1,15 +1,15 @@
 export interface CountryModel {
   id: string;
-  countryName?: string | null;
   countryCode?: string | null;
-  capital?: string | null;
-  region?: string | null;
+  countryName: string;
+  capital: string;
+  region: string;
   note?: string | null;
 
-  createdAt?: Date;
-  createdBy?: string;
-  updatedAt?: Date;
-  updatedBy?: string;
+  createdAt?: Date | null;
+  createdBy?: string | null;
+  updatedAt?: Date | null;
+  updatedBy?: string | null;
 }
 
 export const CountryFields: Record<keyof CountryModel, string> = {

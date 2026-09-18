@@ -1,8 +1,9 @@
-import { Component, computed, input, signal } from '@angular/core';
+import { Component, computed, inject, input, signal } from '@angular/core';
 import { Modal } from '../modal/modal';
 import { BASE_CONSTANTS } from '../../../core/constants/base.constant';
 import { PagingRequest } from '../../../core/models/paging.model';
 import { FilterOperator, FilterType } from '../../../core/constants/filter.enum';
+import { BaseService } from '../../../core/services/base.service';
 
 export type ExportOption =
   | typeof BASE_CONSTANTS.exportOptionAll
@@ -16,6 +17,8 @@ export type ExportOption =
   styleUrl: './export.scss',
 })
 export class Export {
+  private baseService = inject(BaseService);
+
   //#region //@ PROPS
 
   exportFn = input.required<(filter: PagingRequest) => Promise<Blob>>();
@@ -111,14 +114,6 @@ export class Export {
     this.progressStatus.set(status);
   }
 
-  private closeModal() {
-    const modalEl = document.getElementById('exportModal');
-    if (modalEl) {
-      const bootstrapModal = (window as any).bootstrap?.Modal?.getInstance(modalEl);
-      bootstrapModal?.hide();
-    }
-  }
-
   //#endregion
 
   //#region //@ METHODS
@@ -161,7 +156,7 @@ export class Export {
     } finally {
       this.isExporting.set(false);
       this.showProgress.set(false);
-      this.closeModal();
+      this.baseService.closeModal('exportModal');
     }
   }
 

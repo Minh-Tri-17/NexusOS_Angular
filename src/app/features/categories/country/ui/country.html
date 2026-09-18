@@ -21,18 +21,26 @@
         <button
           type="button"
           class="btn btn-sm btn-pastel-green d-inline-flex align-items-center gap-2 px-3 py-2 rounded-3 shadow-xs"
+          data-bs-toggle="modal"
+          data-bs-target="#countryEditorModal"
+          (click)="handleOpenCreate()"
         >
           <i class="fa-solid fa-plus"></i> Create
         </button>
         <button
           type="button"
           class="btn btn-sm btn-pastel-orange d-inline-flex align-items-center gap-2 px-3 py-2 rounded-3 shadow-xs"
+          data-bs-toggle="modal"
+          data-bs-target="#countryEditorModal"
+          [disabled]="selectedIds().size !== 1"
+          (click)="handleOpenUpdate()"
         >
           <i class="fa-solid fa-pen-to-square"></i> Edit
         </button>
         <button
           type="button"
           class="btn btn-sm btn-pastel-red d-inline-flex align-items-center gap-2 px-3 py-2 rounded-3 shadow-xs"
+          [disabled]="selectedIds().size < 1"
           (click)="handleDeleteSelected()"
         >
           <i class="fa-solid fa-trash-can"></i> Delete
@@ -186,4 +194,4 @@
   [fileName]="'countries'"
 ></app-export>
 
-<app-editor-modal></app-editor-modal>
+<app-country-modal (saveSuccess)="loadListData()"></app-country-modal>

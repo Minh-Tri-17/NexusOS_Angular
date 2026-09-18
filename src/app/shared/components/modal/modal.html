@@ -35,17 +35,7 @@
         </div>
       </div>
 
-      <form>
-        <div class="modal-body px-4 py-3 position-relative z-1">
-          <ng-content select="[modal-body]"></ng-content>
-        </div>
-
-        <div
-          class="modal-footer px-4 py-3 border-top-0 d-flex align-items-center justify-content-between modal-footer-custom z-1"
-        >
-          <ng-content select="[modal-footer]"></ng-content>
-        </div>
-      </form>
+      <ng-content select="[modal-form]"></ng-content>
     </div>
   </div>
 </div>

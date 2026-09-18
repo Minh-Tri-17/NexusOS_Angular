@@ -1,5 +1,6 @@
-import { Component, ElementRef, input, output, signal, viewChild } from '@angular/core';
+import { Component, ElementRef, inject, input, output, signal, viewChild } from '@angular/core';
 import { Result } from '../../../core/models/common.model';
+import { BaseService } from '../../../core/services/base.service';
 import { Modal } from '../modal/modal';
 
 @Component({
@@ -9,6 +10,7 @@ import { Modal } from '../modal/modal';
   styleUrl: './import.scss',
 })
 export class Import {
+  private baseService = inject(BaseService);
   readonly acceptTypes = '.xlsx,.xls,.csv';
   readonly maxSizeMB = 10;
 
@@ -74,14 +76,6 @@ export class Import {
   private animateProgress(target: number, status: string) {
     this.progressPercentage.set(target);
     this.progressStatus.set(status);
-  }
-
-  private closeModal() {
-    const modalEl = document.getElementById('importModal');
-    if (modalEl) {
-      const bootstrapModal = (window as any).bootstrap?.Modal?.getInstance(modalEl);
-      bootstrapModal?.hide();
-    }
   }
 
   private resetFileInput() {
@@ -171,7 +165,8 @@ export class Import {
     } finally {
       this.isImporting.set(false);
       this.showProgress.set(false);
-      this.closeModal();
+      this.selectedFile.set(null);
+      this.baseService.closeModal('importModal');
     }
   }
 

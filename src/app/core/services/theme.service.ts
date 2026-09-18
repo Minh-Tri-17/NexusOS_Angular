@@ -1,6 +1,6 @@
+import { isPlatformBrowser } from '@angular/common';
 import { computed, DOCUMENT, effect, inject, Injectable, PLATFORM_ID, signal } from '@angular/core';
 import { BASE_CONSTANTS } from '../constants/base.constant';
-import { isPlatformBrowser } from '@angular/common';
 
 export type Theme = typeof BASE_CONSTANTS.lightTheme | typeof BASE_CONSTANTS.darkTheme;
 
@@ -87,7 +87,7 @@ export class ThemeService {
     }
   }
 
-  closeMobileSidebar(): void {
+  closeMobileSidebar() {
     this.isMobileOpen.set(false);
   }
 

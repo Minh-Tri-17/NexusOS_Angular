@@ -1,5 +1,4 @@
 export const BASE_CONSTANTS = {
-  guidEmpty: '00000000-0000-0000-0000-000000000000',
   ids: 'Ids',
   id: 'Id',
   isDelete: 'IsDelete',

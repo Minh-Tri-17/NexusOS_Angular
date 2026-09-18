@@ -9,172 +9,185 @@
     </span>
   </ng-container>
 
-  <ng-container modal-body>
-    <div class="form-section-card mb-4">
-      <div class="form-section-header">
-        <div class="d-flex align-items-center gap-2">
-          <i class="fa-solid fa-layer-group text-primary"></i>
-          <span class="fw-bold">EXPORT RANGE / SCOPE</span>
+  <ng-container modal-form>
+    <form>
+      <div class="modal-body px-4 py-3 position-relative z-1">
+        <div class="form-section-card">
+          <div class="form-section-header">
+            <div class="d-flex align-items-center gap-2">
+              <i class="fa-solid fa-layer-group text-primary"></i>
+              <span class="fw-bold">EXPORT RANGE / SCOPE</span>
+            </div>
+            <span class="badge-soft badge-orange">
+              <i class="fa-solid fa-list-check"></i> 3 Options
+            </span>
+          </div>
+
+          <div class="row g-3">
+            <div class="col-12">
+              <label
+                class="custom-radio-card d-flex align-items-center justify-content-between p-3 rounded-4 border w-100 position-relative m-0"
+                for="exportScopeAll"
+              >
+                <div class="d-flex align-items-center gap-3">
+                  <input
+                    class="form-check-input flex-shrink-0 ms-1 me-2"
+                    type="radio"
+                    name="exportScope"
+                    id="exportScopeAll"
+                    value="all"
+                    [checked]="exportOption() === 'all'"
+                    (change)="handleExportOptionChange($event)"
+                  />
+                  <div
+                    class="rounded-3 p-2 bg-soft-indigo text-indigo d-flex align-items-center justify-content-center flex-shrink-0"
+                    style="width: 42px; height: 42px"
+                  >
+                    <i class="fa-solid fa-database fs-5"></i>
+                  </div>
+                  <div>
+                    <span class="fw-bold text-dark d-block mb-0 fs-6">All Pages</span>
+                    <span class="text-muted small">Export complete dataset across all pages</span>
+                  </div>
+                </div>
+                <span class="badge-soft badge-indigo px-3 py-1 me-1"
+                  >{{ totalRecord() || 0 }} Total Records</span
+                >
+              </label>
+            </div>
+
+            <div class="col-12">
+              <label
+                class="custom-radio-card d-flex align-items-center justify-content-between p-3 rounded-4 border w-100 position-relative m-0"
+                for="exportScopeCurrent"
+              >
+                <div class="d-flex align-items-center gap-3">
+                  <input
+                    class="form-check-input flex-shrink-0 ms-1 me-2"
+                    type="radio"
+                    name="exportScope"
+                    id="exportScopeCurrent"
+                    value="current"
+                    [checked]="exportOption() === 'current'"
+                    (change)="handleExportOptionChange($event)"
+                  />
+                  <div
+                    class="rounded-3 p-2 bg-soft-teal text-teal d-flex align-items-center justify-content-center flex-shrink-0"
+                    style="width: 42px; height: 42px"
+                  >
+                    <i class="fa-solid fa-file-lines fs-5"></i>
+                  </div>
+                  <div>
+                    <span class="fw-bold text-dark d-block mb-0 fs-6">Current Page</span>
+                    <span class="text-muted small"
+                      >Export 10 rows visible on current grid view</span
+                    >
+                  </div>
+                </div>
+                <span class="badge-soft badge-teal px-3 py-1 me-1"
+                  >Page {{ currentFilter()?.pageIndex }} ({{
+                    currentFilter()?.pageSize || 20
+                  }}
+                  Rows)</span
+                >
+              </label>
+            </div>
+
+            <div class="col-12">
+              <label
+                class="custom-radio-card d-flex align-items-center justify-content-between p-3 rounded-4 border w-100 position-relative m-0"
+                for="exportScopeSelected"
+                [class.disabled]="!canExportSelectItems()"
+              >
+                <div class="d-flex align-items-center gap-3">
+                  <input
+                    class="form-check-input flex-shrink-0 ms-1 me-2"
+                    type="radio"
+                    name="exportScope"
+                    id="exportScopeSelected"
+                    value="select"
+                    [checked]="exportOption() === 'select'"
+                    (change)="handleExportOptionChange($event)"
+                  />
+                  <div
+                    class="rounded-3 p-2 bg-soft-purple text-purple d-flex align-items-center justify-content-center flex-shrink-0"
+                    style="width: 42px; height: 42px"
+                  >
+                    <i class="fa-solid fa-list-check fs-5"></i>
+                  </div>
+                  <div>
+                    <span class="fw-bold text-dark d-block mb-0 fs-6">Selected Items</span>
+                    <span class="text-muted small">Export checked items from data grid</span>
+                  </div>
+                </div>
+                <span
+                  class="badge-soft badge-purple px-3 py-1 me-1"
+                  id="exportSelectedItemCountBadge"
+                  >{{ selectedIds().size }} Items Selected</span
+                >
+              </label>
+            </div>
+          </div>
+
+          @if (showProgress()) {
+            <div class="import-progress-wrapper mt-3">
+              <div class="d-flex align-items-center justify-content-between mb-1">
+                <span class="small fw-semibold text-muted">{{ progressStatus() }}</span>
+                <span class="small fw-bold text-indigo">{{ progressPercentage() }}%</span>
+              </div>
+              <div class="progress custom-import-progress">
+                <div
+                  class="progress-bar bg-indigo progress-bar-striped progress-bar-animated rounded-pill"
+                  role="progressbar"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                  [aria-valuenow]="progressPercentage()"
+                  [style.width.%]="progressPercentage()"
+                ></div>
+              </div>
+            </div>
+          }
         </div>
-        <span class="badge-soft badge-orange">
-          <i class="fa-solid fa-list-check"></i> 3 Options
-        </span>
       </div>
 
-      <div class="row g-3">
-        <div class="col-12">
-          <label
-            class="custom-radio-card d-flex align-items-center justify-content-between p-3 rounded-4 border w-100 position-relative m-0"
-            for="exportScopeAll"
+      <div
+        class="modal-footer px-4 py-3 border-top-0 d-flex align-items-center justify-content-between modal-footer-custom z-1"
+      >
+        <div class="d-none d-md-flex align-items-center gap-2 text-muted small">
+          <i class="fa-solid fa-shield-halved text-primary opacity-75"></i>
+          <span>Enterprise Encrypted</span>
+          <span class="modal-footer-divider"></span>
+          <span class="d-inline-flex align-items-center gap-1"
+            ><kbd class="kbd-badge">ESC</kbd> Close</span
           >
-            <div class="d-flex align-items-center gap-3">
-              <input
-                class="form-check-input flex-shrink-0 ms-1 me-2"
-                type="radio"
-                name="exportScope"
-                id="exportScopeAll"
-                value="all"
-                [checked]="exportOption() === 'all'"
-                (change)="handleExportOptionChange($event)"
-              />
-              <div
-                class="rounded-3 p-2 bg-soft-indigo text-indigo d-flex align-items-center justify-content-center flex-shrink-0"
-                style="width: 42px; height: 42px"
-              >
-                <i class="fa-solid fa-database fs-5"></i>
-              </div>
-              <div>
-                <span class="fw-bold text-dark d-block mb-0 fs-6">All Pages</span>
-                <span class="text-muted small">Export complete dataset across all pages</span>
-              </div>
-            </div>
-            <span class="badge-soft badge-indigo px-3 py-1 me-1"
-              >{{ totalRecord() || 0 }} Total Records</span
-            >
-          </label>
         </div>
-
-        <div class="col-12">
-          <label
-            class="custom-radio-card d-flex align-items-center justify-content-between p-3 rounded-4 border w-100 position-relative m-0"
-            for="exportScopeCurrent"
+        <div class="d-flex align-items-center gap-2 ms-auto">
+          <button
+            type="button"
+            class="btn btn-sm btn-pastel-slate px-3 py-2 rounded-3"
+            data-bs-dismiss="modal"
           >
-            <div class="d-flex align-items-center gap-3">
-              <input
-                class="form-check-input flex-shrink-0 ms-1 me-2"
-                type="radio"
-                name="exportScope"
-                id="exportScopeCurrent"
-                value="current"
-                [checked]="exportOption() === 'current'"
-                (change)="handleExportOptionChange($event)"
-              />
-              <div
-                class="rounded-3 p-2 bg-soft-teal text-teal d-flex align-items-center justify-content-center flex-shrink-0"
-                style="width: 42px; height: 42px"
-              >
-                <i class="fa-solid fa-file-lines fs-5"></i>
-              </div>
-              <div>
-                <span class="fw-bold text-dark d-block mb-0 fs-6">Current Page</span>
-                <span class="text-muted small">Export 10 rows visible on current grid view</span>
-              </div>
-            </div>
-            <span class="badge-soft badge-teal px-3 py-1 me-1"
-              >Page 1 ({{ currentFilter()?.pageSize || 20 }} Rows)</span
-            >
-          </label>
-        </div>
-
-        <div class="col-12">
-          <label
-            class="custom-radio-card d-flex align-items-center justify-content-between p-3 rounded-4 border w-100 position-relative m-0"
-            for="exportScopeSelected"
-            [class.disabled]="!canExportSelectItems()"
+            <i class="fa-solid fa-xmark me-1"></i> Close
+          </button>
+          <button
+            type="button"
+            class="btn btn-sm btn-pastel-indigo px-4 py-2 rounded-3"
+            (click)="handleConfirmExport()"
+            [disabled]="isExporting()"
           >
-            <div class="d-flex align-items-center gap-3">
-              <input
-                class="form-check-input flex-shrink-0 ms-1 me-2"
-                type="radio"
-                name="exportScope"
-                id="exportScopeSelected"
-                value="select"
-                [checked]="exportOption() === 'select'"
-                (change)="handleExportOptionChange($event)"
-              />
-              <div
-                class="rounded-3 p-2 bg-soft-purple text-purple d-flex align-items-center justify-content-center flex-shrink-0"
-                style="width: 42px; height: 42px"
-              >
-                <i class="fa-solid fa-list-check fs-5"></i>
-              </div>
-              <div>
-                <span class="fw-bold text-dark d-block mb-0 fs-6">Selected Items</span>
-                <span class="text-muted small">Export checked items from data grid</span>
-              </div>
-            </div>
-            <span class="badge-soft badge-purple px-3 py-1 me-1" id="exportSelectedItemCountBadge"
-              >{{ selectedIds().size }} Items Selected</span
-            >
-          </label>
+            @if (isExporting()) {
+              <span
+                class="spinner-border spinner-border-sm me-1"
+                role="status"
+                aria-hidden="true"
+              ></span>
+              Exporting...
+            } @else {
+              <i class="fa-solid fa-file-export me-1"></i> Start Export
+            }
+          </button>
         </div>
       </div>
-
-      @if (showProgress()) {
-        <div class="import-progress-wrapper mt-3">
-          <div class="d-flex align-items-center justify-content-between mb-1">
-            <span class="small fw-semibold text-muted">{{ progressStatus() }}</span>
-            <span class="small fw-bold text-indigo">{{ progressPercentage() }}%</span>
-          </div>
-          <div class="progress custom-import-progress">
-            <div
-              class="progress-bar bg-indigo progress-bar-striped progress-bar-animated rounded-pill"
-              role="progressbar"
-              aria-valuemin="0"
-              aria-valuemax="100"
-              [aria-valuenow]="progressPercentage()"
-              [style.width.%]="progressPercentage()"
-            ></div>
-          </div>
-        </div>
-      }
-    </div>
-  </ng-container>
-
-  <ng-container modal-footer>
-    <div class="d-none d-md-flex align-items-center gap-2 text-muted small">
-      <i class="fa-solid fa-shield-halved text-primary opacity-75"></i>
-      <span>Enterprise Encrypted</span>
-      <span class="modal-footer-divider"></span>
-      <span class="d-inline-flex align-items-center gap-1"
-        ><kbd class="kbd-badge">ESC</kbd> Close</span
-      >
-    </div>
-    <div class="d-flex align-items-center gap-2 ms-auto">
-      <button
-        type="button"
-        class="btn btn-sm btn-pastel-slate px-3 py-2 rounded-3"
-        data-bs-dismiss="modal"
-      >
-        <i class="fa-solid fa-xmark me-1"></i> Close
-      </button>
-      <button
-        type="button"
-        class="btn btn-sm btn-pastel-indigo px-4 py-2 rounded-3"
-        (click)="handleConfirmExport()"
-        [disabled]="isExporting()"
-      >
-        @if (isExporting()) {
-          <span
-            class="spinner-border spinner-border-sm me-1"
-            role="status"
-            aria-hidden="true"
-          ></span>
-          Exporting...
-        } @else {
-          <i class="fa-solid fa-file-export me-1"></i> Start Export
-        }
-      </button>
-    </div>
+    </form>
   </ng-container>
 </app-modal>

@@ -1,19 +1,19 @@
-import { Component, effect, inject, signal } from '@angular/core';
 import { DatePipe } from '@angular/common';
-import { Summary } from '../../../../shared/components/summary/summary';
-import { Toolbar } from '../../../../shared/components/toolbar/toolbar';
-import { Pagination } from '../../../../shared/components/pagination/pagination';
-import { Table } from '../../../../shared/components/table/table';
-import { Import } from '../../../../shared/components/import/import';
-import { Export } from '../../../../shared/components/export/export';
-import { EditorModal } from './editor-modal/editor-modal';
-import { CountryFacade } from '../data-access/country.facade';
-import { PagingRequest } from '../../../../core/models/paging.model';
+import { Component, effect, inject, signal, viewChild } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { BASE_CONSTANTS } from '../../../../core/constants/base.constant';
 import { FilterOperator, FilterType } from '../../../../core/constants/filter.enum';
-import { CountryFields, CountryModel } from '../data-access/country.model';
-import { FormsModule } from '@angular/forms';
+import { PagingRequest } from '../../../../core/models/paging.model';
+import { Export } from '../../../../shared/components/export/export';
+import { Import } from '../../../../shared/components/import/import';
+import { Pagination } from '../../../../shared/components/pagination/pagination';
+import { Summary } from '../../../../shared/components/summary/summary';
+import { Table } from '../../../../shared/components/table/table';
+import { Toolbar } from '../../../../shared/components/toolbar/toolbar';
 import { Region } from '../data-access/country.enum';
+import { CountryFacade } from '../data-access/country.facade';
+import { CountryFields, CountryModel } from '../data-access/country.model';
+import { CountryModal } from './editor-modal/country-modal';
 
 @Component({
   selector: 'app-country',
@@ -24,7 +24,7 @@ import { Region } from '../data-access/country.enum';
     Table,
     Import,
     Export,
-    EditorModal,
+    CountryModal,
     DatePipe,
     FormsModule,
   ],
@@ -50,8 +50,6 @@ export class Country {
     'badge-teal',
   ];
 
-  regions = Object.values(Region);
-
   pageIndex = signal<number>(1);
   pageSize = signal<number>(20);
   fromRecord = signal<number>(1);
@@ -66,6 +64,9 @@ export class Country {
   filterIsDelete = signal<boolean>(false);
 
   //#endregion
+
+  regions = Object.values(Region);
+  modalRef = viewChild.required(CountryModal);
 
   constructor() {
     effect(() => {
@@ -126,12 +127,12 @@ export class Country {
     const filter = this.buildFilter();
     this.facade.getPaging(filter).then((res: any) => {
       this.countries.set(res.result?.items || []);
-      this.fromRecord.set(res.result?.fromRecord || 1);
       this.totalRecord.set(res.result?.totalRecord || 0);
       this.recordRange.set(res.result?.recordRange || '');
       this.fromRecord.set(res.result?.fromRecord || 0);
       this.toRecord.set(res.result?.toRecord || 0);
       this.pageCount.set(res.result?.pageCount || 0);
+      this.selectedIds.set(new Set());
     });
   }
 
@@ -189,6 +190,22 @@ export class Country {
       this.facade.hardDelete(idsArray.join(',')).then(() => {
         this.loadListData();
       });
+  }
+
+  handleOpenCreate() {
+    this.modalRef().initCreateForm();
+  }
+
+  handleOpenUpdate() {
+    this.modalRef().initUpdateForm(this.getSelectedItem());
+  }
+
+  getSelectedItem(): CountryModel {
+    const idsArray = Array.from(this.selectedIds());
+    if (idsArray.length !== 1) return {} as CountryModel;
+
+    const selectedId = idsArray[0];
+    return this.countries().find((item) => item.id === selectedId) || ({} as CountryModel);
   }
 
   exportFn = (filter: PagingRequest): Promise<Blob> => {
