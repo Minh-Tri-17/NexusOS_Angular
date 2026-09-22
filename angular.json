@@ -63,6 +63,14 @@
         },
         "serve": {
           "builder": "@angular/build:dev-server",
+          "options": {
+            "port": 2027,
+            "host": "0.0.0.0",
+            "proxyConfig": "proxy.conf.json",
+            "allowedHosts": [
+              ".trycloudflare.com"
+            ]
+          },
           "configurations": {
             "production": {
               "buildTarget": "NexusOS_Angular:build:production"
