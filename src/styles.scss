@@ -8250,7 +8250,7 @@ tr:hover td.col-pin,
 }
 
 /* Custom Modern Toggle Switch (Gạt Công Tắc) */
-.nexus-toggle-switch {
+.toggle-switch {
   position: relative;
   display: inline-block;
   width: 36px;
@@ -8258,14 +8258,14 @@ tr:hover td.col-pin,
   flex-shrink: 0;
 }
 
-.nexus-toggle-switch .nexus-toggle-input {
+.toggle-switch .toggle-input {
   opacity: 0;
   width: 0;
   height: 0;
   position: absolute;
 }
 
-.nexus-toggle-slider {
+.toggle-slider {
   position: absolute;
   cursor: pointer;
   top: 0;
@@ -8277,7 +8277,7 @@ tr:hover td.col-pin,
   border-radius: 20px;
 }
 
-.nexus-toggle-slider:before {
+.toggle-slider:before {
   position: absolute;
   content: '';
   height: 14px;
@@ -8290,15 +8290,15 @@ tr:hover td.col-pin,
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
 }
 
-.nexus-toggle-input:checked + .nexus-toggle-slider {
+.toggle-input:checked + .toggle-slider {
   background-color: #ef4444;
 }
 
-.nexus-toggle-input:checked + .nexus-toggle-slider:before {
+.toggle-input:checked + .toggle-slider:before {
   transform: translateX(16px);
 }
 
-[data-theme='dark'] .nexus-toggle-slider {
+[data-theme='dark'] .toggle-slider {
   background-color: #475569;
 }
 
@@ -8317,4 +8317,27 @@ tr:hover td.col-pin,
 
 [data-theme='dark'] .app-list-table tbody tr.deleted-row:hover {
   background-color: rgba(239, 68, 68, 0.18) !important;
+}
+
+.skeleton-row {
+  transition: opacity 0.25s ease;
+}
+
+.skeleton-row td {
+  padding: 1rem 0.75rem !important;
+  vertical-align: middle;
+}
+
+.skeleton-row .placeholder {
+  display: inline-block;
+  vertical-align: middle;
+  border-radius: 4px;
+}
+
+[data-theme='dark'] .skeleton-row .placeholder {
+  background-color: rgba(255, 255, 255, 0.14) !important;
+}
+
+[data-theme='dark'] .placeholder-glow .placeholder {
+  animation-duration: 1.6s;
 }

@@ -112,66 +112,73 @@
     </ng-container>
 
     <ng-container table-body>
-      @for (country of countries(); track country.id; let idx = $index) {
-        <tr [class.deleted-row]="filterIsDelete()">
-          <td class="col-pin">
-            <input
-              type="checkbox"
-              class="country-row-cb"
-              [aria-label]="country.countryName"
-              [checked]="isSelected(country.id)"
-              (click)="handleToggleSelect(country.id, $event)"
-            />
-          </td>
-          <td class="td-cell text-center">{{ fromRecord() + idx }}</td>
-          <td>
-            <span class="badge-soft badge-blue">#{{ country.countryCode }}</span>
-          </td>
-          <td>
-            <div
-              class="fw-semibold text-main"
-              [class.text-decoration-line-through]="filterIsDelete()"
-            >
-              {{ country.countryName }}
-            </div>
-            @if (filterIsDelete()) {
-              <span
-                class="badge bg-danger-subtle text-danger border border-danger-subtle fs-xs rounded-pill px-2 py-0.5 mt-1"
+      @if (isLoading()) {
+        <app-placeholder></app-placeholder>
+      } @else {
+        @for (country of countries(); track country.id; let idx = $index) {
+          <tr [class.deleted-row]="filterIsDelete()">
+            <td class="col-pin">
+              <input
+                type="checkbox"
+                class="country-row-cb"
+                [aria-label]="country.countryName"
+                [checked]="isSelected(country.id)"
+                (click)="handleToggleSelect(country.id, $event)"
+              />
+            </td>
+            <td class="td-cell text-center">{{ fromRecord() + idx }}</td>
+            <td>
+              <span class="badge-soft badge-blue">#{{ country.countryCode }}</span>
+            </td>
+            <td>
+              <div
+                class="fw-semibold text-main"
+                [class.text-decoration-line-through]="filterIsDelete()"
               >
-                <i class="fa-solid fa-trash-can me-1"></i>Soft Deleted
-              </span>
-            }
-          </td>
-          <td>
-            <span class="text-muted small" [class.text-decoration-line-through]="filterIsDelete()">
-              <i class="fa-solid fa-location-dot text-primary"></i>{{ country.capital }}</span
-            >
-          </td>
-          <td>
-            <span class="badge-soft" [class]="badgeColors[idx % badgeColors.length]">
-              <i class="fa-solid fa-globe-asia"></i>{{ country.region }}</span
-            >
-          </td>
-          <td>
-            <span class="text-muted small">
-              <i class="fa-regular fa-user"></i>{{ country.createdBy }}</span
-            >
-          </td>
-          <td>
-            <span class="text-muted small">{{ country.createdAt | date }}</span>
-          </td>
-          <td>
-            <span class="text-muted small">
-              <i class="fa-regular fa-user"></i>{{ country.updatedBy }}</span
-            >
-          </td>
-          <td>
-            <span class="text-muted small">{{ country.updatedAt | date }}</span>
-          </td>
-          <td>
-            <span class="text-muted small fst-italic">{{ country.note }}</span>
-          </td>
-        </tr>
+                {{ country.countryName }}
+              </div>
+              @if (filterIsDelete()) {
+                <span
+                  class="badge bg-danger-subtle text-danger border border-danger-subtle fs-xs rounded-pill px-2 py-0.5 mt-1"
+                >
+                  <i class="fa-solid fa-trash-can me-1"></i>Soft Deleted
+                </span>
+              }
+            </td>
+            <td>
+              <span
+                class="text-muted small"
+                [class.text-decoration-line-through]="filterIsDelete()"
+              >
+                <i class="fa-solid fa-location-dot text-primary"></i>{{ country.capital }}</span
+              >
+            </td>
+            <td>
+              <span class="badge-soft" [class]="badgeColors[idx % badgeColors.length]">
+                <i class="fa-solid fa-globe-asia"></i>{{ country.region }}</span
+              >
+            </td>
+            <td>
+              <span class="text-muted small">
+                <i class="fa-regular fa-user"></i>{{ country.createdBy }}</span
+              >
+            </td>
+            <td>
+              <span class="text-muted small">{{ country.createdAt | date }}</span>
+            </td>
+            <td>
+              <span class="text-muted small">
+                <i class="fa-regular fa-user"></i>{{ country.updatedBy }}</span
+              >
+            </td>
+            <td>
+              <span class="text-muted small">{{ country.updatedAt | date }}</span>
+            </td>
+            <td>
+              <span class="text-muted small fst-italic">{{ country.note }}</span>
+            </td>
+          </tr>
+        }
       }
     </ng-container>
   </app-table>
@@ -190,6 +197,8 @@
   [exportFn]="exportFn"
   [currentFilter]="buildFilter()"
   [totalRecord]="totalRecord()"
+  [fromRecord]="fromRecord()"
+  [toRecord]="toRecord()"
   [selectedIds]="selectedIds()"
   [fileName]="'countries'"
 ></app-export>

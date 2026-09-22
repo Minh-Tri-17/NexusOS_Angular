@@ -1,9 +1,9 @@
 import { Component, computed, inject, input, signal } from '@angular/core';
-import { Modal } from '../modal/modal';
 import { BASE_CONSTANTS } from '../../../core/constants/base.constant';
-import { PagingRequest } from '../../../core/models/paging.model';
 import { FilterOperator, FilterType } from '../../../core/constants/filter.enum';
+import { PagingRequest } from '../../../core/models/paging.model';
 import { BaseService } from '../../../core/services/base.service';
+import { Modal } from '../modal/modal';
 
 export type ExportOption =
   | typeof BASE_CONSTANTS.exportOptionAll
@@ -25,6 +25,8 @@ export class Export {
   fileName = input<string>('export');
   currentFilter = input<PagingRequest>();
   totalRecord = input<number>(0);
+  fromRecord = input<number>(0);
+  toRecord = input<number>(0);
   selectedIds = input<Set<string>>(new Set());
 
   //#endregion
@@ -39,6 +41,7 @@ export class Export {
   //* computed() dùng để tính toán giá trị dựa trên state khác
   canExportSelectItems = computed(() => this.selectedIds().size > 0);
   canExportAllPage = computed(() => this.totalRecord() > 0);
+  totalPageRecord = computed(() => this.toRecord() - this.fromRecord() + 1);
 
   //#endregion
 

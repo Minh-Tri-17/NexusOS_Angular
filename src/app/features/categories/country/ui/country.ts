@@ -7,6 +7,7 @@ import { PagingRequest } from '../../../../core/models/paging.model';
 import { Export } from '../../../../shared/components/export/export';
 import { Import } from '../../../../shared/components/import/import';
 import { Pagination } from '../../../../shared/components/pagination/pagination';
+import { Placeholder } from '../../../../shared/components/placeholder/placeholder';
 import { Summary } from '../../../../shared/components/summary/summary';
 import { Table } from '../../../../shared/components/table/table';
 import { Toolbar } from '../../../../shared/components/toolbar/toolbar';
@@ -27,6 +28,7 @@ import { CountryModal } from './editor-modal/country-modal';
     CountryModal,
     DatePipe,
     FormsModule,
+    Placeholder,
   ],
   templateUrl: './country.html',
   styleUrl: './country.scss',
@@ -62,6 +64,7 @@ export class Country {
   filterRegion = signal<string>('');
   selectedIds = signal<Set<string>>(new Set());
   filterIsDelete = signal<boolean>(false);
+  isLoading = signal<boolean>(true);
 
   //#endregion
 
@@ -133,6 +136,7 @@ export class Country {
       this.toRecord.set(res.result?.toRecord || 0);
       this.pageCount.set(res.result?.pageCount || 0);
       this.selectedIds.set(new Set());
+      this.isLoading.set(false);
     });
   }
 
