@@ -95,7 +95,7 @@
             id="selectAllList"
             aria-label="Select all"
             [checked]="isSelectedAll()"
-            (click)="handleToggleSelectAll($event)"
+            (click)="handleToggleSelectAll()"
           />
         </th>
         <th class="text-center" style="width: 50px">#</th>
@@ -123,7 +123,7 @@
                 class="country-row-cb"
                 [aria-label]="country.countryName"
                 [checked]="isSelected(country.id)"
-                (click)="handleToggleSelect(country.id, $event)"
+                (click)="handleToggleSelect(country.id)"
               />
             </td>
             <td class="td-cell text-center">{{ fromRecord() + idx }}</td>

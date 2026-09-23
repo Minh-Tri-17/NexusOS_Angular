@@ -1,7 +1,9 @@
-import { Component, inject, NgZone, PLATFORM_ID, signal } from '@angular/core';
-import { ThemeService } from '../../../core/services/theme.service';
 import { isPlatformBrowser } from '@angular/common';
+import { Component, inject, NgZone, PLATFORM_ID, signal } from '@angular/core';
+import { Router } from '@angular/router';
 import { auditTime, fromEvent, Subscription } from 'rxjs';
+import { AuthService } from '../../../core/services/auth.service';
+import { ThemeService } from '../../../core/services/theme.service';
 
 @Component({
   selector: 'app-header',
@@ -10,13 +12,15 @@ import { auditTime, fromEvent, Subscription } from 'rxjs';
   styleUrl: './header.scss',
 })
 export class Header {
+  private router = inject(Router);
   private readonly ngZone = inject(NgZone);
   private readonly platformId = inject(PLATFORM_ID);
   private readonly isBrowser = isPlatformBrowser(this.platformId);
   private scrollSub?: Subscription;
 
   protected themeService = inject(ThemeService);
-  readonly isScrolled = signal<boolean>(false);
+  protected authService = inject(AuthService);
+  readonly isScrolled = signal(false);
 
   ngOnInit() {
     if (!this.isBrowser) return;
@@ -51,6 +55,11 @@ export class Header {
 
   handleToggleCollapsed() {
     this.themeService.toggleCollapsed();
+  }
+
+  handleLogout() {
+    this.authService.logout();
+    this.router.navigate(['/login']);
   }
 
   //#endregion

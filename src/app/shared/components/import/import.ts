@@ -23,13 +23,13 @@ export class Import {
 
   //#region //@ STATE
 
-  isDragOver = signal<boolean>(false);
-  isImporting = signal<boolean>(false);
+  isDragOver = signal(false);
+  isImporting = signal(false);
   selectedFile = signal<File | null>(null);
-  errorMessage = signal<string>('');
-  showProgress = signal<boolean>(false);
-  progressStatus = signal<string>('');
-  progressPercentage = signal<number>(0);
+  errorMessage = signal('');
+  showProgress = signal(false);
+  progressStatus = signal('');
+  progressPercentage = signal(0);
 
   fileInput = viewChild<ElementRef<HTMLInputElement>>('importFileInput');
 

@@ -1,7 +1,7 @@
-import { HttpInterceptorFn, HttpResponse } from '@angular/common/http';
-import { tap } from 'rxjs';
-import { Result } from '../models/common.model';
+import { HttpErrorResponse, HttpInterceptorFn, HttpResponse } from '@angular/common/http';
+import { catchError, tap, throwError } from 'rxjs';
 import { showToast } from '../../shared/components/toast/toast.util';
+import { Result } from '../models/common.model';
 
 export const responseInterceptor: HttpInterceptorFn = (req, next) => {
   return next(req).pipe(
@@ -25,6 +25,15 @@ export const responseInterceptor: HttpInterceptorFn = (req, next) => {
             type: 'danger',
           });
       }
+    }),
+    catchError((error: HttpErrorResponse) => {
+      const errorMsg = error.error?.message || 'Có lỗi kết nối máy chủ!';
+      showToast({
+        message: errorMsg,
+        type: 'danger',
+      });
+
+      return throwError(() => error);
     }),
   );
 

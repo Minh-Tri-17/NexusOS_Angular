@@ -64,18 +64,18 @@ export class CountryModal {
     //* as ép kiểu sang model tương ứng
     const rawValues = this.countryForm.getRawValue() as CountryModel;
 
-    if (rawValues.id) {
-      await this.facade.update(rawValues);
-    } else {
-      rawValues.id = NIL_GUID;
-      await this.facade.create(rawValues);
-    }
+    try {
+      if (rawValues.id) {
+        await this.facade.update(rawValues);
+      } else {
+        rawValues.id = NIL_GUID;
+        await this.facade.create(rawValues);
+      }
 
-    this.saveSuccess.emit();
-
-    this.initCreateForm();
-
-    this.baseService.closeModal('countryEditorModal');
+      this.saveSuccess.emit();
+      this.initCreateForm();
+      this.baseService.closeModal('countryEditorModal');
+    } catch (error) {}
   }
 
   //#endregion

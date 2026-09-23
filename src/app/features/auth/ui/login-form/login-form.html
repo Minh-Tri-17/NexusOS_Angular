@@ -1,0 +1,142 @@
+<div class="auth-form-side">
+  <div class="mb-4 animate-item delay-1">
+    <h2 class="fw-bold fs-3 text-main mb-0" style="letter-spacing: -0.02em">
+      Sign in to Workspace
+    </h2>
+  </div>
+
+  <div class="demo-box animate-item delay-2">
+    <div
+      class="d-flex align-items-center gap-2 mb-2 text-muted fw-bold text-uppercase"
+      style="font-size: 0.72rem; letter-spacing: 0.08em"
+    >
+      <i class="fa-solid fa-bolt text-warning"></i> Quick Login:
+    </div>
+    <div class="d-flex flex-wrap gap-2">
+      @for (item of demoRoles; track item.key) {
+        <button
+          type="button"
+          class="demo-pill"
+          [class]="item.pillClass"
+          [class.active]="currentFill() === item.key"
+          (click)="handleFillAccount(item.key)"
+        >
+          <i [class]="item.icon"></i> {{ item.label }}
+        </button>
+      }
+    </div>
+  </div>
+
+  <div class="auth-tabs animate-item delay-3">
+    <button
+      type="button"
+      class="tab-btn"
+      [class.active]="currentTab() == 'email'"
+      (click)="handleToggleTab('email')"
+    >
+      <i class="fa-regular fa-envelope me-1"></i> Email
+    </button>
+    <button
+      type="button"
+      class="tab-btn"
+      [class.active]="currentTab() == 'empid'"
+      (click)="handleToggleTab('empid')"
+    >
+      <i class="fa-solid fa-id-card me-1"></i> Employee ID
+    </button>
+    <button
+      type="button"
+      class="tab-btn"
+      [class.active]="currentTab() == 'sso'"
+      (click)="handleToggleTab('sso')"
+      disabled
+    >
+      <i class="fa-solid fa-key me-1"></i> SSO
+    </button>
+  </div>
+
+  <form [formGroup]="loginForm" ngNativeValidate (ngSubmit)="handleLogin()">
+    <div class="form-field">
+      <label for="inputUsername" class="form-label-custom" id="identifierLabel">Work Email</label>
+      <div class="form-input-wrapper">
+        <input
+          id="inputUsername"
+          class="form-input-custom"
+          formControlName="username"
+          [type]="currentTab() == 'email' ? 'email' : 'text'"
+          [placeholder]="currentTab() == 'email' ? 'name@nexusost.com' : 'e.g. NEX-1001'"
+          [style.border-color]="loginForm.controls.username.value ? 'var(--primary-color)' : ''"
+          required
+        />
+        <i class="fa-regular fa-envelope form-input-icon"></i>
+      </div>
+    </div>
+
+    <div class="form-field" id="passwordGroup">
+      <label for="inputPassword" class="form-label-custom">Password</label>
+      <div class="form-input-wrapper">
+        <input
+          id="inputPassword"
+          class="form-input-custom"
+          placeholder="••••••••••••"
+          formControlName="password"
+          [type]="isVisibility() ? 'text' : 'password'"
+          [style.border-color]="loginForm.controls.password.value ? 'var(--primary-color)' : ''"
+          required
+        />
+        <i class="fa-solid fa-lock form-input-icon"></i>
+        <button
+          type="button"
+          class="toggle-pwd"
+          title="Toggle Password Visibility"
+          (click)="handleTogglePwdVisibility()"
+        >
+          <i class="fa-regular" [class]="isVisibility() ? 'fa-eye-slash' : 'fa-eye'"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="d-flex align-items-center justify-content-between mb-4 small">
+      <label class="d-flex align-items-center gap-2 cursor-pointer text-muted font-weight-medium">
+        <input type="checkbox" id="rememberMe" checked class="form-check-input mt-0" />
+        <span>Keep me signed in</span>
+      </label>
+      <a
+        href="#"
+        class="text-primary fw-bold text-decoration-none"
+        data-bs-toggle="modal"
+        data-bs-target="#forgotPasswordModal"
+      >
+        Forgot password?
+      </a>
+    </div>
+
+    <button
+      type="submit"
+      class="btn btn-pastel-purple w-100 py-2.5 rounded-3 fw-bold shadow-sm d-flex align-items-center justify-content-center gap-2"
+      id="loginSubmitBtn"
+    >
+      @if (isSigning()) {
+        <span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+        Signing in...
+      } @else {
+        Sign In to Dashboard <i class="fa-solid fa-arrow-right text-xs"></i>
+      }
+    </button>
+  </form>
+
+  <div class="auth-divider">
+    <span>or sign in with</span>
+  </div>
+
+  <div class="sso-grid">
+    <button type="button" class="sso-btn">
+      <i class="fa-brands fa-microsoft text-primary"></i>
+      <span>Microsoft</span>
+    </button>
+    <button type="button" class="sso-btn">
+      <i class="fa-brands fa-google text-danger"></i>
+      <span>Google</span>
+    </button>
+  </div>
+</div>

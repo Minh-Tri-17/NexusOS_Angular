@@ -14,9 +14,9 @@ export class ThemeService {
   private readonly document = inject(DOCUMENT);
   private readonly isBrowser = isPlatformBrowser(this.platformId);
 
-  readonly currentTheme = signal<Theme>(this.getInitialTheme());
-  readonly isCollapsed = signal<boolean>(this.getInitialCollapsed());
-  readonly isMobileOpen = signal<boolean>(false);
+  readonly currentTheme = signal(this.getInitialTheme());
+  readonly isCollapsed = signal(this.getInitialCollapsed());
+  readonly isMobileOpen = signal(false);
   //* computed() dùng để tính toán giá trị dựa trên state khác
   readonly isDark = computed(() => this.currentTheme() === BASE_CONSTANTS.darkTheme);
 

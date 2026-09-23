@@ -1,0 +1,115 @@
+<div class="auth-bg-gradient"></div>
+<div class="auth-glow-orb auth-glow-orb-1"></div>
+<div class="auth-glow-orb auth-glow-orb-2"></div>
+
+<div class="auth-topbar topbar-action-group">
+  <div class="dropdown d-inline-block">
+    <button
+      class="btn-icon-action"
+      id="langTranslateBtn"
+      type="button"
+      data-bs-toggle="dropdown"
+      aria-expanded="false"
+      title="Language / Ngôn ngữ"
+    >
+      <i class="fa-solid fa-language"></i>
+    </button>
+    <ul class="dropdown-menu dropdown-menu-end lang-dropdown-menu">
+      <li>
+        <div class="dropdown-header">
+          <i class="fa-solid fa-globe me-1"></i> Ngôn ngữ / Language
+        </div>
+      </li>
+      <li><hr class="dropdown-divider my-1" /></li>
+      <li>
+        <a class="dropdown-item active" href="javascript:void(0)" data-lang="vi">
+          <div class="d-flex align-items-center gap-2">
+            <img src="/flag-vn.png" alt="Tiếng Việt" class="lang-flag" />
+            <span class="lang-name">Tiếng Việt</span>
+          </div>
+          <i class="fa-solid fa-check lang-check"></i>
+        </a>
+      </li>
+      <li>
+        <a class="dropdown-item" href="javascript:void(0)" data-lang="en">
+          <div class="d-flex align-items-center gap-2">
+            <img src="/flag-us.png" alt="English" class="lang-flag" />
+            <span class="lang-name">English</span>
+          </div>
+          <i class="fa-solid fa-check lang-check"></i>
+        </a>
+      </li>
+      <li>
+        <a class="dropdown-item" href="javascript:void(0)" data-lang="jp">
+          <div class="d-flex align-items-center gap-2">
+            <img src="/flag-jp.png" alt="日本語" class="lang-flag" />
+            <span class="lang-name">日本語</span>
+          </div>
+          <i class="fa-solid fa-check lang-check"></i>
+        </a>
+      </li>
+      <li>
+        <a class="dropdown-item" href="javascript:void(0)" data-lang="cn">
+          <div class="d-flex align-items-center gap-2">
+            <img src="/flag-cn.png" alt="中文" class="lang-flag" />
+            <span class="lang-name">中文</span>
+          </div>
+          <i class="fa-solid fa-check lang-check"></i>
+        </a>
+      </li>
+      <li>
+        <a class="dropdown-item" href="javascript:void(0)" data-lang="fr">
+          <div class="d-flex align-items-center gap-2">
+            <img src="/flag-fr.png" alt="Français" class="lang-flag" />
+            <span class="lang-name">Français</span>
+          </div>
+          <i class="fa-solid fa-check lang-check"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <button class="btn-icon-action" id="themeToggleBtn" title="Toggle Light/Dark Theme">
+    <i class="fa-regular fa-moon" id="themeToggleIcon"></i>
+  </button>
+</div>
+
+<div class="auth-wrapper">
+  <div class="auth-card">
+    <div class="auth-brand-side">
+      <div>
+        <div class="d-flex align-items-center gap-3 mb-4 animate-item delay-1">
+          <img
+            src="/logo.png"
+            alt="Nexus Logo"
+            class="brand-logo-img"
+            style="height: 48px; width: auto"
+          />
+          <div>
+            <h1 class="brand-title m-0 fs-3">Nexus</h1>
+            <div
+              class="brand-subtitle text-uppercase font-mono text-muted"
+              style="font-size: 0.72rem; letter-spacing: 0.12em"
+            >
+              Human Resource & Sales
+            </div>
+          </div>
+        </div>
+
+        <div class="brand-badge-pill animate-item delay-2">
+          <i class="fa-solid fa-cube"></i> Enterprise Portal v2.4.0
+        </div>
+
+        <h2 class="auth-title animate-item delay-2">Enterprise Resource & Workforce Platform</h2>
+
+        <div class="topic-showcase mb-0">
+          <img src="/topic.png" alt="Nexus Enterprise Overview" class="topic-img" />
+        </div>
+      </div>
+    </div>
+
+    <app-login-form></app-login-form>
+  </div>
+</div>
+
+<app-forgot-password-modal></app-forgot-password-modal>

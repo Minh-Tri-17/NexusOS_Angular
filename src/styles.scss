@@ -7228,28 +7228,31 @@ tr:hover td.col-pin,
   transform: translateY(-2px) scale(1.05) !important;
 }
 
-.demo-pill-director:hover {
+.demo-pill-director:hover,
+.demo-pill-director.active {
   border-color: #2563eb !important;
   background-color: rgba(37, 99, 235, 0.08) !important;
   color: #1d4ed8 !important;
   box-shadow: 0 4px 14px rgba(37, 99, 235, 0.2) !important;
 }
 
-.demo-pill-hr:hover {
+.demo-pill-hr:hover,
+.demo-pill-hr.active {
   border-color: #10b981 !important;
   background-color: rgba(16, 185, 129, 0.08) !important;
   color: #047857 !important;
   box-shadow: 0 4px 14px rgba(16, 185, 129, 0.2) !important;
 }
 
-.demo-pill-employee:hover {
+.demo-pill-employee:hover,
+.demo-pill-employee.active {
   border-color: #06b6d4 !important;
   background-color: rgba(6, 182, 212, 0.08) !important;
   color: #0e7490 !important;
   box-shadow: 0 4px 14px rgba(6, 182, 212, 0.2) !important;
 }
 
-.demo-pill:active {
+.demo-pill.active {
   transform: scale(0.95) !important;
 }
 

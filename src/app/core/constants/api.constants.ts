@@ -8,5 +8,10 @@ export const API_CONSTANTS = {
     getById: 'CatCountry/GetOne',
     import: 'CatCountry/Import',
     export: 'CatCountry/Export',
-  }
-}
+  },
+  account: {
+    login: 'Account/Authentication',
+    sendOTP: 'Account/SendOTP',
+    resetPass: 'Account/ResetPassword',
+  },
+};

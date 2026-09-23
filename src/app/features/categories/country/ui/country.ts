@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, effect, inject, signal, viewChild } from '@angular/core';
+import { Component, computed, effect, inject, signal, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BASE_CONSTANTS } from '../../../../core/constants/base.constant';
 import { FilterOperator, FilterType } from '../../../../core/constants/filter.enum';
@@ -52,19 +52,25 @@ export class Country {
     'badge-teal',
   ];
 
-  pageIndex = signal<number>(1);
-  pageSize = signal<number>(20);
-  fromRecord = signal<number>(1);
-  toRecord = signal<number>(20);
-  recordRange = signal<string>('');
-  totalRecord = signal<number>(0);
-  pageCount = signal<number>(0);
-  countries = signal<CountryModel[]>([]);
-  searchText = signal<string>('');
-  filterRegion = signal<string>('');
+  pageIndex = signal(1);
+  pageSize = signal(20);
+  fromRecord = signal(1);
+  toRecord = signal(20);
+  recordRange = signal('');
+  totalRecord = signal(0);
+  pageCount = signal(0);
+  countries = signal([] as CountryModel[]);
+  searchText = signal('');
+  filterRegion = signal('');
   selectedIds = signal<Set<string>>(new Set());
-  filterIsDelete = signal<boolean>(false);
-  isLoading = signal<boolean>(true);
+  filterIsDelete = signal(false);
+  isLoading = signal(true);
+
+  readonly isSelectedAll = computed(() => {
+    const list = this.countries();
+    const ids = this.selectedIds();
+    return list.length > 0 && list.every((item) => ids.has(item.id));
+  });
 
   //#endregion
 
@@ -158,28 +164,28 @@ export class Country {
     return this.selectedIds().has(id);
   }
 
-  handleToggleSelect(id: string, event: Event) {
-    const checked = (event.target as HTMLInputElement).checked;
-    const currentIds = new Set(this.selectedIds());
+  handleToggleSelect(id: string) {
+    this.selectedIds.update((prev) => {
+      const next = new Set(prev);
 
-    checked ? currentIds.add(id) : currentIds.delete(id);
+      next.has(id) ? next.delete(id) : next.add(id);
 
-    this.selectedIds.set(currentIds);
+      return next;
+    });
   }
 
-  isSelectedAll(): boolean {
-    const list = this.countries();
-    return list.length > 0 && list.every((item) => this.selectedIds().has(item.id));
-  }
+  handleToggleSelectAll() {
+    const allSelected = this.isSelectedAll();
 
-  handleToggleSelectAll(event: Event) {
-    const checked = (event.target as HTMLInputElement).checked;
-    const currentIds = new Set(this.selectedIds());
+    this.selectedIds.update((prev) => {
+      const next = new Set(prev);
+      const list = this.countries();
 
-    if (checked) this.countries().forEach((item) => currentIds.add(item.id));
-    else this.countries().forEach((item) => currentIds.delete(item.id));
+      if (allSelected) list.forEach((item) => next.delete(item.id));
+      else list.forEach((item) => next.add(item.id));
 
-    this.selectedIds.set(currentIds);
+      return next;
+    });
   }
 
   handleDeleteSelected() {

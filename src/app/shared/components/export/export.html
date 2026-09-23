@@ -35,9 +35,8 @@
                     type="radio"
                     name="exportScope"
                     id="exportScopeAll"
-                    value="all"
-                    [checked]="exportOption() === 'all'"
-                    (change)="handleExportOptionChange($event)"
+                    [checked]="exportOption() === BASE_CONSTANTS.exportOptionAll"
+                    (change)="handleExportOptionChange(BASE_CONSTANTS.exportOptionAll)"
                   />
                   <div
                     class="rounded-3 p-2 bg-soft-indigo text-indigo d-flex align-items-center justify-content-center flex-shrink-0"
@@ -67,9 +66,8 @@
                     type="radio"
                     name="exportScope"
                     id="exportScopeCurrent"
-                    value="current"
-                    [checked]="exportOption() === 'current'"
-                    (change)="handleExportOptionChange($event)"
+                    [checked]="exportOption() === BASE_CONSTANTS.exportOptionCurrent"
+                    (change)="handleExportOptionChange(BASE_CONSTANTS.exportOptionCurrent)"
                   />
                   <div
                     class="rounded-3 p-2 bg-soft-teal text-teal d-flex align-items-center justify-content-center flex-shrink-0"
@@ -100,9 +98,8 @@
                     type="radio"
                     name="exportScope"
                     id="exportScopeSelected"
-                    value="select"
-                    [checked]="exportOption() === 'select'"
-                    (change)="handleExportOptionChange($event)"
+                    [checked]="exportOption() === BASE_CONSTANTS.exportOptionSelect"
+                    (change)="handleExportOptionChange(BASE_CONSTANTS.exportOptionSelect)"
                   />
                   <div
                     class="rounded-3 p-2 bg-soft-purple text-purple d-flex align-items-center justify-content-center flex-shrink-0"

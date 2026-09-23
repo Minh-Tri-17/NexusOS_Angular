@@ -17,6 +17,7 @@ export type ExportOption =
   styleUrl: './export.scss',
 })
 export class Export {
+  readonly BASE_CONSTANTS = BASE_CONSTANTS;
   private baseService = inject(BaseService);
 
   //#region //@ PROPS
@@ -34,10 +35,10 @@ export class Export {
   //#region //@ STATE
 
   exportOption = signal<ExportOption>(BASE_CONSTANTS.exportOptionAll);
-  isExporting = signal<boolean>(false);
-  showProgress = signal<boolean>(false);
-  progressStatus = signal<string>('');
-  progressPercentage = signal<number>(0);
+  isExporting = signal(false);
+  showProgress = signal(false);
+  progressStatus = signal('');
+  progressPercentage = signal(0);
   //* computed() dùng để tính toán giá trị dựa trên state khác
   canExportSelectItems = computed(() => this.selectedIds().size > 0);
   canExportAllPage = computed(() => this.totalRecord() > 0);
@@ -121,14 +122,13 @@ export class Export {
 
   //#region //@ METHODS
 
-  handleExportOptionChange(event: Event) {
-    const target = event.target as HTMLInputElement;
-    if (target.checked) this.exportOption.set(target.value as ExportOption);
+  handleExportOptionChange(option: ExportOption) {
+    this.exportOption.set(option);
   }
 
   async handleConfirmExport() {
     const option = this.exportOption();
-    if (option === BASE_CONSTANTS.exportOptionSelect && this.selectedIds().size === 0) return;
+    if (option === BASE_CONSTANTS.exportOptionSelect && !this.canExportSelectItems()) return;
 
     this.isExporting.set(true);
     this.showProgress.set(true);
