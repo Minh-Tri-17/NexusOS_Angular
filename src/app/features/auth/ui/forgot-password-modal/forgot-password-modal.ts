@@ -11,7 +11,10 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { map, Subject, switchMap, takeWhile, timer } from 'rxjs';
 import { MailModel } from '../../../../core/models/mail.model';
+import { BaseService } from '../../../../core/services/base.service';
+import { showToast } from '../../../../shared/components/toast/toast.util';
 import { AuthFacade } from '../../data-access/auth.facade';
+import { AuthModel } from '../../data-access/auth.model';
 import { OTPModel } from '../../data-access/otp.model';
 
 @Component({
@@ -21,6 +24,7 @@ import { OTPModel } from '../../data-access/otp.model';
   styleUrl: './forgot-password-modal.scss',
 })
 export class ForgotPasswordModal {
+  private baseService = inject(BaseService);
   private facade = inject(AuthFacade);
   otpInput?: string;
 
@@ -31,15 +35,15 @@ export class ForgotPasswordModal {
   isVisibility = signal(false);
   isSendingOtp = signal(false);
   isVerifyingOtp = signal(false);
+  isResetting = signal(false);
 
   forgotEmailForm = new FormGroup({
     email: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
   });
 
-  resetForm = new FormGroup({
-    username: new FormControl(),
+  forgotNewPasswordForm = new FormGroup({
     password: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
-    phone: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
+    confirmPassword: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
     email: new FormControl(),
   });
 
@@ -211,7 +215,7 @@ export class ForgotPasswordModal {
       const res = await this.facade.validateOtp(payload);
 
       if (res?.isSuccess) {
-        this.resetForm.patchValue({
+        this.forgotNewPasswordForm.patchValue({
           email: emailValue,
         });
 
@@ -220,6 +224,34 @@ export class ForgotPasswordModal {
     } catch (error: any) {
     } finally {
       this.isVerifyingOtp.set(false);
+    }
+  }
+
+  async handleNewPassword() {
+    if (this.forgotNewPasswordForm.invalid) return;
+    this.isResetting.set(true);
+
+    const password = this.forgotNewPasswordForm.value.password;
+    const confirmPassword = this.forgotNewPasswordForm.value.confirmPassword;
+
+    if (password !== confirmPassword) {
+      showToast({
+        message: 'Passwords do not match.',
+        type: 'danger',
+      });
+    }
+
+    //* getRawValue() lấy toàn bộ giá trị của form, kể cả ô bị disabled
+    //* as ép kiểu sang model tương ứng
+    const rawValues = this.forgotNewPasswordForm.getRawValue() as AuthModel;
+
+    try {
+      const res = await this.facade.resetPass(rawValues);
+
+      if (res?.isSuccess) this.baseService.closeModal('forgotPasswordModal');
+    } catch (error) {
+    } finally {
+      this.isResetting.set(false);
     }
   }
 
