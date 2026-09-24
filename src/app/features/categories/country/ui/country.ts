@@ -132,9 +132,11 @@ export class Country {
 
   //#region //@ METHODS
 
-  loadListData() {
+  async loadListData() {
     const filter = this.buildFilter();
-    this.facade.getPaging(filter).then((res: any) => {
+    try {
+      const res = await this.facade.getPaging(filter);
+
       this.countries.set(res.result?.items || []);
       this.totalRecord.set(res.result?.totalRecord || 0);
       this.recordRange.set(res.result?.recordRange || '');
@@ -142,8 +144,10 @@ export class Country {
       this.toRecord.set(res.result?.toRecord || 0);
       this.pageCount.set(res.result?.pageCount || 0);
       this.selectedIds.set(new Set());
+    } catch (error) {
+    } finally {
       this.isLoading.set(false);
-    });
+    }
   }
 
   handleSearch(searchText: string) {
@@ -188,18 +192,18 @@ export class Country {
     });
   }
 
-  handleDeleteSelected() {
+  async handleDeleteSelected() {
     const idsArray = Array.from(this.selectedIds());
     if (idsArray.length === 0) return;
 
-    if (!this.filterIsDelete())
-      this.facade.softDelete(idsArray.join(',')).then(() => {
-        this.loadListData();
-      });
-    else
-      this.facade.hardDelete(idsArray.join(',')).then(() => {
-        this.loadListData();
-      });
+    const idString = idsArray.join(',');
+
+    try {
+      if (!this.filterIsDelete()) await this.facade.softDelete(idString);
+      else await this.facade.hardDelete(idString);
+
+      this.loadListData();
+    } catch (error) {}
   }
 
   handleOpenCreate() {
@@ -218,13 +222,9 @@ export class Country {
     return this.countries().find((item) => item.id === selectedId) || ({} as CountryModel);
   }
 
-  exportFn = (filter: PagingRequest): Promise<Blob> => {
-    return this.facade.export(filter);
-  };
+  exportFn = (filter: PagingRequest): Promise<Blob> => this.facade.export(filter);
 
-  importFn = (file: File): Promise<any> => {
-    return this.facade.import(file);
-  };
+  importFn = (file: File): Promise<any> => this.facade.import(file);
 
   //#endregion
 }

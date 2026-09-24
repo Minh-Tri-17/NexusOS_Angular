@@ -2,6 +2,7 @@ import { inject, Injectable, signal } from '@angular/core';
 import { MailModel } from '../../../core/models/mail.model';
 import { AuthApiService } from './auth-api.service';
 import { AuthModel } from './auth.model';
+import { OTPModel } from './otp.model';
 
 export type ActiveFormType = 'login' | 'otp' | 'reset';
 
@@ -27,8 +28,12 @@ export class AuthFacade {
     return this.api.sendOTP(data);
   }
 
-  reset(data: AuthModel) {
+  resetPass(data: AuthModel) {
     return this.api.resetPass(data);
+  }
+
+  validateOtp(data: OTPModel) {
+    return this.api.validateOtp(data);
   }
 
   //#endregion

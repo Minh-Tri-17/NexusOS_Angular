@@ -11,7 +11,7 @@ export const responseInterceptor: HttpInterceptorFn = (req, next) => {
 
         if (!isApiResponse(event.body)) return;
 
-        if (event.body.result !== null) return;
+        if (event.body.result !== null && typeof event.body.result !== 'boolean') return;
 
         if (event.body.isSuccess && event.body.message)
           showToast({
