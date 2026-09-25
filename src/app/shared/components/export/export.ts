@@ -18,31 +18,38 @@ export type ExportOption =
 })
 export class Export {
   readonly BASE_CONSTANTS = BASE_CONSTANTS;
-  private baseService = inject(BaseService);
+  private readonly baseService = inject(BaseService);
 
   //#region //@ PROPS
 
-  exportFn = input.required<(filter: PagingRequest) => Promise<Blob>>();
-  fileName = input<string>('export');
-  currentFilter = input<PagingRequest>();
-  totalRecord = input<number>(0);
-  fromRecord = input<number>(0);
-  toRecord = input<number>(0);
-  selectedIds = input<Set<string>>(new Set());
+  readonly exportFn = input.required<(filter: PagingRequest) => Promise<Blob>>();
+  readonly fileName = input<string>('export');
+  readonly currentFilter = input<PagingRequest>();
+  readonly totalRecord = input<number>(0);
+  readonly fromRecord = input<number>(0);
+  readonly toRecord = input<number>(0);
+  readonly selectedIds = input<Set<string>>(new Set());
 
   //#endregion
 
   //#region //@ STATE
 
-  exportOption = signal<ExportOption>(BASE_CONSTANTS.exportOptionAll);
-  isExporting = signal(false);
-  showProgress = signal(false);
-  progressStatus = signal('');
-  progressPercentage = signal(0);
+  readonly exportOption = signal<ExportOption>(BASE_CONSTANTS.exportOptionAll);
+  readonly isExporting = signal(false);
+  readonly showProgress = signal(false);
+  readonly progressStatus = signal('');
+  readonly progressPercentage = signal(0);
+
   //* computed() dùng để tính toán giá trị dựa trên state khác
-  canExportSelectItems = computed(() => this.selectedIds().size > 0);
-  canExportAllPage = computed(() => this.totalRecord() > 0);
-  totalPageRecord = computed(() => this.toRecord() - this.fromRecord() + 1);
+  readonly canExportSelectItems = computed(() => this.selectedIds().size > 0);
+  readonly canExportAllPage = computed(() => this.totalRecord() > 0);
+  readonly totalPageRecord = computed(() => {
+    const to = this.toRecord();
+    const from = this.fromRecord();
+    if (to === 0 || from === 0 || to < from) return 0;
+
+    return to - from + 1;
+  });
 
   //#endregion
 
@@ -153,7 +160,7 @@ export class Export {
         this.animateProgress(100, 'Export completed!');
         await this.delay(500);
       }
-    } catch (error) {
+    } catch {
       this.animateProgress(0, 'Export failed. Please try again.');
       await this.delay(3000);
     } finally {

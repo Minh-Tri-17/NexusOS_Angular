@@ -15,35 +15,38 @@ import { CountryModel } from '../../data-access/country.model';
   styleUrl: './country-modal.scss',
 })
 export class CountryModal {
-  private baseService = inject(BaseService);
-  private facade = inject(CountryFacade);
+  private readonly baseService = inject(BaseService);
+  private readonly facade = inject(CountryFacade);
 
   //#region //@ PROPS
 
-  saveSuccess = output<void>();
+  readonly saveSuccess = output<void>();
 
   //#endregion
 
   //#region //@ STATE
 
-  regions = Object.values(Region);
+  readonly regions = Object.values(Region);
 
-  countryForm = new FormGroup({
+  readonly countryForm = new FormGroup({
     id: new FormControl('', { nonNullable: true }),
     countryCode: new FormControl<string | null>(null),
     countryName: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
     capital: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
-    region: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
+    region: new FormControl<Region | ''>('', {
+      nonNullable: true,
+      validators: [Validators.required],
+    }),
     note: new FormControl<string | null>(null),
   });
 
   //* toSignal() chuyển đổi luồng thay đổi giá trị của form (Observable) sang Signal
-  private formValueSignal = toSignal(this.countryForm.valueChanges, {
-    initialValue: this.countryForm.value,
+  private readonly currentId = toSignal(this.countryForm.controls.id.valueChanges, {
+    initialValue: this.countryForm.controls.id.value,
   });
 
   //* computed() dùng để tính toán giá trị dựa trên state khác
-  title = computed(() => (this.formValueSignal()?.id ? 'Update' : 'Create'));
+  readonly title = computed(() => (this.currentId() ? 'Update' : 'Create'));
 
   //#endregion
 
@@ -54,15 +57,17 @@ export class CountryModal {
   }
 
   initUpdateForm(item: CountryModel) {
-    this.countryForm.patchValue(item);
+    this.countryForm.patchValue({
+      ...item,
+      region: (item.region as Region) ?? '',
+    });
   }
 
   async handleSave() {
     if (this.countryForm.invalid) return;
 
     //* getRawValue() lấy toàn bộ giá trị của form, kể cả ô bị disabled
-    //* as ép kiểu sang model tương ứng
-    const rawValues = this.countryForm.getRawValue() as CountryModel;
+    const rawValues: CountryModel = this.countryForm.getRawValue();
 
     try {
       if (rawValues.id) {
@@ -75,7 +80,7 @@ export class CountryModal {
       this.saveSuccess.emit();
       this.initCreateForm();
       this.baseService.closeModal('countryEditorModal');
-    } catch (error) {}
+    } catch {}
   }
 
   //#endregion

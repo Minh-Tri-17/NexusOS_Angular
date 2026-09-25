@@ -8,19 +8,19 @@
   </div>
 
   <nav class="sidebar-nav">
-    <a [routerLink]="['/']" routerLinkActive="active" class="nav-link" title="Dashboard">
+    <a class="nav-link" title="Dashboard" [routerLink]="['/']" routerLinkActive="active">
       <i class="fa-solid fa-house"></i>
       <span>Dashboard</span>
     </a>
-    <a [routerLink]="['/']" class="nav-link" title="Employees">
+    <a class="nav-link" title="Employees" [routerLink]="['/']">
       <i class="fa-solid fa-user-group"></i>
       <span>Employees</span>
     </a>
-    <a [routerLink]="['/']" class="nav-link" title="Recruitment">
+    <a class="nav-link" title="Recruitment" [routerLink]="['/']">
       <i class="fa-solid fa-user-plus"></i>
       <span>Recruitment</span>
     </a>
-    <a [routerLink]="['/']" class="nav-link" title="Leave Management">
+    <a class="nav-link" title="Leave Management" [routerLink]="['/']">
       <i class="fa-solid fa-calendar-minus"></i>
       <span>Leave Management</span>
     </a>
@@ -41,26 +41,26 @@
         <div class="submenu-list">
           <div class="submenu-header">Geography</div>
           <a
-            [routerLink]="['/country']"
-            routerLinkActive="active"
             class="submenu-link"
             title="Country"
+            [routerLink]="['/country']"
+            routerLinkActive="active"
           >
             <i class="fa-solid fa-globe"></i>
             <span>Country</span>
           </a>
-          <a [routerLink]="['/']" class="submenu-link" title="Province">
+          <a class="submenu-link" title="Province" [routerLink]="['/']">
             <i class="fa-solid fa-map"></i>
             <span>Province</span>
           </a>
-          <a [routerLink]="['/']" class="submenu-link" title="Ward">
+          <a class="submenu-link" title="Ward" [routerLink]="['/']">
             <i class="fa-solid fa-location-dot"></i>
             <span>Ward</span>
           </a>
         </div>
       </div>
     </div>
-    <a [routerLink]="['/']" class="nav-link">
+    <a class="nav-link" [routerLink]="['/']">
       <i class="fa-solid fa-gear"></i>
       <span>Settings</span>
     </a>

@@ -1,12 +1,4 @@
-import {
-  Component,
-  ElementRef,
-  HostListener,
-  inject,
-  QueryList,
-  signal,
-  ViewChildren,
-} from '@angular/core';
+import { Component, computed, HostListener, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { map, Subject, switchMap, takeWhile, timer } from 'rxjs';
@@ -17,6 +9,12 @@ import { AuthFacade } from '../../data-access/auth.facade';
 import { AuthModel } from '../../data-access/auth.model';
 import { OTPModel } from '../../data-access/otp.model';
 
+interface PasswordStrengthState {
+  width: string;
+  color: string;
+  label: string;
+}
+
 @Component({
   selector: 'app-forgot-password-modal',
   imports: [ReactiveFormsModule],
@@ -24,30 +22,36 @@ import { OTPModel } from '../../data-access/otp.model';
   styleUrl: './forgot-password-modal.scss',
 })
 export class ForgotPasswordModal {
-  private baseService = inject(BaseService);
-  private facade = inject(AuthFacade);
-  otpInput?: string;
+  private readonly baseService = inject(BaseService);
+  private readonly facade = inject(AuthFacade);
 
   //#region //@ STATE
 
-  private readonly startCountdown$ = new Subject<number>();
-  readonly currentForgotStep = signal(1);
-  isVisibility = signal(false);
-  isSendingOtp = signal(false);
-  isVerifyingOtp = signal(false);
-  isResetting = signal(false);
-
-  forgotEmailForm = new FormGroup({
-    email: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
+  readonly forgotEmailForm = new FormGroup({
+    email: new FormControl('', {
+      nonNullable: true,
+      validators: [Validators.required, Validators.email],
+    }),
   });
 
-  forgotNewPasswordForm = new FormGroup({
+  readonly forgotNewPasswordForm = new FormGroup({
     password: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
     confirmPassword: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
-    email: new FormControl(),
+    email: new FormControl('', {
+      nonNullable: true,
+      validators: [Validators.required, Validators.email],
+    }),
   });
 
-  otpCountDown = toSignal(
+  private readonly startCountdown$ = new Subject<number>();
+  readonly currentForgotStep = signal(1);
+
+  //* toSignal() chuyển đổi luồng thay đổi giá trị của form (Observable) sang Signal
+  private readonly passwordValue = toSignal(
+    this.forgotNewPasswordForm.controls.password.valueChanges,
+    { initialValue: '' },
+  );
+  readonly otpCountDown = toSignal(
     this.startCountdown$.pipe(
       switchMap((seconds) =>
         timer(0, 1000).pipe(
@@ -59,7 +63,45 @@ export class ForgotPasswordModal {
     { initialValue: 0 },
   );
 
-  @ViewChildren('otpInput') otpInputs!: QueryList<ElementRef<HTMLInputElement>>;
+  readonly otpDigits = signal<string[]>(['', '', '', '', '', '']);
+
+  //* computed() dùng để tính toán giá trị dựa trên state khác
+  readonly otpInput = computed(() => this.otpDigits().join(''));
+
+  readonly pwdStrength = computed<PasswordStrengthState>(() => {
+    const val = this.passwordValue();
+
+    if (!val) {
+      return {
+        width: '0%',
+        color: 'transparent',
+        label: 'Enter password strength',
+      };
+    }
+
+    let score = 0;
+    if (val.length >= 8) score++;
+    if (/[A-Z]/.test(val)) score++;
+    if (/[0-9]/.test(val)) score++;
+    if (/[^A-Za-z0-9]/.test(val)) score++;
+
+    switch (score) {
+      case 0:
+      case 1:
+        return { width: '25%', color: '#ef4444', label: 'Weak Password' };
+      case 2:
+        return { width: '50%', color: '#f59e0b', label: 'Fair Password' };
+      case 3:
+        return { width: '75%', color: '#3b82f6', label: 'Good Password' };
+      default:
+        return { width: '100%', color: '#10b981', label: 'Strong Password!' };
+    }
+  });
+
+  readonly isVisibility = signal(false);
+  readonly isSendingOtp = signal(false);
+  readonly isVerifyingOtp = signal(false);
+  readonly isResetting = signal(false);
 
   //#endregion
 
@@ -69,13 +111,13 @@ export class ForgotPasswordModal {
     this.startCountdown$.next(seconds);
   }
 
-  private syncOtpValue(): void {
-    const combined = this.otpInputs
-      .toArray()
-      .map((inp) => inp.nativeElement.value)
-      .join('');
+  private updateDigit(index: number, val: string): void {
+    this.otpDigits.update((digits) => {
+      const next = [...digits];
+      next[index] = val;
 
-    this.otpInput = combined;
+      return next;
+    });
   }
 
   //#endregion
@@ -89,17 +131,16 @@ export class ForgotPasswordModal {
   @HostListener('hidden.bs.modal')
   onModalClose(): void {
     this.currentForgotStep.set(1);
-    this.forgotEmailForm.patchValue({
-      email: '',
-    });
+    this.forgotEmailForm.reset();
+    this.forgotNewPasswordForm.reset();
+    this.otpDigits.set(['', '', '', '', '', '']);
   }
 
   async handleSendOTP() {
     if (this.forgotEmailForm.invalid) return;
-    this.isSendingOtp.set(true);
 
+    this.isSendingOtp.set(true);
     //* getRawValue() lấy toàn bộ giá trị của form, kể cả ô bị disabled
-    //* as ép kiểu sang model tương ứng
     const rawValues = this.forgotEmailForm.getRawValue();
 
     const payload: MailModel = {
@@ -113,101 +154,22 @@ export class ForgotPasswordModal {
         this.goToResetStep(2);
         this.startOtpCountDown(60);
       }
-    } catch (error: any) {
+    } catch {
     } finally {
       this.isSendingOtp.set(false);
     }
   }
 
-  handleOtpKeydown(event: KeyboardEvent, index: number): void {
-    const inputs = this.otpInputs.toArray();
-    //* nativeElement lắng nghe sự thay đổi giá trị của form.
-    const input = inputs[index].nativeElement;
-    const isHandledKey =
-      event.key === 'Backspace' ||
-      (event.key === 'ArrowLeft' && index > 0) ||
-      (event.key === 'ArrowRight' && index < inputs.length - 1);
-
-    if (!isHandledKey) return;
-
-    event.preventDefault();
-
-    if (event.key === 'Backspace') {
-      if (input.value) {
-        input.value = '';
-      } else if (index > 0) {
-        //* nativeElement lắng nghe sự thay đổi giá trị của form.
-        inputs[index - 1].nativeElement.value = '';
-        inputs[index - 1].nativeElement.focus();
-      }
-      this.syncOtpValue();
-      return;
-    }
-
-    if (event.key === 'ArrowLeft') {
-      //* nativeElement lắng nghe sự thay đổi giá trị của form.
-      inputs[index - 1].nativeElement.focus();
-      return;
-    }
-
-    if (event.key === 'ArrowRight') {
-      //* nativeElement lắng nghe sự thay đổi giá trị của form.
-      inputs[index + 1].nativeElement.focus();
-      return;
-    }
-  }
-
-  handleOtpInput(event: Event, index: number): void {
-    const inputs = this.otpInputs.toArray();
-    const input = event.target as HTMLInputElement;
-    const digit = input.value.replace(/\D/g, '').slice(-1);
-    input.value = digit;
-
-    if (digit && index < inputs.length - 1) {
-      //* nativeElement lắng nghe sự thay đổi giá trị của form.
-      inputs[index + 1].nativeElement.focus();
-      inputs[index + 1].nativeElement.select();
-    }
-
-    this.syncOtpValue();
-  }
-
-  handleOtpPaste(event: ClipboardEvent, index: number): void {
-    event.preventDefault();
-    const pasted = event.clipboardData?.getData('text') ?? '';
-    const digits = pasted.replace(/\D/g, '').slice(0, 6);
-    const inputs = this.otpInputs.toArray();
-
-    digits.split('').forEach((d, i) => {
-      const targetIndex = index + i;
-      if (targetIndex < inputs.length)
-        //* nativeElement lắng nghe sự thay đổi giá trị của form.
-        inputs[targetIndex].nativeElement.value = d;
-    });
-
-    const nextFocus = Math.min(index + digits.length, inputs.length - 1);
-    //* nativeElement lắng nghe sự thay đổi giá trị của form.
-    inputs[nextFocus].nativeElement.focus();
-    this.syncOtpValue();
-  }
-
-  handleOtpFocus(index: number): void {
-    const inputs = this.otpInputs.toArray();
-    const firstEmpty = inputs.findIndex((inp) => !inp.nativeElement.value);
-
-    if (firstEmpty !== -1 && firstEmpty < index)
-      //* nativeElement lắng nghe sự thay đổi giá trị của form.
-      inputs[firstEmpty].nativeElement.focus();
-  }
-
   async handleOtpVerify() {
-    if (this.forgotEmailForm.invalid) return;
+    const otpVal = this.otpInput();
+    if (this.forgotEmailForm.invalid || !otpVal || otpVal.length < 6) return;
+
     this.isVerifyingOtp.set(true);
 
     const emailValue = this.forgotEmailForm.controls.email.value;
 
     const payload: OTPModel = {
-      otp: this.otpInput,
+      otp: otpVal,
       email: emailValue,
     };
 
@@ -221,7 +183,7 @@ export class ForgotPasswordModal {
 
         this.goToResetStep(3);
       }
-    } catch (error: any) {
+    } catch {
     } finally {
       this.isVerifyingOtp.set(false);
     }
@@ -229,29 +191,110 @@ export class ForgotPasswordModal {
 
   async handleNewPassword() {
     if (this.forgotNewPasswordForm.invalid) return;
-    this.isResetting.set(true);
 
-    const password = this.forgotNewPasswordForm.value.password;
-    const confirmPassword = this.forgotNewPasswordForm.value.confirmPassword;
+    const { password, confirmPassword } = this.forgotNewPasswordForm.getRawValue();
 
     if (password !== confirmPassword) {
       showToast({
         message: 'Passwords do not match.',
         type: 'danger',
       });
+
+      return;
     }
 
+    this.isResetting.set(true);
     //* getRawValue() lấy toàn bộ giá trị của form, kể cả ô bị disabled
-    //* as ép kiểu sang model tương ứng
-    const rawValues = this.forgotNewPasswordForm.getRawValue() as AuthModel;
+    const rawValues: AuthModel = this.forgotNewPasswordForm.getRawValue();
 
     try {
       const res = await this.facade.resetPass(rawValues);
 
       if (res?.isSuccess) this.baseService.closeModal('forgotPasswordModal');
-    } catch (error) {
+    } catch {
     } finally {
       this.isResetting.set(false);
+    }
+  }
+
+  handleOtpKeydown(event: KeyboardEvent, index: number): void {
+    const input = event.currentTarget as HTMLInputElement;
+
+    if (event.key === 'Backspace') {
+      event.preventDefault();
+
+      if (this.otpDigits()[index]) {
+        //* Xóa ô hiện tại nếu có ký tự
+        this.updateDigit(index, '');
+      } else if (index > 0) {
+        //* Ô hiện tại rỗng -> Lùi về ô trước, xóa và focus
+        const prevInput = input.previousElementSibling as HTMLInputElement | null;
+        if (prevInput) {
+          this.updateDigit(index - 1, '');
+          prevInput.focus();
+        }
+      }
+
+      return;
+    }
+
+    if (event.key === 'ArrowLeft') {
+      event.preventDefault();
+      (input.previousElementSibling as HTMLInputElement | null)?.focus();
+      return;
+    }
+
+    if (event.key === 'ArrowRight') {
+      event.preventDefault();
+      (input.nextElementSibling as HTMLInputElement | null)?.focus();
+      return;
+    }
+  }
+
+  handleOtpInput(event: Event, index: number): void {
+    const input = event.target as HTMLInputElement;
+    const digit = input.value.replace(/\D/g, '').slice(-1);
+
+    this.updateDigit(index, digit);
+
+    if (digit) {
+      const nextInput = input.nextElementSibling as HTMLInputElement | null;
+      if (nextInput) {
+        nextInput.focus();
+        nextInput.select();
+      }
+    }
+  }
+
+  handleOtpPaste(event: ClipboardEvent, startIndex: number): void {
+    event.preventDefault();
+    const pasted = event.clipboardData?.getData('text') ?? '';
+    const digits = pasted.replace(/\D/g, '').slice(0, 6);
+    if (!digits) return;
+
+    const current = [...this.otpDigits()];
+    for (let i = 0; i < digits.length && startIndex + i < current.length; i++) {
+      current[startIndex + i] = digits[i];
+    }
+
+    this.otpDigits.set(current);
+
+    const container = (event.currentTarget as HTMLInputElement).parentElement;
+    if (container) {
+      const inputs = container.querySelectorAll<HTMLInputElement>('.otp-box');
+      const targetFocusIndex = Math.min(startIndex + digits.length, inputs.length - 1);
+      inputs[targetFocusIndex]?.focus();
+    }
+  }
+
+  handleOtpFocus(event: FocusEvent, index: number): void {
+    const firstEmptyIndex = this.otpDigits().findIndex((val) => !val);
+
+    if (firstEmptyIndex !== -1 && firstEmptyIndex < index) {
+      const container = (event.currentTarget as HTMLInputElement).parentElement;
+      const targetInput =
+        container?.querySelectorAll<HTMLInputElement>('.otp-box')[firstEmptyIndex];
+      targetInput?.focus();
     }
   }
 

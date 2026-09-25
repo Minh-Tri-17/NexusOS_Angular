@@ -28,31 +28,18 @@
   </div>
 
   <div class="auth-tabs animate-item delay-3">
-    <button
-      type="button"
-      class="tab-btn"
-      [class.active]="currentTab() == 'email'"
-      (click)="handleToggleTab('email')"
-    >
-      <i class="fa-regular fa-envelope me-1"></i> Email
-    </button>
-    <button
-      type="button"
-      class="tab-btn"
-      [class.active]="currentTab() == 'empid'"
-      (click)="handleToggleTab('empid')"
-    >
-      <i class="fa-solid fa-id-card me-1"></i> Employee ID
-    </button>
-    <button
-      type="button"
-      class="tab-btn"
-      [class.active]="currentTab() == 'sso'"
-      (click)="handleToggleTab('sso')"
-      disabled
-    >
-      <i class="fa-solid fa-key me-1"></i> SSO
-    </button>
+    @for (tab of loginTabs; track tab) {
+      <button
+        type="button"
+        class="tab-btn"
+        [class.active]="currentTab() === tab"
+        (click)="handleToggleTab(tab)"
+      >
+        {{ tab.toUpperCase() }}
+      </button>
+    }
+
+    <button type="button" class="tab-btn" disabled><i class="fa-solid fa-key me-1"></i> SSO</button>
   </div>
 
   <form [formGroup]="loginForm" ngNativeValidate (ngSubmit)="handleLogin()">
@@ -114,7 +101,7 @@
     <button
       type="submit"
       class="btn btn-pastel-purple w-100 py-2.5 rounded-3 fw-bold shadow-sm d-flex align-items-center justify-content-center gap-2"
-      id="loginSubmitBtn"
+      [disabled]="isSigning()"
     >
       @if (isSigning()) {
         <span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>

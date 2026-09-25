@@ -10,28 +10,28 @@ import { Modal } from '../modal/modal';
   styleUrl: './import.scss',
 })
 export class Import {
-  private baseService = inject(BaseService);
+  private readonly baseService = inject(BaseService);
   readonly acceptTypes = '.xlsx,.xls,.csv';
   readonly maxSizeMB = 10;
 
   //#region //@ PROPS
 
-  importFn = input.required<(file: File) => Promise<Result<boolean>>>();
-  importSuccess = output<void>();
+  readonly importFn = input.required<(file: File) => Promise<Result<boolean>>>();
+  readonly importSuccess = output<void>();
 
   //#endregion
 
   //#region //@ STATE
 
-  isDragOver = signal(false);
-  isImporting = signal(false);
-  selectedFile = signal<File | null>(null);
-  errorMessage = signal('');
-  showProgress = signal(false);
-  progressStatus = signal('');
-  progressPercentage = signal(0);
+  readonly isDragOver = signal(false);
+  readonly isImporting = signal(false);
+  readonly selectedFile = signal<File | null>(null);
+  readonly errorMessage = signal('');
+  readonly showProgress = signal(false);
+  readonly progressStatus = signal('');
+  readonly progressPercentage = signal(0);
 
-  fileInput = viewChild<ElementRef<HTMLInputElement>>('importFileInput');
+  readonly fileInput = viewChild<ElementRef<HTMLInputElement>>('importFileInput');
 
   //#endregion
 
@@ -159,7 +159,7 @@ export class Import {
         await this.delay(500);
         this.importSuccess.emit();
       }
-    } catch (error) {
+    } catch {
       this.animateProgress(0, 'Import failed. Please try again.');
       await this.delay(3000);
     } finally {

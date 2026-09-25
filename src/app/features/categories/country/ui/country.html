@@ -10,7 +10,7 @@
       @if (filterRegion()) {
         <span class="filter-chip">
           <i class="fa-solid fa-compass chip-icon"></i> Region:
-          <strong>Asia</strong>
+          <strong>{{ filterRegion() }}</strong>
           <i class="fa-solid fa-xmark chip-remove-btn" (click)="filterRegion.set('')"></i>
         </span>
       }

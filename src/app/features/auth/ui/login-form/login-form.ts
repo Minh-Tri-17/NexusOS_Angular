@@ -1,6 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../../../core/services/auth.service';
 import { AuthFacade } from '../../data-access/auth.facade';
 import { AuthModel } from '../../data-access/auth.model';
@@ -24,6 +24,7 @@ const DEMO_ACCOUNTS = {
 } as const;
 
 export type DemoRole = keyof typeof DEMO_ACCOUNTS;
+export type LoginTab = 'email' | 'empId';
 
 @Component({
   selector: 'app-login-form',
@@ -32,9 +33,10 @@ export type DemoRole = keyof typeof DEMO_ACCOUNTS;
   styleUrl: './login-form.scss',
 })
 export class LoginForm {
-  private router = inject(Router);
-  private facade = inject(AuthFacade);
-  private authService = inject(AuthService);
+  private readonly router = inject(Router);
+  private readonly route = inject(ActivatedRoute);
+  private readonly facade = inject(AuthFacade);
+  private readonly authService = inject(AuthService);
 
   readonly demoRoles = [
     {
@@ -56,19 +58,20 @@ export class LoginForm {
       pillClass: 'demo-pill-employee',
     },
   ] as const;
+  readonly loginTabs: readonly LoginTab[] = ['email', 'empId'] as const;
 
   //#region //@ STATE
 
-  loginForm = new FormGroup({
+  readonly loginForm = new FormGroup({
     username: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
     password: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
-    remember: new FormControl<boolean>(false),
+    remember: new FormControl(false),
   });
 
-  currentTab = signal('email');
-  currentFill = signal<DemoRole | null>(null);
-  isSigning = signal(false);
-  isVisibility = signal(false);
+  readonly currentTab = signal<LoginTab>('email');
+  readonly currentFill = signal<DemoRole | null>(null);
+  readonly isSigning = signal(false);
+  readonly isVisibility = signal(false);
 
   //#endregion
 
@@ -79,25 +82,30 @@ export class LoginForm {
     this.isSigning.set(true);
 
     //* getRawValue() lấy toàn bộ giá trị của form, kể cả ô bị disabled
-    //* as ép kiểu sang model tương ứng
-    const rawValues = this.loginForm.getRawValue() as AuthModel;
+    const rawValues: AuthModel = this.loginForm.getRawValue();
 
     try {
       const res = await this.facade.login(rawValues);
-      this.authService.setToken(res?.result || '');
 
-      if (this.authService.isLoggedIn()) this.router.navigate(['/']);
-    } catch (error) {
+      if (res?.result) {
+        this.authService.setToken(res?.result || '');
+        if (this.authService.isLoggedIn()) {
+          const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+          await this.router.navigateByUrl(returnUrl);
+        }
+      }
+    } catch {
     } finally {
       this.isSigning.set(false);
     }
   }
 
-  handleFillAccount(role: DemoRole) {
-    const acc = DEMO_ACCOUNTS[role];
-    if (!acc) return;
+  private updateFormAccount(): void {
+    const currentRole = this.currentFill();
+    if (!currentRole) return;
 
-    this.currentFill.set(role);
+    const acc = DEMO_ACCOUNTS[currentRole];
+    if (!acc) return;
 
     const identifier = this.currentTab() === 'email' ? acc.email : acc.username;
 
@@ -107,8 +115,14 @@ export class LoginForm {
     });
   }
 
-  handleToggleTab(tab: string) {
+  handleFillAccount(role: DemoRole): void {
+    this.currentFill.set(role);
+    this.updateFormAccount();
+  }
+
+  handleToggleTab(tab: LoginTab): void {
     this.currentTab.set(tab);
+    this.updateFormAccount();
   }
 
   handleTogglePwdVisibility() {

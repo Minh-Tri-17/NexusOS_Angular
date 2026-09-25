@@ -21,7 +21,7 @@ export class Pagination {
   //#region //@ STATE
 
   //* computed() dùng để tính toán giá trị dựa trên state khác
-  pages = computed(() => {
+  readonly pages = computed(() => {
     const list = [];
 
     for (let i = 1; i <= this.pageCount(); i++) {
@@ -30,8 +30,7 @@ export class Pagination {
 
     return list;
   });
-
-  visiblePages = computed<(number | string)[]>(() => {
+  readonly visiblePages = computed<(number | string)[]>(() => {
     const total = this.pageCount();
     const current = this.pageIndex();
     const delta = 1;

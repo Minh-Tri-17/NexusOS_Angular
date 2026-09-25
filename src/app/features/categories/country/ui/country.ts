@@ -34,7 +34,7 @@ import { CountryModal } from './editor-modal/country-modal';
   styleUrl: './country.scss',
 })
 export class Country {
-  private facade = inject(CountryFacade);
+  private readonly facade = inject(CountryFacade);
 
   //#region //@ STATE
 
@@ -52,34 +52,34 @@ export class Country {
     'badge-teal',
   ];
 
-  pageIndex = signal(1);
-  pageSize = signal(20);
-  fromRecord = signal(1);
-  toRecord = signal(20);
-  recordRange = signal('');
-  totalRecord = signal(0);
-  pageCount = signal(0);
-  countries = signal([] as CountryModel[]);
-  searchText = signal('');
-  filterRegion = signal('');
-  selectedIds = signal<Set<string>>(new Set());
-  filterIsDelete = signal(false);
-  isLoading = signal(true);
+  readonly pageIndex = signal(1);
+  readonly pageSize = signal(20);
+  readonly fromRecord = signal(1);
+  readonly toRecord = signal(20);
+  readonly recordRange = signal('');
+  readonly totalRecord = signal(0);
+  readonly pageCount = signal(0);
+  readonly countries = signal<CountryModel[]>([]);
+  readonly searchText = signal('');
+  readonly filterRegion = signal('');
+  readonly selectedIds = signal<Set<string>>(new Set());
+  readonly filterIsDelete = signal(false);
+  readonly isLoading = signal(false);
 
+  //* computed() dùng để tính toán giá trị dựa trên state khác
   readonly isSelectedAll = computed(() => {
     const list = this.countries();
     const ids = this.selectedIds();
     return list.length > 0 && list.every((item) => ids.has(item.id));
   });
 
-  //#endregion
+  readonly regions = Object.values(Region);
+  readonly modalRef = viewChild.required(CountryModal);
 
-  regions = Object.values(Region);
-  modalRef = viewChild.required(CountryModal);
+  //#endregion
 
   constructor() {
     effect(() => {
-      this.searchText();
       this.loadListData();
     });
   }
@@ -128,14 +128,21 @@ export class Country {
     return 0;
   }
 
+  private delay(ms: number): Promise<void> {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
   //#endregion
 
   //#region //@ METHODS
 
   async loadListData() {
+    this.isLoading.set(true);
     const filter = this.buildFilter();
+
     try {
-      const res = await this.facade.getPaging(filter);
+      //* Chạy song song cả API và timer tối thiểu 300ms
+      const [res] = await Promise.all([this.facade.getPaging(filter), this.delay(300)]);
 
       this.countries.set(res.result?.items || []);
       this.totalRecord.set(res.result?.totalRecord || 0);
@@ -144,7 +151,7 @@ export class Country {
       this.toRecord.set(res.result?.toRecord || 0);
       this.pageCount.set(res.result?.pageCount || 0);
       this.selectedIds.set(new Set());
-    } catch (error) {
+    } catch {
     } finally {
       this.isLoading.set(false);
     }
@@ -153,7 +160,6 @@ export class Country {
   handleSearch(searchText: string) {
     this.searchText.set(searchText);
     this.pageIndex.set(1);
-    this.loadListData();
   }
 
   handleClearFilter() {
@@ -161,7 +167,6 @@ export class Country {
     this.searchText.set('');
     this.filterRegion.set('');
     this.pageIndex.set(1);
-    this.loadListData();
   }
 
   isSelected(id: string): boolean {
@@ -202,8 +207,8 @@ export class Country {
       if (!this.filterIsDelete()) await this.facade.softDelete(idString);
       else await this.facade.hardDelete(idString);
 
-      this.loadListData();
-    } catch (error) {}
+      await this.loadListData();
+    } catch {}
   }
 
   handleOpenCreate() {
@@ -211,15 +216,17 @@ export class Country {
   }
 
   handleOpenUpdate() {
-    this.modalRef().initUpdateForm(this.getSelectedItem());
+    const item = this.getSelectedItem();
+    if (!item) return;
+
+    this.modalRef().initUpdateForm(item);
   }
 
-  getSelectedItem(): CountryModel {
+  getSelectedItem(): CountryModel | null {
     const idsArray = Array.from(this.selectedIds());
-    if (idsArray.length !== 1) return {} as CountryModel;
+    if (idsArray.length !== 1) return null;
 
-    const selectedId = idsArray[0];
-    return this.countries().find((item) => item.id === selectedId) || ({} as CountryModel);
+    return this.countries().find((item) => item.id === idsArray[0]) ?? null;
   }
 
   exportFn = (filter: PagingRequest): Promise<Blob> => this.facade.export(filter);

@@ -1,7 +1,8 @@
 import { isPlatformBrowser } from '@angular/common';
-import { Component, inject, NgZone, PLATFORM_ID, signal } from '@angular/core';
+import { Component, DestroyRef, inject, NgZone, PLATFORM_ID, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
-import { auditTime, fromEvent, Subscription } from 'rxjs';
+import { auditTime, fromEvent } from 'rxjs';
 import { AuthService } from '../../../core/services/auth.service';
 import { ThemeService } from '../../../core/services/theme.service';
 
@@ -12,22 +13,22 @@ import { ThemeService } from '../../../core/services/theme.service';
   styleUrl: './header.scss',
 })
 export class Header {
-  private router = inject(Router);
+  private readonly router = inject(Router);
   private readonly ngZone = inject(NgZone);
   private readonly platformId = inject(PLATFORM_ID);
+  private readonly destroyRef = inject(DestroyRef);
   private readonly isBrowser = isPlatformBrowser(this.platformId);
-  private scrollSub?: Subscription;
 
-  protected themeService = inject(ThemeService);
-  protected authService = inject(AuthService);
+  protected readonly themeService = inject(ThemeService);
+  protected readonly authService = inject(AuthService);
   readonly isScrolled = signal(false);
 
   ngOnInit() {
     if (!this.isBrowser) return;
 
     this.ngZone.runOutsideAngular(() => {
-      this.scrollSub = fromEvent(window, 'scroll', { passive: true })
-        .pipe(auditTime(20))
+      fromEvent(window, 'scroll', { passive: true })
+        .pipe(auditTime(20), takeUntilDestroyed(this.destroyRef))
         .subscribe(() => {
           const scrolled = window.scrollY > 10;
           if (this.isScrolled() !== scrolled) {
@@ -43,10 +44,6 @@ export class Header {
     }
   }
 
-  ngOnDestroy() {
-    this.scrollSub?.unsubscribe();
-  }
-
   //#region //@ METHODS
 
   handleToggleTheme() {
@@ -57,9 +54,13 @@ export class Header {
     this.themeService.toggleCollapsed();
   }
 
-  handleLogout() {
+  async handleLogout() {
+    const currentUrl = this.router.url;
     this.authService.logout();
-    this.router.navigate(['/login']);
+
+    await this.router.navigate(['/login'], {
+      queryParams: { returnUrl: currentUrl },
+    });
   }
 
   //#endregion

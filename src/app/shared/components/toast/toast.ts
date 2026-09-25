@@ -12,21 +12,22 @@ export type ToastType = 'primary' | 'info' | 'success' | 'warning' | 'danger';
 export class Toast {
   //#region //@ PROPS
 
-  toastId = input<string | number>();
-  title = input<string>('Notification');
-  message = input<string>('');
-  type = input<ToastType>('success');
-  customIcon = input<string | null>(null);
+  readonly toastId = input<string | number>();
+  readonly title = input<string>('Notification');
+  readonly message = input<string>('');
+  readonly type = input<ToastType>('success');
+  readonly customIcon = input<string | null>(null);
 
   //#endregion
 
   //#region //@ STATE
 
-  safeType = computed<ToastType>(() => {
+  //* computed() dùng để tính toán giá trị dựa trên state khác
+  readonly safeType = computed<ToastType>(() => {
     const validTypes: ToastType[] = ['primary', 'info', 'success', 'warning', 'danger'];
     return validTypes.includes(this.type()) ? this.type() : 'success';
   });
-  resolvedIcon = computed<string>(() => {
+  readonly resolvedIcon = computed<string>(() => {
     return this.customIcon() || this.iconMap[this.safeType()];
   });
 
