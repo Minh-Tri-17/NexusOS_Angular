@@ -33,25 +33,23 @@ export class Dialog {
   private readonly injectedOptions = inject(DIALOG_OPTIONS, { optional: true });
   private readonly activeModal = inject(NgbActiveModal, { optional: true });
 
-  //#region //@ INPUTS (for template usage)
+  //#region //@ PROPS
+
   readonly titleProp = input<string | undefined>(undefined, { alias: 'title' });
   readonly messageProp = input<string | undefined>(undefined, { alias: 'message' });
   readonly confirmTextProp = input<string | undefined>(undefined, { alias: 'confirmText' });
   readonly cancelTextProp = input<string | undefined>(undefined, { alias: 'cancelText' });
   readonly typeProp = input<DialogType | undefined>(undefined, { alias: 'type' });
   readonly iconProp = input<string | undefined>(undefined, { alias: 'icon' });
-  //#endregion
-
-  //#region //@ OUTPUTS
   readonly confirmed = output<void>();
   readonly cancelled = output<void>();
+
   //#endregion
 
-  //#region //@ INTERNAL OVERRIDES (for manual programmatic call)
+  //#region //@ STATE
+
   private readonly manualOptions = signal<DialogOptions>({});
-  //#endregion
 
-  //#region //@ COMPUTED PROPERTIES
   readonly title = computed(() => {
     return (
       this.manualOptions().title ??
@@ -158,7 +156,10 @@ export class Dialog {
         return 'btn-danger';
     }
   });
+
   //#endregion
+
+  //#region //@ METHODS
 
   setOptions(options: DialogOptions) {
     this.manualOptions.set(options);
@@ -173,4 +174,6 @@ export class Dialog {
     this.confirmed.emit();
     this.activeModal?.close(true);
   }
+
+  //#endregion
 }

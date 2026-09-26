@@ -1,8 +1,8 @@
 export interface AuthModel {
-  email?: string | null;
-  username?: string | null;
-  password?: string | null;
-  remember?: boolean | null;
+  email?: string;
+  username?: string;
+  password?: string;
+  remember?: boolean;
 }
 
 export const AuthFields: Record<keyof AuthModel, string> = {

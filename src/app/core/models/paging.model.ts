@@ -1,4 +1,4 @@
-import { FilterOperator, FilterType } from "../constants/filter.enum";
+import { FilterOperator, FilterType } from '../constants/filter.enum';
 
 export interface PagingRequest {
   idMain?: string;

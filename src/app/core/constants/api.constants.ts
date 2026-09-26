@@ -15,4 +15,4 @@ export const API_CONSTANTS = {
     resetPass: 'Account/ResetPassword',
     validateOtp: 'Account/ValidateOtp',
   },
-};
+} as const;

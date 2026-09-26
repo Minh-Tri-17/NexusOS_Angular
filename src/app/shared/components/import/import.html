@@ -1,4 +1,4 @@
-<app-modal modalId="importModal">
+<app-modal>
   <ng-container modal-eyebrow>DATA IMPORT WIZARD</ng-container>
 
   <ng-container modal-title>Import Data</ng-container>
@@ -29,7 +29,7 @@
             [class.has-file]="selectedFile() !== null"
             [class.disabled]="isImporting()"
             (click)="handleTriggerFileInput()"
-            (dragover)="handleDragOver($event)"
+            (dragover)="handleDragOver(); $event.preventDefault(); $event.stopPropagation()"
             (dragleave)="handleDragLeave()"
             (drop)="handleDrop($event)"
           >

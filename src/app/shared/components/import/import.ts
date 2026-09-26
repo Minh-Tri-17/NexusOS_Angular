@@ -1,8 +1,8 @@
 import { Component, ElementRef, inject, input, output, signal, viewChild } from '@angular/core';
 import { Result } from '../../../core/models/common.model';
 import { BaseService } from '../../../core/services/base.service';
-import { IMPORT_MODAL_CONTEXT } from '../modal/modal-context';
 import { Modal } from '../modal/modal';
+import { IMPORT_MODAL_CONTEXT } from '../modal/modal-context';
 
 @Component({
   selector: 'app-import',
@@ -12,8 +12,6 @@ import { Modal } from '../modal/modal';
 })
 export class Import {
   private readonly baseService = inject(BaseService);
-
-  //* NgbModal v21 không còn componentProps -> dữ liệu được cấp qua Injector khi open().
   private readonly ctx = inject(IMPORT_MODAL_CONTEXT, { optional: true });
 
   readonly acceptTypes = '.xlsx,.xls,.csv';
@@ -97,9 +95,7 @@ export class Import {
     this.fileInput()?.nativeElement.click();
   }
 
-  handleDragOver(event: Event) {
-    event.preventDefault();
-    event.stopPropagation();
+  handleDragOver() {
     if (!this.isImporting()) this.isDragOver.set(true);
   }
 
@@ -110,11 +106,13 @@ export class Import {
   handleDrop(event: DragEvent) {
     event.preventDefault();
     event.stopPropagation();
+
     this.isDragOver.set(false);
+
     if (this.isImporting()) return;
-    if (event.dataTransfer?.files && event.dataTransfer.files.length > 0) {
+
+    if (event.dataTransfer?.files && event.dataTransfer.files.length > 0)
       this.validateAndSetFile(event.dataTransfer.files[0]);
-    }
   }
 
   handleFileSelect(event: Event) {

@@ -27,9 +27,8 @@ export const responseInterceptor: HttpInterceptorFn = (req, next) => {
       }
     }),
     catchError((error: HttpErrorResponse) => {
-      const errorMsg = error.error?.message || 'Có lỗi kết nối máy chủ!';
       showToast({
-        message: errorMsg,
+        message: error.error?.message || 'Có lỗi kết nối máy chủ!',
         type: 'danger',
       });
 

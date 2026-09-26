@@ -69,8 +69,13 @@
     </ul>
   </div>
 
-  <button class="btn-icon-action" id="themeToggleBtn" title="Toggle Light/Dark Theme">
-    <i class="fa-regular fa-moon" id="themeToggleIcon"></i>
+  <button
+    class="btn-icon-action"
+    id="themeToggleBtn"
+    title="Toggle Light/Dark Theme"
+    (click)="handleToggleTheme()"
+  >
+    <i class="fa-regular" [class]="themeService.isDark() ? 'fa-sun' : 'fa-moon'"></i>
   </button>
 </div>
 

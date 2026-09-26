@@ -1,13 +1,17 @@
 import { DatePipe } from '@angular/common';
 import { Component, computed, effect, inject, Injector, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { BASE_CONSTANTS } from '../../../../core/constants/base.constant';
 import { FilterOperator, FilterType } from '../../../../core/constants/filter.enum';
 import { PagingRequest } from '../../../../core/models/paging.model';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { EXPORT_MODAL_CONTEXT, IMPORT_MODAL_CONTEXT } from '../../../../shared/components/modal/modal-context';
+import { DialogService } from '../../../../shared/components/dialog/dialog.service';
 import { Export } from '../../../../shared/components/export/export';
 import { Import } from '../../../../shared/components/import/import';
+import {
+  EXPORT_MODAL_CONTEXT,
+  IMPORT_MODAL_CONTEXT,
+} from '../../../../shared/components/modal/modal-context';
 import { Pagination } from '../../../../shared/components/pagination/pagination';
 import { Placeholder } from '../../../../shared/components/placeholder/placeholder';
 import { Summary } from '../../../../shared/components/summary/summary';
@@ -17,19 +21,10 @@ import { Region } from '../data-access/country.enum';
 import { CountryFacade } from '../data-access/country.facade';
 import { CountryFields, CountryModel } from '../data-access/country.model';
 import { CountryModal } from './editor-modal/country-modal';
-import { DialogService } from '../../../../shared/components/dialog/dialog.service';
 
 @Component({
   selector: 'app-country',
-  imports: [
-    Summary,
-    Toolbar,
-    Pagination,
-    Table,
-    DatePipe,
-    FormsModule,
-    Placeholder,
-  ],
+  imports: [Summary, Toolbar, Pagination, Table, DatePipe, FormsModule, Placeholder],
   templateUrl: './country.html',
   styleUrl: './country.scss',
 })
@@ -227,18 +222,26 @@ export class Country {
   }
 
   handleOpenCreate() {
-    const ref = this.modal.open(CountryModal, { size: 'lg', centered: true, windowClass: 'custom-modal' });
-    ref.componentInstance.saveSuccess.subscribe(() => this.loadListData());
-    ref.componentInstance.initCreateForm();
+    const modalRef = this.modal.open(CountryModal, {
+      size: 'lg',
+      centered: true,
+      windowClass: 'custom-modal',
+    });
+    modalRef.componentInstance.saveSuccess.subscribe(() => this.loadListData());
+    modalRef.componentInstance.initCreateForm();
   }
 
   handleOpenUpdate() {
     const item = this.getSelectedItem();
     if (!item) return;
 
-    const ref = this.modal.open(CountryModal, { size: 'lg', centered: true, windowClass: 'custom-modal' });
-    ref.componentInstance.saveSuccess.subscribe(() => this.loadListData());
-    ref.componentInstance.initUpdateForm(item);
+    const modalRef = this.modal.open(CountryModal, {
+      size: 'lg',
+      centered: true,
+      windowClass: 'custom-modal',
+    });
+    modalRef.componentInstance.saveSuccess.subscribe(() => this.loadListData());
+    modalRef.componentInstance.initUpdateForm(item);
   }
 
   getSelectedItem(): CountryModel | null {
@@ -253,7 +256,7 @@ export class Country {
   importFn = (file: File): Promise<any> => this.facade.import(file);
 
   openImportModal() {
-    const ref = this.modal.open(Import, {
+    const modalRef = this.modal.open(Import, {
       size: 'lg',
       centered: true,
       windowClass: 'custom-modal',
@@ -262,7 +265,7 @@ export class Country {
         providers: [{ provide: IMPORT_MODAL_CONTEXT, useValue: { importFn: this.importFn } }],
       }),
     });
-    ref.componentInstance.importSuccess.subscribe(() => this.loadListData());
+    modalRef.componentInstance.importSuccess.subscribe(() => this.loadListData());
   }
 
   openExportModal() {

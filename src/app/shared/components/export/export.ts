@@ -20,8 +20,6 @@ export type ExportOption =
 export class Export {
   readonly BASE_CONSTANTS = BASE_CONSTANTS;
   private readonly baseService = inject(BaseService);
-
-  //* NgbModal v21 không còn componentProps -> dữ liệu được cấp qua Injector khi open().
   private readonly ctx = inject(EXPORT_MODAL_CONTEXT, { optional: true });
 
   //#region //@ PROPS

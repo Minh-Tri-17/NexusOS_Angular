@@ -30,14 +30,20 @@ export class CountryModal {
 
   readonly countryForm = new FormGroup({
     id: new FormControl('', { nonNullable: true }),
-    countryCode: new FormControl<string | null>(null),
-    countryName: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
-    capital: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
+    countryCode: new FormControl('', { nonNullable: true }),
+    countryName: new FormControl('', {
+      nonNullable: true,
+      validators: [Validators.required],
+    }),
+    capital: new FormControl('', {
+      nonNullable: true,
+      validators: [Validators.required],
+    }),
     region: new FormControl<Region | ''>('', {
       nonNullable: true,
       validators: [Validators.required],
     }),
-    note: new FormControl<string | null>(null),
+    note: new FormControl('', { nonNullable: true }),
   });
 
   //* toSignal() chuyển đổi luồng thay đổi giá trị của form (Observable) sang Signal

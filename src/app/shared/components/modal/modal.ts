@@ -10,7 +10,6 @@ import { BaseService } from '../../../core/services/base.service';
 })
 export class Modal {
   private readonly baseService = inject(BaseService);
-  readonly modalId = input<string>();
 
   handleClose() {
     this.baseService.closeModal();

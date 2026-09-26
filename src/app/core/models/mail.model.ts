@@ -1,5 +1,5 @@
 export interface MailModel {
-  to?: string | null;
+  to?: string;
 }
 
 export const MailFields: Record<keyof MailModel, string> = {

@@ -1,5 +1,5 @@
-import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { inject, Injectable } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { env } from '../../../environments/environment';
 
@@ -23,12 +23,15 @@ export class BaseApiService {
       if (key === '__proto__' || key === 'constructor' || key === 'prototype') return;
 
       if (value !== undefined && value !== null) {
-        if (Array.isArray(value))
+        if (Array.isArray(value)) {
           value.forEach((val) => {
             if (val !== undefined && val !== null) httpParams = httpParams.append(key, String(val));
           });
-        else if (value instanceof Date) httpParams = httpParams.set(key, value.toISOString());
-        else httpParams = httpParams.set(key, String(value));
+        } else if (value instanceof Date) {
+          httpParams = httpParams.set(key, value.toISOString());
+        } else {
+          httpParams = httpParams.set(key, String(value));
+        }
       }
     });
 
@@ -45,28 +48,19 @@ export class BaseApiService {
   }
 
   protected postHttp<T>(url: string, body: any): Promise<T> {
-    const headers = new HttpHeaders({
-      'Accept-Language': 'en',
-    });
-
+    const headers = new HttpHeaders({ 'Accept-Language': 'en' });
     return firstValueFrom(this.http.post<T>(`${this.baseUrl}${url}`, body, { headers: headers }));
   }
 
   protected postBlobHttp(url: string, body: any): Promise<Blob> {
-    const headers = new HttpHeaders({
-      'Accept-Language': 'en',
-    });
-
+    const headers = new HttpHeaders({ 'Accept-Language': 'en' });
     return firstValueFrom(
       this.http.post(`${this.baseUrl}${url}`, body, { headers: headers, responseType: 'blob' }),
     );
   }
 
   protected patchHttp<T>(url: string, body: any): Promise<T> {
-    const headers = new HttpHeaders({
-      'Accept-Language': 'en',
-    });
-
+    const headers = new HttpHeaders({ 'Accept-Language': 'en' });
     return firstValueFrom(this.http.patch<T>(`${this.baseUrl}${url}`, body, { headers: headers }));
   }
 

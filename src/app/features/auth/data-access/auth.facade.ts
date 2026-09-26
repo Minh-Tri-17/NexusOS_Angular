@@ -1,22 +1,14 @@
-import { inject, Injectable, signal } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { MailModel } from '../../../core/models/mail.model';
 import { AuthApiService } from './auth-api.service';
 import { AuthModel } from './auth.model';
 import { OTPModel } from './otp.model';
-
-export type ActiveFormType = 'login' | 'otp' | 'reset';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthFacade {
   private readonly api = inject(AuthApiService);
-
-  //#region //@ STATE
-
-  readonly activeForm = signal<ActiveFormType>('login');
-
-  //#endregion
 
   //#region //@ METHODS
 

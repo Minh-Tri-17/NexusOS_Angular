@@ -40,9 +40,9 @@ export class Header {
         });
     });
 
-    if (window.scrollY > 10) {
+    if (window.scrollY > 10) 
       this.isScrolled.set(true);
-    }
+    
   }
 
   //#region //@ METHODS
@@ -56,12 +56,9 @@ export class Header {
   }
 
   async handleLogout() {
-    const currentUrl = this.router.url;
     this.authService.logout();
 
-    await this.router.navigate(['/login'], {
-      queryParams: { returnUrl: currentUrl },
-    });
+    await this.router.navigate(['/login'], { queryParams: { returnUrl: this.router.url } });
   }
 
   //#endregion

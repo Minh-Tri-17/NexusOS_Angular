@@ -36,8 +36,14 @@ export class ForgotPasswordModal {
   });
 
   readonly forgotNewPasswordForm = new FormGroup({
-    password: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
-    confirmPassword: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
+    password: new FormControl('', {
+      nonNullable: true,
+      validators: [Validators.required],
+    }),
+    confirmPassword: new FormControl('', {
+      nonNullable: true,
+      validators: [Validators.required],
+    }),
     email: new FormControl('', {
       nonNullable: true,
       validators: [Validators.required, Validators.email],
@@ -72,28 +78,25 @@ export class ForgotPasswordModal {
   readonly pwdStrength = computed<PasswordStrengthState>(() => {
     const val = this.passwordValue();
 
-    if (!val) {
-      return {
-        width: '0%',
-        color: 'transparent',
-        label: 'Enter password strength',
-      };
-    }
+    if (!val) return { width: '0%', color: 'transparent', label: 'Enter password strength' };
 
     let score = 0;
     if (val.length >= 8) score++;
     if (/[A-Z]/.test(val)) score++;
+    if (/[a-z]/.test(val)) score++;
     if (/[0-9]/.test(val)) score++;
     if (/[^A-Za-z0-9]/.test(val)) score++;
 
     switch (score) {
-      case 0:
       case 1:
-        return { width: '25%', color: '#ef4444', label: 'Weak Password' };
+        return { width: '20%', color: '#ef4444', label: 'Very Weak' };
       case 2:
-        return { width: '50%', color: '#f59e0b', label: 'Fair Password' };
+        return { width: '40%', color: '#f97316', label: 'Weak' };
       case 3:
-        return { width: '75%', color: '#3b82f6', label: 'Good Password' };
+        return { width: '60%', color: '#f59e0b', label: 'Fair' };
+      case 4:
+        return { width: '80%', color: '#3b82f6', label: 'Good' };
+      case 5:
       default:
         return { width: '100%', color: '#10b981', label: 'Strong Password!' };
     }
@@ -130,7 +133,7 @@ export class ForgotPasswordModal {
   }
 
   @HostListener('hidden.bs.modal')
-  onModalClose(): void {
+  onModalClose() {
     this.currentForgotStep.set(1);
     this.forgotEmailForm.reset();
     this.forgotNewPasswordForm.reset();

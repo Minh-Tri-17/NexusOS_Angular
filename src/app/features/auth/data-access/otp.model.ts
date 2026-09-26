@@ -1,6 +1,6 @@
 export interface OTPModel {
-  email?: string | null;
-  otp?: string | null;
+  email?: string;
+  otp?: string;
 }
 
 export const OTPFields: Record<keyof OTPModel, string> = {

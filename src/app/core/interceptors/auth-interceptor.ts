@@ -12,22 +12,14 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
 
   let authReq = req;
 
-  if (token) {
-    authReq = req.clone({
-      setHeaders: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-  }
+  if (token) authReq = req.clone({ setHeaders: { Authorization: `Bearer ${token}` } });
 
   return next(authReq).pipe(
     catchError((err: HttpErrorResponse) => {
       if (err.status === 401) {
         authService.logout();
 
-        router.navigate(['/login'], {
-          queryParams: { returnUrl: router.url },
-        });
+        router.navigate(['/login'], { queryParams: { returnUrl: router.url } });
       }
 
       return throwError(() => err);

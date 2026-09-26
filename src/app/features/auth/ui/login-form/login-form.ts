@@ -1,7 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AuthService } from '../../../../core/services/auth.service';
 import { AuthFacade } from '../../data-access/auth.facade';
 import { AuthModel } from '../../data-access/auth.model';
@@ -68,7 +68,7 @@ export class LoginForm {
   readonly loginForm = new FormGroup({
     username: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
     password: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
-    remember: new FormControl(false),
+    remember: new FormControl(false, { nonNullable: true }),
   });
 
   readonly currentTab = signal<LoginTab>('email');
@@ -133,10 +133,7 @@ export class LoginForm {
   }
 
   openForgotPasswordModal() {
-    this.modal.open(ForgotPasswordModal, {
-      centered: true,
-      windowClass: 'auth-modal',
-    });
+    this.modal.open(ForgotPasswordModal, { centered: true, windowClass: 'auth-modal' });
   }
 
   //#endregion

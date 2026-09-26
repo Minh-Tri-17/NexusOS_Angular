@@ -29,13 +29,13 @@ export class ThemeService {
       const savedTheme = localStorage.getItem(BASE_CONSTANTS.themeStorageKey) as Theme;
       return savedTheme || BASE_CONSTANTS.lightTheme;
     }
+
     return BASE_CONSTANTS.lightTheme;
   }
 
   private getInitialCollapsed(): boolean {
-    if (this.isBrowser) {
-      return localStorage.getItem(BASE_CONSTANTS.collapsedStorageKey) === 'true';
-    }
+    if (this.isBrowser) return localStorage.getItem(BASE_CONSTANTS.collapsedStorageKey) === 'true';
+
     return false;
   }
 

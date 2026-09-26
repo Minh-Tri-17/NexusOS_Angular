@@ -1,6 +1,6 @@
 import { inject, Injectable, Injector } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Dialog, DialogOptions, DIALOG_OPTIONS } from './dialog';
+import { Dialog, DIALOG_OPTIONS, DialogOptions } from './dialog';
 
 @Injectable({
   providedIn: 'root',
@@ -9,9 +9,6 @@ export class DialogService {
   private readonly modal = inject(NgbModal);
   private readonly injector = inject(Injector);
 
-  /**
-   * Mở confirm dialog dạng Promise trả về boolean (true nếu xác nhận, false nếu hủy hoặc đóng modal).
-   */
   confirm(options?: DialogOptions): Promise<boolean> {
     const modalRef = this.modal.open(Dialog, {
       centered: true,
@@ -30,7 +27,7 @@ export class DialogService {
 
     return modalRef.result.then(
       (result) => result === true,
-      () => false
+      () => false,
     );
   }
 }
