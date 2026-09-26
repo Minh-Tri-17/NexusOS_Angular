@@ -1,7 +1,7 @@
 <div class="app-table-footer" role="region" aria-label="Table pagination footer">
   <div class="app-footer-left">
     <div class="app-footer-counter">
-      <span id="countryResultCount"
+      <span
         >Showing <strong>{{ recordRange() }}</strong> of
         <strong>{{ totalRecord() }}</strong> items</span
       >
@@ -10,7 +10,6 @@
     <div class="app-page-size-picker">
       <span>Rows per page:</span>
       <select
-        id="countryPageSizeSelect"
         class="app-size-select"
         aria-label="Rows per page"
         [value]="pageSize()"
@@ -29,14 +28,12 @@
     <span class="app-jump-label">Go to page:</span>
     <form
       #jumpForm="ngForm"
-      id="countryPageJumpForm"
       class="app-jump-form"
       (ngSubmit)="handlePageIndexChange(jumpInput.value)"
     >
       <input
         #jumpInput
         type="number"
-        id="countryJumpInput"
         class="app-jump-input"
         aria-label="Target page number"
         required
@@ -45,7 +42,7 @@
         [value]="pageIndex()"
       />
       <span class="app-jump-total"
-        >/ <span id="countryTotalPages">{{ pageCount() }}</span></span
+        >/ <span>{{ pageCount() }}</span></span
       >
       <button type="submit" class="app-jump-btn" title="Jump to page">
         <i class="fa-solid fa-arrow-right"></i>
@@ -74,7 +71,7 @@
       <i class="fa-solid fa-chevron-left"></i>
     </button>
 
-    <div class="d-flex align-items-center gap-1" id="countryPageNumbersGroup">
+    <div class="d-flex align-items-center gap-1">
       @for (page of visiblePages(); track $index) {
         @if (page === '...') {
           <span class="px-2 text-muted user-select-none">...</span>

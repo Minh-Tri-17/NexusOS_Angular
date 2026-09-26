@@ -7481,6 +7481,100 @@ tr:hover td.col-pin,
   display: block;
 }
 
+.pwd-requirements-box {
+  background: rgba(15, 23, 42, 0.02);
+  border: 1px solid var(--border-color, #e2e8f0);
+  border-radius: 0.75rem;
+  padding: 0.75rem 0.85rem;
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+  transition: all 0.25s ease;
+}
+
+.pwd-requirements-title {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted, #64748b);
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pwd-req-count {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--text-muted, #94a3b8);
+  font-feature-settings: 'tnum';
+}
+
+.pwd-requirements-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.4rem 0.6rem;
+}
+
+@media (max-width: 480px) {
+  .pwd-requirements-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.pwd-requirement-item {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.73rem;
+  color: var(--text-muted, #94a3b8);
+  transition:
+    color 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.2s ease;
+}
+
+.pwd-requirement-item .req-icon {
+  width: 14px;
+  height: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.68rem;
+  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  color: var(--text-light, #cbd5e1);
+}
+
+.pwd-requirement-item.valid {
+  color: #10b981 !important;
+  font-weight: 600;
+}
+
+.pwd-requirement-item.valid .req-icon {
+  color: #10b981 !important;
+  transform: scale(1.15);
+}
+
+.pwd-requirement-item.span-full {
+  grid-column: 1 / -1;
+}
+
+[data-theme='dark'] .pwd-requirements-box {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme='dark'] .pwd-requirement-item .req-icon {
+  color: #64748b;
+}
+
+[data-theme='dark'] .pwd-requirement-item.valid {
+  color: #34d399 !important;
+}
+
+[data-theme='dark'] .pwd-requirement-item.valid .req-icon {
+  color: #34d399 !important;
+}
+
 /* Password Reset Modal Wizard Progress Header */
 .wizard-progress {
   display: flex;
@@ -8348,4 +8442,3 @@ tr:hover td.col-pin,
 .custom-modal .modal-dialog.modal-confirm-dialog {
   max-width: 400px;
 }
-

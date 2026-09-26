@@ -7,8 +7,14 @@
 
   <div class="toast-content">
     <h6 class="toast-title">{{ title() }}</h6>
-    @if (message()) {
-      <p class="toast-message">{{ message() }}</p>
+    @if (messages().length === 1) {
+      <p class="toast-message">{{ messages()[0] }}</p>
+    } @else if (messages().length > 1) {
+      <ul class="mb-0 ps-3 text-secondary small">
+        @for (item of messages(); track $index) {
+          <li>{{ item }}</li>
+        }
+      </ul>
     }
   </div>
 

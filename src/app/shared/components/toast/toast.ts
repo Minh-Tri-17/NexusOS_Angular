@@ -14,7 +14,7 @@ export class Toast {
 
   readonly toastId = input<string | number>();
   readonly title = input<string>('Notification');
-  readonly message = input<string>('');
+  readonly messages = input<string[]>([]);
   readonly type = input<ToastType>('success');
   readonly customIcon = input<string | null>(null);
 

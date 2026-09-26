@@ -19,13 +19,20 @@ export function showToast({
   const toastId =
     typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : Date.now();
 
+  const messages: string[] = Array.isArray(message)
+    ? message
+    : message
+        .split(',')
+        .map((item) => item.trim())
+        .filter(Boolean);
+
   return toast.custom(Toast, {
     id: toastId,
     duration,
     componentProps: {
       toastId,
       title,
-      message,
+      messages,
       type,
       customIcon: icon,
     },

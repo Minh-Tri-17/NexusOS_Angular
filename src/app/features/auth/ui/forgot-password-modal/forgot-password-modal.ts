@@ -80,27 +80,38 @@ export class ForgotPasswordModal {
 
     if (!val) return { width: '0%', color: 'transparent', label: 'Enter password strength' };
 
-    let score = 0;
-    if (val.length >= 8) score++;
-    if (/[A-Z]/.test(val)) score++;
-    if (/[a-z]/.test(val)) score++;
-    if (/[0-9]/.test(val)) score++;
-    if (/[^A-Za-z0-9]/.test(val)) score++;
-
-    switch (score) {
+    switch (this.score()) {
       case 1:
-        return { width: '20%', color: '#ef4444', label: 'Very Weak' };
+        return { width: '16%', color: '#ef4444', label: 'Very Weak' };
       case 2:
-        return { width: '40%', color: '#f97316', label: 'Weak' };
+        return { width: '33%', color: '#f97316', label: 'Weak' };
       case 3:
-        return { width: '60%', color: '#f59e0b', label: 'Fair' };
+        return { width: '50%', color: '#f59e0b', label: 'Fair' };
       case 4:
-        return { width: '80%', color: '#3b82f6', label: 'Good' };
+        return { width: '67%', color: '#eab308', label: 'Moderate' };
       case 5:
+        return { width: '83%', color: '#3b82f6', label: 'Good' };
+      case 6:
       default:
         return { width: '100%', color: '#10b981', label: 'Strong Password!' };
     }
   });
+
+  readonly hasLength = computed(() => (this.passwordValue()?.length ?? 0) >= 8);
+  readonly hasUpper = computed(() => /[A-Z]/.test(this.passwordValue() ?? ''));
+  readonly hasLower = computed(() => /[a-z]/.test(this.passwordValue() ?? ''));
+  readonly hasNumber = computed(() => /[0-9]/.test(this.passwordValue() ?? ''));
+  readonly hasSpecial = computed(() => /[^A-Za-z0-9]/.test(this.passwordValue() ?? ''));
+  readonly hasUnique = computed(() => new Set(this.passwordValue() ?? '').size >= 5);
+  readonly score = computed(
+    () =>
+      Number(this.hasLength()) +
+      Number(this.hasUpper()) +
+      Number(this.hasLower()) +
+      Number(this.hasNumber()) +
+      Number(this.hasSpecial()) +
+      Number(this.hasUnique()),
+  );
 
   readonly isVisibility = signal(false);
   readonly isSendingOtp = signal(false);
