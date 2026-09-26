@@ -79,7 +79,7 @@ export class CountryModal {
 
       this.saveSuccess.emit();
       this.initCreateForm();
-      this.baseService.closeModal('countryEditorModal');
+      this.baseService.closeModal();
     } catch {}
   }
 

@@ -1,9 +1,11 @@
 import { DatePipe } from '@angular/common';
-import { Component, computed, effect, inject, signal, viewChild } from '@angular/core';
+import { Component, computed, effect, inject, Injector, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BASE_CONSTANTS } from '../../../../core/constants/base.constant';
 import { FilterOperator, FilterType } from '../../../../core/constants/filter.enum';
 import { PagingRequest } from '../../../../core/models/paging.model';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { EXPORT_MODAL_CONTEXT, IMPORT_MODAL_CONTEXT } from '../../../../shared/components/modal/modal-context';
 import { Export } from '../../../../shared/components/export/export';
 import { Import } from '../../../../shared/components/import/import';
 import { Pagination } from '../../../../shared/components/pagination/pagination';
@@ -23,9 +25,6 @@ import { CountryModal } from './editor-modal/country-modal';
     Toolbar,
     Pagination,
     Table,
-    Import,
-    Export,
-    CountryModal,
     DatePipe,
     FormsModule,
     Placeholder,
@@ -35,6 +34,8 @@ import { CountryModal } from './editor-modal/country-modal';
 })
 export class Country {
   private readonly facade = inject(CountryFacade);
+  private readonly modal = inject(NgbModal);
+  private readonly injector = inject(Injector);
 
   //#region //@ STATE
 
@@ -74,7 +75,6 @@ export class Country {
   });
 
   readonly regions = Object.values(Region);
-  readonly modalRef = viewChild.required(CountryModal);
 
   //#endregion
 
@@ -212,14 +212,18 @@ export class Country {
   }
 
   handleOpenCreate() {
-    this.modalRef().initCreateForm();
+    const ref = this.modal.open(CountryModal, { size: 'lg', centered: true, windowClass: 'custom-modal' });
+    ref.componentInstance.saveSuccess.subscribe(() => this.loadListData());
+    ref.componentInstance.initCreateForm();
   }
 
   handleOpenUpdate() {
     const item = this.getSelectedItem();
     if (!item) return;
 
-    this.modalRef().initUpdateForm(item);
+    const ref = this.modal.open(CountryModal, { size: 'lg', centered: true, windowClass: 'custom-modal' });
+    ref.componentInstance.saveSuccess.subscribe(() => this.loadListData());
+    ref.componentInstance.initUpdateForm(item);
   }
 
   getSelectedItem(): CountryModel | null {
@@ -232,6 +236,44 @@ export class Country {
   exportFn = (filter: PagingRequest): Promise<Blob> => this.facade.export(filter);
 
   importFn = (file: File): Promise<any> => this.facade.import(file);
+
+  openImportModal() {
+    const ref = this.modal.open(Import, {
+      size: 'lg',
+      centered: true,
+      windowClass: 'custom-modal',
+      injector: Injector.create({
+        parent: this.injector,
+        providers: [{ provide: IMPORT_MODAL_CONTEXT, useValue: { importFn: this.importFn } }],
+      }),
+    });
+    ref.componentInstance.importSuccess.subscribe(() => this.loadListData());
+  }
+
+  openExportModal() {
+    this.modal.open(Export, {
+      size: 'lg',
+      centered: true,
+      windowClass: 'custom-modal',
+      injector: Injector.create({
+        parent: this.injector,
+        providers: [
+          {
+            provide: EXPORT_MODAL_CONTEXT,
+            useValue: {
+              exportFn: this.exportFn,
+              currentFilter: this.buildFilter(),
+              totalRecord: this.totalRecord(),
+              fromRecord: this.fromRecord(),
+              toRecord: this.toRecord(),
+              selectedIds: this.selectedIds(),
+              fileName: 'countries',
+            },
+          },
+        ],
+      }),
+    });
+  }
 
   //#endregion
 }

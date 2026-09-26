@@ -1,8 +1,9 @@
-import { Component, model, output } from '@angular/core';
+import { Component, model, output, signal } from '@angular/core';
+import { NgbCollapse } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-toolbar',
-  imports: [],
+  imports: [NgbCollapse],
   templateUrl: './toolbar.html',
   styleUrl: './toolbar.scss',
 })
@@ -12,6 +13,12 @@ export class Toolbar {
   searchText = model<string>('');
   filterIsDelete = model<boolean>(false);
   clearFilters = output<void>();
+
+  //#endregion
+
+  //#region //@ STATE
+
+  readonly filterCollapsed = signal(true);
 
   //#endregion
 

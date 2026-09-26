@@ -1,41 +1,53 @@
-<div class="modal fade custom-modal" [id]="modalId()" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-lg">
-    <div class="modal-content border-0 shadow-2xl rounded-5 overflow-hidden">
-      <div class="modal-bg-glow"></div>
-      <div class="modal-top-accent-bar"></div>
+<div class="modal-bg-glow"></div>
+<div class="modal-top-accent-bar"></div>
 
-      <div
-        class="modal-header border-0 px-4 pt-4 pb-3 position-relative d-flex align-items-start justify-content-between z-1"
-      >
-        <div class="d-flex align-items-center gap-3">
-          <div class="modal-icon-badge">
-            <i class="fa-solid fa-earth-americas"></i>
-          </div>
-          <div>
-            <div class="modal-eyebrow-tag mb-1">
-              <span class="eyebrow-dot"></span>
-              <ng-content select="[modal-eyebrow]"></ng-content>
-            </div>
-            <h5 class="modal-title fw-bold text-dark mb-0 d-flex align-items-center gap-2">
-              <i class="fa-solid fa-earth-americas text-primary"></i>
-              <span><ng-content select="[modal-title]"></ng-content></span>
-            </h5>
-          </div>
-        </div>
-        <div class="d-flex align-items-center gap-2">
-          <ng-content select="[modal-header-extra]"></ng-content>
-          <button
-            type="button"
-            class="custom-btn-close ms-1"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          >
-            <i class="fa-solid fa-xmark"></i>
-          </button>
-        </div>
-      </div>
-
-      <ng-content select="[modal-form]"></ng-content>
+<div
+  class="modal-header border-0 px-4 pt-4 pb-3 position-relative d-flex align-items-start justify-content-between z-1"
+>
+  <div class="d-flex align-items-center gap-3">
+    <div class="modal-icon-badge">
+      <i class="fa-solid fa-earth-americas"></i>
     </div>
+    <div>
+      <div class="modal-eyebrow-tag mb-1">
+        <span class="eyebrow-dot"></span>
+        <ng-content select="[modal-eyebrow]"></ng-content>
+      </div>
+      <h5 class="modal-title fw-bold text-dark mb-0 d-flex align-items-center gap-2">
+        <i class="fa-solid fa-earth-americas text-primary"></i>
+        <span><ng-content select="[modal-title]"></ng-content></span>
+      </h5>
+    </div>
+  </div>
+  <div class="d-flex align-items-center gap-2">
+    <ng-content select="[modal-header-extra]"></ng-content>
+    <button type="button" class="custom-btn-close ms-1" (click)="handleClose()" aria-label="Close">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+  </div>
+</div>
+
+<ng-content select="[modal-form]"></ng-content>
+
+<div
+  class="modal-footer px-4 py-3 border-top-0 d-flex align-items-center justify-content-between modal-footer-custom z-1"
+>
+  <div class="d-none d-md-flex align-items-center gap-2 text-muted small">
+    <i class="fa-solid fa-shield-halved text-primary opacity-75"></i>
+    <span>Enterprise encrypted</span>
+    <span class="modal-footer-divider"></span>
+    <span class="d-inline-flex align-items-center gap-1"
+      ><kbd class="kbd-badge">ESC</kbd> Close</span
+    >
+  </div>
+  <div class="d-flex align-items-center gap-2 ms-auto">
+    <button
+      type="button"
+      class="btn btn-sm btn-pastel-slate px-3 py-2 rounded-3"
+      (click)="handleClose()"
+    >
+      <i class="fa-solid fa-xmark me-1"></i> Close
+    </button>
+    <ng-content select="[modal-actions]"></ng-content>
   </div>
 </div>

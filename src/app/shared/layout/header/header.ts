@@ -5,10 +5,11 @@ import { Router } from '@angular/router';
 import { auditTime, fromEvent } from 'rxjs';
 import { AuthService } from '../../../core/services/auth.service';
 import { ThemeService } from '../../../core/services/theme.service';
+import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-header',
-  imports: [],
+  imports: [NgbDropdownModule],
   templateUrl: './header.html',
   styleUrl: './header.scss',
 })

@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { ForgotPasswordModal } from './ui/forgot-password-modal/forgot-password-modal';
+import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { LoginForm } from './ui/login-form/login-form';
 
 @Component({
   selector: 'app-auth',
-  imports: [ForgotPasswordModal, LoginForm],
+  imports: [LoginForm, NgbDropdownModule],
   templateUrl: './auth.html',
   styleUrl: './auth.scss',
 })

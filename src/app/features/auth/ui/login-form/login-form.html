@@ -85,14 +85,13 @@
 
     <div class="d-flex align-items-center justify-content-between mb-4 small">
       <label class="d-flex align-items-center gap-2 cursor-pointer text-muted font-weight-medium">
-        <input type="checkbox" id="rememberMe" checked class="form-check-input mt-0" />
+        <input type="checkbox" class="form-check-input mt-0" formControlName="remember" />
         <span>Keep me signed in</span>
       </label>
       <a
         href="#"
         class="text-primary fw-bold text-decoration-none"
-        data-bs-toggle="modal"
-        data-bs-target="#forgotPasswordModal"
+        (click)="openForgotPasswordModal(); $event.preventDefault()"
       >
         Forgot password?
       </a>

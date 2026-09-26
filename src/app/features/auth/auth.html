@@ -3,18 +3,18 @@
 <div class="auth-glow-orb auth-glow-orb-2"></div>
 
 <div class="auth-topbar topbar-action-group">
-  <div class="dropdown d-inline-block">
+  <div class="dropdown d-inline-block" ngbDropdown>
     <button
       class="btn-icon-action"
       id="langTranslateBtn"
       type="button"
-      data-bs-toggle="dropdown"
+      ngbDropdownToggle
       aria-expanded="false"
       title="Language / Ngôn ngữ"
     >
       <i class="fa-solid fa-language"></i>
     </button>
-    <ul class="dropdown-menu dropdown-menu-end lang-dropdown-menu">
+    <ul class="dropdown-menu dropdown-menu-end lang-dropdown-menu" ngbDropdownMenu>
       <li>
         <div class="dropdown-header">
           <i class="fa-solid fa-globe me-1"></i> Ngôn ngữ / Language
@@ -111,5 +111,3 @@
     <app-login-form></app-login-form>
   </div>
 </div>
-
-<app-forgot-password-modal></app-forgot-password-modal>

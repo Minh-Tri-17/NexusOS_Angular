@@ -1,14 +1,13 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Injectable({
   providedIn: 'root',
 })
 export class BaseService {
-  closeModal(modalId: string) {
-    const modalEl = document.getElementById(modalId);
-    if (modalEl) {
-      const bootstrapModal = (window as any).bootstrap?.Modal?.getInstance(modalEl);
-      bootstrapModal?.hide();
-    }
+  private readonly modal = inject(NgbModal);
+
+  closeModal() {
+    this.modal.dismissAll();
   }
 }

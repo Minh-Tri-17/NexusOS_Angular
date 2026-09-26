@@ -21,8 +21,6 @@
         <button
           type="button"
           class="btn btn-sm btn-pastel-green d-inline-flex align-items-center gap-2 px-3 py-2 rounded-3 shadow-xs"
-          data-bs-toggle="modal"
-          data-bs-target="#countryEditorModal"
           (click)="handleOpenCreate()"
         >
           <i class="fa-solid fa-plus"></i> Create
@@ -30,8 +28,6 @@
         <button
           type="button"
           class="btn btn-sm btn-pastel-orange d-inline-flex align-items-center gap-2 px-3 py-2 rounded-3 shadow-xs"
-          data-bs-toggle="modal"
-          data-bs-target="#countryEditorModal"
           [disabled]="selectedIds().size !== 1"
           (click)="handleOpenUpdate()"
         >
@@ -53,16 +49,14 @@
         <button
           type="button"
           class="btn btn-sm btn-pastel-indigo d-inline-flex align-items-center gap-2 px-3 py-2 rounded-3 shadow-xs"
-          data-bs-toggle="modal"
-          data-bs-target="#importModal"
+          (click)="openImportModal()"
         >
           <i class="fa-solid fa-file-import"></i> Import
         </button>
         <button
           type="button"
           class="btn btn-sm btn-pastel-indigo d-inline-flex align-items-center gap-2 px-3 py-2 rounded-3 shadow-xs"
-          data-bs-toggle="modal"
-          data-bs-target="#exportModal"
+          (click)="openExportModal()"
         >
           <i class="fa-solid fa-file-export"></i> Export
         </button>
@@ -191,16 +185,3 @@
     [pageCount]="pageCount()"
   ></app-pagination>
 </div>
-
-<app-import [importFn]="importFn" (importSuccess)="loadListData()"></app-import>
-<app-export
-  [exportFn]="exportFn"
-  [currentFilter]="buildFilter()"
-  [totalRecord]="totalRecord()"
-  [fromRecord]="fromRecord()"
-  [toRecord]="toRecord()"
-  [selectedIds]="selectedIds()"
-  [fileName]="'countries'"
-></app-export>
-
-<app-country-modal (saveSuccess)="loadListData()"></app-country-modal>

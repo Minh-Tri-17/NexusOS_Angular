@@ -20,18 +20,18 @@
 
   <div class="topbar-actions">
     <div class="topbar-action-group">
-      <div class="dropdown d-inline-block">
+      <div class="dropdown d-inline-block" ngbDropdown>
         <button
           class="btn-icon-action"
           id="langTranslateBtn"
           type="button"
-          data-bs-toggle="dropdown"
+          ngbDropdownToggle
           aria-expanded="false"
           title="Language / Ngôn ngữ"
         >
           <i class="fa-solid fa-language"></i>
         </button>
-        <ul class="dropdown-menu dropdown-menu-end lang-dropdown-menu">
+        <ul class="dropdown-menu dropdown-menu-end lang-dropdown-menu" ngbDropdownMenu>
           <li>
             <div class="dropdown-header">
               <i class="fa-solid fa-globe me-1"></i> Ngôn ngữ / Language
@@ -95,12 +95,11 @@
         <i class="fa-regular" [class]="themeService.isDark() ? 'fa-sun' : 'fa-moon'"></i>
       </button>
 
-      <div class="dropdown d-inline-block notif-wrapper">
+      <div class="dropdown d-inline-block notif-wrapper" ngbDropdown autoClose="outside">
         <button
           class="btn-icon-action"
           id="notifBellBtn"
-          data-bs-toggle="dropdown"
-          data-bs-auto-close="outside"
+          ngbDropdownToggle
           aria-expanded="false"
           title="Notifications"
         >
@@ -108,7 +107,7 @@
           <span class="badge-dot">3</span>
         </button>
 
-        <div class="dropdown-menu dropdown-menu-end notif-dropdown p-0" id="nexusNotifDropdownMenu">
+        <div class="dropdown-menu dropdown-menu-end notif-dropdown p-0" id="nexusNotifDropdownMenu" ngbDropdownMenu>
           <div class="notif-header">
             <div class="notif-title">
               <i class="fa-solid fa-bell text-primary"></i> Thông báo
@@ -184,12 +183,7 @@
             </div>
           </div>
           <div class="notif-footer">
-            <button
-              type="button"
-              class="notif-show-more"
-              data-bs-toggle="modal"
-              data-bs-target="#nexusAllNotifModal"
-            >
+            <button type="button" class="notif-show-more" disabled>
               <span>Xem tất cả thông báo</span>
               <i class="fa-solid fa-chevron-right fs-xs"></i>
             </button>
@@ -198,11 +192,10 @@
       </div>
     </div>
 
-    <div class="dropdown">
+    <div class="dropdown" ngbDropdown>
       <div
         class="user-profile-menu dropdown-toggle"
-        data-bs-toggle="dropdown"
-        data-bs-display="static"
+        ngbDropdownToggle
         aria-expanded="false"
       >
         <div class="avatar-wrapper">
@@ -219,7 +212,7 @@
         </div>
         <i class="fa-solid fa-chevron-down dropdown-chevron ms-1 text-muted"></i>
       </div>
-      <ul class="dropdown-menu dropdown-menu-end user-dropdown-menu">
+      <ul class="dropdown-menu dropdown-menu-end user-dropdown-menu" ngbDropdownMenu>
         <li class="dropdown-header-info">
           <img
             src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=120&auto=format&fit=crop&q=80"

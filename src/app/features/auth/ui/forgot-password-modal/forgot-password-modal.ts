@@ -1,6 +1,7 @@
 import { Component, computed, HostListener, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { map, Subject, switchMap, takeWhile, timer } from 'rxjs';
 import { MailModel } from '../../../../core/models/mail.model';
 import { BaseService } from '../../../../core/services/base.service';
@@ -17,7 +18,7 @@ interface PasswordStrengthState {
 
 @Component({
   selector: 'app-forgot-password-modal',
-  imports: [ReactiveFormsModule],
+  imports: [NgbModule, ReactiveFormsModule],
   templateUrl: './forgot-password-modal.html',
   styleUrl: './forgot-password-modal.scss',
 })
@@ -210,11 +211,15 @@ export class ForgotPasswordModal {
     try {
       const res = await this.facade.resetPass(rawValues);
 
-      if (res?.isSuccess) this.baseService.closeModal('forgotPasswordModal');
+      if (res?.isSuccess) this.baseService.closeModal();
     } catch {
     } finally {
       this.isResetting.set(false);
     }
+  }
+
+  handleClose() {
+    this.baseService.closeModal();
   }
 
   handleOtpKeydown(event: KeyboardEvent, index: number): void {

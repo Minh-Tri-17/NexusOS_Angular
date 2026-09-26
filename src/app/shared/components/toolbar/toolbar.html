@@ -20,11 +20,8 @@
     <button
       class="btn btn-sm btn-pastel-slate d-inline-flex align-items-center gap-2 px-3 rounded-3"
       type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#smartFilterMatrixCollapse"
-      aria-expanded="false"
-      aria-controls="smartFilterMatrixCollapse"
-      id="toggleFilterBarBtn"
+      [attr.aria-expanded]="!filterCollapsed()"
+      (click)="filterCollapsed.set(!filterCollapsed())"
     >
       <i class="fa-solid fa-sliders text-primary"></i> Filter
     </button>
@@ -76,7 +73,7 @@
   </button>
 </div>
 
-<div class="collapse" id="smartFilterMatrixCollapse">
+<div class="collapse" [ngbCollapse]="filterCollapsed()">
   <div class="smart-filter-matrix mb-3">
     <div class="d-flex align-items-center justify-content-between mb-3 pb-2 border-bottom">
       <span class="fw-bold small text-muted text-uppercase tracking-wider">

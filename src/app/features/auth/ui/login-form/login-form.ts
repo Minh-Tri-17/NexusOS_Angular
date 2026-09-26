@@ -1,9 +1,11 @@
 import { Component, inject, signal } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../../../core/services/auth.service';
 import { AuthFacade } from '../../data-access/auth.facade';
 import { AuthModel } from '../../data-access/auth.model';
+import { ForgotPasswordModal } from '../forgot-password-modal/forgot-password-modal';
 
 const DEMO_ACCOUNTS = {
   director: {
@@ -37,6 +39,7 @@ export class LoginForm {
   private readonly route = inject(ActivatedRoute);
   private readonly facade = inject(AuthFacade);
   private readonly authService = inject(AuthService);
+  private readonly modal = inject(NgbModal);
 
   readonly demoRoles = [
     {
@@ -127,6 +130,13 @@ export class LoginForm {
 
   handleTogglePwdVisibility() {
     this.isVisibility.update((visible) => !visible);
+  }
+
+  openForgotPasswordModal() {
+    this.modal.open(ForgotPasswordModal, {
+      centered: true,
+      windowClass: 'auth-modal',
+    });
   }
 
   //#endregion

@@ -80,7 +80,8 @@ export class ThemeService {
   }
 
   toggleCollapsed() {
-    if (window.innerWidth < 992) {
+    const view = this.document.defaultView;
+    if (view && view.innerWidth < 992) {
       this.isMobileOpen.update((open) => !open);
     } else {
       this.isCollapsed.update((collapsed) => !collapsed);

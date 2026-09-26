@@ -1,6 +1,7 @@
 import { Component, ElementRef, inject, input, output, signal, viewChild } from '@angular/core';
 import { Result } from '../../../core/models/common.model';
 import { BaseService } from '../../../core/services/base.service';
+import { IMPORT_MODAL_CONTEXT } from '../modal/modal-context';
 import { Modal } from '../modal/modal';
 
 @Component({
@@ -11,12 +12,16 @@ import { Modal } from '../modal/modal';
 })
 export class Import {
   private readonly baseService = inject(BaseService);
+
+  //* NgbModal v21 không còn componentProps -> dữ liệu được cấp qua Injector khi open().
+  private readonly ctx = inject(IMPORT_MODAL_CONTEXT, { optional: true });
+
   readonly acceptTypes = '.xlsx,.xls,.csv';
   readonly maxSizeMB = 10;
 
   //#region //@ PROPS
 
-  readonly importFn = input.required<(file: File) => Promise<Result<boolean>>>();
+  readonly importFn = input<(file: File) => Promise<Result<boolean>>>();
   readonly importSuccess = output<void>();
 
   //#endregion
@@ -79,7 +84,6 @@ export class Import {
   }
 
   private resetFileInput() {
-    //* nativeElement lắng nghe sự thay đổi giá trị của form.
     const input = this.fileInput()?.nativeElement;
     if (input) input.value = '';
   }
@@ -90,15 +94,12 @@ export class Import {
 
   handleTriggerFileInput() {
     if (this.isImporting()) return;
-
-    //* nativeElement lắng nghe sự thay đổi giá trị của form.
     this.fileInput()?.nativeElement.click();
   }
 
   handleDragOver(event: Event) {
     event.preventDefault();
     event.stopPropagation();
-
     if (!this.isImporting()) this.isDragOver.set(true);
   }
 
@@ -109,21 +110,16 @@ export class Import {
   handleDrop(event: DragEvent) {
     event.preventDefault();
     event.stopPropagation();
-
     this.isDragOver.set(false);
-
     if (this.isImporting()) return;
-
     if (event.dataTransfer?.files && event.dataTransfer.files.length > 0) {
-      const file = event.dataTransfer.files[0];
-      this.validateAndSetFile(file);
+      this.validateAndSetFile(event.dataTransfer.files[0]);
     }
   }
 
   handleFileSelect(event: Event) {
     const input = event.target as HTMLInputElement;
     const file = input.files?.[0];
-
     if (file) this.validateAndSetFile(file);
   }
 
@@ -144,10 +140,9 @@ export class Import {
     try {
       this.animateProgress(10, 'Reading file...');
       await this.delay(300);
-
       this.animateProgress(30, 'Uploading data...');
       await this.delay(200);
-      const result = await this.importFn()(file);
+      const result = await (this.ctx?.importFn ?? this.importFn()!)(file);
       this.animateProgress(80, 'Processing file...');
       await this.delay(400);
 
@@ -166,7 +161,7 @@ export class Import {
       this.isImporting.set(false);
       this.showProgress.set(false);
       this.selectedFile.set(null);
-      this.baseService.closeModal('importModal');
+      this.baseService.closeModal();
     }
   }
 

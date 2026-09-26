@@ -106,45 +106,22 @@
           }
         </div>
       </div>
-
-      <div
-        class="modal-footer px-4 py-3 border-top-0 d-flex align-items-center justify-content-between modal-footer-custom z-1"
-      >
-        <div class="d-none d-md-flex align-items-center gap-2 text-muted small">
-          <i class="fa-solid fa-shield-halved text-primary opacity-75"></i>
-          <span>Automatic validation</span>
-          <span class="modal-footer-divider"></span>
-          <span class="d-inline-flex align-items-center gap-1"
-            ><kbd class="kbd-badge">ESC</kbd> Close</span
-          >
-        </div>
-        <div class="d-flex align-items-center gap-2 ms-auto">
-          <button
-            type="button"
-            class="btn btn-sm btn-pastel-slate px-3 py-2 rounded-3"
-            data-bs-dismiss="modal"
-          >
-            <i class="fa-solid fa-xmark me-1"></i> Close
-          </button>
-          <button
-            type="button"
-            class="btn btn-sm btn-pastel-indigo px-4 py-2 rounded-3"
-            (click)="handleConfirmImport()"
-            [disabled]="isImporting()"
-          >
-            @if (isImporting()) {
-              <span
-                class="spinner-border spinner-border-sm me-1"
-                role="status"
-                aria-hidden="true"
-              ></span>
-              Importing...
-            } @else {
-              <i class="fa-solid fa-file-import me-1"></i> Start Import
-            }
-          </button>
-        </div>
-      </div>
     </form>
+  </ng-container>
+
+  <ng-container modal-actions>
+    <button
+      type="button"
+      class="btn btn-sm btn-pastel-indigo px-4 py-2 rounded-3"
+      (click)="handleConfirmImport()"
+      [disabled]="isImporting()"
+    >
+      @if (isImporting()) {
+        <span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+        Importing...
+      } @else {
+        <i class="fa-solid fa-file-import me-1"></i> Start Import
+      }
+    </button>
   </ng-container>
 </app-modal>

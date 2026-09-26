@@ -10,7 +10,12 @@
   </ng-container>
 
   <ng-container modal-form>
-    <form [formGroup]="countryForm" ngNativeValidate (ngSubmit)="handleSave()">
+    <form
+      id="countryEditorForm"
+      [formGroup]="countryForm"
+      ngNativeValidate
+      (ngSubmit)="handleSave()"
+    >
       <div class="modal-body px-4 py-3 position-relative z-1">
         <div class="form-section-card">
           <div class="form-section-header">
@@ -117,31 +122,16 @@
           </div>
         </div>
       </div>
-
-      <div
-        class="modal-footer px-4 py-3 border-top-0 d-flex align-items-center justify-content-between modal-footer-custom z-1"
-      >
-        <div class="d-none d-md-flex align-items-center gap-2 text-muted small">
-          <i class="fa-solid fa-shield-halved text-primary opacity-75"></i>
-          <span>Enterprise encrypted</span>
-          <span class="modal-footer-divider"></span>
-          <span class="d-inline-flex align-items-center gap-1"
-            ><kbd class="kbd-badge">ESC</kbd> Close</span
-          >
-        </div>
-        <div class="d-flex align-items-center gap-2 ms-auto">
-          <button
-            type="button"
-            class="btn btn-sm btn-pastel-slate px-3 py-2 rounded-3"
-            data-bs-dismiss="modal"
-          >
-            <i class="fa-solid fa-xmark me-1"></i> Close
-          </button>
-          <button type="submit" class="btn btn-sm btn-pastel-purple px-4 py-2 rounded-3">
-            <i class="fa-solid fa-floppy-disk me-1"></i> Save Changes
-          </button>
-        </div>
-      </div>
     </form>
+  </ng-container>
+
+  <ng-container modal-actions>
+    <button
+      type="submit"
+      form="countryEditorForm"
+      class="btn btn-sm btn-pastel-purple px-4 py-2 rounded-3"
+    >
+      <i class="fa-solid fa-floppy-disk me-1"></i> Save Changes
+    </button>
   </ng-container>
 </app-modal>

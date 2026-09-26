@@ -1,5 +1,6 @@
 import { Component, computed, inject, input, signal } from '@angular/core';
 import { BASE_CONSTANTS } from '../../../core/constants/base.constant';
+import { EXPORT_MODAL_CONTEXT } from '../modal/modal-context';
 import { FilterOperator, FilterType } from '../../../core/constants/filter.enum';
 import { PagingRequest } from '../../../core/models/paging.model';
 import { BaseService } from '../../../core/services/base.service';
@@ -20,9 +21,12 @@ export class Export {
   readonly BASE_CONSTANTS = BASE_CONSTANTS;
   private readonly baseService = inject(BaseService);
 
+  //* NgbModal v21 không còn componentProps -> dữ liệu được cấp qua Injector khi open().
+  private readonly ctx = inject(EXPORT_MODAL_CONTEXT, { optional: true });
+
   //#region //@ PROPS
 
-  readonly exportFn = input.required<(filter: PagingRequest) => Promise<Blob>>();
+  readonly exportFn = input<(filter: PagingRequest) => Promise<Blob>>();
   readonly fileName = input<string>('export');
   readonly currentFilter = input<PagingRequest>();
   readonly totalRecord = input<number>(0);
@@ -40,12 +44,21 @@ export class Export {
   readonly progressStatus = signal('');
   readonly progressPercentage = signal(0);
 
+  //* Ưu tiên dữ liệu truyền qua Injector (khi mở bằng NgbModal.open), fallback về input binding.
+  private readonly resolvedExportFn = () => this.ctx?.exportFn ?? this.exportFn();
+  private readonly resolvedCurrentFilter = () => this.ctx?.currentFilter ?? this.currentFilter();
+  private readonly resolvedTotalRecord = () => this.ctx?.totalRecord ?? this.totalRecord();
+  private readonly resolvedFromRecord = () => this.ctx?.fromRecord ?? this.fromRecord();
+  private readonly resolvedToRecord = () => this.ctx?.toRecord ?? this.toRecord();
+  private readonly resolvedSelectedIds = () => this.ctx?.selectedIds ?? this.selectedIds();
+  private readonly resolvedFileName = () => this.ctx?.fileName ?? this.fileName();
+
   //* computed() dùng để tính toán giá trị dựa trên state khác
-  readonly canExportSelectItems = computed(() => this.selectedIds().size > 0);
-  readonly canExportAllPage = computed(() => this.totalRecord() > 0);
+  readonly canExportSelectItems = computed(() => this.resolvedSelectedIds().size > 0);
+  readonly canExportAllPage = computed(() => this.resolvedTotalRecord() > 0);
   readonly totalPageRecord = computed(() => {
-    const to = this.toRecord();
-    const from = this.fromRecord();
+    const to = this.resolvedToRecord();
+    const from = this.resolvedFromRecord();
     if (to === 0 || from === 0 || to < from) return 0;
 
     return to - from + 1;
@@ -56,7 +69,7 @@ export class Export {
   //#region //@ HELPERS
 
   private buildExportFilter(option: ExportOption) {
-    const baseFilter = { ...this.currentFilter() };
+    const baseFilter = { ...this.resolvedCurrentFilter() };
 
     switch (option) {
       case BASE_CONSTANTS.exportOptionAll:
@@ -148,7 +161,7 @@ export class Export {
 
       this.animateProgress(30, 'Requesting data...');
       await this.delay(200);
-      const blob = await this.exportFn()(filter);
+      const blob = await this.resolvedExportFn()!(filter);
       this.animateProgress(80, 'Processing file...');
       await this.delay(400);
 
@@ -166,7 +179,7 @@ export class Export {
     } finally {
       this.isExporting.set(false);
       this.showProgress.set(false);
-      this.baseService.closeModal('exportModal');
+      this.baseService.closeModal();
     }
   }
 

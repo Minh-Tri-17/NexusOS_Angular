@@ -27,17 +27,15 @@
     <div class="nav-item-collapsible">
       <a
         class="nav-link collapse-toggle collapsed"
-        data-bs-toggle="collapse"
-        href="#collapseCategories"
         role="button"
-        aria-expanded="false"
-        aria-controls="collapseCategories"
+        [attr.aria-expanded]="!isCollapsed"
+        (click)="isCollapsed = !isCollapsed"
       >
         <i class="fa-solid fa-layer-group"></i>
         <span>Categories</span>
         <i class="fa-solid fa-plus toggle-chevron ms-auto"></i>
       </a>
-      <div class="collapse show" id="collapseCategories">
+      <div class="collapse" [ngbCollapse]="isCollapsed" id="collapseCategories">
         <div class="submenu-list">
           <div class="submenu-header">Geography</div>
           <a
