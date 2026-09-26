@@ -8344,3 +8344,15 @@ tr:hover td.col-pin,
 [data-theme='dark'] .placeholder-glow .placeholder {
   animation-duration: 1.6s;
 }
+
+.custom-modal .modal-dialog.modal-confirm-dialog {
+  max-width: 400px;
+}
+
+.app-list-table tbody tr.table-active-row {
+  background-color: rgba(37, 99, 235, 0.04) !important;
+}
+
+[data-theme="dark"] .app-list-table tbody tr.table-active-row {
+  background-color: rgba(37, 99, 235, 0.12) !important;
+}

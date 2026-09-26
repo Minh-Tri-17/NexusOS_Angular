@@ -17,6 +17,7 @@ import { Region } from '../data-access/country.enum';
 import { CountryFacade } from '../data-access/country.facade';
 import { CountryFields, CountryModel } from '../data-access/country.model';
 import { CountryModal } from './editor-modal/country-modal';
+import { DialogService } from '../../../../shared/components/dialog/dialog.service';
 
 @Component({
   selector: 'app-country',
@@ -36,6 +37,7 @@ export class Country {
   private readonly facade = inject(CountryFacade);
   private readonly modal = inject(NgbModal);
   private readonly injector = inject(Injector);
+  private readonly dialogService = inject(DialogService);
 
   //#region //@ STATE
 
@@ -200,6 +202,19 @@ export class Country {
   async handleDeleteSelected() {
     const idsArray = Array.from(this.selectedIds());
     if (idsArray.length === 0) return;
+
+    const confirmed = await this.dialogService.confirm({
+      title: 'Xác nhận xóa',
+      message:
+        idsArray.length === 1
+          ? 'Bạn có chắc chắn muốn xóa bản ghi này?'
+          : `Bạn có chắc chắn muốn xóa ${idsArray.length} bản ghi đã chọn?`,
+      type: 'danger',
+      confirmText: 'Xác nhận',
+      cancelText: 'Hủy',
+    });
+
+    if (!confirmed) return;
 
     const idString = idsArray.join(',');
 

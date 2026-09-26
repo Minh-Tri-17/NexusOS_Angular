@@ -26,7 +26,7 @@ export class CountryApiService extends BaseApiService {
   }
 
   getById(id: string) {
-    return this.getHttp<Result<CountryModel>>(API_CONSTANTS.country.getById, id);
+    return this.getHttp<Result<CountryModel>>(API_CONSTANTS.country.getById, { id });
   }
 
   getPaging(data: PagingRequest) {

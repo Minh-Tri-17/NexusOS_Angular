@@ -1,0 +1,37 @@
+<div class="modal-body p-4 text-center">
+  <div
+    class="mx-auto mb-3 d-flex align-items-center justify-content-center rounded-circle dialog-icon-wrapper"
+    [style.width.px]="52"
+    [style.height.px]="52"
+    [style.backgroundColor]="iconBgColor()"
+    [style.color]="iconColor()"
+  >
+    <i [class]="iconClass()" class="fs-4"></i>
+  </div>
+
+  <h5 class="fw-bold text-dark mb-2 dialog-title" id="dialogTitle">
+    {{ title() }}
+  </h5>
+
+  <p class="text-secondary small mb-4 dialog-message" id="dialogDesc">
+    {{ message() }}
+  </p>
+
+  <div class="d-flex align-items-center justify-content-center gap-2">
+    <button
+      type="button"
+      class="btn btn-sm btn-light border px-3 py-2 rounded-3 fw-semibold flex-fill dialog-btn dialog-cancel-btn"
+      (click)="handleCancel()"
+    >
+      {{ cancelText() }}
+    </button>
+    <button
+      type="button"
+      class="btn btn-sm px-3 py-2 rounded-3 fw-semibold flex-fill shadow-xs dialog-btn dialog-confirm-btn"
+      [ngClass]="confirmBtnClass()"
+      (click)="handleConfirm()"
+    >
+      {{ confirmText() }}
+    </button>
+  </div>
+</div>
