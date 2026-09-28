@@ -72,6 +72,7 @@ export class Country {
   });
 
   readonly regions = Object.values(Region);
+  readonly countryColumns = Object.keys(CountryFields).filter((key) => key !== 'id');
 
   //#endregion
 

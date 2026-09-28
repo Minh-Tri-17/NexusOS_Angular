@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, input } from '@angular/core';
 
 @Component({
   selector: 'app-placeholder',
@@ -6,4 +6,6 @@ import { Component } from '@angular/core';
   templateUrl: './placeholder.html',
   styleUrl: './placeholder.scss',
 })
-export class Placeholder {}
+export class Placeholder {
+  readonly modelColumns = input<string[]>([]);
+}

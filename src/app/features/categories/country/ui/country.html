@@ -92,21 +92,15 @@
           />
         </th>
         <th class="text-center" style="width: 50px">#</th>
-        <th>Code</th>
-        <th>Country Name</th>
-        <th>Capital</th>
-        <th>Region</th>
-        <th>Created By</th>
-        <th>Created At</th>
-        <th>Updated By</th>
-        <th>Updated At</th>
-        <th>Note</th>
+        @for (column of countryColumns; track column) {
+          <th>{{ column }}</th>
+        }
       </tr>
     </ng-container>
 
     <ng-container table-body>
       @if (isLoading()) {
-        <app-placeholder></app-placeholder>
+        <app-placeholder [modelColumns]="countryColumns"></app-placeholder>
       } @else {
         @for (country of countries(); track country.id; let idx = $index) {
           <tr [class.deleted-row]="filterIsDelete()">
