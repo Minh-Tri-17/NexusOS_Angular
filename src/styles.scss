@@ -1728,28 +1728,6 @@
   border: 1px solid var(--modal-border) !important;
 }
 
-.leave-emp-name {
-  font-weight: 600;
-  font-size: 0.875rem;
-  color: var(--text-main);
-  line-height: 1.2;
-  margin-bottom: 2px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 100%;
-}
-
-.leave-emp-role {
-  font-size: 0.75rem;
-  color: var(--text-muted);
-  line-height: 1;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 100%;
-}
-
 .modal-header,
 .modal-footer,
 .modal-body {
@@ -2410,13 +2388,15 @@ a {
   transform: translateY(0) scale(0.95);
 }
 
-/* Individual Topbar Button Color Themes */
+/* Individual Topbar Button Color Themes & Dynamic Micro-Animations */
 #langTranslateBtn {
   color: var(--btn-icon-action-color);
 }
 
 #langTranslateBtn i {
+  display: inline-block;
   color: inherit;
+  animation: waveAnimation 3.8s infinite ease-in-out;
   transition:
     color 0.25s ease,
     transform 0.25s ease;
@@ -2427,10 +2407,22 @@ a {
 }
 
 #themeToggleBtn i {
+  display: inline-block;
   color: inherit;
+  animation: moonSwing 4s infinite ease-in-out;
   transition:
     color 0.25s ease,
     transform 0.25s ease;
+}
+
+#themeToggleBtn i.fa-sun {
+  color: #fbbf24;
+  animation: sunGlow 6s infinite linear;
+}
+
+#themeToggleBtn i.fa-moon {
+  color: #818cf8;
+  animation: moonSwing 4s infinite ease-in-out;
 }
 
 #notifBellBtn {
@@ -2438,7 +2430,10 @@ a {
 }
 
 #notifBellBtn i {
+  display: inline-block;
   color: inherit;
+  transform-origin: top center;
+  animation: bellRing 3.5s infinite ease-in-out;
   transition:
     color 0.25s ease,
     transform 0.25s ease;
@@ -2574,88 +2569,96 @@ a {
 }
 
 /* Language Dropdown Menu Styling (Minimalist 1-Line) */
+.lang-dropdown-menu.dropdown-menu,
 .lang-dropdown-menu {
-  min-width: 200px !important;
-  padding: 0.5rem !important;
-  border-radius: 14px !important;
-  background: var(--dropdown-bg) !important;
-  border: 1px solid var(--dropdown-border) !important;
-  box-shadow: var(--dropdown-shadow) !important;
+  min-width: 200px;
+  padding: 0.5rem;
+  border-radius: 14px;
+  background: var(--dropdown-bg);
+  border: 1px solid var(--dropdown-border);
+  box-shadow: var(--dropdown-shadow);
 }
 
 .lang-dropdown-menu .dropdown-header {
-  font-size: 0.725rem !important;
-  font-weight: 700 !important;
-  text-transform: uppercase !important;
-  letter-spacing: 0.05em !important;
-  color: var(--text-muted) !important;
-  padding: 0.4rem 0.65rem 0.3rem 0.65rem !important;
-  display: flex !important;
-  align-items: center !important;
-  gap: 0.4rem !important;
-  background: transparent !important;
+  font-size: 0.725rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  padding: 0.4rem 0.65rem 0.3rem 0.65rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: transparent;
 }
 
 .lang-dropdown-menu .dropdown-item {
-  display: flex !important;
-  align-items: center !important;
-  justify-content: space-between !important;
-  padding: 0.55rem 0.75rem !important;
-  border-radius: 9px !important;
-  margin-bottom: 2px !important;
-  cursor: pointer !important;
-  background: transparent !important;
-  border: none !important;
-  transition: all 0.15s ease !important;
-  text-decoration: none !important;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.55rem 0.75rem;
+  border-radius: 9px;
+  margin-bottom: 2px;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  transition: all 0.15s ease;
+  text-decoration: none;
 }
 
 .lang-dropdown-menu .dropdown-item:hover {
-  background-color: var(--dropdown-item-hover-bg) !important;
-  color: var(--dropdown-item-hover-color) !important;
-  transform: translateX(2px) !important;
+  background-color: var(--dropdown-item-hover-bg);
+  color: var(--dropdown-item-hover-color);
+  transform: translateX(2px);
 }
 
 .lang-dropdown-menu .dropdown-item:last-child {
-  margin-bottom: 0 !important;
+  margin-bottom: 0;
 }
 
 .lang-dropdown-menu .lang-flag {
-  width: 20px !important;
-  height: 14px !important;
-  object-fit: cover !important;
-  border-radius: 3px !important;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12) !important;
-  flex-shrink: 0 !important;
+  width: 20px;
+  height: 14px;
+  object-fit: cover;
+  border-radius: 3px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+  flex-shrink: 0;
 }
 
 .lang-dropdown-menu .lang-name {
-  font-size: 0.85rem !important;
-  font-weight: 500 !important;
-  color: var(--text-main) !important;
-  line-height: 1 !important;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-main);
+  line-height: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .lang-dropdown-menu .lang-check {
-  font-size: 0.8rem !important;
-  color: var(--soft-indigo-text) !important;
-  opacity: 0 !important;
-  transition: opacity 0.15s ease !important;
-  margin-left: 0.75rem !important;
+  font-size: 0.8rem;
+  color: var(--soft-indigo-text);
+  opacity: 0;
+  transition:
+    opacity 0.15s ease,
+    transform 0.15s ease;
+  transform: scale(0.8);
+  margin-left: 0.75rem;
 }
 
 .lang-dropdown-menu .dropdown-item.active {
-  background-color: var(--soft-indigo-bg) !important;
+  background-color: var(--soft-indigo-bg);
 }
 
 .lang-dropdown-menu .dropdown-item.active .lang-name {
-  color: var(--soft-indigo-text) !important;
-  font-weight: 600 !important;
+  color: var(--soft-indigo-text);
+  font-weight: 600;
 }
 
 .lang-dropdown-menu .dropdown-item.active .lang-check {
-  opacity: 1 !important;
-  color: var(--soft-indigo-text) !important;
+  opacity: 1;
+  transform: scale(1);
+  color: var(--soft-indigo-text);
 }
 
 /* User Header Block inside Dropdown */
@@ -3169,10 +3172,10 @@ a {
   top: 50% !important;
   transform: translateY(-50%) !important;
   z-index: 5 !important;
+  pointer-events: none !important;
   color: var(--text-light, #94a3b8) !important;
   font-size: 0.875rem !important;
   margin: 0 !important;
-  cursor: pointer !important;
 }
 
 .position-relative > input.form-control,
@@ -3466,33 +3469,6 @@ a {
   stroke: var(--border-color) !important;
   stroke-dasharray: 4 !important;
   stroke-opacity: 0.9 !important;
-}
-
-#langTranslateBtn i {
-  display: inline-block;
-  animation: waveAnimation 3.8s infinite ease-in-out;
-}
-
-#notifBellBtn i {
-  display: inline-block;
-  transform-origin: top center;
-  animation: bellRing 3.5s infinite ease-in-out;
-}
-
-/* Theme Toggle Button Icons Animation & Colors */
-#themeToggleBtn i {
-  display: inline-block;
-  animation: moonSwing 4s infinite ease-in-out;
-}
-
-#themeToggleBtn i.fa-sun {
-  color: #fbbf24;
-  animation: sunGlow 6s infinite linear;
-}
-
-#themeToggleBtn i.fa-moon {
-  color: #818cf8;
-  animation: moonSwing 4s infinite ease-in-out;
 }
 
 /* ApexCharts Donut Chart Total Label & Value Theme Compatibility */
@@ -4484,6 +4460,26 @@ svg g.apextree-selected .apextree-sleek-card {
   border-color: #818cf8 !important;
   background: rgba(129, 140, 248, 0.12) !important;
   box-shadow: 0 4px 14px -3px rgba(129, 140, 248, 0.2);
+}
+
+[data-theme='dark'] .custom-radio-card.disabled,
+[data-theme='dark'] .custom-radio-card:has(.form-check-input:disabled) {
+  background: rgba(255, 255, 255, 0.02) !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+[data-theme='dark'] .custom-radio-card.disabled:hover,
+[data-theme='dark'] .custom-radio-card:has(.form-check-input:disabled):hover {
+  border-color: rgba(255, 255, 255, 0.08) !important;
+  background: rgba(255, 255, 255, 0.02) !important;
+  transform: none !important;
+}
+
+/* General disabled utility class */
+.disabled {
+  opacity: 0.55;
+  pointer-events: none !important;
+  cursor: not-allowed !important;
 }
 
 /* Color Utility Classes for Teal & Purple */
@@ -6688,6 +6684,28 @@ tr:hover td.col-pin,
   overflow: hidden !important;
 }
 
+.leave-emp-name {
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: var(--text-main);
+  line-height: 1.2;
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.leave-emp-role {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  line-height: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
 .leave-planner-table th:not(.col-employee),
 .leave-planner-table td:not(.col-employee) {
   min-width: 35px !important;
@@ -7627,185 +7645,6 @@ tr:hover td.col-pin,
 }
 
 /* ==========================================================================
-   NexusOST Language Dropdown Component
-   ========================================================================== */
-.lang-wrapper {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-}
-
-.lang-dropdown {
-  position: absolute;
-  top: calc(100% + 10px);
-  right: 0;
-  width: 220px;
-  background: var(--bg-card, #ffffff);
-  border: 1px solid var(--border-color, rgba(226, 232, 240, 0.9));
-  border-radius: 14px;
-  box-shadow:
-    0 12px 30px -5px rgba(15, 23, 42, 0.15),
-    0 4px 12px -2px rgba(15, 23, 42, 0.06);
-  padding: 8px;
-  z-index: 1080;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(-8px) scale(0.96);
-  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-}
-
-.lang-dropdown.show {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0) scale(1);
-}
-
-.lang-header {
-  padding: 6px 12px 8px;
-  font-size: 0.72rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--text-muted, #94a3b8);
-  border-bottom: 1px solid var(--border-color, rgba(226, 232, 240, 0.6));
-  margin-bottom: 6px;
-}
-
-.lang-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.lang-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 8px 12px;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: all 0.18s ease;
-  user-select: none;
-}
-
-.lang-item:hover {
-  background-color: rgba(99, 102, 241, 0.08);
-  transform: translateX(2px);
-}
-
-.lang-flag {
-  width: 24px;
-  height: 17px;
-  object-fit: cover;
-  border-radius: 3px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.18);
-  flex-shrink: 0;
-}
-
-.lang-info {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex: 1;
-  min-width: 0;
-}
-
-.lang-name {
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: var(--text-main, #334155);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.lang-short {
-  font-size: 0.72rem;
-  font-weight: 600;
-  padding: 2px 7px;
-  border-radius: 6px;
-  background: rgba(148, 163, 184, 0.12);
-  color: var(--text-muted, #64748b);
-  margin-left: 6px;
-}
-
-.lang-check {
-  font-size: 0.8rem;
-  color: #6366f1;
-  opacity: 0;
-  transition:
-    opacity 0.18s ease,
-    transform 0.18s ease;
-  transform: scale(0.7);
-}
-
-.lang-item.active {
-  background-color: rgba(99, 102, 241, 0.12);
-}
-
-.lang-item.active .lang-name {
-  font-weight: 600;
-  color: #4f46e5;
-}
-
-.lang-item.active .lang-short {
-  background: rgba(99, 102, 241, 0.18);
-  color: #4338ca;
-}
-
-.lang-item.active .lang-check {
-  opacity: 1;
-  transform: scale(1);
-}
-
-/* Dark Mode Overrides */
-[data-theme='dark'] .lang-dropdown {
-  background-color: var(--bg-dropdown, #18181b);
-  border-color: var(--border-color, #27272a);
-  box-shadow: 0 14px 35px -5px rgba(0, 0, 0, 0.65);
-}
-
-[data-theme='dark'] .lang-header {
-  color: var(--text-muted, #a1a1aa);
-  border-bottom-color: var(--border-color, #27272a);
-}
-
-[data-theme='dark'] .lang-item:hover {
-  background-color: var(--bg-hover, #27272a);
-}
-
-[data-theme='dark'] .lang-name {
-  color: var(--text-main, #f4f4f5);
-}
-
-[data-theme='dark'] .lang-short {
-  background: rgba(255, 255, 255, 0.06);
-  color: var(--text-muted, #a1a1aa);
-}
-
-[data-theme='dark'] .lang-item.active {
-  background-color: rgba(99, 102, 241, 0.18);
-}
-
-[data-theme='dark'] .lang-item.active .lang-name {
-  color: #818cf8;
-}
-
-[data-theme='dark'] .lang-item.active .lang-short {
-  background: rgba(129, 140, 248, 0.2);
-  color: #c7d2fe;
-}
-
-[data-theme='dark'] .lang-item.active .lang-check {
-  color: #818cf8;
-}
-
-/* ==========================================================================
    NexusOST Notification Dropdown & View All Modal Component
    ========================================================================== */
 .notif-wrapper {
@@ -8399,6 +8238,49 @@ tr:hover td.col-pin,
   background-color: #475569;
 }
 
+/* ==========================================================================
+   REUSABLE COUNTRY AVATAR BADGES
+   ========================================================================== */
+.country-avatar-badge {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #ffffff;
+  flex-shrink: 0;
+}
+
+.country-avatar-badge.avatar-blue {
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+}
+
+.country-avatar-badge.avatar-green {
+  background: linear-gradient(135deg, #10b981, #047857);
+}
+
+.country-avatar-badge.avatar-purple {
+  background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+}
+
+.country-avatar-badge.avatar-amber {
+  background: linear-gradient(135deg, #f59e0b, #b45309);
+}
+
+.country-avatar-badge.avatar-pink {
+  background: linear-gradient(135deg, #ec4899, #be185d);
+}
+
+.country-avatar-badge.avatar-red,
+.country-avatar-badge.avatar-deleted {
+  background: linear-gradient(135deg, #ef4444, #b91c1c);
+  opacity: 0.85;
+}
+
+/* Soft Deleted Row Background & Hover States */
 .app-list-table tbody tr.deleted-row {
   background-color: rgba(239, 68, 68, 0.05) !important;
   transition: background-color 0.2s ease;
@@ -8416,6 +8298,9 @@ tr:hover td.col-pin,
   background-color: rgba(239, 68, 68, 0.18) !important;
 }
 
+/* ==========================================================================
+   BOOTSTRAP PLACEHOLDERS TABLE SKELETON STYLING
+   ========================================================================== */
 .skeleton-row {
   transition: opacity 0.25s ease;
 }
@@ -8439,6 +8324,25 @@ tr:hover td.col-pin,
   animation-duration: 1.6s;
 }
 
-.custom-modal .modal-dialog.modal-confirm-dialog {
-  max-width: 400px;
+#map {
+  width: 100%;
+  min-height: 560px;
+  position: relative;
+}
+
+#map svg {
+  overflow: visible;
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+}
+
+/* Fix overlapping legend numbers/ticks in gradient mode */
+#map svg text {
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+}
+
+#map svg g[class*='legend'] text,
+#map svg text[class*='tick'],
+#map svg text {
+  font-size: 10px !important;
+  font-weight: 500 !important;
 }

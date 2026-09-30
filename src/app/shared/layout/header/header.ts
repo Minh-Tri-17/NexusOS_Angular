@@ -2,14 +2,15 @@ import { isPlatformBrowser } from '@angular/common';
 import { Component, DestroyRef, inject, NgZone, PLATFORM_ID, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
+import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { auditTime, fromEvent } from 'rxjs';
 import { AuthService } from '../../../core/services/auth.service';
 import { ThemeService } from '../../../core/services/theme.service';
-import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
+import { Languages } from '../../components/languages/languages';
 
 @Component({
   selector: 'app-header',
-  imports: [NgbDropdownModule],
+  imports: [NgbDropdownModule, Languages],
   templateUrl: './header.html',
   styleUrl: './header.scss',
 })
@@ -40,9 +41,7 @@ export class Header {
         });
     });
 
-    if (window.scrollY > 10) 
-      this.isScrolled.set(true);
-    
+    if (window.scrollY > 10) this.isScrolled.set(true);
   }
 
   //#region //@ METHODS

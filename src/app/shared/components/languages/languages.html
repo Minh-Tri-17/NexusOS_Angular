@@ -1,0 +1,34 @@
+<div class="dropdown d-inline-block" ngbDropdown>
+  <button
+    class="btn-icon-action"
+    id="langTranslateBtn"
+    type="button"
+    ngbDropdownToggle
+    aria-expanded="false"
+    title="Language / Ngôn ngữ"
+  >
+    <i class="fa-solid fa-language"></i>
+  </button>
+
+  <ul class="dropdown-menu dropdown-menu-end lang-dropdown-menu" ngbDropdownMenu>
+    <li>
+      <div class="dropdown-header"><i class="fa-solid fa-globe me-1"></i> Ngôn ngữ / Language</div>
+    </li>
+    <li><hr class="dropdown-divider my-1" /></li>
+    @for (lang of languages; track lang.code) {
+      <li>
+        <a
+          class="dropdown-item"
+          [class.active]="currentLang().code == lang.code"
+          (click)="handleChangeLanguage(lang); $event.preventDefault()"
+        >
+          <div class="d-flex align-items-center gap-2">
+            <img class="lang-flag" [alt]="lang.flag" [src]="lang.flag" />
+            <span class="lang-name">{{ lang.label }}</span>
+          </div>
+          <i class="fa-solid fa-check lang-check"></i>
+        </a>
+      </li>
+    }
+  </ul>
+</div>

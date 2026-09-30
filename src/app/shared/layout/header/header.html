@@ -20,71 +20,7 @@
 
   <div class="topbar-actions">
     <div class="topbar-action-group">
-      <div class="dropdown d-inline-block" ngbDropdown>
-        <button
-          class="btn-icon-action"
-          id="langTranslateBtn"
-          type="button"
-          ngbDropdownToggle
-          aria-expanded="false"
-          title="Language / Ngôn ngữ"
-        >
-          <i class="fa-solid fa-language"></i>
-        </button>
-        <ul class="dropdown-menu dropdown-menu-end lang-dropdown-menu" ngbDropdownMenu>
-          <li>
-            <div class="dropdown-header">
-              <i class="fa-solid fa-globe me-1"></i> Ngôn ngữ / Language
-            </div>
-          </li>
-          <li><hr class="dropdown-divider my-1" /></li>
-          <li>
-            <a class="dropdown-item active" href="javascript:void(0)" data-lang="vi">
-              <div class="d-flex align-items-center gap-2">
-                <img src="/flag-vn.png" alt="Tiếng Việt" class="lang-flag" />
-                <span class="lang-name">Tiếng Việt</span>
-              </div>
-              <i class="fa-solid fa-check lang-check"></i>
-            </a>
-          </li>
-          <li>
-            <a class="dropdown-item" href="javascript:void(0)" data-lang="en">
-              <div class="d-flex align-items-center gap-2">
-                <img src="/flag-us.png" alt="English" class="lang-flag" />
-                <span class="lang-name">English</span>
-              </div>
-              <i class="fa-solid fa-check lang-check"></i>
-            </a>
-          </li>
-          <li>
-            <a class="dropdown-item" href="javascript:void(0)" data-lang="jp">
-              <div class="d-flex align-items-center gap-2">
-                <img src="/flag-jp.png" alt="日本語" class="lang-flag" />
-                <span class="lang-name">日本語</span>
-              </div>
-              <i class="fa-solid fa-check lang-check"></i>
-            </a>
-          </li>
-          <li>
-            <a class="dropdown-item" href="javascript:void(0)" data-lang="cn">
-              <div class="d-flex align-items-center gap-2">
-                <img src="/flag-cn.png" alt="中文" class="lang-flag" />
-                <span class="lang-name">中文</span>
-              </div>
-              <i class="fa-solid fa-check lang-check"></i>
-            </a>
-          </li>
-          <li>
-            <a class="dropdown-item" href="javascript:void(0)" data-lang="fr">
-              <div class="d-flex align-items-center gap-2">
-                <img src="/flag-fr.png" alt="Français" class="lang-flag" />
-                <span class="lang-name">Français</span>
-              </div>
-              <i class="fa-solid fa-check lang-check"></i>
-            </a>
-          </li>
-        </ul>
-      </div>
+      <app-languages></app-languages>
 
       <button
         class="btn-icon-action"
@@ -107,7 +43,11 @@
           <span class="badge-dot">3</span>
         </button>
 
-        <div class="dropdown-menu dropdown-menu-end notif-dropdown p-0" id="nexusNotifDropdownMenu" ngbDropdownMenu>
+        <div
+          class="dropdown-menu dropdown-menu-end notif-dropdown p-0"
+          id="nexusNotifDropdownMenu"
+          ngbDropdownMenu
+        >
           <div class="notif-header">
             <div class="notif-title">
               <i class="fa-solid fa-bell text-primary"></i> Thông báo
@@ -193,11 +133,7 @@
     </div>
 
     <div class="dropdown" ngbDropdown>
-      <div
-        class="user-profile-menu dropdown-toggle"
-        ngbDropdownToggle
-        aria-expanded="false"
-      >
+      <div class="user-profile-menu dropdown-toggle" ngbDropdownToggle aria-expanded="false">
         <div class="avatar-wrapper">
           <img
             src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=120&auto=format&fit=crop&q=80"
