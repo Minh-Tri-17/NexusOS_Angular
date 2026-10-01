@@ -2,8 +2,14 @@ import { HttpErrorResponse, HttpInterceptorFn, HttpResponse } from '@angular/com
 import { catchError, tap, throwError } from 'rxjs';
 import { showToast } from '../../shared/components/toast/toast.util';
 import { Result } from '../models/common.model';
+import { TranslateService } from '@ngx-translate/core';
+import { inject } from '@angular/core';
 
 export const responseInterceptor: HttpInterceptorFn = (req, next) => {
+  const translateService = inject(TranslateService);
+
+  if (req.url.includes('/i18n/') || req.url.endsWith('.json')) return next(req);
+
   return next(req).pipe(
     tap((event) => {
       if (event instanceof HttpResponse) {
@@ -27,10 +33,19 @@ export const responseInterceptor: HttpInterceptorFn = (req, next) => {
       }
     }),
     catchError((error: HttpErrorResponse) => {
-      showToast({
-        message: error.error?.message || 'Có lỗi kết nối máy chủ!',
-        type: 'danger',
-      });
+      if (error.error?.message) {
+        showToast({
+          message: error.error.message,
+          type: 'danger',
+        });
+      } else {
+        translateService.get('common.errorOccurred').subscribe((translatedMsg: string) => {
+          showToast({
+            message: translatedMsg,
+            type: 'danger',
+          });
+        });
+      }
 
       return throwError(() => error);
     }),

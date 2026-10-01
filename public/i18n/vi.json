@@ -1,10 +1,8 @@
 {
   "auth": {
-    "brandSubtitle": "Nhân sự & Kinh doanh",
-    "enterprisePortal": "Cổng thông tin Doanh nghiệp",
-    "enterprisePlatform": "Nền tảng Nguồn lực & Nhân sự Doanh nghiệp",
-    "title": "Đăng nhập vào Không gian làm việc",
-    "titleForm": "Đăng nhập vào Không gian làm việc",
+    "enterprisePlatform": "Nền tảng nguồn lực & nhân sự doanh nghiệp",
+    "title": "Đăng nhập vào không gian làm việc",
+    "titleForm": "Đăng nhập vào không gian làm việc",
     "quickLogin": "Đăng nhập nhanh:",
     "director": "Giám đốc",
     "hr": "Quản lý nhân sự",
@@ -47,6 +45,25 @@
     "edit": "Chỉnh sửa",
     "delete": "Xóa",
     "import": "Nhập file",
-    "export": "Xuất file"
+    "export": "Xuất file",
+    "brandSubtitle": "Nhân sự & kinh doanh",
+    "enterprisePortal": "Cổng thông tin doanh nghiệp",
+    "errorOccurred": "Đã xảy ra lỗi!",
+    "save": "Lưu",
+    "saving": "Đang lưu..."
+  },
+  "sidebar": {
+    "dashboard": "Bảng điều khiển",
+    "employees": "Nhân viên",
+    "recruitment": "Tuyển dụng",
+    "leaveManagement": "Quản lý nghỉ phép",
+    "categories": "Danh mục",
+    "geography": "Địa lý",
+    "country": "Quốc gia",
+    "province": "Tỉnh / thành phố",
+    "ward": "Phường / xã",
+    "settings": "Cài đặt",
+    "operational": "Hoạt động",
+    "uptime": "Thời gian hoạt động"
   }
 }

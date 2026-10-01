@@ -1,7 +1,5 @@
 {
   "auth": {
-    "brandSubtitle": "Human Resource & Sales",
-    "enterprisePortal": "Enterprise Portal",
     "enterprisePlatform": "Enterprise Resource & Workforce Platform",
     "title": "Sign in to Workspace",
     "titleForm": "Sign in to Workspace",
@@ -47,6 +45,25 @@
     "edit": "Edit",
     "delete": "Delete",
     "import": "Import",
-    "export": "Export"
+    "export": "Export",
+    "brandSubtitle": "Human Resource & Sales",
+    "enterprisePortal": "Enterprise Portal",
+    "errorOccurred": "An error occurred!",
+    "save": "Save",
+    "saving": "Saving..."
+  },
+  "sidebar": {
+    "dashboard": "Dashboard",
+    "employees": "Employees",
+    "recruitment": "Recruitment",
+    "leaveManagement": "Leave Management",
+    "categories": "Categories",
+    "geography": "Geography",
+    "country": "Country",
+    "province": "Province",
+    "ward": "Ward",
+    "settings": "Settings",
+    "operational": "Operational",
+    "uptime": "Uptime"
   }
 }

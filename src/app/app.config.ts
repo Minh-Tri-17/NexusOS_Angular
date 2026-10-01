@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 import { routes } from './app.routes';
 import { authInterceptor } from './core/interceptors/auth-interceptor';
 import { responseInterceptor } from './core/interceptors/response-interceptor';
+import { requestInterceptor } from './core/interceptors/request-interceptor';
 
 export class AppTranslationLoader implements TranslateLoader {
   constructor(private readonly http: HttpClient) {}
@@ -20,7 +21,7 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
-    provideHttpClient(withInterceptors([responseInterceptor, authInterceptor])),
+    provideHttpClient(withInterceptors([requestInterceptor, responseInterceptor, authInterceptor])),
     provideTranslateService({
       fallbackLang: 'vi',
       loader: {

@@ -1,7 +1,5 @@
 {
   "auth": {
-    "brandSubtitle": "Ressources Humaines & Ventes",
-    "enterprisePortal": "Portail d'entreprise",
     "enterprisePlatform": "Plateforme de ressources d'entreprise et gestion du personnel",
     "title": "Connexion à l'espace de travail",
     "titleForm": "Connexion à l'espace de travail",
@@ -47,6 +45,25 @@
     "edit": "Modifier",
     "delete": "Supprimer",
     "import": "Importer",
-    "export": "Exporter"
+    "export": "Exporter",
+    "brandSubtitle": "Ressources Humaines & Ventes",
+    "enterprisePortal": "Portail d'entreprise",
+    "errorOccurred": "Une erreur est survenue !",
+    "save": "Enregistrer",
+    "saving": "Enregistrement en cours..."
+  },
+  "sidebar": {
+    "dashboard": "Tableau de bord",
+    "employees": "Employés",
+    "recruitment": "Recrutement",
+    "leaveManagement": "Gestion des congés",
+    "categories": "Catégories",
+    "geography": "Géographie",
+    "country": "Pays",
+    "province": "Province",
+    "ward": "Quartier",
+    "settings": "Paramètres",
+    "operational": "Opérationnel",
+    "uptime": "Disponibilité"
   }
 }

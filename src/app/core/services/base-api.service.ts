@@ -48,20 +48,15 @@ export class BaseApiService {
   }
 
   protected postHttp<T>(url: string, body: any): Promise<T> {
-    const headers = new HttpHeaders({ 'Accept-Language': 'en' });
-    return firstValueFrom(this.http.post<T>(`${this.baseUrl}${url}`, body, { headers: headers }));
+    return firstValueFrom(this.http.post<T>(`${this.baseUrl}${url}`, body));
   }
 
   protected postBlobHttp(url: string, body: any): Promise<Blob> {
-    const headers = new HttpHeaders({ 'Accept-Language': 'en' });
-    return firstValueFrom(
-      this.http.post(`${this.baseUrl}${url}`, body, { headers: headers, responseType: 'blob' }),
-    );
+    return firstValueFrom(this.http.post(`${this.baseUrl}${url}`, body, { responseType: 'blob' }));
   }
 
   protected patchHttp<T>(url: string, body: any): Promise<T> {
-    const headers = new HttpHeaders({ 'Accept-Language': 'en' });
-    return firstValueFrom(this.http.patch<T>(`${this.baseUrl}${url}`, body, { headers: headers }));
+    return firstValueFrom(this.http.patch<T>(`${this.baseUrl}${url}`, body));
   }
 
   protected deleteHttp<T>(url: string): Promise<T> {

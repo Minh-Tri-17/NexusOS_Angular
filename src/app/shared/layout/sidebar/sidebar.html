@@ -3,26 +3,26 @@
     <img src="/logo.png" alt="Nexus Logo" class="brand-logo-img" />
     <div>
       <h1 class="brand-title">Nexus</h1>
-      <div class="brand-subtitle">Human Resource & Sales</div>
+      <div class="brand-subtitle">{{ 'common.brandSubtitle' | translate }}</div>
     </div>
   </div>
 
   <nav class="sidebar-nav">
     <a class="nav-link" title="Dashboard" [routerLink]="['/']" routerLinkActive="active">
       <i class="fa-solid fa-house"></i>
-      <span>Dashboard</span>
+      <span>{{ 'sidebar.dashboard' | translate }}</span>
     </a>
     <a class="nav-link" title="Employees" [routerLink]="['/']">
       <i class="fa-solid fa-user-group"></i>
-      <span>Employees</span>
+      <span>{{ 'sidebar.employees' | translate }}</span>
     </a>
     <a class="nav-link" title="Recruitment" [routerLink]="['/']">
       <i class="fa-solid fa-user-plus"></i>
-      <span>Recruitment</span>
+      <span>{{ 'sidebar.recruitment' | translate }}</span>
     </a>
     <a class="nav-link" title="Leave Management" [routerLink]="['/']">
       <i class="fa-solid fa-calendar-minus"></i>
-      <span>Leave Management</span>
+      <span>{{ 'sidebar.leaveManagement' | translate }}</span>
     </a>
     <div class="nav-item-collapsible">
       <a
@@ -32,12 +32,12 @@
         (click)="isCollapsed = !isCollapsed"
       >
         <i class="fa-solid fa-layer-group"></i>
-        <span>Categories</span>
+        <span>{{ 'sidebar.categories' | translate }}</span>
         <i class="fa-solid fa-plus toggle-chevron ms-auto"></i>
       </a>
       <div class="collapse" [ngbCollapse]="isCollapsed">
         <div class="submenu-list">
-          <div class="submenu-header">Geography</div>
+          <div class="submenu-header">{{ 'sidebar.geography' | translate }}</div>
           <a
             class="submenu-link"
             title="Country"
@@ -45,22 +45,22 @@
             routerLinkActive="active"
           >
             <i class="fa-solid fa-globe"></i>
-            <span>Country</span>
+            <span>{{ 'sidebar.country' | translate }}</span>
           </a>
           <a class="submenu-link" title="Province" [routerLink]="['/']">
             <i class="fa-solid fa-map"></i>
-            <span>Province</span>
+            <span>{{ 'sidebar.province' | translate }}</span>
           </a>
           <a class="submenu-link" title="Ward" [routerLink]="['/']">
             <i class="fa-solid fa-location-dot"></i>
-            <span>Ward</span>
+            <span>{{ 'sidebar.ward' | translate }}</span>
           </a>
         </div>
       </div>
     </div>
     <a class="nav-link" [routerLink]="['/']">
       <i class="fa-solid fa-gear"></i>
-      <span>Settings</span>
+      <span>{{ 'sidebar.settings' | translate }}</span>
     </a>
   </nav>
 
@@ -69,18 +69,20 @@
       <div class="d-flex align-items-center justify-content-between mb-2">
         <div class="status-indicator-pill">
           <span class="live-pulse-dot"></span>
-          <span class="status-text">Operational</span>
+          <span class="status-text">{{ 'sidebar.operational' | translate }}</span>
         </div>
         <span class="version-badge">v2.4.0</span>
       </div>
       <div class="status-brand-title">
         <i class="fa-solid fa-cube brand-icon"></i>
-        <span>NexusOST Enterprise</span>
+        <span>{{ 'common.enterprisePortal' | translate }}</span>
       </div>
       <div class="status-footer-sub">
         <span>&copy; 2026 Suite</span>
         <span class="status-dot-sep">&bull;</span>
-        <span class="uptime-tag"><i class="fa-solid fa-bolt me-1"></i>99.9% Uptime</span>
+        <span class="uptime-tag"
+          ><i class="fa-solid fa-bolt me-1"></i>99.9% {{ 'sidebar.uptime' | translate }}</span
+        >
       </div>
     </div>
   </div>

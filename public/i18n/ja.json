@@ -1,7 +1,5 @@
 {
   "auth": {
-    "brandSubtitle": "人事 ＆ 営業",
-    "enterprisePortal": "エンタープライズポータル",
     "enterprisePlatform": "企業リソース・人事管理プラットフォーム",
     "title": "ワークスペースにサインイン",
     "titleForm": "ワークスペースにサインイン",
@@ -47,6 +45,25 @@
     "edit": "編集",
     "delete": "削除",
     "import": "インポート",
-    "export": "エクスポート"
+    "export": "エクスポート",
+    "brandSubtitle": "人事 ＆ 営業",
+    "enterprisePortal": "エンタープライズポータル",
+    "errorOccurred": "エラーが発生しました",
+    "save": "保存",
+    "saving": "保存中..."
+  },
+  "sidebar": {
+    "dashboard": "ダッシュボード",
+    "employees": "従業員",
+    "recruitment": "採用管理",
+    "leaveManagement": "休暇管理",
+    "categories": "カテゴリー",
+    "geography": "地域・地理",
+    "country": "国",
+    "province": "都道府県",
+    "ward": "市区町村",
+    "settings": "設定",
+    "operational": "稼働中",
+    "uptime": "稼働率"
   }
 }

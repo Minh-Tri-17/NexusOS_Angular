@@ -1,7 +1,5 @@
 {
   "auth": {
-    "brandSubtitle": "人力资源与销售",
-    "enterprisePortal": "企业门户",
     "enterprisePlatform": "企业资源与劳动力平台",
     "title": "登录工作区",
     "titleForm": "登录工作区",
@@ -47,6 +45,25 @@
     "edit": "编辑",
     "delete": "删除",
     "import": "导入",
-    "export": "导出"
+    "export": "导出",
+    "brandSubtitle": "人力资源与销售",
+    "enterprisePortal": "企业门户",
+    "errorOccurred": "发生错误！",
+    "save": "保存",
+    "saving": "正在保存..."
+  },
+  "sidebar": {
+    "dashboard": "仪表板",
+    "employees": "员工管理",
+    "recruitment": "招聘管理",
+    "leaveManagement": "请假管理",
+    "categories": "分类管理",
+    "geography": "地理信息",
+    "country": "国家",
+    "province": "省份 / 城市",
+    "ward": "区 / 街道",
+    "settings": "系统设置",
+    "operational": "运行正常",
+    "uptime": "运行时间"
   }
 }
