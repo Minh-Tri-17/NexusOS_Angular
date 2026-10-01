@@ -2,6 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { TranslatePipe } from '@ngx-translate/core';
 import { AuthService } from '../../../../core/services/auth.service';
 import { AuthFacade } from '../../data-access/auth.facade';
 import { AuthModel } from '../../data-access/auth.model';
@@ -30,7 +31,7 @@ export type LoginTab = 'email' | 'empId';
 
 @Component({
   selector: 'app-login-form',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, TranslatePipe],
   templateUrl: './login-form.html',
   styleUrl: './login-form.scss',
 })
@@ -44,19 +45,16 @@ export class LoginForm {
   readonly demoRoles = [
     {
       key: 'director',
-      label: 'Director',
       icon: 'fa-solid fa-user-tie text-primary',
       pillClass: 'demo-pill-director',
     },
     {
       key: 'hr',
-      label: 'HR Manager',
       icon: 'fa-solid fa-user-gear text-success',
       pillClass: 'demo-pill-hr',
     },
     {
       key: 'employee',
-      label: 'Employee',
       icon: 'fa-solid fa-user text-info',
       pillClass: 'demo-pill-employee',
     },

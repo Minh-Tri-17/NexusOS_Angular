@@ -9,6 +9,7 @@ import { showToast } from '../../../../shared/components/toast/toast.util';
 import { AuthFacade } from '../../data-access/auth.facade';
 import { AuthModel } from '../../data-access/auth.model';
 import { OTPModel } from '../../data-access/otp.model';
+import { TranslatePipe } from '@ngx-translate/core';
 
 interface PasswordStrengthState {
   width: string;
@@ -18,7 +19,7 @@ interface PasswordStrengthState {
 
 @Component({
   selector: 'app-forgot-password-modal',
-  imports: [NgbModule, ReactiveFormsModule],
+  imports: [NgbModule, ReactiveFormsModule,TranslatePipe],
   templateUrl: './forgot-password-modal.html',
   styleUrl: './forgot-password-modal.scss',
 })

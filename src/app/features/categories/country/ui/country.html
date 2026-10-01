@@ -23,7 +23,7 @@
           class="btn btn-sm btn-pastel-green d-inline-flex align-items-center gap-2 px-3 py-2 rounded-3 shadow-xs"
           (click)="handleOpenCreate()"
         >
-          <i class="fa-solid fa-plus"></i> Create
+          <i class="fa-solid fa-plus"></i> {{ 'common.create' | translate }}
         </button>
         <button
           type="button"
@@ -31,7 +31,7 @@
           [disabled]="selectedIds().size !== 1"
           (click)="handleOpenUpdate()"
         >
-          <i class="fa-solid fa-pen-to-square"></i> Edit
+          <i class="fa-solid fa-pen-to-square"></i> {{ 'common.edit' | translate }}
         </button>
         <button
           type="button"
@@ -39,7 +39,7 @@
           [disabled]="selectedIds().size < 1"
           (click)="handleDeleteSelected()"
         >
-          <i class="fa-solid fa-trash-can"></i> Delete
+          <i class="fa-solid fa-trash-can"></i> {{ 'common.delete' | translate }}
         </button>
       </div>
 
@@ -51,14 +51,14 @@
           class="btn btn-sm btn-pastel-indigo d-inline-flex align-items-center gap-2 px-3 py-2 rounded-3 shadow-xs"
           (click)="openImportModal()"
         >
-          <i class="fa-solid fa-file-import"></i> Import
+          <i class="fa-solid fa-file-import"></i> {{ 'common.import' | translate }}
         </button>
         <button
           type="button"
           class="btn btn-sm btn-pastel-indigo d-inline-flex align-items-center gap-2 px-3 py-2 rounded-3 shadow-xs"
           (click)="openExportModal()"
         >
-          <i class="fa-solid fa-file-export"></i> Export
+          <i class="fa-solid fa-file-export"></i> {{ 'common.export' | translate }}
         </button>
       </div>
     </ng-container>

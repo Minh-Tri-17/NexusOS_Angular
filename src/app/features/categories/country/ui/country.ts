@@ -2,6 +2,7 @@ import { DatePipe } from '@angular/common';
 import { Component, computed, effect, inject, Injector, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { TranslatePipe } from '@ngx-translate/core';
 import { BASE_CONSTANTS } from '../../../../core/constants/base.constant';
 import { FilterOperator, FilterType } from '../../../../core/constants/filter.enum';
 import { PagingRequest } from '../../../../core/models/paging.model';
@@ -24,7 +25,7 @@ import { CountryModal } from './editor-modal/country-modal';
 
 @Component({
   selector: 'app-country',
-  imports: [Summary, Toolbar, Pagination, Table, DatePipe, FormsModule, Placeholder],
+  imports: [Summary, Toolbar, Pagination, Table, DatePipe, FormsModule, Placeholder, TranslatePipe],
   templateUrl: './country.html',
   styleUrl: './country.scss',
 })
