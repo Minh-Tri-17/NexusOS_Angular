@@ -1,9 +1,10 @@
 import { Component, computed, input, model } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-pagination',
-  imports: [FormsModule],
+  imports: [FormsModule, TranslatePipe],
   templateUrl: './pagination.html',
   styleUrl: './pagination.scss',
 })

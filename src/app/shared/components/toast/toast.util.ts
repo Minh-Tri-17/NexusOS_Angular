@@ -10,7 +10,7 @@ export interface ToastOptions {
 }
 
 export function showToast({
-  title = 'Notification',
+  title = 'common.notification',
   message = '',
   type = 'success',
   duration = 3000,

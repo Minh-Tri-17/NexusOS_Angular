@@ -1,11 +1,12 @@
 import { Component, computed, input } from '@angular/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { toast } from 'ngx-sonner';
 
 export type ToastType = 'primary' | 'info' | 'success' | 'warning' | 'danger';
 
 @Component({
   selector: 'app-toast',
-  imports: [],
+  imports: [TranslatePipe],
   templateUrl: './toast.html',
   styleUrl: './toast.scss',
 })
@@ -13,7 +14,7 @@ export class Toast {
   //#region //@ PROPS
 
   readonly toastId = input<string | number>();
-  readonly title = input<string>('Notification');
+  readonly title = input<string>();
   readonly messages = input<string[]>([]);
   readonly type = input<ToastType>('success');
   readonly customIcon = input<string | null>(null);

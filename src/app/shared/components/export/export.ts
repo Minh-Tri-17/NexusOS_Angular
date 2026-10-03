@@ -1,10 +1,10 @@
-import { Component, computed, inject, input, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { BASE_CONSTANTS } from '../../../core/constants/base.constant';
-import { EXPORT_MODAL_CONTEXT } from '../modal/modal-context';
 import { FilterOperator, FilterType } from '../../../core/constants/filter.enum';
-import { PagingRequest } from '../../../core/models/paging.model';
 import { BaseService } from '../../../core/services/base.service';
 import { Modal } from '../modal/modal';
+import { EXPORT_MODAL_CONTEXT } from '../modal/modal-context';
 
 export type ExportOption =
   | typeof BASE_CONSTANTS.exportOptionAll
@@ -13,7 +13,7 @@ export type ExportOption =
 
 @Component({
   selector: 'app-export',
-  imports: [Modal],
+  imports: [Modal, TranslatePipe],
   templateUrl: './export.html',
   styleUrl: './export.scss',
 })
@@ -24,13 +24,14 @@ export class Export {
 
   //#region //@ PROPS
 
-  readonly exportFn = input<(filter: PagingRequest) => Promise<Blob>>();
-  readonly fileName = input<string>('export');
-  readonly currentFilter = input<PagingRequest>();
-  readonly totalRecord = input<number>(0);
-  readonly fromRecord = input<number>(0);
-  readonly toRecord = input<number>(0);
-  readonly selectedIds = input<Set<string>>(new Set());
+  //* Dữ liệu truyền qua Injector (khi mở bằng NgbModal.open).
+  readonly exportFn = () => this.ctx?.exportFn;
+  readonly currentFilter = () => this.ctx?.currentFilter;
+  readonly totalRecord = () => this.ctx?.totalRecord ?? 0;
+  readonly fromRecord = () => this.ctx?.fromRecord ?? 0;
+  readonly toRecord = () => this.ctx?.toRecord ?? 0;
+  readonly selectedIds = () => this.ctx?.selectedIds ?? new Set();
+  readonly fileName = () => this.ctx?.fileName ?? 'export';
 
   //#endregion
 
@@ -42,21 +43,12 @@ export class Export {
   readonly progressStatus = signal('');
   readonly progressPercentage = signal(0);
 
-  //* Ưu tiên dữ liệu truyền qua Injector (khi mở bằng NgbModal.open), fallback về input binding.
-  private readonly resolvedExportFn = () => this.ctx?.exportFn ?? this.exportFn();
-  private readonly resolvedCurrentFilter = () => this.ctx?.currentFilter ?? this.currentFilter();
-  private readonly resolvedTotalRecord = () => this.ctx?.totalRecord ?? this.totalRecord();
-  private readonly resolvedFromRecord = () => this.ctx?.fromRecord ?? this.fromRecord();
-  private readonly resolvedToRecord = () => this.ctx?.toRecord ?? this.toRecord();
-  private readonly resolvedSelectedIds = () => this.ctx?.selectedIds ?? this.selectedIds();
-  private readonly resolvedFileName = () => this.ctx?.fileName ?? this.fileName();
-
   //* computed() dùng để tính toán giá trị dựa trên state khác
-  readonly canExportSelectItems = computed(() => this.resolvedSelectedIds().size > 0);
-  readonly canExportAllPage = computed(() => this.resolvedTotalRecord() > 0);
+  readonly canExportSelectItems = computed(() => this.selectedIds().size > 0);
+  readonly canExportAllPage = computed(() => this.totalRecord() > 0);
   readonly totalPageRecord = computed(() => {
-    const to = this.resolvedToRecord();
-    const from = this.resolvedFromRecord();
+    const to = this.toRecord();
+    const from = this.fromRecord();
     if (to === 0 || from === 0 || to < from) return 0;
 
     return to - from + 1;
@@ -67,7 +59,7 @@ export class Export {
   //#region //@ HELPERS
 
   private buildExportFilter(option: ExportOption) {
-    const baseFilter = { ...this.resolvedCurrentFilter() };
+    const baseFilter = { ...this.currentFilter() };
 
     switch (option) {
       case BASE_CONSTANTS.exportOptionAll:
@@ -150,29 +142,29 @@ export class Export {
 
     this.isExporting.set(true);
     this.showProgress.set(true);
-    this.animateProgress(0, 'Generating export file...');
+    this.animateProgress(0, 'common.generatingExportFile');
 
     try {
       const filter = this.buildExportFilter(option);
-      this.animateProgress(10, 'Building request...');
+      this.animateProgress(10, 'common.buildingRequest');
       await this.delay(300);
 
-      this.animateProgress(30, 'Requesting data...');
+      this.animateProgress(30, 'common.requestingData');
       await this.delay(200);
-      const blob = await this.resolvedExportFn()!(filter);
-      this.animateProgress(80, 'Processing file...');
+      const blob = await this.exportFn()!(filter);
+      this.animateProgress(80, 'common.processingFile');
       await this.delay(400);
 
       if (!blob || blob.size === 0) {
-        this.animateProgress(0, 'Export failed. Please try again.');
+        this.animateProgress(0, 'common.exportFailed');
         await this.delay(3000);
       } else {
         this.downloadBlob(blob);
-        this.animateProgress(100, 'Export completed!');
+        this.animateProgress(100, 'common.exportCompleted');
         await this.delay(500);
       }
     } catch {
-      this.animateProgress(0, 'Export failed. Please try again.');
+      this.animateProgress(0, 'common.exportFailed');
       await this.delay(3000);
     } finally {
       this.isExporting.set(false);

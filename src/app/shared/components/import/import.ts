@@ -1,12 +1,12 @@
-import { Component, ElementRef, inject, input, output, signal, viewChild } from '@angular/core';
-import { Result } from '../../../core/models/common.model';
+import { Component, ElementRef, inject, output, signal, viewChild } from '@angular/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { BaseService } from '../../../core/services/base.service';
 import { Modal } from '../modal/modal';
 import { IMPORT_MODAL_CONTEXT } from '../modal/modal-context';
 
 @Component({
   selector: 'app-import',
-  imports: [Modal],
+  imports: [Modal, TranslatePipe],
   templateUrl: './import.html',
   styleUrl: './import.scss',
 })
@@ -19,8 +19,10 @@ export class Import {
 
   //#region //@ PROPS
 
-  readonly importFn = input<(file: File) => Promise<Result<boolean>>>();
+  //* Dữ liệu truyền qua Injector (khi mở bằng NgbModal.open).
+  readonly importFn = () => this.ctx?.importFn;
   readonly importSuccess = output<void>();
+  readonly fileInput = viewChild<ElementRef<HTMLInputElement>>('importFileInput');
 
   //#endregion
 
@@ -33,8 +35,6 @@ export class Import {
   readonly showProgress = signal(false);
   readonly progressStatus = signal('');
   readonly progressPercentage = signal(0);
-
-  readonly fileInput = viewChild<ElementRef<HTMLInputElement>>('importFileInput');
 
   //#endregion
 
@@ -133,27 +133,27 @@ export class Import {
 
     this.isImporting.set(true);
     this.showProgress.set(true);
-    this.animateProgress(0, 'Preparing import...');
+    this.animateProgress(0, 'common.preparingImport');
 
     try {
-      this.animateProgress(10, 'Reading file...');
+      this.animateProgress(10, 'common.readingFile');
       await this.delay(300);
-      this.animateProgress(30, 'Uploading data...');
+      this.animateProgress(30, 'common.uploadingData');
       await this.delay(200);
-      const result = await (this.ctx?.importFn ?? this.importFn()!)(file);
-      this.animateProgress(80, 'Processing file...');
+      const result = await this.importFn()!(file);
+      this.animateProgress(80, 'common.processingFile');
       await this.delay(400);
 
       if (!result.isSuccess) {
-        this.animateProgress(0, 'Import failed. Please try again.');
+        this.animateProgress(0, 'common.importFailed');
         await this.delay(3000);
       } else {
-        this.animateProgress(100, 'Import completed!');
+        this.animateProgress(100, 'common.importCompleted');
         await this.delay(500);
         this.importSuccess.emit();
       }
     } catch {
-      this.animateProgress(0, 'Import failed. Please try again.');
+      this.animateProgress(0, 'common.importFailed');
       await this.delay(3000);
     } finally {
       this.isImporting.set(false);

@@ -1,9 +1,10 @@
 import { Component, model, output, signal } from '@angular/core';
 import { NgbCollapse } from '@ng-bootstrap/ng-bootstrap';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-toolbar',
-  imports: [NgbCollapse],
+  imports: [NgbCollapse, TranslatePipe],
   templateUrl: './toolbar.html',
   styleUrl: './toolbar.scss',
 })

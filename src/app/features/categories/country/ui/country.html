@@ -1,4 +1,11 @@
-<app-summary></app-summary>
+<app-summary>
+  <ng-container title-header>
+    {{ 'country.title' | translate }}
+  </ng-container>
+  <ng-container description>
+    {{ 'country.description' | translate }}
+  </ng-container>
+</app-summary>
 
 <div class="erp-card p-4 shadow-sm rounded-4">
   <app-toolbar
@@ -9,7 +16,7 @@
     <ng-container active-filters>
       @if (filterRegion()) {
         <span class="filter-chip">
-          <i class="fa-solid fa-compass chip-icon"></i> Region:
+          <i class="fa-solid fa-compass chip-icon"></i> {{ 'country.region' | translate }}:
           <strong>{{ filterRegion() }}</strong>
           <i class="fa-solid fa-xmark chip-remove-btn" (click)="filterRegion.set('')"></i>
         </span>
@@ -65,15 +72,19 @@
 
     <ng-container filter-matrix>
       <div class="col-md-2">
-        <label class="form-label small fw-semibold text-muted">Region / Continent</label>
+        <label class="form-label small fw-semibold text-muted">{{
+          'common.region' | translate
+        }}</label>
         <select
           class="form-select form-select-sm rounded-3 filter-select w-100"
           [ngModel]="filterRegion()"
           (ngModelChange)="filterRegion.set($event)"
         >
-          <option value="">All Regions</option>
+          <option value="">{{ 'country.allRegions' | translate }}</option>
           @for (region of regions; track region) {
-            <option [value]="region">{{ region }}</option>
+            <option [value]="region">
+              {{ 'country.' + region.toLocaleLowerCase() | translate }}
+            </option>
           }
         </select>
       </div>
@@ -93,7 +104,7 @@
         </th>
         <th class="text-center" style="width: 50px">#</th>
         @for (column of countryColumns; track column) {
-          <th>{{ column }}</th>
+          <th>{{ 'country.' + column.toLocaleLowerCase() | translate }}</th>
         }
       </tr>
     </ng-container>
@@ -114,7 +125,7 @@
               />
             </td>
             <td class="td-cell text-center">{{ fromRecord() + idx }}</td>
-            <td>
+            <td class="text-nowrap">
               <span class="badge-soft badge-blue">#{{ country.countryCode }}</span>
             </td>
             <td>
@@ -128,7 +139,7 @@
                 <span
                   class="badge bg-danger-subtle text-danger border border-danger-subtle fs-xs rounded-pill px-2 py-0.5 mt-1"
                 >
-                  <i class="fa-solid fa-trash-can me-1"></i>Soft Deleted
+                  <i class="fa-solid fa-trash-can me-1"></i> {{ 'common.softDeleted' | translate }}
                 </span>
               }
             </td>
@@ -140,9 +151,10 @@
                 <i class="fa-solid fa-location-dot text-primary"></i>{{ country.capital }}</span
               >
             </td>
-            <td>
+            <td class="text-nowrap">
               <span class="badge-soft" [class]="badgeColors[idx % badgeColors.length]">
-                <i class="fa-solid fa-globe-asia"></i>{{ country.region }}</span
+                <i class="fa-solid fa-globe-asia"></i
+                >{{ 'country.' + country.region.toLocaleLowerCase() | translate }}</span
               >
             </td>
             <td>
@@ -150,7 +162,7 @@
                 <i class="fa-regular fa-user"></i>{{ country.createdBy }}</span
               >
             </td>
-            <td>
+            <td class="text-nowrap">
               <span class="text-muted small">{{ country.createdAt | date }}</span>
             </td>
             <td>
@@ -158,7 +170,7 @@
                 <i class="fa-regular fa-user"></i>{{ country.updatedBy }}</span
               >
             </td>
-            <td>
+            <td class="text-nowrap">
               <span class="text-muted small">{{ country.updatedAt | date }}</span>
             </td>
             <td>

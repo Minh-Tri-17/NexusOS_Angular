@@ -11,7 +11,7 @@
         #searchInput
         type="text"
         class="form-control form-control-sm ps-5 pe-3 rounded-3 filter-input"
-        placeholder="Search name, code..."
+        placeholder=" {{ 'common.searchNameCode' | translate }}"
         [value]="searchText()"
         (keyup.enter)="handleSearch(searchInput.value)"
       />
@@ -23,7 +23,7 @@
       [attr.aria-expanded]="!filterCollapsed()"
       (click)="filterCollapsed.set(!filterCollapsed())"
     >
-      <i class="fa-solid fa-sliders text-primary"></i> Filter
+      <i class="fa-solid fa-sliders text-primary"></i> {{ 'common.filter' | translate }}
     </button>
 
     <label
@@ -42,7 +42,8 @@
         <span class="toggle-slider"></span>
       </span>
       <span class="small fw-semibold text-secondary mb-0">
-        <i class="fa-solid fa-trash-arrow-up text-danger me-1"></i> Show Deleted
+        <i class="fa-solid fa-trash-arrow-up text-danger me-1"></i>
+        {{ 'common.showDeleted' | translate }}
       </span>
     </label>
   </div>
@@ -53,12 +54,13 @@
 </div>
 
 <div class="active-filter-chips-bar mb-3">
-  <span class="text-muted small fw-semibold me-1">Active Filters:</span>
+  <span class="text-muted small fw-semibold me-1">{{ 'common.activeFilters' | translate }}:</span>
 
   @if (filterIsDelete()) {
     <span class="filter-chip chip-is-delete">
-      <i class="fa-solid fa-trash-arrow-up chip-icon text-danger"></i> Filter:
-      <strong class="text-danger">Show Deleted</strong>
+      <i class="fa-solid fa-trash-arrow-up chip-icon text-danger"></i>
+      {{ 'common.filter' | translate }}:
+      <strong class="text-danger">{{ 'common.showDeleted' | translate }}</strong>
       <i class="fa-solid fa-xmark chip-remove-btn" (click)="filterIsDelete.set(false)"></i>
     </span>
   }
@@ -69,7 +71,7 @@
     class="btn btn-link text-muted p-0 border-0 btn-clear-all-chips ms-auto"
     (click)="handleClearFilters()"
   >
-    <i class="fa-solid fa-trash-can me-1"></i> Clear All
+    <i class="fa-solid fa-trash-can me-1"></i> {{ 'common.clearAll' | translate }}
   </button>
 </div>
 
@@ -77,9 +79,10 @@
   <div class="smart-filter-matrix mb-3">
     <div class="d-flex align-items-center justify-content-between mb-3 pb-2 border-bottom">
       <span class="fw-bold small text-muted text-uppercase tracking-wider">
-        <i class="fa-solid fa-sliders text-primary me-2"></i>Filter Criteria Matrix
+        <i class="fa-solid fa-sliders text-primary me-2"></i>
+        {{ 'common.filterCriteriaMatrix' | translate }}
       </span>
-      <span class="text-muted small">Select criteria to refine results</span>
+      <span class="text-muted small">{{ 'common.selectCriteriaToRefineResults' | translate }}</span>
     </div>
     <div class="row g-3">
       <ng-content select="[filter-matrix]"></ng-content>

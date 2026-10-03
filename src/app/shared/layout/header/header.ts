@@ -7,10 +7,11 @@ import { auditTime, fromEvent } from 'rxjs';
 import { AuthService } from '../../../core/services/auth.service';
 import { ThemeService } from '../../../core/services/theme.service';
 import { Languages } from '../../components/languages/languages';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-header',
-  imports: [NgbDropdownModule, Languages],
+  imports: [NgbDropdownModule, Languages, TranslatePipe],
   templateUrl: './header.html',
   styleUrl: './header.scss',
 })

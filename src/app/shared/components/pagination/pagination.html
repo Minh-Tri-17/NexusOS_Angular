@@ -1,14 +1,15 @@
 <div class="app-table-footer" role="region" aria-label="Table pagination footer">
   <div class="app-footer-left">
     <div class="app-footer-counter">
-      <span
-        >Showing <strong>{{ recordRange() }}</strong> of
-        <strong>{{ totalRecord() }}</strong> items</span
+      <span>
+        {{ 'common.showing' | translate }} <strong>{{ recordRange() }}</strong>
+        {{ 'common.of' | translate }} <strong>{{ totalRecord() }}</strong>
+        {{ 'common.items' | translate }}</span
       >
     </div>
     <div class="app-footer-divider"></div>
     <div class="app-page-size-picker">
-      <span>Rows per page:</span>
+      <span> {{ 'common.rowsPerPage' | translate }}:</span>
       <select
         class="app-size-select"
         aria-label="Rows per page"
@@ -25,7 +26,7 @@
   </div>
 
   <div class="app-footer-center">
-    <span class="app-jump-label">Go to page:</span>
+    <span class="app-jump-label"> {{ 'common.goToPage' | translate }}:</span>
     <form
       #jumpForm="ngForm"
       class="app-jump-form"

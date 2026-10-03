@@ -1,7 +1,7 @@
 <app-modal>
-  <ng-container modal-eyebrow> DATA EXPORT WIZARD </ng-container>
+  <ng-container modal-eyebrow> {{ 'common.exportDataWizard' | translate }} </ng-container>
 
-  <ng-container modal-title> Export Data </ng-container>
+  <ng-container modal-title> {{ 'common.exportData' | translate }} </ng-container>
 
   <ng-container modal-header-extra>
     <span class="badge-soft badge-indigo d-none d-sm-inline-flex">
@@ -16,10 +16,12 @@
           <div class="form-section-header">
             <div class="d-flex align-items-center gap-2">
               <i class="fa-solid fa-layer-group text-primary"></i>
-              <span class="fw-bold">EXPORT RANGE / SCOPE</span>
+              <span class="fw-bold">
+                {{ 'common.exportRangeScope' | translate }}
+              </span>
             </div>
             <span class="badge-soft badge-orange">
-              <i class="fa-solid fa-list-check"></i> 3 Options
+              <i class="fa-solid fa-list-check"></i> 3 {{ 'common.options' | translate }}
             </span>
           </div>
 
@@ -45,12 +47,16 @@
                     <i class="fa-solid fa-database fs-5"></i>
                   </div>
                   <div>
-                    <span class="fw-bold text-dark d-block mb-0 fs-6">All Pages</span>
-                    <span class="text-muted small">Export complete dataset across all pages</span>
+                    <span class="fw-bold text-dark d-block mb-0 fs-6">
+                      {{ 'common.allPages' | translate }}
+                    </span>
+                    <span class="text-muted small">
+                      {{ 'common.exportCompleteDatasetAcrossAllPages' | translate }}
+                    </span>
                   </div>
                 </div>
                 <span class="badge-soft badge-indigo px-3 py-1 me-1"
-                  >{{ totalRecord() || 0 }} Total Records</span
+                  >{{ totalRecord() || 0 }} {{ 'common.totalRecords' | translate }}</span
                 >
               </label>
             </div>
@@ -76,12 +82,19 @@
                     <i class="fa-solid fa-file-lines fs-5"></i>
                   </div>
                   <div>
-                    <span class="fw-bold text-dark d-block mb-0 fs-6">Current Page</span>
-                    <span class="text-muted small">Export rows visible on current grid view</span>
+                    <span class="fw-bold text-dark d-block mb-0 fs-6">
+                      {{ 'common.currentPage' | translate }}</span
+                    >
+                    <span class="text-muted small">
+                      {{ 'common.exportRowsVisibleOnCurrentGridView' | translate }}</span
+                    >
                   </div>
                 </div>
-                <span class="badge-soft badge-teal px-3 py-1 me-1"
-                  >Page {{ currentFilter()?.pageIndex }} ({{ totalPageRecord() }} Rows)</span
+                <span class="badge-soft badge-teal px-3 py-1 me-1">
+                  {{ 'common.page' | translate }} {{ currentFilter()?.pageIndex }} ({{
+                    totalPageRecord()
+                  }}
+                  {{ 'common.rows' | translate }})</span
                 >
               </label>
             </div>
@@ -108,14 +121,18 @@
                     <i class="fa-solid fa-list-check fs-5"></i>
                   </div>
                   <div>
-                    <span class="fw-bold text-dark d-block mb-0 fs-6">Selected Items</span>
-                    <span class="text-muted small">Export checked items from data grid</span>
+                    <span class="fw-bold text-dark d-block mb-0 fs-6">
+                      {{ 'common.selectedItems' | translate }}</span
+                    >
+                    <span class="text-muted small">
+                      {{ 'common.exportCheckedItemsFromDataGrid' | translate }}</span
+                    >
                   </div>
                 </div>
                 <span
                   class="badge-soft badge-purple px-3 py-1 me-1"
                   id="exportSelectedItemCountBadge"
-                  >{{ selectedIds().size }} Items Selected</span
+                  >{{ selectedIds().size }} {{ 'common.selectedItems' | translate }}</span
                 >
               </label>
             </div>
@@ -124,7 +141,7 @@
           @if (showProgress()) {
             <div class="import-progress-wrapper mt-3">
               <div class="d-flex align-items-center justify-content-between mb-1">
-                <span class="small fw-semibold text-muted">{{ progressStatus() }}</span>
+                <span class="small fw-semibold text-muted">{{ progressStatus() | translate }}</span>
                 <span class="small fw-bold text-indigo">{{ progressPercentage() }}%</span>
               </div>
               <div class="progress custom-import-progress">
@@ -153,9 +170,9 @@
     >
       @if (isExporting()) {
         <span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
-        Exporting...
+        {{ 'common.exporting' | translate }}...
       } @else {
-        <i class="fa-solid fa-file-export me-1"></i> Start Export
+        <i class="fa-solid fa-file-export me-1"></i> {{ 'common.startExport' | translate }}
       }
     </button>
   </ng-container>

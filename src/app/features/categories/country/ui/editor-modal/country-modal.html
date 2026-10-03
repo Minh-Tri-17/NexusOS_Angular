@@ -1,11 +1,11 @@
 <app-modal>
-  <ng-container modal-eyebrow>GLOBAL GEOGRAPHY MODULE</ng-container>
+  <ng-container modal-eyebrow>{{ 'common.globalGeographyModule' | translate }}</ng-container>
 
-  <ng-container modal-title>{{ title() }} Country</ng-container>
+  <ng-container modal-title>{{ title() }} {{ 'common.country' | translate }}</ng-container>
 
   <ng-container modal-header-extra>
     <span class="badge-soft badge-teal d-none d-sm-inline-flex">
-      <i class="fa-solid fa-bolt"></i> Live Sync
+      <i class="fa-solid fa-bolt"></i> {{ 'common.liveSync' | translate }}
     </span>
   </ng-container>
 
@@ -21,16 +21,18 @@
           <div class="form-section-header">
             <div class="d-flex align-items-center gap-2">
               <i class="fa-solid fa-globe text-primary"></i>
-              <span class="fw-bold">GEOGRAPHIC IDENTIFICATION</span>
+              <span class="fw-bold">
+                {{ 'common.geographicIdentification' | translate }}
+              </span>
             </div>
             <span class="badge-soft badge-indigo">
-              <i class="fa-solid fa-list-check"></i> 5 fields
+              <i class="fa-solid fa-list-check"></i> 5 {{ 'common.fields' | translate }}
             </span>
           </div>
           <div class="row g-3">
             <div class="col-md-6">
               <label for="inputCountryCode" class="form-label custom-form-label">
-                Country Code (ISO)
+                {{ 'country.countryCode' | translate }}
               </label>
               <div class="input-group custom-input-group">
                 <span class="input-group-text"><i class="fa-solid fa-passport"></i></span>
@@ -49,7 +51,7 @@
 
             <div class="col-md-6">
               <label for="inputCountryName" class="form-label custom-form-label">
-                Country Name <span class="text-danger fw-bold">*</span>
+                {{ 'country.countryName' | translate }} <span class="text-danger fw-bold">*</span>
               </label>
               <div class="input-group custom-input-group">
                 <span class="input-group-text"><i class="fa-solid fa-flag"></i></span>
@@ -66,8 +68,7 @@
 
             <div class="col-md-6">
               <label for="inputCountryRegion" class="form-label custom-form-label">
-                Region / Continent
-                <span class="text-danger fw-bold">*</span>
+                {{ 'country.region' | translate }} <span class="text-danger fw-bold">*</span>
               </label>
               <div class="input-group custom-input-group">
                 <span class="input-group-text"><i class="fa-solid fa-compass"></i></span>
@@ -77,9 +78,11 @@
                   formControlName="region"
                   required
                 >
-                  <option value="" selected>Select Region...</option>
+                  <option value="" selected>{{ 'country.selectRegion' | translate }}</option>
                   @for (region of regions; track region) {
-                    <option [value]="region">{{ region }}</option>
+                    <option [value]="region">
+                      {{ 'country.' + region.toLocaleLowerCase() | translate }}
+                    </option>
                   }
                 </select>
               </div>
@@ -87,8 +90,7 @@
 
             <div class="col-md-6">
               <label for="inputCountryCapital" class="form-label custom-form-label">
-                Capital
-                <span class="text-danger fw-bold">*</span>
+                {{ 'country.capital' | translate }} <span class="text-danger fw-bold">*</span>
               </label>
               <div class="input-group custom-input-group">
                 <span class="input-group-text"><i class="fa-solid fa-city"></i></span>
@@ -104,16 +106,16 @@
             </div>
 
             <div class="col-12">
-              <label for="inputCountryDescription" class="form-label custom-form-label">
-                Description
+              <label for="inputCountryNote" class="form-label custom-form-label">
+                {{ 'country.note' | translate }}
               </label>
               <div class="input-group custom-input-group">
                 <span class="input-group-text"><i class="fa-solid fa-align-left"></i></span>
                 <textarea
                   class="form-control custom-form-control"
-                  id="inputCountryDescription"
+                  id="inputCountryNote"
                   rows="3"
-                  placeholder="Enter country description..."
+                  placeholder="{{ 'country.placeholderNote' | translate }}"
                   formControlName="note"
                 >
                 </textarea>
