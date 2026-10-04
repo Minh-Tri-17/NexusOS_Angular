@@ -118,7 +118,7 @@ export class ForgotPasswordModal {
   readonly isSendingOtp = signal(false);
   readonly isVerifyingOtp = signal(false);
   readonly isResetting = signal(false);
-  readonly isPasswordsMatch = signal(false);
+  readonly isPasswordMismatch = signal(false);
 
   //#endregion
 
@@ -203,9 +203,9 @@ export class ForgotPasswordModal {
 
     const { password, confirmPassword } = this.forgotNewPasswordForm.getRawValue();
 
-    if (password !== confirmPassword) return this.isPasswordsMatch.set(true);
+    if (password !== confirmPassword) return this.isPasswordMismatch.set(true);
 
-    this.isPasswordsMatch.set(false);
+    this.isPasswordMismatch.set(false);
     this.isResetting.set(true);
     //* getRawValue() lấy toàn bộ giá trị của form, kể cả ô bị disabled
     const rawValues: AuthModel = this.forgotNewPasswordForm.getRawValue();

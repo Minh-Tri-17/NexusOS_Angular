@@ -1,4 +1,4 @@
-import { Component, ElementRef, inject, output, signal, viewChild } from '@angular/core';
+import { Component, computed, ElementRef, inject, output, signal, viewChild } from '@angular/core';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { BaseService } from '../../../core/services/base.service';
 import { Modal } from '../modal/modal';
@@ -36,6 +36,8 @@ export class Import {
   readonly showProgress = signal(false);
   readonly progressStatus = signal('');
   readonly progressPercentage = signal(0);
+  //* computed() dùng để tính toán giá trị dựa trên state khác
+  readonly isHasFile = computed(() => this.selectedFile() !== null);
 
   //#endregion
 

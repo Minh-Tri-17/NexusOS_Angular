@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, computed, effect, inject, Injector, signal } from '@angular/core';
+import { Component, computed, effect, inject, Injector, linkedSignal, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -51,7 +51,6 @@ export class Country {
     'badge-teal',
   ];
 
-  readonly pageIndex = signal(1);
   readonly pageSize = signal(20);
   readonly fromRecord = signal(1);
   readonly toRecord = signal(20);
@@ -61,9 +60,19 @@ export class Country {
   readonly countries = signal<CountryModel[]>([]);
   readonly searchText = signal('');
   readonly filterRegion = signal('');
-  readonly selectedIds = signal<Set<string>>(new Set());
   readonly filterIsDelete = signal(false);
+  readonly selectedIds = signal<Set<string>>(new Set());
   readonly isLoading = signal(false);
+
+  readonly pageIndex = linkedSignal({
+    source: () => ({
+      search: this.searchText(),
+      region: this.filterRegion(),
+      isDelete: this.filterIsDelete(),
+      pageSize: this.pageSize(),
+    }),
+    computation: () => 1,
+  });
 
   //* computed() dùng để tính toán giá trị dựa trên state khác
   readonly isSelectedAll = computed(() => {
