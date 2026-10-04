@@ -111,7 +111,22 @@
     "rows": "lignes",
     "systemNotice": "Avis du système",
     "featureModuleTitle": "Fonctionnalité en cours de développement",
-    "featureModuleMessage": "Cette fonctionnalité est actuellement en cours de développement et d'amélioration. Veuillez revenir plus tard !"
+    "featureModuleMessage": "Cette fonctionnalité est actuellement en cours de développement et d'amélioration. Veuillez revenir plus tard !",
+    "update": "Mettre à jour",
+    "strength": "Force du mot de passe",
+    "veryWeak": "Très faible",
+    "weak": "Faible",
+    "medium": "Moyen",
+    "good": "Bon",
+    "veryGood": "Fort",
+    "veryStrong": "Très fort",
+    "invalidFileType": "Type de fichier non valide. Accepté :",
+    "fileSizeExceedsLimit": "La taille du fichier dépasse la limite de",
+    "confirmDelete": "Confirmer la suppression",
+    "messageConfirmDelete": "Êtes-vous sûr de vouloir supprimer cet enregistrement ?",
+    "confirm": "Confirmer",
+    "cancel": "Annuler",
+    "messageConfirmDeleteMany": "Êtes-vous sûr de vouloir supprimer les {{count}} enregistrements sélectionnés ?"
   },
   "sidebar": {
     "dashboard": "Tableau de bord",
@@ -154,23 +169,7 @@
     "createdBy": "Créé par",
     "updatedAt": "Date de mise à jour",
     "updatedBy": "Mis à jour par",
-    "CountryCode": "Code pays",
-    "CountryName": "Nom du pays",
-    "Capital": "Capitale",
-    "Region": "Région",
-    "Note": "Remarque",
-    "CreatedAt": "Date de création",
-    "CreatedBy": "Créé par",
-    "UpdatedAt": "Date de mise à jour",
-    "UpdatedBy": "Mis à jour par",
-    "allRegion": "Toutes les régions",
     "selectRegion": "Sélectionnez une région...",
-    "placeholderNote": "Entrez une description ou une remarque sur le pays...",
-    "countrycode": "Code pays",
-    "countryname": "Nom du pays",
-    "createdat": "Date de création",
-    "createdby": "Créé par",
-    "updatedat": "Date de mise à jour",
-    "updatedby": "Mis à jour par"
+    "placeholderNote": "Entrez une description ou une remarque sur le pays..."
   }
 }

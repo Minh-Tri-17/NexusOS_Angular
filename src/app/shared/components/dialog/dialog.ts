@@ -1,20 +1,14 @@
-import {
-  Component,
-  computed,
-  inject,
-  InjectionToken,
-  input,
-  output,
-  signal,
-} from '@angular/core';
+import { Component, computed, inject, InjectionToken, input, output, signal } from '@angular/core';
 import { NgClass } from '@angular/common';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { TranslateService } from '@ngx-translate/core';
 
 export type DialogType = 'danger' | 'warning' | 'info' | 'success';
 
 export interface DialogOptions {
   title?: string;
   message?: string;
+  messageParams?: Record<string, any>;
   confirmText?: string;
   cancelText?: string;
   type?: DialogType;
@@ -32,6 +26,7 @@ export const DIALOG_OPTIONS = new InjectionToken<DialogOptions>('DIALOG_OPTIONS'
 export class Dialog {
   private readonly injectedOptions = inject(DIALOG_OPTIONS, { optional: true });
   private readonly activeModal = inject(NgbActiveModal, { optional: true });
+  private readonly translateService = inject(TranslateService);
 
   //#region //@ PROPS
 
@@ -51,55 +46,55 @@ export class Dialog {
   private readonly manualOptions = signal<DialogOptions>({});
 
   readonly title = computed(() => {
-    return (
+    const raw =
       this.manualOptions().title ??
       this.titleProp() ??
       this.injectedOptions?.title ??
-      'Xác nhận xóa'
-    );
+      'common.confirmDelete';
+    return this.translateService.instant(raw);
   });
 
   readonly message = computed(() => {
-    return (
+    const raw =
       this.manualOptions().message ??
       this.messageProp() ??
       this.injectedOptions?.message ??
-      'Bạn có chắc chắn muốn xóa bản ghi này?'
-    );
+      'common.messageConfirmDelete';
+    const rawParams = this.manualOptions().messageParams ?? this.injectedOptions?.messageParams;
+    const params = rawParams
+      ? {
+          count: rawParams['count'] ?? rawParams['length'],
+          length: rawParams['length'] ?? rawParams['count'],
+          ...rawParams,
+        }
+      : undefined;
+    return this.translateService.instant(raw, params);
   });
 
   readonly confirmText = computed(() => {
-    return (
+    const raw =
       this.manualOptions().confirmText ??
       this.confirmTextProp() ??
       this.injectedOptions?.confirmText ??
-      'Xác nhận'
-    );
+      'common.confirm';
+    return this.translateService.instant(raw);
   });
 
   readonly cancelText = computed(() => {
-    return (
+    const raw =
       this.manualOptions().cancelText ??
       this.cancelTextProp() ??
       this.injectedOptions?.cancelText ??
-      'Hủy'
-    );
+      'common.cancel';
+    return this.translateService.instant(raw);
   });
 
   readonly type = computed<DialogType>(() => {
-    return (
-      this.manualOptions().type ??
-      this.typeProp() ??
-      this.injectedOptions?.type ??
-      'danger'
-    );
+    return this.manualOptions().type ?? this.typeProp() ?? this.injectedOptions?.type ?? 'danger';
   });
 
   readonly iconClass = computed<string>(() => {
-    const custom =
-      this.manualOptions().icon ??
-      this.iconProp() ??
-      this.injectedOptions?.icon;
+    const custom = this.manualOptions().icon ?? this.iconProp() ?? this.injectedOptions?.icon;
     if (custom) return custom;
 
     switch (this.type()) {

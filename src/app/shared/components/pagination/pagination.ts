@@ -69,6 +69,7 @@ export class Pagination {
   handlePageSizeChange(event: Event) {
     const target = event.target as HTMLSelectElement;
     this.pageSize.set(Number(target.value));
+    this.pageIndex.set(1);
   }
 
   handlePageIndexChange(index: string | number) {

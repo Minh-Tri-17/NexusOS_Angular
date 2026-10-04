@@ -45,7 +45,7 @@ export class Export {
 
   //* computed() dùng để tính toán giá trị dựa trên state khác
   readonly canExportSelectItems = computed(() => this.selectedIds().size > 0);
-  readonly canExportAllPage = computed(() => this.totalRecord() > 0);
+  readonly canExportPage = computed(() => this.totalRecord() > 0);
   readonly totalPageRecord = computed(() => {
     const to = this.toRecord();
     const from = this.fromRecord();
@@ -82,8 +82,8 @@ export class Export {
             {
               filterName: BASE_CONSTANTS.id,
               filterValue: Array.from(this.selectedIds()).join(','),
-              filterType: FilterType.Guid,
-              filterOperator: FilterOperator.Contains,
+              filterType: FilterType.guid,
+              filterOperator: FilterOperator.contains,
             },
           ],
         };

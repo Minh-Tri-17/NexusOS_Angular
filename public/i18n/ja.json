@@ -111,7 +111,22 @@
     "rows": "行",
     "systemNotice": "システム通知",
     "featureModuleTitle": "機能は開発中です",
-    "featureModuleMessage": "この機能は現在開発および改善中です。後ほどもう一度ご確認ください！"
+    "featureModuleMessage": "この機能は現在開発および改善中です。後ほどもう一度ご確認ください！",
+    "update": "更新",
+    "strength": "パスワードの強度",
+    "veryWeak": "非常に弱い",
+    "weak": "弱い",
+    "medium": "普通",
+    "good": "良好",
+    "veryGood": "強い",
+    "veryStrong": "非常に強い",
+    "invalidFileType": "ファイル形式が無効です。許可形式:",
+    "fileSizeExceedsLimit": "ファイルサイズが上限を超えています:",
+    "confirmDelete": "削除の確認",
+    "messageConfirmDelete": "このレコードを削除してもよろしいですか？",
+    "confirm": "確認",
+    "cancel": "キャンセル",
+    "messageConfirmDeleteMany": "選択した {{count}} 件のレコードを削除してもよろしいですか？"
   },
   "sidebar": {
     "dashboard": "ダッシュボード",
@@ -154,23 +169,7 @@
     "createdBy": "作成者",
     "updatedAt": "更新日時",
     "updatedBy": "更新者",
-    "CountryCode": "国コード",
-    "CountryName": "国名",
-    "Capital": "首都",
-    "Region": "地域",
-    "Note": "備考",
-    "CreatedAt": "作成日時",
-    "CreatedBy": "作成者",
-    "UpdatedAt": "更新日時",
-    "UpdatedBy": "更新者",
-    "allRegion": "すべての地域",
     "selectRegion": "地域を選択...",
-    "placeholderNote": "国の説明または備考を入力...",
-    "countrycode": "国コード",
-    "countryname": "国名",
-    "createdat": "作成日時",
-    "createdby": "作成者",
-    "updatedat": "更新日時",
-    "updatedby": "更新者"
+    "placeholderNote": "国の説明または備考を入力..."
   }
 }

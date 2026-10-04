@@ -19,7 +19,7 @@ interface PasswordStrengthState {
 
 @Component({
   selector: 'app-forgot-password-modal',
-  imports: [NgbModule, ReactiveFormsModule,TranslatePipe],
+  imports: [NgbModule, ReactiveFormsModule, TranslatePipe],
   templateUrl: './forgot-password-modal.html',
   styleUrl: './forgot-password-modal.scss',
 })
@@ -79,22 +79,22 @@ export class ForgotPasswordModal {
   readonly pwdStrength = computed<PasswordStrengthState>(() => {
     const val = this.passwordValue();
 
-    if (!val) return { width: '0%', color: 'transparent', label: 'Enter password strength' };
+    if (!val) return { width: '0%', color: 'transparent', label: 'common.strength' };
 
     switch (this.score()) {
       case 1:
-        return { width: '16%', color: '#ef4444', label: 'Very Weak' };
+        return { width: '16%', color: '#ef4444', label: 'common.veryWeak' };
       case 2:
-        return { width: '33%', color: '#f97316', label: 'Weak' };
+        return { width: '33%', color: '#f97316', label: 'common.weak' };
       case 3:
-        return { width: '50%', color: '#f59e0b', label: 'Fair' };
+        return { width: '50%', color: '#f59e0b', label: 'common.medium' };
       case 4:
-        return { width: '67%', color: '#eab308', label: 'Moderate' };
+        return { width: '67%', color: '#eab308', label: 'common.good' };
       case 5:
-        return { width: '83%', color: '#3b82f6', label: 'Good' };
+        return { width: '83%', color: '#3b82f6', label: 'common.veryGood' };
       case 6:
       default:
-        return { width: '100%', color: '#10b981', label: 'Strong Password!' };
+        return { width: '100%', color: '#10b981', label: 'common.veryStrong' };
     }
   });
 
@@ -118,6 +118,7 @@ export class ForgotPasswordModal {
   readonly isSendingOtp = signal(false);
   readonly isVerifyingOtp = signal(false);
   readonly isResetting = signal(false);
+  readonly isPasswordsMatch = signal(false);
 
   //#endregion
 
@@ -142,14 +143,6 @@ export class ForgotPasswordModal {
 
   goToResetStep(step: number) {
     this.currentForgotStep.set(step);
-  }
-
-  @HostListener('hidden.bs.modal')
-  onModalClose() {
-    this.currentForgotStep.set(1);
-    this.forgotEmailForm.reset();
-    this.forgotNewPasswordForm.reset();
-    this.otpDigits.set(['', '', '', '', '', '']);
   }
 
   async handleSendOTP() {
@@ -210,15 +203,9 @@ export class ForgotPasswordModal {
 
     const { password, confirmPassword } = this.forgotNewPasswordForm.getRawValue();
 
-    if (password !== confirmPassword) {
-      showToast({
-        message: 'Passwords do not match.',
-        type: 'danger',
-      });
+    if (password !== confirmPassword) return this.isPasswordsMatch.set(true);
 
-      return;
-    }
-
+    this.isPasswordsMatch.set(false);
     this.isResetting.set(true);
     //* getRawValue() lấy toàn bộ giá trị của form, kể cả ô bị disabled
     const rawValues: AuthModel = this.forgotNewPasswordForm.getRawValue();

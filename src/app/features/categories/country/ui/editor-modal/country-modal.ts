@@ -54,7 +54,7 @@ export class CountryModal {
   });
 
   //* computed() dùng để tính toán giá trị dựa trên state khác
-  readonly title = computed(() => (this.currentId() ? 'Update' : 'Create'));
+  readonly title = computed(() => (this.currentId() ? 'common.update' : 'common.create'));
 
   //#endregion
 

@@ -111,7 +111,22 @@
     "rows": "Rows",
     "systemNotice": "System Notice",
     "featureModuleTitle": "Feature Under Development",
-    "featureModuleMessage": "This feature is currently under development and improvement. Please check back later!"
+    "featureModuleMessage": "This feature is currently under development and improvement. Please check back later!",
+    "update": "Update",
+    "strength": "Password strength",
+    "veryWeak": "Very Weak",
+    "weak": "Weak",
+    "medium": "Fair",
+    "good": "Good",
+    "veryGood": "Strong",
+    "veryStrong": "Very Strong",
+    "invalidFileType": "Invalid file type. Accepted:",
+    "fileSizeExceedsLimit": "File size exceeds limit of",
+    "confirmDelete": "Confirm Delete",
+    "messageConfirmDelete": "Are you sure you want to delete this record?",
+    "confirm": "Confirm",
+    "cancel": "Cancel",
+    "messageConfirmDeleteMany": "Are you sure you want to delete {{count}} selected records?"
   },
   "sidebar": {
     "dashboard": "Dashboard",
@@ -154,23 +169,7 @@
     "createdBy": "Created By",
     "updatedAt": "Updated At",
     "updatedBy": "Updated By",
-    "CountryCode": "Country Code",
-    "CountryName": "Country Name",
-    "Capital": "Capital",
-    "Region": "Region",
-    "Note": "Note",
-    "CreatedAt": "Created At",
-    "CreatedBy": "Created By",
-    "UpdatedAt": "Updated At",
-    "UpdatedBy": "Updated By",
-    "allRegion": "All Regions",
     "selectRegion": "Select Region...",
-    "placeholderNote": "Enter country description or note...",
-    "countrycode": "Country Code",
-    "countryname": "Country Name",
-    "createdat": "Created At",
-    "createdby": "Created By",
-    "updatedat": "Updated At",
-    "updatedby": "Updated By"
+    "placeholderNote": "Enter country description or note..."
   }
 }

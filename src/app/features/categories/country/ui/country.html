@@ -83,7 +83,7 @@
           <option value="">{{ 'country.allRegions' | translate }}</option>
           @for (region of regions; track region) {
             <option [value]="region">
-              {{ 'country.' + region.toLocaleLowerCase() | translate }}
+              {{ 'country.' + region.toLowerCase() | translate }}
             </option>
           }
         </select>
@@ -104,7 +104,7 @@
         </th>
         <th class="text-center" style="width: 50px">#</th>
         @for (column of countryColumns; track column) {
-          <th>{{ 'country.' + column.toLocaleLowerCase() | translate }}</th>
+          <th>{{ 'country.' + column | translate }}</th>
         }
       </tr>
     </ng-container>
@@ -158,23 +158,23 @@
               >
             </td>
             <td>
-              <span class="text-muted small">
-                <i class="fa-regular fa-user"></i>{{ country.createdBy }}</span
-              >
+              <span class="text-muted small fst-italic">{{ country.note }}</span>
             </td>
             <td class="text-nowrap">
               <span class="text-muted small">{{ country.createdAt | date }}</span>
             </td>
             <td>
               <span class="text-muted small">
-                <i class="fa-regular fa-user"></i>{{ country.updatedBy }}</span
+                <i class="fa-regular fa-user"></i>{{ country.createdBy }}</span
               >
             </td>
             <td class="text-nowrap">
               <span class="text-muted small">{{ country.updatedAt | date }}</span>
             </td>
             <td>
-              <span class="text-muted small fst-italic">{{ country.note }}</span>
+              <span class="text-muted small">
+                <i class="fa-regular fa-user"></i>{{ country.updatedBy }}</span
+              >
             </td>
           </tr>
         }

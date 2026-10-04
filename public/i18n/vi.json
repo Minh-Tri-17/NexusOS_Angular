@@ -111,7 +111,22 @@
     "rows": "hàng",
     "systemNotice": "Thông báo hệ thống",
     "featureModuleTitle": "Tính năng đang được phát triển",
-    "featureModuleMessage": "Chức năng đang trong quá trình phát triển và hoàn thiện. Vui lòng quay lại sau!"
+    "featureModuleMessage": "Chức năng đang trong quá trình phát triển và hoàn thiện. Vui lòng quay lại sau!",
+    "update": "Cập nhật",
+    "strength": "Độ mạnh mật khẩu",
+    "veryWeak": "Rất yếu",
+    "weak": "Yếu",
+    "medium": "Trung bình",
+    "good": "Khá",
+    "veryGood": "Mạnh",
+    "veryStrong": "Rất mạnh",
+    "invalidFileType": "Loại tệp không hợp lệ. Định dạng được chấp nhận:",
+    "fileSizeExceedsLimit": "Dung lượng tệp vượt quá giới hạn",
+    "confirmDelete": "Xác nhận xóa",
+    "messageConfirmDelete": "Bạn có chắc chắn muốn xóa bản ghi này?",
+    "confirm": "Xác nhận",
+    "cancel": "Hủy",
+    "messageConfirmDeleteMany": "Bạn có chắc chắn muốn xóa {{count}} bản ghi đã chọn?"
   },
   "sidebar": {
     "dashboard": "Bảng điều khiển",
@@ -154,23 +169,7 @@
     "createdBy": "Người tạo",
     "updatedAt": "Ngày cập nhật",
     "updatedBy": "Người cập nhật",
-    "CountryCode": "Mã quốc gia",
-    "CountryName": "Tên quốc gia",
-    "Capital": "Thủ đô",
-    "Region": "Khu vực",
-    "Note": "Ghi chú",
-    "CreatedAt": "Ngày tạo",
-    "CreatedBy": "Người tạo",
-    "UpdatedAt": "Ngày cập nhật",
-    "UpdatedBy": "Người cập nhật",
-    "allRegion": "Tất cả khu vực",
     "selectRegion": "Chọn khu vực...",
-    "placeholderNote": "Nhập mô tả hoặc ghi chú quốc gia...",
-    "countrycode": "Mã quốc gia",
-    "countryname": "Tên quốc gia",
-    "createdat": "Ngày tạo",
-    "createdby": "Người tạo",
-    "updatedat": "Ngày cập nhật",
-    "updatedby": "Người cập nhật"
+    "placeholderNote": "Nhập mô tả hoặc ghi chú quốc gia..."
   }
 }

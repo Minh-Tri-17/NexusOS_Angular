@@ -30,6 +30,7 @@
               <label
                 class="custom-radio-card d-flex align-items-center justify-content-between p-3 rounded-4 border w-100 position-relative m-0"
                 for="exportScopeAll"
+                [class.disabled]="!canExportPage()"
               >
                 <div class="d-flex align-items-center gap-3">
                   <input
@@ -37,7 +38,7 @@
                     type="radio"
                     name="exportScope"
                     id="exportScopeAll"
-                    [checked]="exportOption() === BASE_CONSTANTS.exportOptionAll"
+                    [checked]="canExportPage() && exportOption() === BASE_CONSTANTS.exportOptionAll"
                     (change)="handleExportOptionChange(BASE_CONSTANTS.exportOptionAll)"
                   />
                   <div
@@ -65,6 +66,7 @@
               <label
                 class="custom-radio-card d-flex align-items-center justify-content-between p-3 rounded-4 border w-100 position-relative m-0"
                 for="exportScopeCurrent"
+                [class.disabled]="!canExportPage()"
               >
                 <div class="d-flex align-items-center gap-3">
                   <input

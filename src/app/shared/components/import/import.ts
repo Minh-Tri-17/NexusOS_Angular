@@ -1,5 +1,5 @@
 import { Component, ElementRef, inject, output, signal, viewChild } from '@angular/core';
-import { TranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { BaseService } from '../../../core/services/base.service';
 import { Modal } from '../modal/modal';
 import { IMPORT_MODAL_CONTEXT } from '../modal/modal-context';
@@ -11,6 +11,7 @@ import { IMPORT_MODAL_CONTEXT } from '../modal/modal-context';
   styleUrl: './import.scss',
 })
 export class Import {
+  private readonly translateService = inject(TranslateService);
   private readonly baseService = inject(BaseService);
   private readonly ctx = inject(IMPORT_MODAL_CONTEXT, { optional: true });
 
@@ -48,14 +49,18 @@ export class Import {
       const allowedExtensions = acceptTypes.split(',').map((ext) => ext.trim().toLowerCase());
       const fileExtension = '.' + file.name.split('.').pop()?.toLowerCase();
       if (!allowedExtensions.includes(fileExtension)) {
-        this.errorMessage.set(`Invalid file type. Accepted: ${acceptTypes}`);
+        this.errorMessage.set(
+          `${this.translateService.instant('common.invalidFileType')} ${acceptTypes}`,
+        );
         return;
       }
     }
 
     const maxBytes = this.maxSizeMB * 1024 * 1024;
     if (file.size > maxBytes) {
-      this.errorMessage.set(`File size exceeds limit of ${this.maxSizeMB}MB`);
+      this.errorMessage.set(
+        `${this.translateService.instant('common.fileSizeExceedsLimit')} ${this.maxSizeMB}MB`,
+      );
       return;
     }
 

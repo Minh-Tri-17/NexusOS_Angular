@@ -111,7 +111,22 @@
     "rows": "行",
     "systemNotice": "系统通知",
     "featureModuleTitle": "功能正在开发中",
-    "featureModuleMessage": "该功能目前正在开发和完善中，请稍后再试！"
+    "featureModuleMessage": "该功能目前正在开发和完善中，请稍后再试！",
+    "update": "更新",
+    "strength": "密码强度",
+    "veryWeak": "非常弱",
+    "weak": "弱",
+    "medium": "中等",
+    "good": "良好",
+    "veryGood": "强",
+    "veryStrong": "非常强",
+    "invalidFileType": "无效的文件类型。接受的类型：",
+    "fileSizeExceedsLimit": "文件大小超过限制：",
+    "confirmDelete": "确认删除",
+    "messageConfirmDelete": "您确定要删除此记录吗？",
+    "confirm": "确认",
+    "cancel": "取消",
+    "messageConfirmDeleteMany": "您确定要删除选中的 {{count}} 条记录吗？"
   },
   "sidebar": {
     "dashboard": "仪表板",
@@ -154,23 +169,7 @@
     "createdBy": "创建人",
     "updatedAt": "更新时间",
     "updatedBy": "更新人",
-    "CountryCode": "国家代码",
-    "CountryName": "国家名称",
-    "Capital": "首都",
-    "Region": "地区",
-    "Note": "备注",
-    "CreatedAt": "创建时间",
-    "CreatedBy": "创建人",
-    "UpdatedAt": "更新时间",
-    "UpdatedBy": "更新人",
-    "allRegion": "所有地区",
     "selectRegion": "选择地区...",
-    "placeholderNote": "输入国家描述或备注...",
-    "countrycode": "国家代码",
-    "countryname": "国家名称",
-    "createdat": "创建时间",
-    "createdby": "创建人",
-    "updatedat": "更新时间",
-    "updatedby": "更新人"
+    "placeholderNote": "输入国家描述或备注..."
   }
 }

@@ -101,23 +101,23 @@ export class Country {
     filter.filters.push({
       filterName: BASE_CONSTANTS.isDelete,
       filterValue: filterIsDeleted.toString(),
-      filterType: FilterType.Boolean,
+      filterType: FilterType.boolean,
     });
 
     if (filterText)
       filter.filters.push({
         filterName: `${CountryFields.countryCode},${CountryFields.countryName}`,
         filterValue: filterText,
-        filterType: FilterType.String,
-        filterOperator: FilterOperator.Like,
+        filterType: FilterType.string,
+        filterOperator: FilterOperator.like,
       });
 
     if (filterRegion)
       filter.filters.push({
         filterName: CountryFields.region,
         filterValue: filterRegion,
-        filterType: FilterType.String,
-        filterOperator: FilterOperator.Like,
+        filterType: FilterType.string,
+        filterOperator: FilterOperator.like,
       });
 
     return filter;
@@ -154,11 +154,6 @@ export class Country {
     } finally {
       this.isLoading.set(false);
     }
-  }
-
-  handleSearch(searchText: string) {
-    this.searchText.set(searchText);
-    this.pageIndex.set(1);
   }
 
   handleClearFilter() {
@@ -201,14 +196,13 @@ export class Country {
     if (idsArray.length === 0) return;
 
     const confirmed = await this.dialogService.confirm({
-      title: 'Xác nhận xóa',
+      title: 'common.confirmDelete',
       message:
-        idsArray.length === 1
-          ? 'Bạn có chắc chắn muốn xóa bản ghi này?'
-          : `Bạn có chắc chắn muốn xóa ${idsArray.length} bản ghi đã chọn?`,
+        idsArray.length === 1 ? 'common.messageConfirmDelete' : 'common.messageConfirmDeleteMany',
+      messageParams: { count: idsArray.length },
       type: 'danger',
-      confirmText: 'Xác nhận',
-      cancelText: 'Hủy',
+      confirmText: 'common.confirm',
+      cancelText: 'common.cancel',
     });
 
     if (!confirmed) return;

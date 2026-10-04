@@ -1,19 +1,19 @@
 export enum FilterType {
-  String = 'String',
-  Number = 'Number',
-  Date = 'Date',
-  Boolean = 'Boolean',
-  Guid = 'Guid',
+  string = 'String',
+  number = 'Number',
+  date = 'Date',
+  boolean = 'Boolean',
+  guid = 'Guid',
 }
 
 export enum FilterOperator {
-  Like = 'Like',
-  Equal = 'Equal',
-  NotEqual = 'NotEqual',
-  GreaterThan = 'GreaterThan',
-  GreaterOrEqual = 'GreaterOrEqual',
-  LessThan = 'LessThan',
-  LessOrEqual = 'LessOrEqual',
-  Between = 'Between',
-  Contains = 'Contains',
+  like = 'Like',
+  equal = 'Equal',
+  notEqual = 'NotEqual',
+  greaterThan = 'GreaterThan',
+  greaterOrEqual = 'GreaterOrEqual',
+  lessThan = 'LessThan',
+  lessOrEqual = 'LessOrEqual',
+  between = 'Between',
+  contains = 'Contains',
 }
