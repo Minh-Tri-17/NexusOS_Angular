@@ -51,6 +51,7 @@ export class Dialog {
       this.titleProp() ??
       this.injectedOptions?.title ??
       'common.confirmDelete';
+
     return this.translateService.instant(raw);
   });
 
@@ -68,6 +69,7 @@ export class Dialog {
           ...rawParams,
         }
       : undefined;
+
     return this.translateService.instant(raw, params);
   });
 
@@ -77,6 +79,7 @@ export class Dialog {
       this.confirmTextProp() ??
       this.injectedOptions?.confirmText ??
       'common.confirm';
+
     return this.translateService.instant(raw);
   });
 
@@ -86,6 +89,7 @@ export class Dialog {
       this.cancelTextProp() ??
       this.injectedOptions?.cancelText ??
       'common.cancel';
+
     return this.translateService.instant(raw);
   });
 

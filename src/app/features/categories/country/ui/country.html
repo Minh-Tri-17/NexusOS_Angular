@@ -17,7 +17,7 @@
       @if (filterRegion()) {
         <span class="filter-chip">
           <i class="fa-solid fa-compass chip-icon"></i> {{ 'country.region' | translate }}:
-          <strong>{{ filterRegion() }}</strong>
+          <strong>{{ 'country.' + filterRegion()!.toLowerCase() | translate }}</strong>
           <i class="fa-solid fa-xmark chip-remove-btn" (click)="filterRegion.set('')"></i>
         </span>
       }

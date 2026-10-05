@@ -94,7 +94,7 @@ export class Country {
 
   //#region //@ HELPERS
 
-  buildFilter(): PagingRequest {
+  private buildFilter(): PagingRequest {
     const filter: PagingRequest = {
       allowPaging: true,
       pageIndex: this.pageIndex(),
@@ -130,10 +130,6 @@ export class Country {
       });
 
     return filter;
-  }
-
-  returnZero() {
-    return 0;
   }
 
   private delay(ms: number): Promise<void> {
