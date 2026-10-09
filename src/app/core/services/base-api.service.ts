@@ -59,8 +59,8 @@ export class BaseApiService {
     return firstValueFrom(this.http.patch<T>(`${this.baseUrl}${url}`, body));
   }
 
-  protected deleteHttp<T>(url: string): Promise<T> {
-    return firstValueFrom(this.http.delete<T>(`${this.baseUrl}${url}`));
+  protected deleteHttp<T>(url: string, body: any): Promise<T> {
+    return firstValueFrom(this.http.delete<T>(`${this.baseUrl}${url}`, { body }));
   }
 
   //#endregion

@@ -60,6 +60,7 @@ export class Export {
 
   private buildExportFilter(option: ExportOption) {
     const baseFilter = { ...this.currentFilter() };
+    baseFilter.isExport = true;
 
     switch (option) {
       case BASE_CONSTANTS.exportOptionAll:

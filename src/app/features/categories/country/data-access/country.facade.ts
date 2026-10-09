@@ -1,7 +1,7 @@
-import { inject, Injectable, signal } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
+import { PagingRequest } from '../../../../core/models/paging.model';
 import { CountryApiService } from './country-api.service';
 import { CountryModel } from './country.model';
-import { PagingRequest } from '../../../../core/models/paging.model';
 
 @Injectable({
   providedIn: 'root',
@@ -17,11 +17,11 @@ export class CountryFacade {
     return this.api.update(dto);
   }
 
-  softDelete(ids: string) {
+  softDelete(ids: string[]) {
     return this.api.softDelete(ids);
   }
 
-  hardDelete(ids: string) {
+  hardDelete(ids: string[]) {
     return this.api.hardDelete(ids);
   }
 

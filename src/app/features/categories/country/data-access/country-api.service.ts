@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { CountryModel } from './country.model';
-import { Result } from '../../../../core/models/common.model';
 import { API_CONSTANTS } from '../../../../core/constants/api.constants';
-import { BaseApiService } from '../../../../core/services/base-api.service';
+import { Result } from '../../../../core/models/common.model';
 import { PagingRequest, PagingResult } from '../../../../core/models/paging.model';
+import { BaseApiService } from '../../../../core/services/base-api.service';
+import { CountryModel } from './country.model';
 
 @Injectable({
   providedIn: 'root',
@@ -17,12 +17,12 @@ export class CountryApiService extends BaseApiService {
     return this.patchHttp<Result<boolean>>(API_CONSTANTS.country.update, data);
   }
 
-  softDelete(ids: string) {
-    return this.deleteHttp<Result<boolean>>(`${API_CONSTANTS.country.softDelete}?ids=${ids}`);
+  softDelete(ids: string[]) {
+    return this.deleteHttp<Result<boolean>>(API_CONSTANTS.country.softDelete, ids);
   }
 
-  hardDelete(ids: string) {
-    return this.deleteHttp<Result<boolean>>(`${API_CONSTANTS.country.hardDelete}?ids=${ids}`);
+  hardDelete(ids: string[]) {
+    return this.deleteHttp<Result<boolean>>(API_CONSTANTS.country.hardDelete, ids);
   }
 
   getById(id: string) {

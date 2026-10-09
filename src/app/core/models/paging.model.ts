@@ -3,6 +3,7 @@ import { FilterOperator, FilterType } from '../constants/filter.enum';
 export interface PagingRequest {
   idMain?: string;
   allowPaging?: boolean;
+  isExport?: boolean;
   pageSize?: number;
   pageIndex?: number;
   filters?: PagingRequestItem[];

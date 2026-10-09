@@ -212,11 +212,9 @@ export class Country {
 
     if (!confirmed) return;
 
-    const idString = idsArray.join(',');
-
     try {
-      if (!this.filterIsDelete()) await this.facade.softDelete(idString);
-      else await this.facade.hardDelete(idString);
+      if (!this.filterIsDelete()) await this.facade.softDelete(idsArray);
+      else await this.facade.hardDelete(idsArray);
 
       await this.loadListData();
     } catch {}
