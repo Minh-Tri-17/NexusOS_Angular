@@ -18,8 +18,8 @@ export class Languages {
   private readonly translate = inject(TranslateService);
 
   readonly languages: LanguageOption[] = [
-    { code: 'vi', label: 'Tiếng Việt', flag: 'flag-vn.png' },
     { code: 'en', label: 'English', flag: 'flag-us.png' },
+    { code: 'vi', label: 'Tiếng Việt', flag: 'flag-vn.png' },
     { code: 'ja', label: '日本語', flag: 'flag-jp.png' },
     { code: 'zh', label: '中文', flag: 'flag-cn.png' },
     { code: 'fr', label: 'Français', flag: 'flag-fr.png' },
@@ -30,7 +30,7 @@ export class Languages {
   constructor() {
     this.translate.setFallbackLang(this.currentLang().code);
 
-    const savedCode = localStorage.getItem('app_language') || 'vi';
+    const savedCode = localStorage.getItem('app_language') || 'en';
     const found = this.languages.find((l) => l.code === savedCode) ?? this.languages[0];
 
     this.currentLang.set(found);

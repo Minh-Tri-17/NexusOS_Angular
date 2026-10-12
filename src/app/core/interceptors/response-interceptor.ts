@@ -1,9 +1,9 @@
 import { HttpErrorResponse, HttpInterceptorFn, HttpResponse } from '@angular/common/http';
+import { inject } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { catchError, tap, throwError } from 'rxjs';
 import { showToast } from '../../shared/components/toast/toast.util';
 import { Result } from '../models/common.model';
-import { TranslateService } from '@ngx-translate/core';
-import { inject } from '@angular/core';
 
 export const responseInterceptor: HttpInterceptorFn = (req, next) => {
   const translateService = inject(TranslateService);
@@ -38,7 +38,7 @@ export const responseInterceptor: HttpInterceptorFn = (req, next) => {
           message: error.error.message,
           type: 'danger',
         });
-      } else {
+      } else if (error.status === 401) {
         translateService.get('common.errorOccurred').subscribe((translatedMsg: string) => {
           showToast({
             message: translatedMsg,

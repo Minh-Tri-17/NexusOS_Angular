@@ -16,7 +16,7 @@ export class Import {
   private readonly ctx = inject(IMPORT_MODAL_CONTEXT, { optional: true });
 
   readonly acceptTypes = '.xlsx,.xls,.csv';
-  readonly maxSizeMB = 10;
+  readonly maxSizeMB = 25;
 
   //#region //@ PROPS
 

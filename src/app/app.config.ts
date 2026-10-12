@@ -23,7 +23,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideHttpClient(withInterceptors([requestInterceptor, responseInterceptor, authInterceptor])),
     provideTranslateService({
-      fallbackLang: 'vi',
+      fallbackLang: 'en',
       loader: {
         provide: TranslateLoader,
         useClass: AppTranslationLoader,

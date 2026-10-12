@@ -5,14 +5,14 @@
     type="button"
     ngbDropdownToggle
     aria-expanded="false"
-    title="Language / Ngôn ngữ"
+    title="Language"
   >
     <i class="fa-solid fa-language"></i>
   </button>
 
   <ul class="dropdown-menu dropdown-menu-end lang-dropdown-menu" ngbDropdownMenu>
     <li>
-      <div class="dropdown-header"><i class="fa-solid fa-globe me-1"></i> Ngôn ngữ / Language</div>
+      <div class="dropdown-header"><i class="fa-solid fa-globe me-1"></i> Language</div>
     </li>
     <li><hr class="dropdown-divider my-1" /></li>
     @for (lang of languages; track lang.code) {
