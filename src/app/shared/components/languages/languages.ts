@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, ViewEncapsulation } from '@angular/core';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -13,6 +13,7 @@ interface LanguageOption {
   imports: [NgbDropdownModule],
   templateUrl: './languages.html',
   styleUrl: './languages.scss',
+  encapsulation: ViewEncapsulation.None,
 })
 export class Languages {
   private readonly translate = inject(TranslateService);

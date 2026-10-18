@@ -1,3 +1,572 @@
-:host {
-  display: contents;
+/* Sidebar Styling */
+
+.app-sidebar {
+  width: var(--sidebar-width);
+  background: var(--bg-sidebar);
+  border-right: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1040;
+  transition:
+    width 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.3s ease;
+  overflow: hidden;
+}
+
+/* Collapsed Sidebar Mode (Icon-Only) */
+
+.sidebar-collapsed .app-sidebar,
+.app-wrapper.sidebar-collapsed .app-sidebar {
+  width: var(--sidebar-collapsed-width);
+  overflow: hidden !important;
+}
+
+.sidebar-collapsed .sidebar-header,
+.app-wrapper.sidebar-collapsed .sidebar-header {
+  padding: 0;
+  justify-content: center;
+
+  > div:last-child {
+    display: none;
+  }
+}
+
+.sidebar-collapsed .sidebar-nav,
+.app-wrapper.sidebar-collapsed .sidebar-nav {
+  padding: 1.25rem 0.5rem;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+
+  .nav-link {
+    justify-content: center;
+    padding: 0.75rem 0;
+    gap: 0;
+  }
+
+  .nav-link span {
+    display: none;
+  }
+
+  .nav-link i:not(.toggle-chevron) {
+    font-size: 1.25rem;
+    margin: 0;
+    width: auto;
+  }
+
+  .toggle-chevron {
+    display: none !important;
+  }
+
+  .submenu-list {
+    position: relative;
+    margin: 0.25rem 0 0.5rem 0;
+    padding: 0.25rem 0;
+    border-left: none;
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  .submenu-list::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 2px;
+    background: var(--submenu-rail-bg);
+    transform: translateX(-50%);
+    z-index: 1;
+    border-radius: 1px;
+  }
+
+  .submenu-header {
+    display: none !important;
+  }
+
+  .submenu-link {
+    width: 30px;
+    height: 30px;
+    position: relative;
+    z-index: 2;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+    border-radius: 8px;
+    background: var(--submenu-node-bg);
+    border: 1px solid var(--submenu-node-border);
+    box-shadow: var(--submenu-node-shadow);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    color: var(--submenu-node-color);
+  }
+
+  .submenu-link span {
+    display: none !important;
+  }
+
+  .submenu-link i {
+    font-size: 0.8rem !important;
+    margin: 0 !important;
+    width: auto !important;
+    color: var(--submenu-node-color);
+    transition: all 0.2s ease;
+  }
+
+  .submenu-link:hover {
+    background-color: var(--submenu-node-hover-bg);
+    color: var(--submenu-node-hover-color);
+    border-color: var(--submenu-node-hover-border);
+    transform: scale(1.12);
+    box-shadow: var(--submenu-node-hover-shadow);
+  }
+
+  .submenu-link:hover i {
+    color: var(--submenu-node-hover-icon-color) !important;
+  }
+
+  .submenu-link.active {
+    background-color: var(--submenu-node-active-bg) !important;
+    color: var(--submenu-node-active-color) !important;
+    border-color: var(--submenu-node-active-border) !important;
+    box-shadow: var(--submenu-node-active-shadow);
+  }
+
+  .submenu-link.active i {
+    color: var(--submenu-node-active-color) !important;
+  }
+}
+
+/* Vertical Icon Submenu Accordion under Category in Collapsed Mode */
+
+/* Option: Tree Connector Rail + Squircle Node Icons in Collapsed Mode */
+
+/* Vertical Connecting Branch Rail Line down the center */
+
+/* Submenu Icon Nodes sitting on top of the rail line */
+
+/* Hierarchy Icon Size (13px vs 20px) */
+
+/* Hover State - Soft lift */
+
+/* Active State - Solid primary blue node + white icon */
+
+.sidebar-collapsed .sidebar-footer-graphic,
+.app-wrapper.sidebar-collapsed .sidebar-footer-graphic {
+  display: none;
+}
+
+.sidebar-header {
+  height: var(--topbar-height);
+  padding: 0 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  border-bottom: 1px solid transparent;
+}
+
+.brand-logo-img {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  object-fit: cover;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.22);
+}
+
+.brand-title {
+  font-weight: 800;
+  font-size: 1.15rem;
+  letter-spacing: -0.02em;
+  color: var(--text-main);
+  margin: 0;
+  line-height: 1.1;
+}
+
+.brand-subtitle {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  margin-top: 2px;
+}
+
+.sidebar-nav {
+  padding: 1.25rem 1rem;
+  flex: 1;
+  overflow-y: auto;
+
+  .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+    padding: 0.75rem 1rem;
+    color: var(--text-muted);
+    font-weight: 600;
+    font-size: 0.925rem;
+    border-radius: var(--radius-md);
+    margin-bottom: 0.35rem;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background-color: var(--border-sidebar-indicator);
+      transform: scaleY(0);
+      transform-origin: center;
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    i {
+      font-size: 1.1rem;
+      width: 20px;
+      text-align: center;
+      color: var(--sidebar-nav-link-color, var(--text-muted));
+      transition: color 0.2s ease;
+    }
+
+    &:hover {
+      background-color: var(--bg-sidebar-hover);
+      color: var(--text-sidebar-hover);
+
+      i {
+        color: var(--text-sidebar-hover);
+      }
+    }
+
+    &.active {
+      background-color: var(--bg-sidebar-active);
+      color: var(--text-sidebar-active);
+      font-weight: 700;
+
+      i {
+        color: var(--text-sidebar-active);
+      }
+    }
+  }
+}
+
+.sidebar-nav .nav-link:hover::before,
+.sidebar-nav .nav-link.active::before {
+  transform: scaleY(1);
+}
+
+/* Sidebar Collapsible Submenu & Tree Line (Image 2 style) */
+
+.nav-item-collapsible {
+  margin-bottom: 0.35rem;
+}
+
+.collapse-toggle .toggle-chevron {
+  font-size: 0.75rem;
+  width: 14px;
+  height: 14px;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-light);
+  transition: color 0.25s ease;
+  font-style: normal !important;
+
+  &::before {
+    content: '' !important;
+    position: absolute;
+    top: 6px;
+    left: 2px;
+    width: 10px;
+    height: 2px;
+    background-color: currentColor;
+    border-radius: 1px;
+    transform: none;
+    opacity: 1;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  &::after {
+    content: '' !important;
+    position: absolute;
+    top: 2px;
+    left: 6px;
+    width: 2px;
+    height: 10px;
+    background-color: currentColor;
+    border-radius: 1px;
+    transform: none;
+    opacity: 1;
+    transition:
+      transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+      opacity 0.25s ease;
+  }
+}
+
+.collapse-toggle:hover .toggle-chevron,
+.collapse-toggle[aria-expanded='true'] .toggle-chevron {
+  color: var(--text-sidebar-hover);
+}
+
+/* Pure CSS Plus & Minus Morph Icon (Bulletproof across VS Code, Live Server & all environments) */
+
+/* When expanded: Vertical line rotates & shrinks to turn Plus into Minus */
+
+.collapse-toggle[aria-expanded='true'] .toggle-chevron::before {
+  transform: rotate(180deg);
+  opacity: 1;
+}
+
+.collapse-toggle[aria-expanded='true'] .toggle-chevron::after {
+  transform: rotate(90deg) scale(0);
+  opacity: 0;
+}
+
+.submenu-list {
+  position: relative;
+  margin-left: 2.25rem;
+  padding-left: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-left: 1px solid var(--border-color);
+}
+
+.submenu-header {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--text-light);
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+  padding-left: 0.5rem;
+}
+
+.submenu-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  font-size: 0.875rem;
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  transition: all 0.2s ease;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: -1rem;
+    top: 50%;
+    width: 0.75rem;
+    height: 1px;
+    background-color: var(--border-color);
+    transform: translateY(-50%);
+    transition:
+      background-color 0.2s ease,
+      height 0.2s ease;
+  }
+
+  &:hover span {
+    transform: translateX(4px);
+  }
+
+  &.active {
+    background-color: var(--bg-sidebar-active);
+    color: var(--text-sidebar-active);
+    font-weight: 700;
+
+    i {
+      color: var(--text-sidebar-hover);
+    }
+  }
+
+  i {
+    font-size: 0.95rem;
+    width: 16px;
+    text-align: center;
+    color: var(--text-light);
+    transition:
+      color 0.2s ease,
+      transform 0.2s ease;
+  }
+
+  span {
+    transition: transform 0.2s ease;
+  }
+}
+
+.submenu-link:hover::before,
+.submenu-link.active::before {
+  background-color: var(--text-sidebar-hover);
+  height: 2px;
+}
+
+/* Sidebar Bottom Vector Graphic (Image 2 style) */
+
+.sidebar-footer-graphic {
+  padding: 1rem;
+  position: relative;
+  background: var(--sidebar-footer-graphic-bg);
+  border-top: 1px solid var(--sidebar-footer-graphic-border);
+}
+
+/* ======================================================
+   ULTRA-PREMIUM SIDEBAR SYSTEM STATUS CARD
+   ====================================================== */
+
+.sidebar-system-status-card {
+  position: relative;
+  padding: 12px 14px;
+  border-radius: var(--radius-lg, 14px);
+  background: var(--bg-surface, #ffffff);
+  border: 1px solid var(--border-color, #e2e8f0);
+  box-shadow:
+    0 4px 20px -2px rgba(15, 23, 42, 0.04),
+    inset 0 1px 1px rgba(255, 255, 255, 0.9);
+  transition: all 0.25s cubic-bezier(0.32, 0.72, 0, 1);
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #10b981 0%, #3b82f6 50%, #8b5cf6 100%);
+    opacity: 0.75;
+    transition: opacity 0.25s;
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+    border-color: rgba(16, 185, 129, 0.35);
+    box-shadow:
+      0 8px 24px -4px rgba(16, 185, 129, 0.12),
+      inset 0 1px 1px rgba(255, 255, 255, 1);
+  }
+}
+
+/* Subtle top gradient line */
+
+/* Status Indicator Pill */
+
+.status-indicator-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.22);
+
+  .live-pulse-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #10b981;
+    box-shadow: 0 0 8px #10b981;
+    animation: pulseDotAnimation 2s infinite;
+  }
+
+  .status-text {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #059669;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+  }
+}
+
+/* Version Badge */
+
+.version-badge {
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 6px;
+  background: var(--bg-hover, #f1f5f9);
+  color: var(--text-muted, #64748b);
+  border: 1px solid var(--border-color, #e2e8f0);
+}
+
+/* Brand Title */
+
+.status-brand-title {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-main, #0f172a);
+  margin-bottom: 4px;
+
+  .brand-icon {
+    color: var(--primary-600, #2563eb);
+    font-size: 0.85rem;
+  }
+}
+
+/* Subtext Footer */
+
+.status-footer-sub {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.7rem;
+  color: var(--text-muted, #64748b);
+  font-weight: 500;
+}
+
+.status-dot-sep {
+  opacity: 0.4;
+  font-size: 0.6rem;
+}
+
+.uptime-tag {
+  color: #059669;
+  font-weight: 600;
+}
+
+.sidebar-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 1035;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.3s ease,
+    visibility 0.3s ease;
+
+  &.show {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+@media (max-width: 991.98px) {
+  .app-sidebar {
+    transform: translateX(-100%);
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.25);
+
+    &.show-sidebar {
+      transform: translateX(0);
+    }
+  }
 }

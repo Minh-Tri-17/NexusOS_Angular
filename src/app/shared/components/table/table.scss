@@ -1,3 +1,67 @@
 :host {
   display: contents;
 }
+
+/* ======================================================
+   ENTERPRISE DATA TABLE SCROLLABLE CONTAINER
+   (Employee, Leave Request, Recruitment, Country, Settings Roles)
+   ====================================================== */
+
+#empListView .table-responsive,
+#leaveListView .table-responsive,
+#recruitmentListView .table-responsive,
+.app-table-scroll {
+  max-height: 480px;
+  overflow: auto;
+  padding-right: 2px;
+  border-radius: 12px;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--border-color, rgba(203, 213, 225, 0.8));
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-500, #3b82f6);
+  }
+}
+
+/* ======================================================
+   REUSABLE PINNED / STICKY COLUMN SYSTEM (.col-pin)
+   Allows pinning any single or multiple columns on the left
+   ====================================================== */
+
+.col-pin,
+th.col-pin,
+td.col-pin {
+  position: sticky !important;
+  left: var(--pin-left, 0px);
+  border-right: 1px solid var(--border-color);
+}
+
+th.col-pin,
+.app-list-table thead th.col-pin {
+  top: 0;
+  z-index: 10 !important;
+  background: var(--bg-header-table) !important;
+}
+
+td.col-pin,
+.app-list-table tbody td.col-pin {
+  z-index: 5 !important;
+  background: var(--bg-card, #ffffff) !important;
+}
+
+tr:hover td.col-pin,
+.app-list-table tbody tr:hover td.col-pin {
+  background: var(--bg-hover) !important;
+}

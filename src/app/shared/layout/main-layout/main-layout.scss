@@ -1,0 +1,39 @@
+/* Layout Wrapper */
+
+.app-wrapper {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar-collapsed .app-main,
+.app-wrapper.sidebar-collapsed .app-main {
+  margin-left: var(--sidebar-collapsed-width);
+}
+
+.app-main {
+  margin-left: var(--sidebar-width);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  transition: margin-left 0.3s ease;
+}
+
+.page-container {
+  padding: 2rem;
+  flex: 1;
+}
+
+@media (max-width: 991.98px) {
+  .app-main {
+    margin-left: 0;
+  }
+
+  .sidebar-collapsed .app-main {
+    margin-left: 0;
+  }
+
+  .page-container {
+    padding: 1.25rem 1rem;
+  }
+}

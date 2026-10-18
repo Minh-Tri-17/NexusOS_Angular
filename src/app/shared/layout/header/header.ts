@@ -1,5 +1,5 @@
 import { isPlatformBrowser } from '@angular/common';
-import { Component, DestroyRef, inject, NgZone, PLATFORM_ID, signal } from '@angular/core';
+import { Component, DestroyRef, inject, NgZone, PLATFORM_ID, signal, ViewEncapsulation } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
@@ -14,6 +14,7 @@ import { TranslatePipe } from '@ngx-translate/core';
   imports: [NgbDropdownModule, Languages, TranslatePipe],
   templateUrl: './header.html',
   styleUrl: './header.scss',
+  encapsulation: ViewEncapsulation.None,
 })
 export class Header {
   private readonly router = inject(Router);

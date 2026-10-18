@@ -1,4 +1,4 @@
-import { Component, computed, inject, InjectionToken, input, output, signal } from '@angular/core';
+import { Component, computed, inject, InjectionToken, input, output, signal, ViewEncapsulation } from '@angular/core';
 import { NgClass } from '@angular/common';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
@@ -22,6 +22,7 @@ export const DIALOG_OPTIONS = new InjectionToken<DialogOptions>('DIALOG_OPTIONS'
   imports: [NgClass],
   templateUrl: './dialog.html',
   styleUrl: './dialog.scss',
+  encapsulation: ViewEncapsulation.None,
 })
 export class Dialog {
   private readonly injectedOptions = inject(DIALOG_OPTIONS, { optional: true });

@@ -1,4 +1,4 @@
-import { Component, computed, ElementRef, inject, output, signal, viewChild } from '@angular/core';
+import { Component, computed, ElementRef, inject, output, signal, viewChild, ViewEncapsulation } from '@angular/core';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { BaseService } from '../../../core/services/base.service';
 import { Modal } from '../modal/modal';
@@ -9,6 +9,7 @@ import { IMPORT_MODAL_CONTEXT } from '../modal/modal-context';
   imports: [Modal, TranslatePipe],
   templateUrl: './import.html',
   styleUrl: './import.scss',
+  encapsulation: ViewEncapsulation.None,
 })
 export class Import {
   private readonly translateService = inject(TranslateService);

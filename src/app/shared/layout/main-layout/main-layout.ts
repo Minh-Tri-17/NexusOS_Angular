@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ViewEncapsulation } from '@angular/core';
 import { Sidebar } from '../sidebar/sidebar';
 import { Header } from '../header/header';
 import { ThemeService } from '../../../core/services/theme.service';
@@ -9,6 +9,7 @@ import { RouterOutlet } from '@angular/router';
   imports: [Sidebar, Header, RouterOutlet],
   templateUrl: './main-layout.html',
   styleUrl: './main-layout.scss',
+  encapsulation: ViewEncapsulation.None,
 })
 export class MainLayout {
   protected themeService = inject(ThemeService);

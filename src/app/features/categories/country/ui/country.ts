@@ -82,7 +82,15 @@ export class Country {
   });
 
   readonly regions = Object.values(Region);
-  readonly countryColumns = Object.keys(CountryFields).filter((key) => key !== 'id');
+  readonly countryColumns = Object.keys(CountryFields).filter(
+    (key) =>
+      key !== 'id' &&
+      key !== 'note' &&
+      key !== 'createdAt' &&
+      key !== 'createdBy' &&
+      key !== 'updatedAt' &&
+      key !== 'updatedBy',
+  );
 
   //#endregion
 

@@ -1,3 +1,307 @@
 :host {
   display: contents;
 }
+
+/* ======================================================
+   ENTERPRISE TABLE FOOTER & PAGINATION (SHARED COMPONENT)
+   ====================================================== */
+
+.app-table-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 20px;
+  padding: 14px 20px;
+  border-radius: var(--radius-lg);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+
+  &:hover {
+    border-color: rgba(59, 130, 246, 0.25);
+    box-shadow: var(--shadow-card);
+  }
+}
+
+/* Left Zone: Counter & Page Size Picker */
+
+.app-footer-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.app-footer-counter {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-weight: 500;
+
+  strong {
+    color: var(--text-main);
+    font-weight: 700;
+  }
+}
+
+.app-footer-divider {
+  width: 1px;
+  height: 18px;
+  background-color: var(--border-color);
+  display: inline-block;
+}
+
+.app-page-size-picker {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.app-size-select {
+  padding: 4px 28px 4px 10px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-main);
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.15s ease;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2364748b' stroke-width='2.5'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19.5 8.25l-7.5 7.5-7.5-7.5' /%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  background-size: 12px;
+
+  &:hover {
+    border-color: var(--primary-500);
+    color: var(--primary-600);
+  }
+
+  &:focus {
+    border-color: var(--primary-600);
+    box-shadow: var(--shadow-focus);
+  }
+}
+
+/* Center Zone: Quick Jump Widget */
+
+.app-footer-center {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--bg-hover);
+  padding: 4px 10px 4px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--border-light);
+}
+
+.app-jump-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.app-jump-form {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.app-jump-input {
+  width: 40px;
+  height: 26px;
+  text-align: center;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text-main);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  outline: none;
+  transition: all 0.15s;
+
+  &:focus {
+    border-color: var(--primary-600);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+  }
+}
+
+.app-jump-total {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.app-jump-btn {
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
+  border: none;
+  background: var(--primary-600);
+  color: #fff;
+  font-size: 0.7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition:
+    background 0.15s,
+    transform 0.15s;
+
+  &:hover {
+    background: var(--primary-700);
+    transform: translateX(1px);
+  }
+}
+
+/* Right Zone: Kinetic Pagination Controls */
+
+.app-footer-right {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.app-page-btn {
+  min-width: 34px;
+  height: 34px;
+  padding: 0 8px;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-card);
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.18s cubic-bezier(0.32, 0.72, 0, 1);
+  user-select: none;
+
+  &:hover:not(:disabled):not(.active):hover:not(:disabled):not(.active) {
+    border-color: var(--primary-500);
+    color: var(--primary-600);
+    background: var(--primary-50);
+    transform: translateY(-1px);
+  }
+
+  &.active {
+    background: linear-gradient(135deg, var(--primary-600) 0%, var(--primary-700) 100%);
+    border-color: var(--primary-600);
+    color: #ffffff;
+    font-weight: 700;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+  }
+
+  &:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+    background: var(--bg-hover);
+    border-color: var(--border-light);
+  }
+}
+
+.app-page-ellipsis {
+  min-width: 24px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-light);
+  font-size: 0.85rem;
+  user-select: none;
+}
+
+/* Mobile Responsive Optimization for Enterprise Table Footer */
+
+@media (max-width: 767.98px) {
+  .app-table-footer {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 14px;
+    gap: 12px;
+  }
+
+  .app-footer-left {
+    width: 100%;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .app-footer-counter {
+    font-size: 0.76rem;
+    text-align: center;
+  }
+
+  .app-page-size-picker {
+    font-size: 0.75rem;
+  }
+
+  .app-footer-center {
+    width: 100%;
+    justify-content: center;
+    padding: 4px 8px;
+  }
+
+  .app-footer-right {
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+    max-width: 100%;
+    overflow-x: auto;
+    padding: 4px 0;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .app-page-btn {
+    min-width: 30px;
+    height: 32px;
+    padding: 0 6px;
+    font-size: 0.75rem;
+    border-radius: 8px;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .app-footer-divider {
+    display: none !important;
+  }
+
+  .app-footer-left {
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .app-jump-label {
+    font-size: 0.72rem;
+  }
+
+  .app-jump-input {
+    width: 36px;
+    height: 24px;
+    font-size: 0.75rem;
+  }
+}
+
+/* Hide default apex-grid paginator */
+
+apex-grid::part(paginator) {
+  display: none !important;
+}

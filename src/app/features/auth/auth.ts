@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ViewEncapsulation } from '@angular/core';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslatePipe } from '@ngx-translate/core';
 import { ThemeService } from '../../core/services/theme.service';
@@ -10,6 +10,7 @@ import { LoginForm } from './ui/login-form/login-form';
   imports: [LoginForm, Languages, NgbDropdownModule, TranslatePipe],
   templateUrl: './auth.html',
   styleUrl: './auth.scss',
+  encapsulation: ViewEncapsulation.None,
 })
 export class Auth {
   protected readonly themeService = inject(ThemeService);

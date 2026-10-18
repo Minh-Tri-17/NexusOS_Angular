@@ -7,3 +7,241 @@
   overflow-x: hidden;
   width: 100%;
 }
+
+/* ==========================================================================
+   AUTHENTICATION & LOGIN PAGE STYLES (NexusOST ENTERPRISE SYSTEM)
+   ========================================================================== */
+
+app-auth,
+.auth-body {
+  min-height: 100vh;
+  min-height: 100dvh;
+  background-color: var(--bg-app);
+  color: var(--text-main);
+  font-family: var(--font-primary);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Background Ambient Texture */
+
+.auth-bg-gradient {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background:
+    radial-gradient(circle at 15% 20%, rgba(37, 99, 235, 0.06), transparent 45%),
+    radial-gradient(circle at 85% 80%, rgba(126, 34, 206, 0.06), transparent 45%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Fixed Top Control Pill Island Bar (Matching Reference Image 2) */
+
+.auth-topbar {
+  position: fixed;
+  top: 1.25rem;
+  right: 1.5rem;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.auth-wrapper {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1.25rem;
+  position: relative;
+  z-index: 10;
+}
+
+/* Login Card Container matching NexusOST Cards */
+
+.auth-card {
+  width: 100%;
+  max-width: 1020px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 1.5rem;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+@media (max-width: 991.98px) {
+  .auth-card {
+    grid-template-columns: 1fr;
+    max-width: 500px;
+  }
+}
+
+/* Left Brand Panel (NexusOST System Card Aesthetic) */
+
+.auth-brand-side {
+  background: var(--bg-secondary);
+  border-right: 1px solid var(--border-color);
+  padding: 3.5rem 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+}
+
+@media (max-width: 991.98px) {
+  .auth-brand-side {
+    display: none;
+  }
+}
+
+.brand-badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.85rem;
+  border-radius: 9999px;
+  background: var(--badge-purple-bg);
+  color: var(--badge-purple-text);
+  border: 1px solid var(--badge-purple-border);
+  font-size: 0.78rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+}
+
+.auth-title {
+  font-size: 2.1rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--text-main);
+  line-height: 1.2;
+  margin-bottom: 0.75rem;
+}
+
+.auth-sub {
+  color: var(--text-muted);
+  font-size: 0.92rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+/* Topic Image Box in Brand Side */
+
+.topic-showcase {
+  border-radius: 1.25rem;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+  background: var(--bg-card);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
+  margin-bottom: 0;
+  position: relative;
+  transition:
+    transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.4s ease;
+  animation: nexusImageLevitate 7s ease-in-out infinite;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+      60deg,
+      transparent 30%,
+      rgba(255, 255, 255, 0.28) 50%,
+      transparent 70%
+    );
+    transform: translateX(-100%) rotate(25deg);
+    pointer-events: none;
+  }
+
+  &:hover::after {
+    animation: nexusShimmerSweep 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  &:hover {
+    transform: translateY(-6px) scale(1.015);
+    box-shadow: 0 22px 50px rgba(0, 0, 0, 0.15);
+  }
+}
+
+/* Ambient Floating Mesh Orbs */
+
+.auth-glow-orb {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(120px);
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.28;
+  will-change: transform;
+}
+
+.auth-glow-orb-1 {
+  top: -120px;
+  left: -120px;
+  width: 480px;
+  height: 480px;
+  background: radial-gradient(circle, rgba(79, 70, 229, 0.18) 0%, rgba(99, 102, 241, 0) 70%);
+  animation: orbFloat1 18s ease-in-out infinite;
+}
+
+.auth-glow-orb-2 {
+  bottom: -150px;
+  right: -100px;
+  width: 520px;
+  height: 520px;
+  background: radial-gradient(circle, rgba(14, 165, 233, 0.15) 0%, rgba(56, 189, 248, 0) 70%);
+  animation: orbFloat2 22s ease-in-out infinite;
+}
+
+.animate-item {
+  opacity: 0;
+  animation: fadeIn 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.delay-1 {
+  animation-delay: 0.1s;
+}
+
+.delay-2 {
+  animation-delay: 0.2s;
+}
+
+.delay-3 {
+  animation-delay: 0.3s;
+}
+
+.delay-4 {
+  animation-delay: 0.4s;
+}
+
+.delay-5 {
+  animation-delay: 0.5s;
+}
+
+.topic-img {
+  width: 100%;
+  height: auto;
+  max-height: 420px;
+  object-fit: contain;
+  display: block;
+}
+
+/* System Status Footer Box (Matching Sidebar Footer) */
+
+.auth-status-box {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 1rem;
+  padding: 1rem 1.25rem;
+}

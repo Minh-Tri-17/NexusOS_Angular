@@ -1,3 +1,22 @@
 :host {
   display: contents;
 }
+
+/* ==========================================================================
+   BOOTSTRAP PLACEHOLDERS TABLE SKELETON STYLING
+   ========================================================================== */
+
+.skeleton-row {
+  transition: opacity 0.25s ease;
+
+  td {
+    padding: 1rem 0.75rem !important;
+    vertical-align: middle;
+  }
+
+  .placeholder {
+    display: inline-block;
+    vertical-align: middle;
+    border-radius: 4px;
+  }
+}

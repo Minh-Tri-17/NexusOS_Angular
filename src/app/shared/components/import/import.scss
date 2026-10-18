@@ -1,3 +1,122 @@
-:host {
-  display: contents;
+/* Import Modal Dropzone & File Upload Styling */
+
+.import-dropzone {
+  border: 2px dashed rgba(99, 102, 241, 0.35);
+  background: rgba(99, 102, 241, 0.03);
+  border-radius: 16px;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.25s ease-in-out;
+  position: relative;
+}
+
+.import-dropzone:hover,
+.import-dropzone.dragover {
+  border-color: #6366f1;
+  background: rgba(99, 102, 241, 0.08);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px -6px rgba(99, 102, 241, 0.15);
+}
+
+.dropzone-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.12) 0%, rgba(139, 92, 246, 0.12) 100%);
+  color: #6366f1;
+  font-size: 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  transition: transform 0.3s ease;
+}
+
+.import-dropzone:hover .dropzone-icon {
+  transform: scale(1.1) rotate(-5deg);
+}
+
+.file-preview-card {
+  background: rgba(99, 102, 241, 0.05);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  border-radius: 14px;
+  padding: 0.85rem 1.15rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+[data-theme='dark'] .import-dropzone:hover,
+[data-theme='dark'] .import-dropzone.dragover {
+  border-color: #818cf8;
+  background: rgba(129, 140, 248, 0.1);
+  box-shadow: 0 8px 24px -6px rgba(129, 140, 248, 0.2);
+}
+
+.bg-indigo {
+  background-color: #6366f1 !important;
+}
+
+.bg-soft-indigo {
+  background-color: rgba(99, 102, 241, 0.12) !important;
+}
+
+/* Custom Import Progress Bar */
+
+.custom-import-progress {
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(99, 102, 241, 0.12) !important;
+  overflow: hidden;
+}
+
+/* Custom Radio Card Styling for Export Range */
+
+.custom-radio-card {
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+
+  &:hover {
+    border-color: rgba(99, 102, 241, 0.4) !important;
+    background: rgba(99, 102, 241, 0.04) !important;
+    transform: translateY(-1px);
+  }
+
+  &:has(.form-check-input:checked) {
+    border-color: #6366f1 !important;
+    background: rgba(99, 102, 241, 0.08) !important;
+    box-shadow: 0 4px 14px -3px rgba(99, 102, 241, 0.15);
+  }
+}
+
+.custom-radio-card.disabled,
+.custom-radio-card:has(.form-check-input:disabled) {
+  opacity: 0.55 !important;
+  cursor: not-allowed !important;
+  pointer-events: none !important;
+  background: rgba(243, 244, 246, 0.6) !important;
+  border-color: var(--bs-border-color, #e5e7eb) !important;
+  box-shadow: none !important;
+  transform: none !important;
+
+  &:hover {
+    border-color: var(--bs-border-color, #e5e7eb) !important;
+    background: rgba(243, 244, 246, 0.6) !important;
+    transform: none !important;
+  }
+}
+
+[data-theme='dark'] .custom-radio-card.disabled,
+[data-theme='dark'] .custom-radio-card:has(.form-check-input:disabled) {
+  background: rgba(255, 255, 255, 0.02) !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+
+  &:hover {
+    border-color: rgba(255, 255, 255, 0.08) !important;
+    background: rgba(255, 255, 255, 0.02) !important;
+    transform: none !important;
+  }
 }

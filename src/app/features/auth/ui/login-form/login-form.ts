@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -34,6 +34,7 @@ export type LoginTab = 'email' | 'empId';
   imports: [ReactiveFormsModule, TranslatePipe],
   templateUrl: './login-form.html',
   styleUrl: './login-form.scss',
+  encapsulation: ViewEncapsulation.None,
 })
 export class LoginForm {
   private readonly router = inject(Router);

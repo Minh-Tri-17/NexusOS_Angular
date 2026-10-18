@@ -1,0 +1,288 @@
+/* ==========================================================================
+   KEYFRAMES & ANIMATIONS LIBRARY - NexusOST
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. BADGE & STATUS ANIMATIONS
+   -------------------------------------------------------------------------- */
+
+@keyframes badgePulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.12);
+  }
+}
+
+@keyframes pulseDotAnimation {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 8px rgba(16, 185, 129, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes sparkleGlow {
+  0%,
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.15) rotate(12deg);
+    opacity: 1;
+    filter: drop-shadow(0 0 6px rgba(245, 158, 11, 0.6));
+  }
+}
+
+/* --------------------------------------------------------------------------
+   2. ICON & HEADER MICRO-INTERACTIONS
+   -------------------------------------------------------------------------- */
+
+@keyframes waveAnimation {
+  0% {
+    transform: rotate(0deg);
+  }
+  15% {
+    transform: rotate(14deg);
+  }
+  30% {
+    transform: rotate(-8deg);
+  }
+  45% {
+    transform: rotate(14deg);
+  }
+  60% {
+    transform: rotate(-4deg);
+  }
+  75% {
+    transform: rotate(10deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes bellRing {
+  0% {
+    transform: rotate(0deg);
+  }
+  5% {
+    transform: rotate(14deg);
+  }
+  10% {
+    transform: rotate(-12deg);
+  }
+  15% {
+    transform: rotate(10deg);
+  }
+  20% {
+    transform: rotate(-8deg);
+  }
+  25% {
+    transform: rotate(6deg);
+  }
+  30% {
+    transform: rotate(-4deg);
+  }
+  35% {
+    transform: rotate(2deg);
+  }
+  40% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   3. THEME TOGGLE ANIMATIONS (SUN & MOON)
+   -------------------------------------------------------------------------- */
+
+@keyframes sunGlow {
+  0% {
+    filter: drop-shadow(0 0 2px rgba(255, 200, 50, 0.3));
+    transform: rotate(0deg);
+  }
+  25% {
+    filter: drop-shadow(0 0 8px rgba(255, 200, 50, 0.6));
+  }
+  50% {
+    filter: drop-shadow(0 0 12px rgba(255, 200, 50, 0.8));
+    transform: rotate(180deg);
+  }
+  75% {
+    filter: drop-shadow(0 0 8px rgba(255, 200, 50, 0.6));
+  }
+  100% {
+    filter: drop-shadow(0 0 2px rgba(255, 200, 50, 0.3));
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes moonSwing {
+  0% {
+    transform: rotate(0deg) scale(1);
+    filter: drop-shadow(0 0 3px rgba(160, 180, 255, 0.4));
+  }
+  10% {
+    transform: rotate(12deg) scale(1.05);
+    filter: drop-shadow(0 0 8px rgba(160, 180, 255, 0.7));
+  }
+  20% {
+    transform: rotate(-10deg) scale(1);
+    filter: drop-shadow(0 0 10px rgba(160, 180, 255, 0.8));
+  }
+  30% {
+    transform: rotate(8deg) scale(1.03);
+    filter: drop-shadow(0 0 12px rgba(160, 180, 255, 0.9));
+  }
+  40% {
+    transform: rotate(-5deg) scale(1);
+    filter: drop-shadow(0 0 8px rgba(160, 180, 255, 0.7));
+  }
+  50% {
+    transform: rotate(0deg) scale(1);
+    filter: drop-shadow(0 0 4px rgba(160, 180, 255, 0.5));
+  }
+  100% {
+    transform: rotate(0deg) scale(1);
+    filter: drop-shadow(0 0 3px rgba(160, 180, 255, 0.4));
+  }
+}
+
+/* --------------------------------------------------------------------------
+   5. TOAST SLIDE IN ANIMATION
+   -------------------------------------------------------------------------- */
+
+@keyframes nexusToastSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateX(40px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   6. TAB & NAVIGATION ANIMATIONS
+   -------------------------------------------------------------------------- */
+
+@keyframes tabLinePulse {
+  0% {
+    transform: scaleX(0);
+    opacity: 0.5;
+  }
+  60% {
+    transform: scaleX(1.08);
+    opacity: 1;
+  }
+  100% {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+}
+
+@keyframes tabIconBounce {
+  0% {
+    transform: scale(1) rotate(0deg);
+  }
+  50% {
+    transform: scale(1.32) rotate(-8deg);
+  }
+  100% {
+    transform: scale(1.22) rotate(0deg);
+  }
+}
+
+@keyframes tabPaneEntrance {
+  0% {
+    opacity: 0;
+    transform: translateY(16px) scale(0.98);
+  }
+  65% {
+    opacity: 0.9;
+    transform: translateY(-2px) scale(1.002);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   8. AUTHENTICATION ANIMATIONS & KINETIC MOTION SYSTEM
+   -------------------------------------------------------------------------- */
+
+@keyframes orbFloat1 {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(30px, 40px) scale(1.1);
+  }
+}
+
+@keyframes orbFloat2 {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(-35px, -25px) scale(1.08);
+  }
+}
+
+@keyframes cardEntrance {
+  0% {
+    opacity: 0;
+    transform: translateY(24px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes imageLevitate {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes shimmerSweep {
+  0% {
+    transform: translateX(-100%) rotate(25deg);
+  }
+  100% {
+    transform: translateX(200%) rotate(25deg);
+  }
+}

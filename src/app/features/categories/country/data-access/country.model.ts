@@ -4,8 +4,8 @@ export interface CountryModel {
   countryName: string;
   capital: string;
   region: string;
-  note?: string;
 
+  note?: string;
   createdAt?: Date;
   createdBy?: string;
   updatedAt?: Date;
@@ -18,6 +18,7 @@ export const CountryFields: Record<keyof CountryModel, string> = {
   countryName: 'CountryName',
   capital: 'Capital',
   region: 'Region',
+
   note: 'Note',
   createdAt: 'CreatedAt',
   createdBy: 'CreatedBy',
