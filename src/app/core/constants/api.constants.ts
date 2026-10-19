@@ -9,6 +9,16 @@ export const API_CONSTANTS = {
     import: 'CatCountry/Import',
     export: 'CatCountry/Export',
   },
+  employee: {
+    create: 'Employee/Create',
+    update: 'Employee/Update',
+    softDelete: 'Employee/SoftDelete',
+    hardDelete: 'Employee/HardDelete',
+    getPaging: 'Employee/GetPaging/Filter',
+    getById: 'Employee/GetOne',
+    import: 'Employee/Import',
+    export: 'Employee/Export',
+  },
   account: {
     login: 'Account/Authentication',
     sendOTP: 'Account/SendOTP',

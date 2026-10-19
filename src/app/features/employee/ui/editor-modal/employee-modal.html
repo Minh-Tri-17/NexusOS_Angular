@@ -1,0 +1,131 @@
+<app-modal>
+  <ng-container modal-eyebrow>{{ 'common.globalGeographyModule' | translate }}</ng-container>
+
+  <ng-container modal-title
+    >{{ title() | translate }} {{ 'common.employee' | translate }}</ng-container
+  >
+
+  <ng-container modal-header-extra>
+    <span class="badge-soft badge-teal d-none d-sm-inline-flex">
+      <i class="fa-solid fa-bolt"></i> {{ 'common.liveSync' | translate }}
+    </span>
+  </ng-container>
+
+  <ng-container modal-form>
+    <form
+      id="employeeEditorForm"
+      [formGroup]="employeeForm"
+      ngNativeValidate
+      (ngSubmit)="handleSave()"
+    >
+      <div class="modal-body px-4 py-3 position-relative z-1">
+        <div class="form-section-card">
+          <div class="form-section-header">
+            <div class="d-flex align-items-center gap-2">
+              <i class="fa-solid fa-globe text-primary"></i>
+              <span class="fw-bold">
+                {{ 'common.geographicIdentification' | translate }}
+              </span>
+            </div>
+            <span class="badge-soft badge-indigo">
+              <i class="fa-solid fa-list-check"></i> 5 {{ 'common.fields' | translate }}
+            </span>
+          </div>
+
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label for="inputEmployeeCode" class="form-label custom-form-label">
+                {{ 'employee.employeeCode' | translate }}
+              </label>
+              <div class="input-group custom-input-group">
+                <span class="input-group-text"><i class="fa-solid fa-passport"></i></span>
+                <input
+                  type="text"
+                  class="form-control custom-form-control disable"
+                  id="inputEmployeeCode"
+                  placeholder="e.g. VN, US, JP"
+                  formControlName="employeeCode"
+                />
+              </div>
+              <div class="form-text-hint">
+                <i class="fa-solid fa-circle-info"></i> Standard ISO 3166-1 alpha-2 code
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <label for="inputEmployeeName" class="form-label custom-form-label">
+                {{ 'employee.employeeName' | translate }} <span class="text-danger fw-bold">*</span>
+              </label>
+              <div class="input-group custom-input-group">
+                <span class="input-group-text"><i class="fa-solid fa-flag"></i></span>
+                <input
+                  type="text"
+                  class="form-control custom-form-control"
+                  id="inputEmployeeName"
+                  placeholder="e.g. Vietnam, Japan"
+                  formControlName="employeeName"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <label for="inputEmployeeStatus" class="form-label custom-form-label">
+                {{ 'employee.employeeStatus' | translate }}
+                <span class="text-danger fw-bold">*</span>
+              </label>
+              <div class="input-group custom-input-group">
+                <span class="input-group-text"><i class="fa-solid fa-compass"></i></span>
+                <select
+                  class="form-select custom-form-select"
+                  id="inputEmployeeStatus"
+                  formControlName="employeeStatus"
+                  required
+                >
+                  <option value="" selected>{{ 'country.selectRegion' | translate }}</option>
+                  @for (status of employeeStatus; track status) {
+                    <option [value]="status">
+                      {{ 'employee.' + status.toLocaleLowerCase() | translate }}
+                    </option>
+                  }
+                </select>
+              </div>
+            </div>
+
+            <div class="col-12">
+              <label for="inputEmployeeNote" class="form-label custom-form-label">
+                {{ 'common.note' | translate }}
+              </label>
+              <div class="input-group custom-input-group">
+                <span class="input-group-text"><i class="fa-solid fa-align-left"></i></span>
+                <textarea
+                  class="form-control custom-form-control"
+                  id="inputEmployeeNote"
+                  rows="3"
+                  placeholder="{{ 'country.placeholderNote' | translate }}"
+                  formControlName="note"
+                >
+                </textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </ng-container>
+
+  <ng-container modal-actions>
+    <button
+      type="submit"
+      form="employeeEditorForm"
+      class="btn btn-sm btn-pastel-purple px-4 py-2 rounded-3"
+    >
+      @if (isSaving()) {
+        <span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+        {{ 'common.saving' | translate }}
+      } @else {
+        <i class="fa-solid fa-floppy-disk me-1"></i> {{ 'common.save' | translate }}
+      }
+    </button>
+  </ng-container>
+</app-modal>

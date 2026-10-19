@@ -1,0 +1,320 @@
+<app-summary>
+  <ng-container title-header>
+    {{ 'employee.title' | translate }}
+  </ng-container>
+  <ng-container description>
+    {{ 'employee.description' | translate }}
+  </ng-container>
+</app-summary>
+
+<div class="erp-card p-4 shadow-sm rounded-4">
+  <app-toolbar
+    [(searchText)]="searchText"
+    (clearFilters)="handleClearFilter()"
+    [(filterIsDelete)]="filterIsDelete"
+  >
+    <ng-container active-filters>
+      @if (filterEmployeeStatus()) {
+        <span class="filter-chip">
+          <i class="fa-solid fa-compass chip-icon"></i> {{ 'employee.employeeStatus' | translate }}:
+          <strong>{{
+            'employee.' + filterEmployeeStatus()!.toLocaleLowerCase() | translate
+          }}</strong>
+          <i class="fa-solid fa-xmark chip-remove-btn" (click)="filterEmployeeStatus.set('')"></i>
+        </span>
+      }
+    </ng-container>
+
+    <ng-container action-buttons>
+      <div class="d-flex align-items-center gap-2">
+        <button
+          type="button"
+          class="btn btn-sm btn-pastel-green d-inline-flex align-items-center gap-2 px-3 py-2 rounded-3 shadow-xs"
+          (click)="handleOpenCreate()"
+        >
+          <i class="fa-solid fa-plus"></i> {{ 'common.create' | translate }}
+        </button>
+        <button
+          type="button"
+          class="btn btn-sm btn-pastel-orange d-inline-flex align-items-center gap-2 px-3 py-2 rounded-3 shadow-xs"
+          [disabled]="selectedIds().size !== 1"
+          (click)="handleOpenUpdate()"
+        >
+          <i class="fa-solid fa-pen-to-square"></i> {{ 'common.edit' | translate }}
+        </button>
+        <button
+          type="button"
+          class="btn btn-sm btn-pastel-red d-inline-flex align-items-center gap-2 px-3 py-2 rounded-3 shadow-xs"
+          [disabled]="selectedIds().size < 1"
+          (click)="handleDeleteSelected()"
+        >
+          <i class="fa-solid fa-trash-can"></i> {{ 'common.delete' | translate }}
+        </button>
+      </div>
+
+      <div class="action-bar-divider mx-1"></div>
+
+      <div class="d-flex align-items-center gap-2">
+        <button
+          type="button"
+          class="btn btn-sm btn-pastel-indigo d-inline-flex align-items-center gap-2 px-3 py-2 rounded-3 shadow-xs"
+          (click)="openImportModal()"
+        >
+          <i class="fa-solid fa-file-import"></i> {{ 'common.import' | translate }}
+        </button>
+        <button
+          type="button"
+          class="btn btn-sm btn-pastel-indigo d-inline-flex align-items-center gap-2 px-3 py-2 rounded-3 shadow-xs"
+          (click)="openExportModal()"
+        >
+          <i class="fa-solid fa-file-export"></i> {{ 'common.export' | translate }}
+        </button>
+      </div>
+    </ng-container>
+
+    <ng-container filter-matrix>
+      <div class="col-md-3">
+        <label class="form-label small fw-semibold text-muted">{{
+          'common.employeeStatus' | translate
+        }}</label>
+        <select
+          class="form-select form-select-sm rounded-3 filter-select w-100"
+          [ngModel]="filterEmployeeStatus()"
+          (ngModelChange)="filterEmployeeStatus.set($event)"
+        >
+          <option value="">{{ 'employee.allStatus' | translate }}</option>
+          @for (status of employeeStatus; track status) {
+            <option [value]="status">
+              {{ 'employee.' + status.toLocaleLowerCase() | translate }}
+            </option>
+          }
+        </select>
+      </div>
+    </ng-container>
+  </app-toolbar>
+
+  <div id="empListView">
+    <app-table>
+      <ng-container table-header>
+        <tr>
+          <th class="col-pin" style="width: 36px; min-width: 36px">
+            <input
+              type="checkbox"
+              aria-label="Select all"
+              [checked]="isSelectedAll()"
+              (click)="handleToggleSelectAll()"
+            />
+          </th>
+          <th class="text-center" style="width: 50px">#</th>
+          @for (column of employeeColumns; track column) {
+            <th>{{ 'employee.' + column | translate }}</th>
+          }
+          <th style="min-width: 220px">{{ 'common.note' | translate }}</th>
+          <th>{{ 'common.createdAt' | translate }}</th>
+          <th>{{ 'common.createdBy' | translate }}</th>
+          <th>{{ 'common.updatedAt' | translate }}</th>
+          <th>{{ 'common.updatedBy' | translate }}</th>
+        </tr>
+      </ng-container>
+
+      <ng-container table-body>
+        @if (isLoading()) {
+          <app-placeholder [modelColumns]="employeeColumns"></app-placeholder>
+        } @else {
+          @for (employee of employees(); track employee.id; let idx = $index) {
+            <tr [class.deleted-row]="filterIsDelete()">
+              <td class="col-pin">
+                <input
+                  type="checkbox"
+                  [aria-label]="employee.employeeName"
+                  [checked]="isSelected(employee.id)"
+                  (click)="handleToggleSelect(employee.id)"
+                />
+              </td>
+              <td class="td-cell text-center">{{ fromRecord() + idx }}</td>
+
+              <td class="text-nowrap">
+                <span class="badge-soft badge-blue">#{{ employee.employeeCode }}</span>
+              </td>
+
+              <td class="text-nowrap">
+                <div
+                  class="fw-semibold text-main"
+                  [class.text-decoration-line-through]="filterIsDelete()"
+                >
+                  {{ employee.employeeName }}
+                </div>
+                @if (filterIsDelete()) {
+                  <span
+                    class="badge bg-danger-subtle text-danger border border-danger-subtle fs-xs rounded-pill px-2 py-0.5 mt-1"
+                  >
+                    <i class="fa-solid fa-trash-can me-1"></i>
+                    {{ 'common.softDeleted' | translate }}
+                  </span>
+                }
+              </td>
+
+              <td class="text-nowrap">
+                <span class="text-muted small">
+                  <i class="fa-regular fa-user"></i>{{ employee.departmentCatId }}</span
+                >
+              </td>
+
+              <td class="text-nowrap">
+                <span class="text-muted small">
+                  <i class="fa-regular fa-user"></i>{{ employee.jobTitleCatId }}</span
+                >
+              </td>
+
+              <td class="text-nowrap">
+                <span class="text-muted small">
+                  <i class="fa-regular fa-user"></i>{{ employee.storeId }}</span
+                >
+              </td>
+
+              <td class="text-nowrap">
+                <span class="text-muted small">
+                  <i class="fa-regular fa-user"></i>{{ employee.countryCatId }}</span
+                >
+              </td>
+
+              <td class="text-nowrap">
+                <span class="text-muted small">
+                  <i class="fa-regular fa-user"></i>{{ employee.provinceCatId }}</span
+                >
+              </td>
+
+              <td class="text-nowrap">
+                <span class="text-muted small">
+                  <i class="fa-regular fa-user"></i>{{ employee.wardCatId }}</span
+                >
+              </td>
+
+              <td class="text-nowrap">
+                <span class="text-muted small">
+                  <i class="fa-solid fa-venus-mars text-primary me-1"></i>
+                  {{ employee.gender }}</span
+                >
+              </td>
+
+              <td class="text-nowrap">
+                <span class="text-muted small">{{ employee.dateOfBirth | date }}</span>
+              </td>
+
+              <td class="text-nowrap">
+                <span class="text-muted small">{{ employee.phoneNumber }}</span>
+              </td>
+
+              <td class="text-nowrap">
+                <span class="text-muted small">{{ employee.email }}</span>
+              </td>
+
+              <td class="text-nowrap">
+                <span class="text-muted small">{{ employee.identityNumber }}</span>
+              </td>
+
+              <td class="text-nowrap">
+                <span class="text-muted small">
+                  <i class="fa-solid fa-location-dot text-primary me-1"></i
+                  >{{ employee.address }}</span
+                >
+              </td>
+
+              <td class="text-nowrap">
+                <span class="text-muted small">{{ employee.hireDate | date }}</span>
+              </td>
+
+              <td class="text-nowrap">
+                <span class="text-muted small">{{ employee.terminationDate | date }}</span>
+              </td>
+
+              <td>
+                <span
+                  class="badge-soft"
+                  [class]="statusConfig[employee.employmentStatus]?.cssClass"
+                >
+                  <i class="fa-solid" [class]="statusConfig[employee.employmentStatus]?.icon"></i>
+                  {{
+                    'employee.' + employee.employmentStatus.toLocaleLowerCase() | translate
+                  }}</span
+                >
+              </td>
+
+              <td class="text-center">
+                <input type="checkbox" [checked]="employee.isMultiStore" />
+              </td>
+
+              <td class="text-nowrap">
+                <span class="text-muted">{{ employee.photo }}</span>
+              </td>
+
+              <td class="text-nowrap">
+                <span class="text-muted small">{{ employee.healthInsuranceNumber }}</span>
+              </td>
+
+              <td class="text-nowrap">
+                <span class="text-muted small">{{ employee.socialInsuranceNumber }}</span>
+              </td>
+
+              <td class="text-nowrap">
+                <span class="text-muted small">{{ employee.bankAccountNumber }}</span>
+              </td>
+
+              <td class="text-nowrap">
+                <span class="text-muted small">{{ employee.bankName }}</span>
+              </td>
+
+              <td class="text-nowrap">
+                <span class="text-muted small">{{ employee.educationLevel }}</span>
+              </td>
+
+              <td class="text-nowrap">
+                <span class="text-muted small">{{ employee.taxCode }}</span>
+              </td>
+
+              <td class="text-nowrap">
+                <span class="text-muted small">{{ employee.emergencyContactName }}</span>
+              </td>
+
+              <td class="text-nowrap">
+                <span class="text-muted small">{{ employee.emergencyContactPhone }}</span>
+              </td>
+
+              <td>
+                <span class="text-muted small fst-italic">{{ employee.note }}</span>
+              </td>
+
+              <td class="text-nowrap">
+                <span class="text-muted small">{{ employee.createdAt | date }}</span>
+              </td>
+
+              <td>
+                <span class="text-muted small">
+                  <i class="fa-regular fa-user"></i>{{ employee.createdBy }}</span
+                >
+              </td>
+
+              <td class="text-nowrap">
+                <span class="text-muted small">{{ employee.updatedAt | date }}</span>
+              </td>
+
+              <td>
+                <span class="text-muted small">
+                  <i class="fa-regular fa-user"></i>{{ employee.updatedBy }}</span
+                >
+              </td>
+            </tr>
+          }
+        }
+      </ng-container>
+    </app-table>
+  </div>
+
+  <app-pagination
+    [(pageIndex)]="pageIndex"
+    [(pageSize)]="pageSize"
+    [totalRecord]="totalRecord()"
+    [recordRange]="recordRange()"
+    [pageCount]="pageCount()"
+  ></app-pagination>
+</div>

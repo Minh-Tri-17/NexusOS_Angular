@@ -1,4 +1,13 @@
-import { Component, computed, ElementRef, inject, output, signal, viewChild, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  computed,
+  ElementRef,
+  inject,
+  output,
+  signal,
+  viewChild,
+  ViewEncapsulation,
+} from '@angular/core';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { BaseService } from '../../../core/services/base.service';
 import { Modal } from '../modal/modal';
@@ -49,8 +58,8 @@ export class Import {
 
     const acceptTypes = this.acceptTypes;
     if (acceptTypes) {
-      const allowedExtensions = acceptTypes.split(',').map((ext) => ext.trim().toLowerCase());
-      const fileExtension = '.' + file.name.split('.').pop()?.toLowerCase();
+      const allowedExtensions = acceptTypes.split(',').map((ext) => ext.trim().toLocaleLowerCase());
+      const fileExtension = '.' + file.name.split('.').pop()?.toLocaleLowerCase();
       if (!allowedExtensions.includes(fileExtension)) {
         this.errorMessage.set(
           `${this.translateService.instant('common.invalidFileType')} ${acceptTypes}`,
