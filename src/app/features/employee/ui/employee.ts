@@ -18,7 +18,7 @@ import { Placeholder } from '../../../shared/components/placeholder/placeholder'
 import { Summary } from '../../../shared/components/summary/summary';
 import { Table } from '../../../shared/components/table/table';
 import { Toolbar } from '../../../shared/components/toolbar/toolbar';
-import { EmployeeStatus } from '../data-access/employee.enum';
+import { EmploymentStatus } from '../data-access/employee.enum';
 import { EmployeeFacade } from '../data-access/employee.facade';
 import { EmployeeFields, EmployeeModel } from '../data-access/employee.model';
 import { EmployeeModal } from './editor-modal/employee-modal';
@@ -29,23 +29,23 @@ interface StatusBadgeConfig {
 }
 
 export const STATUS_CONFIG: Record<string, StatusBadgeConfig> = {
-  [EmployeeStatus.active]: {
+  [EmploymentStatus.active]: {
     icon: 'fa-circle-check',
     cssClass: 'badge-green',
   },
-  [EmployeeStatus.remote]: {
+  [EmploymentStatus.remote]: {
     icon: 'fa-laptop-house',
     cssClass: 'badge-purple',
   },
-  [EmployeeStatus.leave]: {
+  [EmploymentStatus.leave]: {
     icon: 'fa-baby',
     cssClass: 'badge-cyan',
   },
-  [EmployeeStatus.probation]: {
+  [EmploymentStatus.probation]: {
     icon: 'fa-hourglass-half',
     cssClass: 'badge-amber',
   },
-  [EmployeeStatus.resigned]: {
+  [EmploymentStatus.resigned]: {
     icon: 'fa-circle-xmark',
     cssClass: 'badge-red',
   },
@@ -75,7 +75,7 @@ export class Employee {
   readonly pageCount = signal(0);
   readonly employees = signal<EmployeeModel[]>([]);
   readonly searchText = signal('');
-  readonly filterEmployeeStatus = signal('');
+  readonly filterEmploymentStatus = signal('');
   readonly filterIsDelete = signal(false);
   readonly selectedIds = signal<Set<string>>(new Set());
   readonly isLoading = signal(false);
@@ -83,7 +83,7 @@ export class Employee {
   readonly pageIndex = linkedSignal({
     source: () => ({
       search: this.searchText(),
-      region: this.filterEmployeeStatus(),
+      region: this.filterEmploymentStatus(),
       isDelete: this.filterIsDelete(),
       pageSize: this.pageSize(),
     }),
@@ -97,7 +97,7 @@ export class Employee {
     return list.length > 0 && list.every((item) => ids.has(item.id));
   });
 
-  readonly employeeStatus = Object.values(EmployeeStatus);
+  readonly employeeStatus = Object.values(EmploymentStatus);
   readonly employeeColumns = Object.keys(EmployeeFields).filter(
     (key) =>
       key !== 'id' &&
@@ -127,7 +127,7 @@ export class Employee {
 
     const filterText = this.searchText().trim();
     const filterIsDeleted = this.filterIsDelete();
-    const filterEmployeeStatus = this.filterEmployeeStatus().trim();
+    const filterEmploymentStatus = this.filterEmploymentStatus().trim();
 
     filter.filters = [];
 
@@ -145,10 +145,10 @@ export class Employee {
         filterOperator: FilterOperator.like,
       });
 
-    if (filterEmployeeStatus)
+    if (filterEmploymentStatus)
       filter.filters.push({
         filterName: EmployeeFields.employmentStatus,
-        filterValue: filterEmployeeStatus,
+        filterValue: filterEmploymentStatus,
         filterType: FilterType.string,
         filterOperator: FilterOperator.like,
       });
@@ -188,7 +188,7 @@ export class Employee {
   handleClearFilter() {
     this.filterIsDelete.set(false);
     this.searchText.set('');
-    this.filterEmployeeStatus.set('');
+    this.filterEmploymentStatus.set('');
     this.pageIndex.set(1);
   }
 
@@ -248,6 +248,7 @@ export class Employee {
     const modalRef = this.modal.open(EmployeeModal, {
       size: 'lg',
       centered: true,
+      scrollable: true,
       windowClass: 'custom-modal',
     });
     modalRef.componentInstance.saveSuccess.subscribe(() => this.loadListData());
@@ -261,6 +262,7 @@ export class Employee {
     const modalRef = this.modal.open(EmployeeModal, {
       size: 'lg',
       centered: true,
+      scrollable: true,
       windowClass: 'custom-modal',
     });
     modalRef.componentInstance.saveSuccess.subscribe(() => this.loadListData());

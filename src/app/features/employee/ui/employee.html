@@ -14,13 +14,13 @@
     [(filterIsDelete)]="filterIsDelete"
   >
     <ng-container active-filters>
-      @if (filterEmployeeStatus()) {
+      @if (filterEmploymentStatus()) {
         <span class="filter-chip">
           <i class="fa-solid fa-compass chip-icon"></i> {{ 'employee.employeeStatus' | translate }}:
           <strong>{{
-            'employee.' + filterEmployeeStatus()!.toLocaleLowerCase() | translate
+            'employee.' + filterEmploymentStatus()!.toLocaleLowerCase() | translate
           }}</strong>
-          <i class="fa-solid fa-xmark chip-remove-btn" (click)="filterEmployeeStatus.set('')"></i>
+          <i class="fa-solid fa-xmark chip-remove-btn" (click)="filterEmploymentStatus.set('')"></i>
         </span>
       }
     </ng-container>
@@ -79,8 +79,8 @@
         }}</label>
         <select
           class="form-select form-select-sm rounded-3 filter-select w-100"
-          [ngModel]="filterEmployeeStatus()"
-          (ngModelChange)="filterEmployeeStatus.set($event)"
+          [ngModel]="filterEmploymentStatus()"
+          (ngModelChange)="filterEmploymentStatus.set($event)"
         >
           <option value="">{{ 'employee.allStatus' | translate }}</option>
           @for (status of employeeStatus; track status) {
@@ -191,8 +191,11 @@
               </td>
 
               <td class="text-nowrap">
-                <span class="text-muted small">
-                  <i class="fa-solid fa-venus-mars text-primary me-1"></i>
+                <span
+                  class="badge-soft"
+                  [class]="employee.gender == 'Male' ? 'badge-rose' : 'badge-teal'"
+                >
+                  <i class="fa-solid fa-venus-mars"></i>
                   {{ employee.gender }}</span
                 >
               </td>
@@ -215,8 +218,7 @@
 
               <td class="text-nowrap">
                 <span class="text-muted small">
-                  <i class="fa-solid fa-location-dot text-primary me-1"></i
-                  >{{ employee.address }}</span
+                  <i class="fa-solid fa-location-dot text-primary"></i>{{ employee.address }}</span
                 >
               </td>
 
@@ -228,7 +230,7 @@
                 <span class="text-muted small">{{ employee.terminationDate | date }}</span>
               </td>
 
-              <td>
+              <td class="text-center">
                 <span
                   class="badge-soft"
                   [class]="statusConfig[employee.employmentStatus]?.cssClass"

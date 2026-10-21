@@ -23,6 +23,28 @@ import { CountryFacade } from '../data-access/country.facade';
 import { CountryFields, CountryModel } from '../data-access/country.model';
 import { CountryModal } from './editor-modal/country-modal';
 
+interface StatusBadgeConfig {
+  cssClass: string;
+}
+
+export const STATUS_CONFIG: Record<string, StatusBadgeConfig> = {
+  [Region.asia]: {
+    cssClass: 'badge-teal',
+  },
+  [Region.africa]: {
+    cssClass: 'badge-purple',
+  },
+  [Region.americas]: {
+    cssClass: 'badge-cyan',
+  },
+  [Region.europe]: {
+    cssClass: 'badge-rose',
+  },
+  [Region.oceania]: {
+    cssClass: 'badge-indigo',
+  },
+};
+
 @Component({
   selector: 'app-country',
   imports: [Summary, Toolbar, Pagination, Table, DatePipe, FormsModule, Placeholder, TranslatePipe],
@@ -37,19 +59,7 @@ export class Country {
 
   //#region //@ STATE
 
-  protected readonly badgeColors = [
-    'badge-blue',
-    'badge-green',
-    'badge-amber',
-    'badge-purple',
-    'badge-rose',
-    'badge-cyan',
-    'badge-orange',
-    'badge-red',
-    'badge-slate',
-    'badge-indigo',
-    'badge-teal',
-  ];
+  protected readonly statusConfig = STATUS_CONFIG;
 
   readonly pageSize = signal(20);
   readonly fromRecord = signal(1);
@@ -232,6 +242,7 @@ export class Country {
     const modalRef = this.modal.open(CountryModal, {
       size: 'lg',
       centered: true,
+      scrollable: true,
       windowClass: 'custom-modal',
     });
     modalRef.componentInstance.saveSuccess.subscribe(() => this.loadListData());
@@ -245,6 +256,7 @@ export class Country {
     const modalRef = this.modal.open(CountryModal, {
       size: 'lg',
       centered: true,
+      scrollable: true,
       windowClass: 'custom-modal',
     });
     modalRef.componentInstance.saveSuccess.subscribe(() => this.loadListData());

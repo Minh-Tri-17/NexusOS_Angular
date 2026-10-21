@@ -53,8 +53,8 @@
     "saving": "Saving...",
     "notification": "Notification",
     "softDeleted": "Soft Deleted",
-    "globalGeographyModule": "Global Geography Module",
     "country": "Country",
+    "employee": "Employee",
     "liveSync": "Live Sync",
     "geographicIdentification": "Geographic Identification",
     "fields": "fields",
@@ -132,7 +132,8 @@
     "createdBy": "Created By",
     "updatedAt": "Updated At",
     "updatedBy": "Updated By",
-    "employeeStatus": "Employment Status"
+    "employeeStatus": "Employment Status",
+    "otherInfo": "Additional Information & Notes"
   },
   "sidebar": {
     "dashboard": "Dashboard",
@@ -160,6 +161,7 @@
   },
   "country": {
     "title": "Country Management",
+    "modalTitle": "Global Geography Module",
     "description": "Manage country master records, geographic codes, interactive data grids, and regional settings.",
     "region": "Region",
     "allRegions": "All Regions",
@@ -176,6 +178,7 @@
   },
   "employee": {
     "title": "Employee Management",
+    "modalTitle": "Workforce & Personnel Module",
     "description": "Manage employee master records, job positions, departments, and employment status.",
     "employeeStatus": "Status",
     "allStatus": "All Statuses",
@@ -210,6 +213,16 @@
     "educationLevel": "Education Level",
     "taxCode": "Tax Code",
     "emergencyContactName": "Emergency Contact Name",
-    "emergencyContactPhone": "Emergency Contact Phone"
+    "emergencyContactPhone": "Emergency Contact Phone",
+    "contactAndOrg": "Contact & Organization",
+    "personalInfo": "Personal Information & Address",
+    "legalAndInsurance": "Legal, Insurance & Tax",
+    "bankingAndEmergency": "Banking & Emergency Contact",
+    "male": "Male",
+    "female": "Female",
+    "other": "Other",
+    "selectGender": "-- Select Gender --",
+    "placeholderNote": "Enter additional notes for employee..."
   }
 }
+

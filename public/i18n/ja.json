@@ -53,8 +53,8 @@
     "saving": "保存中...",
     "notification": "通知",
     "softDeleted": "論理削除済み",
-    "globalGeographyModule": "グローバル地理モジュール",
     "country": "国",
+    "employee": "従業員",
     "liveSync": "ライブ同期",
     "geographicIdentification": "地理的識別",
     "fields": "項目",
@@ -132,7 +132,8 @@
     "createdBy": "作成者",
     "updatedAt": "更新日時",
     "updatedBy": "更新者",
-    "employeeStatus": "雇用ステータス"
+    "employeeStatus": "雇用ステータス",
+    "otherInfo": "追加情報および備考"
   },
   "sidebar": {
     "dashboard": "ダッシュボード",
@@ -160,6 +161,7 @@
   },
   "country": {
     "title": "国管理",
+    "modalTitle": "グローバル地理モジュール",
     "description": "国のマスターレコード、地理コード、インタラクティブデータグリッド、地域設定を管理します。",
     "region": "地域",
     "allRegions": "すべての地域",
@@ -176,6 +178,7 @@
   },
   "employee": {
     "title": "従業員管理",
+    "modalTitle": "人事・労務モジュール",
     "description": "従業員マスターレコード、役職、部署、および雇用ステータスを管理します。",
     "employeeStatus": "ステータス",
     "allStatus": "すべてのステータス",
@@ -210,6 +213,16 @@
     "educationLevel": "学歴",
     "taxCode": "税務番号",
     "emergencyContactName": "緊急連絡先名",
-    "emergencyContactPhone": "緊急連絡先電話番号"
+    "emergencyContactPhone": "緊急連絡先電話番号",
+    "contactAndOrg": "連絡先および組織情報",
+    "personalInfo": "個人情報および住所",
+    "legalAndInsurance": "法務・保険・税務",
+    "bankingAndEmergency": "銀行口座および緊急連絡先",
+    "male": "男性",
+    "female": "女性",
+    "other": "その他",
+    "selectGender": "-- 性別を選択 --",
+    "placeholderNote": "社員に関する備考を入力..."
   }
 }
+

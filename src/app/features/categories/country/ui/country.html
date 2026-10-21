@@ -152,13 +152,12 @@
 
             <td>
               <span class="text-muted small">
-                <i class="fa-solid fa-location-dot text-primary me-1"></i
-                >{{ country.capital }}</span
+                <i class="fa-solid fa-location-dot text-primary"></i>{{ country.capital }}</span
               >
             </td>
 
             <td class="text-nowrap">
-              <span class="badge-soft" [class]="badgeColors[idx % badgeColors.length]">
+              <span class="badge-soft" [class]="statusConfig[country.region]?.cssClass">
                 <i class="fa-solid fa-globe-asia"></i
                 >{{ 'country.' + country.region.toLocaleLowerCase() | translate }}</span
               >

@@ -53,8 +53,8 @@
     "saving": "Đang lưu...",
     "notification": "Thông báo",
     "softDeleted": "Đã xóa mềm",
-    "globalGeographyModule": "Mô-đun địa lý toàn cầu",
     "country": "Quốc gia",
+    "employee": "Nhân viên",
     "liveSync": "Đồng bộ trực tiếp",
     "geographicIdentification": "Nhận dạng địa lý",
     "fields": "trường dữ liệu",
@@ -132,7 +132,8 @@
     "createdBy": "Người tạo",
     "updatedAt": "Ngày cập nhật",
     "updatedBy": "Người cập nhật",
-    "employeeStatus": "Trạng thái nhân viên"
+    "employeeStatus": "Trạng thái nhân viên",
+    "otherInfo": "Thông tin bổ sung & Ghi chú"
   },
   "sidebar": {
     "dashboard": "Bảng điều khiển",
@@ -160,6 +161,7 @@
   },
   "country": {
     "title": "Quản lý quốc gia",
+    "modalTitle": "Mô-đun Địa lý Toàn cầu",
     "description": "Quản lý hồ sơ quốc gia, mã địa lý, bảng dữ liệu tương tác và cài đặt khu vực.",
     "region": "Khu vực",
     "allRegions": "Tất cả khu vực",
@@ -176,6 +178,7 @@
   },
   "employee": {
     "title": "Quản lý nhân viên",
+    "modalTitle": "Hồ sơ Nhân sự & Lao động",
     "description": "Quản lý danh sách nhân sự, hồ sơ nhân viên, chức vụ, phòng ban và trạng thái làm việc.",
     "employeeStatus": "Trạng thái",
     "allStatus": "Tất cả trạng thái",
@@ -210,6 +213,16 @@
     "educationLevel": "Trình độ học vấn",
     "taxCode": "Mã số thuế",
     "emergencyContactName": "Người liên hệ khẩn cấp",
-    "emergencyContactPhone": "SĐT liên hệ khẩn cấp"
+    "emergencyContactPhone": "SĐT liên hệ khẩn cấp",
+    "contactAndOrg": "Thông tin liên hệ & Tổ chức",
+    "personalInfo": "Thông tin cá nhân & Địa chỉ",
+    "legalAndInsurance": "Pháp lý, Thuế & Bảo hiểm",
+    "bankingAndEmergency": "Ngân hàng & Liên hệ khẩn cấp",
+    "male": "Nam",
+    "female": "Nữ",
+    "other": "Khác",
+    "selectGender": "-- Chọn giới tính --",
+    "placeholderNote": "Nhập ghi chú thêm về nhân viên..."
   }
 }
+

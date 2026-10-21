@@ -1,13 +1,13 @@
 import { Component, computed, inject, output, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { TranslatePipe } from '@ngx-translate/core';
 import { NIL as NIL_GUID } from 'uuid';
 import { BaseService } from '../../../../../core/services/base.service';
 import { Modal } from '../../../../../shared/components/modal/modal';
 import { Region } from '../../data-access/country.enum';
 import { CountryFacade } from '../../data-access/country.facade';
 import { CountryModel } from '../../data-access/country.model';
-import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-country-modal',
@@ -73,8 +73,8 @@ export class CountryModal {
 
   async handleSave() {
     if (this.countryForm.invalid) return;
-
     this.isSaving.set(true);
+
     //* getRawValue() lấy toàn bộ giá trị của form, kể cả ô bị disabled
     const rawValues: CountryModel = this.countryForm.getRawValue();
 

@@ -53,8 +53,8 @@
     "saving": "Enregistrement en cours...",
     "notification": "Notification",
     "softDeleted": "Supprimé temporairement",
-    "globalGeographyModule": "Module de géographie mondiale",
     "country": "Pays",
+    "employee": "Employé",
     "liveSync": "Synchronisation en direct",
     "geographicIdentification": "Identification géographique",
     "fields": "champs",
@@ -132,7 +132,8 @@
     "createdBy": "Créé par",
     "updatedAt": "Date de mise à jour",
     "updatedBy": "Mis à jour par",
-    "employeeStatus": "Statut de l'employé"
+    "employeeStatus": "Statut de l'employé",
+    "otherInfo": "Informations supplémentaires et notes"
   },
   "sidebar": {
     "dashboard": "Tableau de bord",
@@ -160,6 +161,7 @@
   },
   "country": {
     "title": "Gestion des pays",
+    "modalTitle": "Module Géographique Mondial",
     "description": "Gérez les enregistrements principaux des pays, les codes géographiques, les grilles de données interactives et les paramètres régionaux.",
     "region": "Région",
     "allRegions": "Toutes les régions",
@@ -176,6 +178,7 @@
   },
   "employee": {
     "title": "Gestion des employés",
+    "modalTitle": "Module Personnel & Main-d'œuvre",
     "description": "Gérer les dossiers du personnel, les postes, les départements et les statuts professionnels.",
     "employeeStatus": "Statut",
     "allStatus": "Tous les statuts",
@@ -210,6 +213,16 @@
     "educationLevel": "Niveau d'études",
     "taxCode": "Numéro fiscal",
     "emergencyContactName": "Contact d'urgence",
-    "emergencyContactPhone": "Tél. contact d'urgence"
+    "emergencyContactPhone": "Tél. contact d'urgence",
+    "contactAndOrg": "Contact et organisation",
+    "personalInfo": "Informations personnelles et adresse",
+    "legalAndInsurance": "Légal, assurance et fiscalité",
+    "bankingAndEmergency": "Informations bancaires et urgence",
+    "male": "Homme",
+    "female": "Femme",
+    "other": "Autre",
+    "selectGender": "-- Sélectionner le genre --",
+    "placeholderNote": "Entrez des notes supplémentaires..."
   }
 }
+

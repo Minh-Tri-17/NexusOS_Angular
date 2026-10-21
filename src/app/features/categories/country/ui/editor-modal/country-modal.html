@@ -1,5 +1,5 @@
 <app-modal>
-  <ng-container modal-eyebrow>{{ 'common.globalGeographyModule' | translate }}</ng-container>
+  <ng-container modal-eyebrow>{{ 'country.modalTitle' | translate }}</ng-container>
 
   <ng-container modal-title
     >{{ title() | translate }} {{ 'common.country' | translate }}</ng-container
@@ -19,7 +19,8 @@
       (ngSubmit)="handleSave()"
     >
       <div class="modal-body px-4 py-3 position-relative z-1">
-        <div class="form-section-card">
+        <!-- Form Section 1: Geographic Identification -->
+        <div class="form-section-card mb-4">
           <div class="form-section-header">
             <div class="d-flex align-items-center gap-2">
               <i class="fa-solid fa-globe text-primary"></i>
@@ -28,7 +29,7 @@
               </span>
             </div>
             <span class="badge-soft badge-indigo">
-              <i class="fa-solid fa-list-check"></i> 5 {{ 'common.fields' | translate }}
+              <i class="fa-solid fa-list-check"></i> 4 {{ 'common.fields' | translate }}
             </span>
           </div>
 
@@ -107,7 +108,24 @@
                 />
               </div>
             </div>
+          </div>
+        </div>
 
+        <!-- Form Section 2: Additional Info & Note -->
+        <div class="form-section-card">
+          <div class="form-section-header">
+            <div class="d-flex align-items-center gap-2">
+              <i class="fa-solid fa-align-left text-primary"></i>
+              <span class="fw-bold">
+                {{ 'common.otherInfo' | translate }}
+              </span>
+            </div>
+            <span class="badge-soft badge-indigo">
+              <i class="fa-solid fa-list-check"></i> 1 {{ 'common.fields' | translate }}
+            </span>
+          </div>
+
+          <div class="row g-3">
             <div class="col-12">
               <label for="inputCountryNote" class="form-label custom-form-label">
                 {{ 'common.note' | translate }}
@@ -120,8 +138,7 @@
                   rows="3"
                   placeholder="{{ 'country.placeholderNote' | translate }}"
                   formControlName="note"
-                >
-                </textarea>
+                ></textarea>
               </div>
             </div>
           </div>

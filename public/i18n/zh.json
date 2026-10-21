@@ -53,8 +53,8 @@
     "saving": "正在保存...",
     "notification": "通知",
     "softDeleted": "已软删除",
-    "globalGeographyModule": "全球地理模块",
     "country": "国家",
+    "employee": "员工",
     "liveSync": "实时同步",
     "geographicIdentification": "地理标识",
     "fields": "字段",
@@ -132,7 +132,8 @@
     "createdBy": "创建人",
     "updatedAt": "更新时间",
     "updatedBy": "更新人",
-    "employeeStatus": "员工状态"
+    "employeeStatus": "员工状态",
+    "otherInfo": "附加信息与备注"
   },
   "sidebar": {
     "dashboard": "仪表板",
@@ -160,6 +161,7 @@
   },
   "country": {
     "title": "国家管理",
+    "modalTitle": "全球地理模块",
     "description": "管理国家主数据、地理代码、交互式数据网格和区域设置。",
     "region": "地区",
     "allRegions": "所有地区",
@@ -176,6 +178,7 @@
   },
   "employee": {
     "title": "员工管理",
+    "modalTitle": "人力资源与员工管理模块",
     "description": "管理员工档案、职位、所属部门及在职状态。",
     "employeeStatus": "状态",
     "allStatus": "所有状态",
@@ -210,6 +213,16 @@
     "educationLevel": "学历水平",
     "taxCode": "税号",
     "emergencyContactName": "紧急联系人姓名",
-    "emergencyContactPhone": "紧急联系人电话"
+    "emergencyContactPhone": "紧急联系人电话",
+    "contactAndOrg": "联系方式与组织信息",
+    "personalInfo": "个人信息与地址",
+    "legalAndInsurance": "法律、保险与税务",
+    "bankingAndEmergency": "银行账户与紧急联系人",
+    "male": "男",
+    "female": "女",
+    "other": "其他",
+    "selectGender": "-- 选择性别 --",
+    "placeholderNote": "输入员工附加备注..."
   }
 }
+

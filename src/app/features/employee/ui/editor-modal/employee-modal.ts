@@ -2,14 +2,18 @@ import { Component, computed, inject, output, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
+import { NIL as NIL_GUID } from 'uuid';
+import { PagingRequest } from '../../../../core/models/paging.model';
 import { BaseService } from '../../../../core/services/base.service';
 import { Modal } from '../../../../shared/components/modal/modal';
-import { EmployeeStatus } from '../../data-access/employee.enum';
+import { CountryFacade } from '../../../categories/country/data-access/country.facade';
+import { CountryModel } from '../../../categories/country/data-access/country.model';
+import { EmploymentStatus } from '../../data-access/employee.enum';
 import { EmployeeFacade } from '../../data-access/employee.facade';
 import { EmployeeModel } from '../../data-access/employee.model';
 
 @Component({
-  selector: 'app-country-modal',
+  selector: 'app-employee-modal',
   imports: [Modal, ReactiveFormsModule, TranslatePipe],
   templateUrl: './employee-modal.html',
   styleUrl: './employee-modal.scss',
@@ -17,6 +21,7 @@ import { EmployeeModel } from '../../data-access/employee.model';
 export class EmployeeModal {
   private readonly baseService = inject(BaseService);
   private readonly facade = inject(EmployeeFacade);
+  private readonly countryFacade = inject(CountryFacade);
 
   //#region //@ PROPS
 
@@ -27,7 +32,9 @@ export class EmployeeModal {
   //#region //@ STATE
 
   readonly isSaving = signal(false);
-  readonly employeeStatus = Object.values(EmployeeStatus);
+  readonly photoPreview = signal<string>('');
+  readonly employmentStatus = Object.values(EmploymentStatus);
+  readonly countries = signal<CountryModel[]>([]);
 
   readonly employeeForm = new FormGroup({
     id: new FormControl('', { nonNullable: true }),
@@ -36,10 +43,52 @@ export class EmployeeModal {
       nonNullable: true,
       validators: [Validators.required],
     }),
-    employeeStatus: new FormControl<EmployeeStatus | ''>('', {
+    employmentStatus: new FormControl<EmploymentStatus | string>(EmploymentStatus.active, {
       nonNullable: true,
       validators: [Validators.required],
     }),
+    photo: new FormControl('', { nonNullable: true }),
+    hireDate: new FormControl('', { nonNullable: true }),
+    terminationDate: new FormControl('', { nonNullable: true }),
+    isMultiStore: new FormControl<boolean>(false, { nonNullable: true }),
+
+    departmentCatId: new FormControl<string>(
+      { value: NIL_GUID, disabled: true },
+      { nonNullable: true },
+    ),
+    jobTitleCatId: new FormControl<string>(
+      { value: NIL_GUID, disabled: true },
+      { nonNullable: true },
+    ),
+    storeId: new FormControl<string>({ value: NIL_GUID, disabled: true }, { nonNullable: true }),
+    countryCatId: new FormControl<string>(
+      { value: NIL_GUID, disabled: true },
+      { nonNullable: true },
+    ),
+    provinceCatId: new FormControl<string>(
+      { value: NIL_GUID, disabled: true },
+      { nonNullable: true },
+    ),
+    wardCatId: new FormControl<string>({ value: NIL_GUID, disabled: true }, { nonNullable: true }),
+
+    email: new FormControl('', { nonNullable: true }),
+    phoneNumber: new FormControl('', { nonNullable: true }),
+    emergencyContactName: new FormControl('', { nonNullable: true }),
+    emergencyContactPhone: new FormControl('', { nonNullable: true }),
+
+    dateOfBirth: new FormControl('', { nonNullable: true }),
+    gender: new FormControl('', { nonNullable: true }),
+    educationLevel: new FormControl('', { nonNullable: true }),
+    address: new FormControl('', { nonNullable: true }),
+
+    identityNumber: new FormControl('', { nonNullable: true }),
+    taxCode: new FormControl('', { nonNullable: true }),
+    socialInsuranceNumber: new FormControl('', { nonNullable: true }),
+    healthInsuranceNumber: new FormControl('', { nonNullable: true }),
+
+    bankAccountNumber: new FormControl('', { nonNullable: true }),
+    bankName: new FormControl('', { nonNullable: true }),
+
     note: new FormControl('', { nonNullable: true }),
   });
 
@@ -53,38 +102,139 @@ export class EmployeeModal {
 
   //#endregion
 
+  //#region //@ HELPERS
+
+  private buildFilter(): PagingRequest {
+    const filter: PagingRequest = {
+      allowPaging: false,
+    };
+
+    return filter;
+  }
+
+  private formatDateForInput(date: Date | string | null | undefined): string {
+    if (!date) return '';
+    const d = new Date(date);
+    if (isNaN(d.getTime())) return '';
+
+    return d.toISOString().split('T')[0];
+  }
+
+  //#endregion
+
   //#region //@ METHODS
 
   initCreateForm() {
-    this.employeeForm.reset();
-  }
-
-  initUpdateForm(item: EmployeeModel) {
-    this.employeeForm.patchValue({
-      ...item,
-      employeeStatus: (item.employmentStatus as EmployeeStatus) ?? '',
+    this.photoPreview.set('');
+    this.employeeForm.reset({
+      id: '',
+      employeeCode: '',
+      employeeName: '',
+      employmentStatus: '',
+      photo: '',
+      hireDate: '',
+      terminationDate: '',
+      isMultiStore: false,
+      departmentCatId: NIL_GUID,
+      jobTitleCatId: NIL_GUID,
+      storeId: NIL_GUID,
+      countryCatId: NIL_GUID,
+      provinceCatId: NIL_GUID,
+      wardCatId: NIL_GUID,
+      email: '',
+      phoneNumber: '',
+      emergencyContactName: '',
+      emergencyContactPhone: '',
+      dateOfBirth: '',
+      gender: '',
+      educationLevel: '',
+      address: '',
+      identityNumber: '',
+      taxCode: '',
+      socialInsuranceNumber: '',
+      healthInsuranceNumber: '',
+      bankAccountNumber: '',
+      bankName: '',
+      note: '',
     });
   }
 
+  initUpdateForm(item: EmployeeModel) {
+    this.photoPreview.set(item.photo || '');
+    this.employeeForm.patchValue({
+      ...item,
+      departmentCatId: item.departmentCatId || NIL_GUID,
+      jobTitleCatId: item.jobTitleCatId || NIL_GUID,
+      storeId: item.storeId || NIL_GUID,
+      countryCatId: item.countryCatId || NIL_GUID,
+      provinceCatId: item.provinceCatId || NIL_GUID,
+      wardCatId: item.wardCatId || NIL_GUID,
+      employmentStatus: item.employmentStatus ?? EmploymentStatus.active,
+      dateOfBirth: this.formatDateForInput(item.dateOfBirth),
+      hireDate: this.formatDateForInput(item.hireDate),
+      terminationDate: this.formatDateForInput(item.terminationDate),
+      isMultiStore: Boolean(item.isMultiStore),
+    });
+  }
+
+  onFileSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files[0]) {
+      const file = input.files[0];
+      const reader = new FileReader();
+      reader.onload = () => {
+        const base64 = reader.result as string;
+        this.photoPreview.set(base64);
+        this.employeeForm.controls.photo.setValue(base64);
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  removePhoto(fileInput?: HTMLInputElement) {
+    this.photoPreview.set('');
+    this.employeeForm.controls.photo.setValue('');
+    if (fileInput) {
+      fileInput.value = '';
+    }
+  }
+
   async handleSave() {
-    // if (this.employeeForm.invalid) return;
-    // this.isSaving.set(true);
-    // //* getRawValue() lấy toàn bộ giá trị của form, kể cả ô bị disabled
-    // const rawValues: EmployeeModel = this.employeeForm.getRawValue();
-    // try {
-    //   if (rawValues.id) {
-    //     await this.facade.update(rawValues);
-    //   } else {
-    //     rawValues.id = NIL_GUID;
-    //     await this.facade.create(rawValues);
-    //   }
-    //   this.saveSuccess.emit();
-    //   this.initCreateForm();
-    //   this.baseService.closeModal();
-    // } catch {
-    // } finally {
-    //   this.isSaving.set(false);
-    // }
+    if (this.employeeForm.invalid) return;
+    this.isSaving.set(true);
+
+    //* getRawValue() lấy toàn bộ giá trị của form, kể cả ô bị disabled
+    const rawValues = this.employeeForm.getRawValue();
+
+    const payload: EmployeeModel = {
+      ...(rawValues as unknown as EmployeeModel),
+      dateOfBirth: rawValues.dateOfBirth ? new Date(rawValues.dateOfBirth) : (null as any),
+      hireDate: rawValues.hireDate ? new Date(rawValues.hireDate) : (null as any),
+      terminationDate: rawValues.terminationDate
+        ? new Date(rawValues.terminationDate)
+        : (null as any),
+    };
+
+    try {
+      if (payload.id) {
+        await this.facade.update(payload);
+      } else {
+        payload.id = NIL_GUID;
+        await this.facade.create(payload);
+      }
+      this.saveSuccess.emit();
+      this.initCreateForm();
+      this.baseService.closeModal();
+    } catch {
+    } finally {
+      this.isSaving.set(false);
+    }
+  }
+
+  async loadDataCombobox() {
+    const filter = this.buildFilter();
+    const res = await this.countryFacade.getPaging(filter);
+    this.countries.set(res.result?.items || []);
   }
 
   //#endregion
