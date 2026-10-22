@@ -1,7 +1,6 @@
 {
   "auth": {
     "enterprisePlatform": "企业资源与劳动力平台",
-    "title": "登录工作区",
     "titleForm": "登录工作区",
     "quickLogin": "快速登录:",
     "director": "总监",
@@ -164,7 +163,6 @@
     "modalTitle": "全球地理模块",
     "description": "管理国家主数据、地理代码、交互式数据网格和区域设置。",
     "region": "地区",
-    "allRegions": "所有地区",
     "asia": "亚洲",
     "americas": "美洲",
     "europe": "欧洲",
@@ -173,7 +171,7 @@
     "countryCode": "国家代码",
     "countryName": "国家名称",
     "capital": "首都",
-    "selectRegion": "选择地区...",
+    "selectRegion": "-- 选择地区 --",
     "placeholderNote": "输入国家描述或备注..."
   },
   "employee": {
@@ -181,7 +179,6 @@
     "modalTitle": "人力资源与员工管理模块",
     "description": "管理员工档案、职位、所属部门及在职状态。",
     "employeeStatus": "状态",
-    "allStatus": "所有状态",
     "active": "在职",
     "remote": "远程办公",
     "leave": "休假中",
@@ -220,8 +217,9 @@
     "bankingAndEmergency": "银行账户与紧急联系人",
     "male": "男",
     "female": "女",
-    "other": "其他",
+    "selectStatus": "-- 选择状态 --",
     "selectGender": "-- 选择性别 --",
+    "selectCountry": "-- 选择国家 --",
     "placeholderNote": "输入员工附加备注..."
   }
 }

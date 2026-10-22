@@ -1,7 +1,6 @@
 {
   "auth": {
     "enterprisePlatform": "Nền tảng nguồn lực & nhân sự doanh nghiệp",
-    "title": "Đăng nhập vào không gian làm việc",
     "titleForm": "Đăng nhập vào không gian làm việc",
     "quickLogin": "Đăng nhập nhanh:",
     "director": "Giám đốc",
@@ -164,7 +163,6 @@
     "modalTitle": "Mô-đun Địa lý Toàn cầu",
     "description": "Quản lý hồ sơ quốc gia, mã địa lý, bảng dữ liệu tương tác và cài đặt khu vực.",
     "region": "Khu vực",
-    "allRegions": "Tất cả khu vực",
     "asia": "Châu Á",
     "americas": "Châu Mỹ",
     "europe": "Châu Âu",
@@ -173,7 +171,7 @@
     "countryCode": "Mã quốc gia",
     "countryName": "Tên quốc gia",
     "capital": "Thủ đô",
-    "selectRegion": "Chọn khu vực...",
+    "selectRegion": "-- Chọn khu vực --",
     "placeholderNote": "Nhập mô tả hoặc ghi chú quốc gia..."
   },
   "employee": {
@@ -181,7 +179,6 @@
     "modalTitle": "Hồ sơ Nhân sự & Lao động",
     "description": "Quản lý danh sách nhân sự, hồ sơ nhân viên, chức vụ, phòng ban và trạng thái làm việc.",
     "employeeStatus": "Trạng thái",
-    "allStatus": "Tất cả trạng thái",
     "active": "Đang làm việc",
     "remote": "Làm việc từ xa",
     "leave": "Nghỉ phép",
@@ -220,8 +217,9 @@
     "bankingAndEmergency": "Ngân hàng & Liên hệ khẩn cấp",
     "male": "Nam",
     "female": "Nữ",
-    "other": "Khác",
+    "selectStatus": "-- Chọn trạng thái --",
     "selectGender": "-- Chọn giới tính --",
+    "selectCountry": "-- Chọn quốc gia --",
     "placeholderNote": "Nhập ghi chú thêm về nhân viên..."
   }
 }

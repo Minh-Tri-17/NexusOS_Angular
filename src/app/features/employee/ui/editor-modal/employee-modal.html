@@ -84,6 +84,7 @@
                   formControlName="employmentStatus"
                   required
                 >
+                  <option [value]="">{{ 'employee.selectStatus' | translate }}</option>
                   @for (status of employmentStatus; track status) {
                     <option [value]="status">
                       {{ 'employee.' + status.toLocaleLowerCase() | translate }}
@@ -302,10 +303,9 @@
                   id="inputEmployeeGender"
                   formControlName="gender"
                 >
-                  <option value="">{{ 'employee.selectGender' | translate }}</option>
-                  <option value="Male">{{ 'employee.male' | translate }}</option>
-                  <option value="Female">{{ 'employee.female' | translate }}</option>
-                  <option value="Other">{{ 'employee.other' | translate }}</option>
+                  <option [value]="">{{ 'employee.selectGender' | translate }}</option>
+                  <option [value]="'Male'">{{ 'employee.male' | translate }}</option>
+                  <option [value]="'Female'">{{ 'employee.female' | translate }}</option>
                 </select>
               </div>
             </div>
@@ -348,12 +348,18 @@
               </label>
               <div class="input-group custom-input-group">
                 <span class="input-group-text"><i class="fa-solid fa-globe"></i></span>
-                <input
-                  type="text"
-                  class="form-control custom-form-control"
+                <select
+                  class="form-select custom-form-select"
                   id="inputCountryCatId"
                   formControlName="countryCatId"
-                />
+                >
+                  <option [value]="">{{ 'employee.selectCountry' | translate }}</option>
+                  @for (country of countries(); track country.id) {
+                    <option [value]="country.id">
+                      {{ country.countryName }}
+                    </option>
+                  }
+                </select>
               </div>
             </div>
 

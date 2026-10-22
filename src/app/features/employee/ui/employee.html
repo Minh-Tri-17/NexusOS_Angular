@@ -82,7 +82,7 @@
           [ngModel]="filterEmploymentStatus()"
           (ngModelChange)="filterEmploymentStatus.set($event)"
         >
-          <option value="">{{ 'employee.allStatus' | translate }}</option>
+          <option [value]="">{{ 'employee.selectStatus' | translate }}</option>
           @for (status of employeeStatus; track status) {
             <option [value]="status">
               {{ 'employee.' + status.toLocaleLowerCase() | translate }}

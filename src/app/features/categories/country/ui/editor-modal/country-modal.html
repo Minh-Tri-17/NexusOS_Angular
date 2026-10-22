@@ -82,7 +82,7 @@
                   formControlName="region"
                   required
                 >
-                  <option value="" selected>{{ 'country.selectRegion' | translate }}</option>
+                  <option [value]="" selected>{{ 'country.selectRegion' | translate }}</option>
                   @for (region of regions; track region) {
                     <option [value]="region">
                       {{ 'country.' + region.toLocaleLowerCase() | translate }}

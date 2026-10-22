@@ -1,7 +1,6 @@
 {
   "auth": {
     "enterprisePlatform": "企業リソース・人事管理プラットフォーム",
-    "title": "ワークスペースにサインイン",
     "titleForm": "ワークスペースにサインイン",
     "quickLogin": "クイックログイン:",
     "director": "役員",
@@ -164,7 +163,6 @@
     "modalTitle": "グローバル地理モジュール",
     "description": "国のマスターレコード、地理コード、インタラクティブデータグリッド、地域設定を管理します。",
     "region": "地域",
-    "allRegions": "すべての地域",
     "asia": "アジア",
     "americas": "アメリカ",
     "europe": "ヨーロッパ",
@@ -173,7 +171,7 @@
     "countryCode": "国コード",
     "countryName": "国名",
     "capital": "首都",
-    "selectRegion": "地域を選択...",
+    "selectRegion": "-- 地域を選択 --",
     "placeholderNote": "国の説明または備考を入力..."
   },
   "employee": {
@@ -181,7 +179,6 @@
     "modalTitle": "人事・労務モジュール",
     "description": "従業員マスターレコード、役職、部署、および雇用ステータスを管理します。",
     "employeeStatus": "ステータス",
-    "allStatus": "すべてのステータス",
     "active": "在職中",
     "remote": "リモート",
     "leave": "休職中",
@@ -220,8 +217,9 @@
     "bankingAndEmergency": "銀行口座および緊急連絡先",
     "male": "男性",
     "female": "女性",
-    "other": "その他",
+    "selectStatus": "-- ステータスを選択 --",
     "selectGender": "-- 性別を選択 --",
+    "selectCountry": "-- 国を選択 --",
     "placeholderNote": "社員に関する備考を入力..."
   }
 }

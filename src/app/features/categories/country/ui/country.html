@@ -80,7 +80,7 @@
           [ngModel]="filterRegion()"
           (ngModelChange)="filterRegion.set($event)"
         >
-          <option value="">{{ 'country.allRegions' | translate }}</option>
+          <option [value]="">{{ 'country.selectRegion' | translate }}</option>
           @for (region of regions; track region) {
             <option [value]="region">
               {{ 'country.' + region.toLocaleLowerCase() | translate }}

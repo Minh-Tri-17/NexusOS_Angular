@@ -1,7 +1,6 @@
 {
   "auth": {
     "enterprisePlatform": "Enterprise Resource & Workforce Platform",
-    "title": "Sign in to Workspace",
     "titleForm": "Sign in to Workspace",
     "quickLogin": "Quick login:",
     "director": "Director",
@@ -164,7 +163,6 @@
     "modalTitle": "Global Geography Module",
     "description": "Manage country master records, geographic codes, interactive data grids, and regional settings.",
     "region": "Region",
-    "allRegions": "All Regions",
     "asia": "Asia",
     "americas": "Americas",
     "europe": "Europe",
@@ -173,7 +171,7 @@
     "countryCode": "Country Code",
     "countryName": "Country Name",
     "capital": "Capital",
-    "selectRegion": "Select Region...",
+    "selectRegion": "-- Select Region --",
     "placeholderNote": "Enter country description or note..."
   },
   "employee": {
@@ -181,7 +179,6 @@
     "modalTitle": "Workforce & Personnel Module",
     "description": "Manage employee master records, job positions, departments, and employment status.",
     "employeeStatus": "Status",
-    "allStatus": "All Statuses",
     "active": "Active",
     "remote": "Remote",
     "leave": "On Leave",
@@ -220,8 +217,9 @@
     "bankingAndEmergency": "Banking & Emergency Contact",
     "male": "Male",
     "female": "Female",
-    "other": "Other",
+    "selectStatus": "-- Select Status --",
     "selectGender": "-- Select Gender --",
+    "selectCountry": "-- Select Country --",
     "placeholderNote": "Enter additional notes for employee..."
   }
 }

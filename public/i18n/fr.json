@@ -1,7 +1,6 @@
 {
   "auth": {
     "enterprisePlatform": "Plateforme de ressources d'entreprise et gestion du personnel",
-    "title": "Connexion à l'espace de travail",
     "titleForm": "Connexion à l'espace de travail",
     "quickLogin": "Connexion rapide :",
     "director": "Directeur",
@@ -164,7 +163,6 @@
     "modalTitle": "Module Géographique Mondial",
     "description": "Gérez les enregistrements principaux des pays, les codes géographiques, les grilles de données interactives et les paramètres régionaux.",
     "region": "Région",
-    "allRegions": "Toutes les régions",
     "asia": "Asie",
     "americas": "Amériques",
     "europe": "Europe",
@@ -173,7 +171,7 @@
     "countryCode": "Code pays",
     "countryName": "Nom du pays",
     "capital": "Capitale",
-    "selectRegion": "Sélectionnez une région...",
+    "selectRegion": "-- Sélectionner la région --",
     "placeholderNote": "Entrez une description ou une remarque sur le pays..."
   },
   "employee": {
@@ -181,7 +179,6 @@
     "modalTitle": "Module Personnel & Main-d'œuvre",
     "description": "Gérer les dossiers du personnel, les postes, les départements et les statuts professionnels.",
     "employeeStatus": "Statut",
-    "allStatus": "Tous les statuts",
     "active": "Actif",
     "remote": "À distance",
     "leave": "En congé",
@@ -220,8 +217,9 @@
     "bankingAndEmergency": "Informations bancaires et urgence",
     "male": "Homme",
     "female": "Femme",
-    "other": "Autre",
+    "selectStatus": "-- Sélectionner le statut --",
     "selectGender": "-- Sélectionner le genre --",
+    "selectCountry": "-- Sélectionner un pays --",
     "placeholderNote": "Entrez des notes supplémentaires..."
   }
 }

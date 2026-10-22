@@ -2,12 +2,12 @@ export interface EmployeeModel {
   id: string;
   employeeCode: string;
   employeeName: string;
-  departmentCatId?: string;
-  jobTitleCatId: string;
-  storeId: string;
-  countryCatId: string;
-  provinceCatId: string;
-  wardCatId: string;
+  departmentCatId?: string | null;
+  jobTitleCatId?: string | null;
+  storeId?: string | null;
+  countryCatId?: string | null;
+  provinceCatId?: string | null;
+  wardCatId?: string | null;
   gender: string;
   dateOfBirth: Date;
   phoneNumber: string;

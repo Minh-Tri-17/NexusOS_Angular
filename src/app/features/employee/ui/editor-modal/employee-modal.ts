@@ -52,24 +52,12 @@ export class EmployeeModal {
     terminationDate: new FormControl('', { nonNullable: true }),
     isMultiStore: new FormControl<boolean>(false, { nonNullable: true }),
 
-    departmentCatId: new FormControl<string>(
-      { value: NIL_GUID, disabled: true },
-      { nonNullable: true },
-    ),
-    jobTitleCatId: new FormControl<string>(
-      { value: NIL_GUID, disabled: true },
-      { nonNullable: true },
-    ),
-    storeId: new FormControl<string>({ value: NIL_GUID, disabled: true }, { nonNullable: true }),
-    countryCatId: new FormControl<string>(
-      { value: NIL_GUID, disabled: true },
-      { nonNullable: true },
-    ),
-    provinceCatId: new FormControl<string>(
-      { value: NIL_GUID, disabled: true },
-      { nonNullable: true },
-    ),
-    wardCatId: new FormControl<string>({ value: NIL_GUID, disabled: true }, { nonNullable: true }),
+    departmentCatId: new FormControl<string | null>({ value: null, disabled: true }),
+    jobTitleCatId: new FormControl<string | null>({ value: null, disabled: true }),
+    storeId: new FormControl<string | null>({ value: null, disabled: true }),
+    countryCatId: new FormControl<string | null>(null),
+    provinceCatId: new FormControl<string | null>({ value: null, disabled: true }),
+    wardCatId: new FormControl<string | null>({ value: null, disabled: true }),
 
     email: new FormControl('', { nonNullable: true }),
     phoneNumber: new FormControl('', { nonNullable: true }),
@@ -101,6 +89,10 @@ export class EmployeeModal {
   readonly title = computed(() => (this.currentId() ? 'common.update' : 'common.create'));
 
   //#endregion
+
+  constructor() {
+    void this.loadComboboxData();
+  }
 
   //#region //@ HELPERS
 
@@ -135,12 +127,12 @@ export class EmployeeModal {
       hireDate: '',
       terminationDate: '',
       isMultiStore: false,
-      departmentCatId: NIL_GUID,
-      jobTitleCatId: NIL_GUID,
-      storeId: NIL_GUID,
-      countryCatId: NIL_GUID,
-      provinceCatId: NIL_GUID,
-      wardCatId: NIL_GUID,
+      departmentCatId: null,
+      jobTitleCatId: null,
+      storeId: null,
+      countryCatId: null,
+      provinceCatId: null,
+      wardCatId: null,
       email: '',
       phoneNumber: '',
       emergencyContactName: '',
@@ -163,12 +155,15 @@ export class EmployeeModal {
     this.photoPreview.set(item.photo || '');
     this.employeeForm.patchValue({
       ...item,
-      departmentCatId: item.departmentCatId || NIL_GUID,
-      jobTitleCatId: item.jobTitleCatId || NIL_GUID,
-      storeId: item.storeId || NIL_GUID,
-      countryCatId: item.countryCatId || NIL_GUID,
-      provinceCatId: item.provinceCatId || NIL_GUID,
-      wardCatId: item.wardCatId || NIL_GUID,
+      departmentCatId:
+        item.departmentCatId && item.departmentCatId !== NIL_GUID ? item.departmentCatId : null,
+      jobTitleCatId:
+        item.jobTitleCatId && item.jobTitleCatId !== NIL_GUID ? item.jobTitleCatId : null,
+      storeId: item.storeId && item.storeId !== NIL_GUID ? item.storeId : null,
+      countryCatId: item.countryCatId && item.countryCatId !== NIL_GUID ? item.countryCatId : null,
+      provinceCatId:
+        item.provinceCatId && item.provinceCatId !== NIL_GUID ? item.provinceCatId : null,
+      wardCatId: item.wardCatId && item.wardCatId !== NIL_GUID ? item.wardCatId : null,
       employmentStatus: item.employmentStatus ?? EmploymentStatus.active,
       dateOfBirth: this.formatDateForInput(item.dateOfBirth),
       hireDate: this.formatDateForInput(item.hireDate),
@@ -208,6 +203,12 @@ export class EmployeeModal {
 
     const payload: EmployeeModel = {
       ...(rawValues as unknown as EmployeeModel),
+      departmentCatId: rawValues.departmentCatId || null,
+      jobTitleCatId: rawValues.jobTitleCatId || null,
+      storeId: rawValues.storeId || null,
+      countryCatId: rawValues.countryCatId || null,
+      provinceCatId: rawValues.provinceCatId || null,
+      wardCatId: rawValues.wardCatId || null,
       dateOfBirth: rawValues.dateOfBirth ? new Date(rawValues.dateOfBirth) : (null as any),
       hireDate: rawValues.hireDate ? new Date(rawValues.hireDate) : (null as any),
       terminationDate: rawValues.terminationDate
@@ -231,10 +232,18 @@ export class EmployeeModal {
     }
   }
 
-  async loadDataCombobox() {
-    const filter = this.buildFilter();
-    const res = await this.countryFacade.getPaging(filter);
-    this.countries.set(res.result?.items || []);
+  async loadComboboxData() {
+    await Promise.allSettled([this.loadCountries()]);
+  }
+
+  private async loadCountries() {
+    try {
+      const filter = this.buildFilter();
+      const res = await this.countryFacade.getPaging(filter);
+      this.countries.set(res.result?.items || []);
+    } catch {
+      this.countries.set([]);
+    }
   }
 
   //#endregion
