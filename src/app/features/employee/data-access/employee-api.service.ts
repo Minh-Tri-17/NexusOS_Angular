@@ -9,20 +9,14 @@ import { EmployeeModel } from './employee.model';
   providedIn: 'root',
 })
 export class EmployeeApiService extends BaseApiService {
+  //#region //@ METHODS
+
   create(data: EmployeeModel) {
     return this.postHttp<Result<boolean>>(API_CONSTANTS.employee.create, data);
   }
 
   update(data: EmployeeModel) {
     return this.patchHttp<Result<boolean>>(API_CONSTANTS.employee.update, data);
-  }
-
-  softDelete(ids: string[]) {
-    return this.deleteHttp<Result<boolean>>(API_CONSTANTS.employee.softDelete, ids);
-  }
-
-  hardDelete(ids: string[]) {
-    return this.deleteHttp<Result<boolean>>(API_CONSTANTS.employee.hardDelete, ids);
   }
 
   getById(id: string) {
@@ -36,6 +30,14 @@ export class EmployeeApiService extends BaseApiService {
     );
   }
 
+  softDelete(ids: string[]) {
+    return this.deleteHttp<Result<boolean>>(API_CONSTANTS.employee.softDelete, ids);
+  }
+
+  hardDelete(ids: string[]) {
+    return this.deleteHttp<Result<boolean>>(API_CONSTANTS.employee.hardDelete, ids);
+  }
+
   import(file: File) {
     const formData = new FormData();
     formData.append('file', file);
@@ -45,4 +47,6 @@ export class EmployeeApiService extends BaseApiService {
   export(data: PagingRequest) {
     return this.postBlobHttp(API_CONSTANTS.employee.export, data);
   }
+
+  //#endregion
 }

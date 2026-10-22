@@ -9,6 +9,8 @@ import { CountryModel } from './country.model';
   providedIn: 'root',
 })
 export class CountryApiService extends BaseApiService {
+  //#region //@ METHODS
+
   create(data: CountryModel) {
     return this.postHttp<Result<boolean>>(API_CONSTANTS.country.create, data);
   }
@@ -17,20 +19,20 @@ export class CountryApiService extends BaseApiService {
     return this.patchHttp<Result<boolean>>(API_CONSTANTS.country.update, data);
   }
 
-  softDelete(ids: string[]) {
-    return this.deleteHttp<Result<boolean>>(API_CONSTANTS.country.softDelete, ids);
-  }
-
-  hardDelete(ids: string[]) {
-    return this.deleteHttp<Result<boolean>>(API_CONSTANTS.country.hardDelete, ids);
-  }
-
   getById(id: string) {
     return this.getHttp<Result<CountryModel>>(API_CONSTANTS.country.getById, { id });
   }
 
   getPaging(data: PagingRequest) {
     return this.postHttp<Result<PagingResult<CountryModel>>>(API_CONSTANTS.country.getPaging, data);
+  }
+
+  softDelete(ids: string[]) {
+    return this.deleteHttp<Result<boolean>>(API_CONSTANTS.country.softDelete, ids);
+  }
+
+  hardDelete(ids: string[]) {
+    return this.deleteHttp<Result<boolean>>(API_CONSTANTS.country.hardDelete, ids);
   }
 
   import(file: File) {
@@ -42,4 +44,6 @@ export class CountryApiService extends BaseApiService {
   export(data: PagingRequest) {
     return this.postBlobHttp(API_CONSTANTS.country.export, data);
   }
+
+  //#endregion
 }

@@ -33,8 +33,8 @@ export class EmployeeModal {
 
   readonly isSaving = signal(false);
   readonly photoPreview = signal<string>('');
-  readonly employmentStatus = Object.values(EmploymentStatus);
   readonly countries = signal<CountryModel[]>([]);
+  readonly employmentStatus = Object.values(EmploymentStatus);
 
   readonly employeeForm = new FormGroup({
     id: new FormControl('', { nonNullable: true }),

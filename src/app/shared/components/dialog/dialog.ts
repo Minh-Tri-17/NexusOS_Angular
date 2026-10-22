@@ -1,5 +1,5 @@
-import { Component, computed, inject, InjectionToken, input, output, signal, ViewEncapsulation } from '@angular/core';
 import { NgClass } from '@angular/common';
+import { Component, computed, inject, InjectionToken, input, output, signal, ViewEncapsulation } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 

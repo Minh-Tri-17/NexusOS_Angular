@@ -20,12 +20,12 @@ export class AuthApiService extends BaseApiService {
     return this.postHttp<Result<boolean>>(API_CONSTANTS.account.sendOTP, data);
   }
 
-  resetPass(data: AuthModel) {
-    return this.patchHttp<Result<boolean>>(API_CONSTANTS.account.resetPass, data);
-  }
-
   validateOtp(data: OTPModel) {
     return this.postHttp<Result<boolean>>(API_CONSTANTS.account.validateOtp, data);
+  }
+
+  resetPass(data: AuthModel) {
+    return this.patchHttp<Result<boolean>>(API_CONSTANTS.account.resetPass, data);
   }
   //#endregion
 }

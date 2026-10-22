@@ -18,11 +18,12 @@ export type ExportOption =
   styleUrl: './export.scss',
 })
 export class Export {
-  readonly BASE_CONSTANTS = BASE_CONSTANTS;
   private readonly baseService = inject(BaseService);
   private readonly ctx = inject(EXPORT_MODAL_CONTEXT, { optional: true });
 
   //#region //@ PROPS
+
+  readonly BASE_CONSTANTS = BASE_CONSTANTS;
 
   //* Dữ liệu truyền qua Injector (khi mở bằng NgbModal.open).
   readonly exportFn = () => this.ctx?.exportFn;

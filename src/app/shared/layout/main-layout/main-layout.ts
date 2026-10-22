@@ -1,8 +1,8 @@
 import { Component, inject, ViewEncapsulation } from '@angular/core';
-import { Sidebar } from '../sidebar/sidebar';
-import { Header } from '../header/header';
-import { ThemeService } from '../../../core/services/theme.service';
 import { RouterOutlet } from '@angular/router';
+import { Header } from '../header/header';
+import { Sidebar } from '../sidebar/sidebar';
+import { ThemeService } from '../../../core/services/theme.service';
 
 @Component({
   selector: 'app-main-layout',

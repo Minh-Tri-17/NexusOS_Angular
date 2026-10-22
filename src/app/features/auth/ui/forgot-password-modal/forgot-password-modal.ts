@@ -2,14 +2,14 @@ import { Component, computed, HostListener, inject, signal, ViewEncapsulation } 
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { TranslatePipe } from '@ngx-translate/core';
 import { map, Subject, switchMap, takeWhile, timer } from 'rxjs';
-import { MailModel } from '../../../../core/models/mail.model';
 import { BaseService } from '../../../../core/services/base.service';
+import { MailModel } from '../../../../core/models/mail.model';
 import { showToast } from '../../../../shared/components/toast/toast.util';
 import { AuthFacade } from '../../data-access/auth.facade';
 import { AuthModel } from '../../data-access/auth.model';
 import { OTPModel } from '../../data-access/otp.model';
-import { TranslatePipe } from '@ngx-translate/core';
 
 interface PasswordStrengthState {
   width: string;

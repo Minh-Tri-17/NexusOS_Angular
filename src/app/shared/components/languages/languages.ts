@@ -18,6 +18,8 @@ interface LanguageOption {
 export class Languages {
   private readonly translate = inject(TranslateService);
 
+  //#region //@ PROPS
+
   readonly languages: LanguageOption[] = [
     { code: 'en', label: 'English', flag: 'flag-us.png' },
     { code: 'vi', label: 'Tiếng Việt', flag: 'flag-vn.png' },
@@ -26,7 +28,13 @@ export class Languages {
     { code: 'fr', label: 'Français', flag: 'flag-fr.png' },
   ];
 
+  //#endregion
+
+  //#region //@ STATE
+
   readonly currentLang = signal<LanguageOption>(this.languages[0]);
+
+  //#endregion
 
   constructor() {
     this.translate.setFallbackLang(this.currentLang().code);
@@ -38,10 +46,14 @@ export class Languages {
     this.translate.use(found.code);
   }
 
+  //#region //@ METHODS
+
   handleChangeLanguage(lang: LanguageOption) {
     this.currentLang.set(lang);
     this.translate.use(lang.code);
 
     localStorage.setItem('app_language', lang.code);
   }
+
+  //#endregion
 }

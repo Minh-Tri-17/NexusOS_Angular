@@ -1,6 +1,6 @@
 import { Component, inject, input, ViewEncapsulation } from '@angular/core';
-import { BaseService } from '../../../core/services/base.service';
 import { TranslatePipe } from '@ngx-translate/core';
+import { BaseService } from '../../../core/services/base.service';
 
 @Component({
   selector: 'app-modal',

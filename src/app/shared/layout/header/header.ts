@@ -3,11 +3,11 @@ import { Component, DestroyRef, inject, NgZone, PLATFORM_ID, signal, ViewEncapsu
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
+import { TranslatePipe } from '@ngx-translate/core';
 import { auditTime, fromEvent } from 'rxjs';
 import { AuthService } from '../../../core/services/auth.service';
 import { ThemeService } from '../../../core/services/theme.service';
 import { Languages } from '../../components/languages/languages';
-import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-header',

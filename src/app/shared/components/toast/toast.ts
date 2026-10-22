@@ -34,6 +34,8 @@ export class Toast {
 
   //#endregion
 
+  //#region //@ CONSTANTS
+
   private readonly iconMap: Record<ToastType, string> = {
     primary: 'fa-solid fa-bell',
     info: 'fa-solid fa-circle-info',
@@ -42,9 +44,15 @@ export class Toast {
     danger: 'fa-solid fa-circle-xmark',
   };
 
+  //#endregion
+
+  //#region //@ METHODS
+
   dismiss() {
     if (this.toastId() !== undefined) {
       toast.dismiss(this.toastId());
     }
   }
+
+  //#endregion
 }

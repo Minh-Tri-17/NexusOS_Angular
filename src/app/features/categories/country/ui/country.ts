@@ -57,9 +57,24 @@ export class Country {
   private readonly injector = inject(Injector);
   private readonly dialogService = inject(DialogService);
 
-  //#region //@ STATE
+  //#region //@ PROPS
 
   protected readonly statusConfig = STATUS_CONFIG;
+
+  readonly regions = Object.values(Region);
+  readonly countryColumns = Object.keys(CountryFields).filter(
+    (key) =>
+      key !== 'id' &&
+      key !== 'note' &&
+      key !== 'createdAt' &&
+      key !== 'createdBy' &&
+      key !== 'updatedAt' &&
+      key !== 'updatedBy',
+  );
+
+  //#endregion
+
+  //#region //@ STATE
 
   readonly pageSize = signal(20);
   readonly fromRecord = signal(1);
@@ -90,17 +105,6 @@ export class Country {
     const ids = this.selectedIds();
     return list.length > 0 && list.every((item) => ids.has(item.id));
   });
-
-  readonly regions = Object.values(Region);
-  readonly countryColumns = Object.keys(CountryFields).filter(
-    (key) =>
-      key !== 'id' &&
-      key !== 'note' &&
-      key !== 'createdAt' &&
-      key !== 'createdBy' &&
-      key !== 'updatedAt' &&
-      key !== 'updatedBy',
-  );
 
   //#endregion
 

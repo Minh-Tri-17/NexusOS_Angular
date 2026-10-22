@@ -9,20 +9,14 @@ import { CountryModel } from './country.model';
 export class CountryFacade {
   private readonly api = inject(CountryApiService);
 
+  //#region //@ METHODS
+
   create(dto: CountryModel) {
     return this.api.create(dto);
   }
 
   update(dto: CountryModel) {
     return this.api.update(dto);
-  }
-
-  softDelete(ids: string[]) {
-    return this.api.softDelete(ids);
-  }
-
-  hardDelete(ids: string[]) {
-    return this.api.hardDelete(ids);
   }
 
   getById(id: string) {
@@ -33,6 +27,14 @@ export class CountryFacade {
     return this.api.getPaging(filter);
   }
 
+  softDelete(ids: string[]) {
+    return this.api.softDelete(ids);
+  }
+
+  hardDelete(ids: string[]) {
+    return this.api.hardDelete(ids);
+  }
+
   import(file: File) {
     return this.api.import(file);
   }
@@ -40,4 +42,6 @@ export class CountryFacade {
   export(filter: PagingRequest) {
     return this.api.export(filter);
   }
+
+  //#endregion
 }

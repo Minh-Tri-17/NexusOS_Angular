@@ -1,8 +1,8 @@
 import { Component, inject, ViewEncapsulation } from '@angular/core';
-import { ThemeService } from '../../../core/services/theme.service';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { NgbCollapse } from '@ng-bootstrap/ng-bootstrap';
 import { TranslatePipe } from '@ngx-translate/core';
+import { ThemeService } from '../../../core/services/theme.service';
 
 @Component({
   selector: 'app-sidebar',

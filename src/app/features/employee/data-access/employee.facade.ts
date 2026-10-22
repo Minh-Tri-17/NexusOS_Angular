@@ -9,20 +9,14 @@ import { EmployeeModel } from './employee.model';
 export class EmployeeFacade {
   private readonly api = inject(EmployeeApiService);
 
+  //#region //@ METHODS
+
   create(dto: EmployeeModel) {
     return this.api.create(dto);
   }
 
   update(dto: EmployeeModel) {
     return this.api.update(dto);
-  }
-
-  softDelete(ids: string[]) {
-    return this.api.softDelete(ids);
-  }
-
-  hardDelete(ids: string[]) {
-    return this.api.hardDelete(ids);
   }
 
   getById(id: string) {
@@ -33,6 +27,14 @@ export class EmployeeFacade {
     return this.api.getPaging(filter);
   }
 
+  softDelete(ids: string[]) {
+    return this.api.softDelete(ids);
+  }
+
+  hardDelete(ids: string[]) {
+    return this.api.hardDelete(ids);
+  }
+
   import(file: File) {
     return this.api.import(file);
   }
@@ -40,4 +42,6 @@ export class EmployeeFacade {
   export(filter: PagingRequest) {
     return this.api.export(filter);
   }
+
+  //#endregion
 }

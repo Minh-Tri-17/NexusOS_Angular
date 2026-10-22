@@ -20,12 +20,12 @@ export class AuthFacade {
     return this.api.sendOTP(data);
   }
 
-  resetPass(data: AuthModel) {
-    return this.api.resetPass(data);
-  }
-
   validateOtp(data: OTPModel) {
     return this.api.validateOtp(data);
+  }
+
+  resetPass(data: AuthModel) {
+    return this.api.resetPass(data);
   }
 
   //#endregion

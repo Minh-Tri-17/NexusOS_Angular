@@ -25,10 +25,10 @@ export class Import {
   private readonly baseService = inject(BaseService);
   private readonly ctx = inject(IMPORT_MODAL_CONTEXT, { optional: true });
 
+  //#region //@ PROPS
+
   readonly acceptTypes = '.xlsx,.xls,.csv';
   readonly maxSizeMB = 25;
-
-  //#region //@ PROPS
 
   //* Dữ liệu truyền qua Injector (khi mở bằng NgbModal.open).
   readonly importFn = () => this.ctx?.importFn;

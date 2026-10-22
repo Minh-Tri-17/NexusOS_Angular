@@ -63,9 +63,23 @@ export class Employee {
   private readonly injector = inject(Injector);
   private readonly dialogService = inject(DialogService);
 
-  //#region //@ STATE
+  //#region //@ PROPS
 
   protected readonly statusConfig = STATUS_CONFIG;
+  readonly employeeStatus = Object.values(EmploymentStatus);
+  readonly employeeColumns = Object.keys(EmployeeFields).filter(
+    (key) =>
+      key !== 'id' &&
+      key !== 'note' &&
+      key !== 'createdAt' &&
+      key !== 'createdBy' &&
+      key !== 'updatedAt' &&
+      key !== 'updatedBy',
+  );
+
+  //#endregion
+
+  //#region //@ STATE
 
   readonly pageSize = signal(20);
   readonly fromRecord = signal(1);
@@ -96,17 +110,6 @@ export class Employee {
     const ids = this.selectedIds();
     return list.length > 0 && list.every((item) => ids.has(item.id));
   });
-
-  readonly employeeStatus = Object.values(EmploymentStatus);
-  readonly employeeColumns = Object.keys(EmployeeFields).filter(
-    (key) =>
-      key !== 'id' &&
-      key !== 'note' &&
-      key !== 'createdAt' &&
-      key !== 'createdBy' &&
-      key !== 'updatedAt' &&
-      key !== 'updatedBy',
-  );
 
   //#endregion
 
