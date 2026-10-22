@@ -80,9 +80,9 @@
           [ngModel]="filterRegion()"
           (ngModelChange)="filterRegion.set($event)"
         >
-          <option [value]="">{{ 'country.selectRegion' | translate }}</option>
+          <option [ngValue]="null">{{ 'country.selectRegion' | translate }}</option>
           @for (region of regions; track region) {
-            <option [value]="region">
+            <option [ngValue]="region">
               {{ 'country.' + region.toLocaleLowerCase() | translate }}
             </option>
           }
@@ -171,7 +171,7 @@
               <span class="text-muted small">{{ country.createdAt | date }}</span>
             </td>
 
-            <td>
+            <td class="text-nowrap">
               <span class="text-muted small">
                 <i class="fa-regular fa-user"></i>{{ country.createdBy }}</span
               >
@@ -181,7 +181,7 @@
               <span class="text-muted small">{{ country.updatedAt | date }}</span>
             </td>
 
-            <td>
+            <td class="text-nowrap">
               <span class="text-muted small">
                 <i class="fa-regular fa-user"></i>{{ country.updatedBy }}</span
               >

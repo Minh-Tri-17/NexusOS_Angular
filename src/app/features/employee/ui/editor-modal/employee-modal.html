@@ -42,7 +42,7 @@
                 <span class="input-group-text"><i class="fa-solid fa-passport"></i></span>
                 <input
                   type="text"
-                  class="form-control custom-form-control disable"
+                  class="form-control custom-form-control disabled"
                   id="inputEmployeeCode"
                   placeholder="e.g. EMP-001"
                   formControlName="employeeCode"
@@ -84,9 +84,9 @@
                   formControlName="employmentStatus"
                   required
                 >
-                  <option [value]="">{{ 'employee.selectStatus' | translate }}</option>
+                  <option [ngValue]="null">{{ 'employee.selectStatus' | translate }}</option>
                   @for (status of employmentStatus; track status) {
-                    <option [value]="status">
+                    <option [ngValue]="status">
                       {{ 'employee.' + status.toLocaleLowerCase() | translate }}
                     </option>
                   }
@@ -303,9 +303,9 @@
                   id="inputEmployeeGender"
                   formControlName="gender"
                 >
-                  <option [value]="">{{ 'employee.selectGender' | translate }}</option>
-                  <option [value]="'Male'">{{ 'employee.male' | translate }}</option>
-                  <option [value]="'Female'">{{ 'employee.female' | translate }}</option>
+                  <option [ngValue]="null">{{ 'employee.selectGender' | translate }}</option>
+                  <option [ngValue]="'Male'">{{ 'employee.male' | translate }}</option>
+                  <option [ngValue]="'Female'">{{ 'employee.female' | translate }}</option>
                 </select>
               </div>
             </div>
@@ -353,9 +353,11 @@
                   id="inputCountryId"
                   formControlName="countryId"
                 >
-                  <option [value]="">{{ 'employee.selectCountry' | translate }}</option>
+                  <option [ngValue]="null">
+                    {{ 'employee.selectCountry' | translate }}
+                  </option>
                   @for (country of countries(); track country.id) {
-                    <option [value]="country.id">
+                    <option [ngValue]="country.id">
                       {{ country.countryName }}
                     </option>
                   }

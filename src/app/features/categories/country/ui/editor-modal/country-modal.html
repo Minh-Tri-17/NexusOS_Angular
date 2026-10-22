@@ -42,7 +42,7 @@
                 <span class="input-group-text"><i class="fa-solid fa-passport"></i></span>
                 <input
                   type="text"
-                  class="form-control custom-form-control disable"
+                  class="form-control custom-form-control disabled"
                   id="inputCountryCode"
                   placeholder="e.g. VN, US, JP"
                   formControlName="countryCode"
@@ -82,9 +82,11 @@
                   formControlName="region"
                   required
                 >
-                  <option [value]="" selected>{{ 'country.selectRegion' | translate }}</option>
+                  <option [ngValue]="null">
+                    {{ 'country.selectRegion' | translate }}
+                  </option>
                   @for (region of regions; track region) {
-                    <option [value]="region">
+                    <option [ngValue]="region">
                       {{ 'country.' + region.toLocaleLowerCase() | translate }}
                     </option>
                   }

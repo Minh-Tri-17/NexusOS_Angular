@@ -82,9 +82,9 @@
           [ngModel]="filterEmploymentStatus()"
           (ngModelChange)="filterEmploymentStatus.set($event)"
         >
-          <option [value]="">{{ 'employee.selectStatus' | translate }}</option>
+          <option [ngValue]="null">{{ 'employee.selectStatus' | translate }}</option>
           @for (status of employeeStatus; track status) {
-            <option [value]="status">
+            <option [ngValue]="status">
               {{ 'employee.' + status.toLocaleLowerCase() | translate }}
             </option>
           }
@@ -288,7 +288,7 @@
                 <span class="text-muted small">{{ employee.createdAt | date }}</span>
               </td>
 
-              <td>
+              <td class="text-nowrap">
                 <span class="text-muted small">
                   <i class="fa-regular fa-user"></i>{{ employee.createdBy }}</span
                 >
@@ -298,7 +298,7 @@
                 <span class="text-muted small">{{ employee.updatedAt | date }}</span>
               </td>
 
-              <td>
+              <td class="text-nowrap">
                 <span class="text-muted small">
                   <i class="fa-regular fa-user"></i>{{ employee.updatedBy }}</span
                 >

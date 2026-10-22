@@ -37,19 +37,17 @@ export class EmployeeModal {
   readonly employmentStatus = Object.values(EmploymentStatus);
 
   readonly employeeForm = new FormGroup({
-    id: new FormControl('', { nonNullable: true }),
-    employeeCode: new FormControl('', { nonNullable: true }),
-    employeeName: new FormControl('', {
-      nonNullable: true,
+    id: new FormControl<string | null>(null),
+    employeeCode: new FormControl<string | null>(null),
+    employeeName: new FormControl<string | null>(null, {
       validators: [Validators.required],
     }),
-    employmentStatus: new FormControl<EmploymentStatus | string>(EmploymentStatus.active, {
-      nonNullable: true,
+    employmentStatus: new FormControl<EmploymentStatus | string | null>(null, {
       validators: [Validators.required],
     }),
-    photo: new FormControl('', { nonNullable: true }),
-    hireDate: new FormControl('', { nonNullable: true }),
-    terminationDate: new FormControl('', { nonNullable: true }),
+    photo: new FormControl<string | null>(null),
+    hireDate: new FormControl<string | null>(null),
+    terminationDate: new FormControl<string | null>(null),
     isMultiStore: new FormControl<boolean>(false, { nonNullable: true }),
 
     departmentId: new FormControl<string | null>({ value: null, disabled: true }),
@@ -59,25 +57,25 @@ export class EmployeeModal {
     provinceId: new FormControl<string | null>({ value: null, disabled: true }),
     wardId: new FormControl<string | null>({ value: null, disabled: true }),
 
-    email: new FormControl('', { nonNullable: true }),
-    phoneNumber: new FormControl('', { nonNullable: true }),
-    emergencyContactName: new FormControl('', { nonNullable: true }),
-    emergencyContactPhone: new FormControl('', { nonNullable: true }),
+    email: new FormControl<string | null>(null),
+    phoneNumber: new FormControl<string | null>(null),
+    emergencyContactName: new FormControl<string | null>(null),
+    emergencyContactPhone: new FormControl<string | null>(null),
 
-    dateOfBirth: new FormControl('', { nonNullable: true }),
-    gender: new FormControl('', { nonNullable: true }),
-    educationLevel: new FormControl('', { nonNullable: true }),
-    address: new FormControl('', { nonNullable: true }),
+    dateOfBirth: new FormControl<string | null>(null),
+    gender: new FormControl<string | null>(null),
+    educationLevel: new FormControl<string | null>(null),
+    address: new FormControl<string | null>(null),
 
-    identityNumber: new FormControl('', { nonNullable: true }),
-    taxCode: new FormControl('', { nonNullable: true }),
-    socialInsuranceNumber: new FormControl('', { nonNullable: true }),
-    healthInsuranceNumber: new FormControl('', { nonNullable: true }),
+    identityNumber: new FormControl<string | null>(null),
+    taxCode: new FormControl<string | null>(null),
+    socialInsuranceNumber: new FormControl<string | null>(null),
+    healthInsuranceNumber: new FormControl<string | null>(null),
 
-    bankAccountNumber: new FormControl('', { nonNullable: true }),
-    bankName: new FormControl('', { nonNullable: true }),
+    bankAccountNumber: new FormControl<string | null>(null),
+    bankName: new FormControl<string | null>(null),
 
-    note: new FormControl('', { nonNullable: true }),
+    note: new FormControl<string | null>(null),
   });
 
   //* toSignal() chuyển đổi luồng thay đổi giá trị của form (Observable) sang Signal
@@ -90,10 +88,6 @@ export class EmployeeModal {
 
   //#endregion
 
-  constructor() {
-    void this.loadComboboxData();
-  }
-
   //#region //@ HELPERS
 
   private buildFilter(): PagingRequest {
@@ -104,10 +98,10 @@ export class EmployeeModal {
     return filter;
   }
 
-  private formatDateForInput(date: Date | string | null | undefined): string {
-    if (!date) return '';
+  private formatDateForInput(date: Date | string | null | undefined): string | null {
+    if (!date) return null;
     const d = new Date(date);
-    if (isNaN(d.getTime())) return '';
+    if (isNaN(d.getTime())) return null;
 
     return d.toISOString().split('T')[0];
   }
@@ -116,16 +110,18 @@ export class EmployeeModal {
 
   //#region //@ METHODS
 
-  initCreateForm() {
+  async initCreateForm() {
+    await this.loadComboboxData();
+
     this.photoPreview.set('');
     this.employeeForm.reset({
-      id: '',
-      employeeCode: '',
-      employeeName: '',
-      employmentStatus: '',
-      photo: '',
-      hireDate: '',
-      terminationDate: '',
+      id: null,
+      employeeCode: null,
+      employeeName: null,
+      employmentStatus: null,
+      photo: null,
+      hireDate: null,
+      terminationDate: null,
       isMultiStore: false,
       departmentId: null,
       jobTitleId: null,
@@ -133,35 +129,54 @@ export class EmployeeModal {
       countryId: null,
       provinceId: null,
       wardId: null,
-      email: '',
-      phoneNumber: '',
-      emergencyContactName: '',
-      emergencyContactPhone: '',
-      dateOfBirth: '',
-      gender: '',
-      educationLevel: '',
-      address: '',
-      identityNumber: '',
-      taxCode: '',
-      socialInsuranceNumber: '',
-      healthInsuranceNumber: '',
-      bankAccountNumber: '',
-      bankName: '',
-      note: '',
+      email: null,
+      phoneNumber: null,
+      emergencyContactName: null,
+      emergencyContactPhone: null,
+      dateOfBirth: null,
+      gender: null,
+      educationLevel: null,
+      address: null,
+      identityNumber: null,
+      taxCode: null,
+      socialInsuranceNumber: null,
+      healthInsuranceNumber: null,
+      bankAccountNumber: null,
+      bankName: null,
+      note: null,
     });
   }
 
-  initUpdateForm(item: EmployeeModel) {
+  async initUpdateForm(item: EmployeeModel) {
+    await this.loadComboboxData();
+
     this.photoPreview.set(item.photo || '');
     this.employeeForm.patchValue({
-      ...item,
-      departmentId: item.departmentId && item.departmentId !== NIL_GUID ? item.departmentId : null,
-      jobTitleId: item.jobTitleId && item.jobTitleId !== NIL_GUID ? item.jobTitleId : null,
-      storeId: item.storeId && item.storeId !== NIL_GUID ? item.storeId : null,
-      countryId: item.countryId && item.countryId !== NIL_GUID ? item.countryId : null,
-      provinceId: item.provinceId && item.provinceId !== NIL_GUID ? item.provinceId : null,
-      wardId: item.wardId && item.wardId !== NIL_GUID ? item.wardId : null,
-      employmentStatus: item.employmentStatus ?? EmploymentStatus.active,
+      id: item.id || null,
+      employeeCode: item.employeeCode || null,
+      employeeName: item.employeeName || null,
+      photo: item.photo || null,
+      email: item.email || null,
+      phoneNumber: item.phoneNumber || null,
+      emergencyContactName: item.emergencyContactName || null,
+      emergencyContactPhone: item.emergencyContactPhone || null,
+      gender: item.gender || null,
+      educationLevel: item.educationLevel || null,
+      address: item.address || null,
+      identityNumber: item.identityNumber || null,
+      taxCode: item.taxCode || null,
+      socialInsuranceNumber: item.socialInsuranceNumber || null,
+      healthInsuranceNumber: item.healthInsuranceNumber || null,
+      bankAccountNumber: item.bankAccountNumber || null,
+      bankName: item.bankName || null,
+      note: item.note || null,
+      departmentId: item.departmentId || null,
+      jobTitleId: item.jobTitleId || null,
+      storeId: item.storeId || null,
+      countryId: item.countryId || null,
+      provinceId: item.provinceId || null,
+      wardId: item.wardId || null,
+      employmentStatus: item.employmentStatus || null,
       dateOfBirth: this.formatDateForInput(item.dateOfBirth),
       hireDate: this.formatDateForInput(item.hireDate),
       terminationDate: this.formatDateForInput(item.terminationDate),
@@ -185,7 +200,7 @@ export class EmployeeModal {
 
   removePhoto(fileInput?: HTMLInputElement) {
     this.photoPreview.set('');
-    this.employeeForm.controls.photo.setValue('');
+    this.employeeForm.controls.photo.setValue(null);
     if (fileInput) {
       fileInput.value = '';
     }
@@ -234,6 +249,8 @@ export class EmployeeModal {
   }
 
   private async loadCountries() {
+    if (this.countries().length > 0) return;
+
     try {
       const filter = this.buildFilter();
       const res = await this.countryFacade.getPaging(filter);
