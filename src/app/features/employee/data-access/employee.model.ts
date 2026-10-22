@@ -2,12 +2,13 @@ export interface EmployeeModel {
   id: string;
   employeeCode: string;
   employeeName: string;
-  departmentCatId?: string | null;
-  jobTitleCatId?: string | null;
+  departmentId?: string | null;
+  jobTitleId?: string | null;
   storeId?: string | null;
-  countryCatId?: string | null;
-  provinceCatId?: string | null;
-  wardCatId?: string | null;
+  countryId?: string | null;
+  countryName?: string | null;
+  provinceId?: string | null;
+  wardId?: string | null;
   gender: string;
   dateOfBirth: Date;
   phoneNumber: string;
@@ -39,12 +40,13 @@ export const EmployeeFields: Record<keyof EmployeeModel, string> = {
   id: 'Id',
   employeeCode: 'EmployeeCode',
   employeeName: 'EmployeeName',
-  departmentCatId: 'DepartmentCatId',
-  jobTitleCatId: 'JobTitleCatId',
+  departmentId: 'DepartmentId',
+  jobTitleId: 'JobTitleId',
   storeId: 'StoreId',
-  countryCatId: 'CountryCatId',
-  provinceCatId: 'ProvinceCatId',
-  wardCatId: 'WardCatId',
+  countryId: 'CountryId',
+  countryName: 'CountryName',
+  provinceId: 'ProvinceId',
+  wardId: 'WardId',
   gender: 'Gender',
   dateOfBirth: 'DateOfBirth',
   phoneNumber: 'PhoneNumber',
