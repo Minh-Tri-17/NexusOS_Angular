@@ -16,7 +16,7 @@
     <ng-container active-filters>
       @if (filterEmploymentStatus()) {
         <span class="filter-chip">
-          <i class="fa-solid fa-compass chip-icon"></i> {{ 'employee.employeeStatus' | translate }}:
+          <i class="fa-solid fa-compass chip-icon"></i> {{ 'employee.employmentStatus' | translate }}:
           <strong>{{
             'employee.' + filterEmploymentStatus()!.toLocaleLowerCase() | translate
           }}</strong>
@@ -75,7 +75,7 @@
     <ng-container filter-matrix>
       <div class="col-md-3">
         <label class="form-label small fw-semibold text-muted">{{
-          'common.employeeStatus' | translate
+          'employee.employmentStatus' | translate
         }}</label>
         <select
           class="form-select form-select-sm rounded-3 filter-select w-100"
@@ -231,11 +231,14 @@
               <td class="text-center">
                 <span
                   class="badge-soft"
-                  [class]="statusConfig[employee.employmentStatus]?.cssClass"
+                  [class]="statusConfig[employee.employmentStatus || '']?.cssClass"
                 >
-                  <i class="fa-solid" [class]="statusConfig[employee.employmentStatus]?.icon"></i>
+                  <i
+                    class="fa-solid"
+                    [class]="statusConfig[employee.employmentStatus || '']?.icon"
+                  ></i>
                   {{
-                    'employee.' + employee.employmentStatus.toLocaleLowerCase() | translate
+                    'employee.' + (employee.employmentStatus || '').toLocaleLowerCase() | translate
                   }}</span
                 >
               </td>

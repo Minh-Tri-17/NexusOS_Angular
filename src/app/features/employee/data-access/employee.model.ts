@@ -1,6 +1,6 @@
 export interface EmployeeModel {
   id: string;
-  employeeCode: string;
+  employeeCode?: string | null;
   employeeName: string;
   departmentId?: string | null;
   jobTitleId?: string | null;
@@ -9,31 +9,31 @@ export interface EmployeeModel {
   countryName?: string | null;
   provinceId?: string | null;
   wardId?: string | null;
-  gender: string;
-  dateOfBirth: Date;
-  phoneNumber: string;
-  email: string;
-  identityNumber: string;
-  address: string;
-  hireDate: Date;
-  terminationDate: Date;
-  employmentStatus: string;
-  isMultiStore: boolean;
-  photo: string;
-  healthInsuranceNumber: string;
-  socialInsuranceNumber: string;
-  bankAccountNumber: string;
-  bankName: string;
-  educationLevel: string;
-  taxCode: string;
-  emergencyContactName: string;
-  emergencyContactPhone: string;
+  gender?: string | null;
+  dateOfBirth?: Date | null;
+  phoneNumber?: string | null;
+  email?: string | null;
+  identityNumber?: string | null;
+  address?: string | null;
+  hireDate?: Date | null;
+  terminationDate?: Date | null;
+  employmentStatus?: string | null;
+  isMultiStore?: boolean | null;
+  photo?: string | null;
+  healthInsuranceNumber?: string | null;
+  socialInsuranceNumber?: string | null;
+  bankAccountNumber?: string | null;
+  bankName?: string | null;
+  educationLevel?: string | null;
+  taxCode?: string | null;
+  emergencyContactName?: string | null;
+  emergencyContactPhone?: string | null;
 
-  note?: string;
-  createdAt?: Date;
-  createdBy?: string;
-  updatedAt?: Date;
-  updatedBy?: string;
+  note?: string | null;
+  createdAt?: Date | null;
+  createdBy?: string | null;
+  updatedAt?: Date | null;
+  updatedBy?: string | null;
 }
 
 export const EmployeeFields: Record<keyof EmployeeModel, string> = {

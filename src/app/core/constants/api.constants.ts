@@ -9,6 +9,16 @@ export const API_CONSTANTS = {
     import: 'CatCountry/Import',
     export: 'CatCountry/Export',
   },
+  role: {
+    create: 'Role/Create',
+    update: 'Role/Update',
+    softDelete: 'Role/SoftDelete',
+    hardDelete: 'Role/HardDelete',
+    getPaging: 'Role/GetPaging/Filter',
+    getById: 'Role/GetOne',
+    import: 'Role/Import',
+    export: 'Role/Export',
+  },
   employee: {
     create: 'Employee/Create',
     update: 'Employee/Update',

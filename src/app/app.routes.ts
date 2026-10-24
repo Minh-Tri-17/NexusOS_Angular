@@ -27,6 +27,10 @@ export const routes: Routes = [
         path: 'employee',
         loadComponent: () => import('./features/employee/ui/employee').then((m) => m.Employee),
       },
+      {
+        path: 'role',
+        loadComponent: () => import('./features/system/roles/ui/role').then((m) => m.Role),
+      },
     ],
   },
   { path: '**', redirectTo: '' },

@@ -14,4 +14,5 @@ import { ThemeService } from '../../../core/services/theme.service';
 export class Sidebar {
   protected readonly themeService = inject(ThemeService);
   isCollapsed = false;
+  isSettingsCollapsed = false;
 }

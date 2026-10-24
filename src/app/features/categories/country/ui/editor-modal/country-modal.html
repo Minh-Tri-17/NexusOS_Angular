@@ -19,13 +19,13 @@
       (ngSubmit)="handleSave()"
     >
       <div class="modal-body px-4 py-3 position-relative z-1">
-        <!-- Form Section 1: Geographic Identification -->
+        <!-- Form Section 1: Country Information -->
         <div class="form-section-card mb-4">
           <div class="form-section-header">
             <div class="d-flex align-items-center gap-2">
               <i class="fa-solid fa-globe text-primary"></i>
               <span class="fw-bold">
-                {{ 'common.geographicIdentification' | translate }}
+                {{ 'country.countryInfo' | translate }}
               </span>
             </div>
             <span class="badge-soft badge-indigo">
@@ -44,12 +44,12 @@
                   type="text"
                   class="form-control custom-form-control disabled"
                   id="inputCountryCode"
-                  placeholder="e.g. VN, US, JP"
+                  placeholder="e.g. CTR-001"
                   formControlName="countryCode"
                 />
               </div>
               <div class="form-text-hint">
-                <i class="fa-solid fa-circle-info"></i> Standard ISO 3166-1 alpha-2 code
+                <i class="fa-solid fa-circle-info"></i> Standard country identification code
               </div>
             </div>
 
@@ -138,7 +138,7 @@
                   class="form-control custom-form-control"
                   id="inputCountryNote"
                   rows="3"
-                  placeholder="{{ 'country.placeholderNote' | translate }}"
+                  placeholder="{{ 'common.placeholderNote' | translate }}"
                   formControlName="note"
                 ></textarea>
               </div>

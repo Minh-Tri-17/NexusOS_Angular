@@ -54,8 +54,11 @@
     "softDeleted": "Đã xóa mềm",
     "country": "Quốc gia",
     "employee": "Nhân viên",
+    "role": "Vai trò",
+    "all": "Tất cả",
+    "active": "Đang hoạt động",
+    "inactive": "Ngưng hoạt động",
     "liveSync": "Đồng bộ trực tiếp",
-    "geographicIdentification": "Nhận dạng địa lý",
     "fields": "trường dữ liệu",
     "searchNameCode": "Tìm kiếm tên, mã...",
     "filter": "Bộ lọc",
@@ -131,8 +134,8 @@
     "createdBy": "Người tạo",
     "updatedAt": "Ngày cập nhật",
     "updatedBy": "Người cập nhật",
-    "employeeStatus": "Trạng thái nhân viên",
-    "otherInfo": "Thông tin bổ sung & Ghi chú"
+    "otherInfo": "Thông tin bổ sung & Ghi chú",
+    "placeholderNote": "Nhập mô tả hoặc ghi chú thêm..."
   },
   "sidebar": {
     "dashboard": "Bảng điều khiển",
@@ -145,6 +148,8 @@
     "province": "Tỉnh / thành phố",
     "ward": "Phường / xã",
     "settings": "Cài đặt",
+    "user": "Người dùng",
+    "role": "Vai trò",
     "operational": "Hoạt động",
     "uptime": "Thời gian hoạt động"
   },
@@ -172,13 +177,12 @@
     "countryName": "Tên quốc gia",
     "capital": "Thủ đô",
     "selectRegion": "-- Chọn khu vực --",
-    "placeholderNote": "Nhập mô tả hoặc ghi chú quốc gia..."
+    "countryInfo": "Thông tin quốc gia"
   },
   "employee": {
     "title": "Quản lý nhân viên",
     "modalTitle": "Hồ sơ Nhân sự & Lao động",
     "description": "Quản lý danh sách nhân sự, hồ sơ nhân viên, chức vụ, phòng ban và trạng thái làm việc.",
-    "employeeStatus": "Trạng thái",
     "active": "Đang làm việc",
     "remote": "Làm việc từ xa",
     "leave": "Nghỉ phép",
@@ -200,7 +204,7 @@
     "address": "Địa chỉ",
     "hireDate": "Ngày vào làm",
     "terminationDate": "Ngày nghỉ việc",
-    "employmentStatus": "Trạng thái việc làm",
+    "employmentStatus": "Trạng thái nhân viên",
     "isMultiStore": "Đa cửa hàng",
     "photo": "Ảnh đại diện",
     "healthInsuranceNumber": "Số BHYT",
@@ -219,8 +223,16 @@
     "female": "Nữ",
     "selectStatus": "-- Chọn trạng thái --",
     "selectGender": "-- Chọn giới tính --",
-    "selectCountry": "-- Chọn quốc gia --",
-    "placeholderNote": "Nhập ghi chú thêm về nhân viên..."
+    "selectCountry": "-- Chọn quốc gia --"
+  },
+  "role": {
+    "title": "Quản lý vai trò & quyền hạn",
+    "modalTitle": "Hồ sơ Vai trò & Phân quyền",
+    "description": "Quản lý danh sách vai trò, phân quyền chức năng và trạng thái hoạt động.",
+    "roleCode": "Mã vai trò",
+    "roleName": "Tên vai trò",
+    "isSystemRole": "Vai trò hệ thống",
+    "isActive": "Đang hoạt động",
+    "roleInfo": "Thông tin vai trò"
   }
 }
-

@@ -54,8 +54,11 @@
     "softDeleted": "Soft Deleted",
     "country": "Country",
     "employee": "Employee",
+    "role": "Role",
+    "all": "All",
+    "active": "Active",
+    "inactive": "Inactive",
     "liveSync": "Live Sync",
-    "geographicIdentification": "Geographic Identification",
     "fields": "fields",
     "searchNameCode": "Search name, code...",
     "filter": "Filter",
@@ -131,8 +134,8 @@
     "createdBy": "Created By",
     "updatedAt": "Updated At",
     "updatedBy": "Updated By",
-    "employeeStatus": "Employment Status",
-    "otherInfo": "Additional Information & Notes"
+    "otherInfo": "Additional Information & Notes",
+    "placeholderNote": "Enter description or additional notes..."
   },
   "sidebar": {
     "dashboard": "Dashboard",
@@ -145,6 +148,8 @@
     "province": "Province",
     "ward": "Ward",
     "settings": "Settings",
+    "user": "User",
+    "role": "Role",
     "operational": "Operational",
     "uptime": "Uptime"
   },
@@ -172,13 +177,12 @@
     "countryName": "Country Name",
     "capital": "Capital",
     "selectRegion": "-- Select Region --",
-    "placeholderNote": "Enter country description or note..."
+    "countryInfo": "Country Information"
   },
   "employee": {
     "title": "Employee Management",
     "modalTitle": "Workforce & Personnel Module",
     "description": "Manage employee master records, job positions, departments, and employment status.",
-    "employeeStatus": "Status",
     "active": "Active",
     "remote": "Remote",
     "leave": "On Leave",
@@ -219,8 +223,16 @@
     "female": "Female",
     "selectStatus": "-- Select Status --",
     "selectGender": "-- Select Gender --",
-    "selectCountry": "-- Select Country --",
-    "placeholderNote": "Enter additional notes for employee..."
+    "selectCountry": "-- Select Country --"
+  },
+  "role": {
+    "title": "Role & Permission Management",
+    "modalTitle": "System Role & Permission Profile",
+    "description": "Manage system roles, access permissions, and activation status.",
+    "roleCode": "Role Code",
+    "roleName": "Role Name",
+    "isSystemRole": "System Role",
+    "isActive": "Active Status",
+    "roleInfo": "Role Information"
   }
 }
-

@@ -54,8 +54,11 @@
     "softDeleted": "論理削除済み",
     "country": "国",
     "employee": "従業員",
+    "role": "ロール",
+    "all": "すべて",
+    "active": "有効",
+    "inactive": "無効",
     "liveSync": "ライブ同期",
-    "geographicIdentification": "地理的識別",
     "fields": "項目",
     "searchNameCode": "名前、コードで検索...",
     "filter": "フィルター",
@@ -131,8 +134,8 @@
     "createdBy": "作成者",
     "updatedAt": "更新日時",
     "updatedBy": "更新者",
-    "employeeStatus": "雇用ステータス",
-    "otherInfo": "追加情報および備考"
+    "otherInfo": "追加情報および備考",
+    "placeholderNote": "説明または追加のメモを入力..."
   },
   "sidebar": {
     "dashboard": "ダッシュボード",
@@ -145,6 +148,8 @@
     "province": "都道府県",
     "ward": "市区町村",
     "settings": "設定",
+    "user": "ユーザー",
+    "role": "ロール",
     "operational": "稼働中",
     "uptime": "稼働率"
   },
@@ -172,13 +177,12 @@
     "countryName": "国名",
     "capital": "首都",
     "selectRegion": "-- 地域を選択 --",
-    "placeholderNote": "国の説明または備考を入力..."
+    "countryInfo": "国情報"
   },
   "employee": {
     "title": "従業員管理",
     "modalTitle": "人事・労務モジュール",
     "description": "従業員マスターレコード、役職、部署、および雇用ステータスを管理します。",
-    "employeeStatus": "ステータス",
     "active": "在職中",
     "remote": "リモート",
     "leave": "休職中",
@@ -200,7 +204,7 @@
     "address": "住所",
     "hireDate": "入社日",
     "terminationDate": "退職日",
-    "employmentStatus": "雇用形態",
+    "employmentStatus": "雇用ステータス",
     "isMultiStore": "複数店舗勤務",
     "photo": "写真",
     "healthInsuranceNumber": "健康保険番号",
@@ -219,8 +223,16 @@
     "female": "女性",
     "selectStatus": "-- ステータスを選択 --",
     "selectGender": "-- 性別を選択 --",
-    "selectCountry": "-- 国を選択 --",
-    "placeholderNote": "社員に関する備考を入力..."
+    "selectCountry": "-- 国を選択 --"
+  },
+  "role": {
+    "title": "役割・権限管理",
+    "modalTitle": "システム役割・権限プロファイル",
+    "description": "システム役割、アクセス権限、および有効化ステータスを管理します。",
+    "roleCode": "役割コード",
+    "roleName": "役割名",
+    "isSystemRole": "システム役割",
+    "isActive": "有効ステータス",
+    "roleInfo": "役割情報"
   }
 }
-

@@ -1,0 +1,150 @@
+<app-modal>
+  <ng-container modal-eyebrow>{{ 'role.modalTitle' | translate }}</ng-container>
+
+  <ng-container modal-title>{{ title() | translate }} {{ 'common.role' | translate }}</ng-container>
+
+  <ng-container modal-header-extra>
+    <span class="badge-soft badge-teal d-none d-sm-inline-flex">
+      <i class="fa-solid fa-bolt"></i> {{ 'common.liveSync' | translate }}
+    </span>
+  </ng-container>
+
+  <ng-container modal-form>
+    <form id="roleEditorForm" [formGroup]="roleForm" ngNativeValidate (ngSubmit)="handleSave()">
+      <div class="modal-body px-4 py-3 position-relative z-1">
+        <!-- Form Section 1: Role Information -->
+        <div class="form-section-card mb-4">
+          <div class="form-section-header">
+            <div class="d-flex align-items-center gap-2">
+              <i class="fa-solid fa-shield-halved text-primary"></i>
+              <span class="fw-bold">
+                {{ 'role.roleInfo' | translate }}
+              </span>
+            </div>
+            <span class="badge-soft badge-indigo">
+              <i class="fa-solid fa-list-check"></i> 4 {{ 'common.fields' | translate }}
+            </span>
+          </div>
+
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label for="inputRoleCode" class="form-label custom-form-label">
+                {{ 'role.roleCode' | translate }}
+              </label>
+              <div class="input-group custom-input-group">
+                <span class="input-group-text"><i class="fa-solid fa-id-badge"></i></span>
+                <input
+                  type="text"
+                  class="form-control custom-form-control disabled"
+                  id="inputRoleCode"
+                  placeholder="e.g. ROL-001"
+                  formControlName="roleCode"
+                />
+              </div>
+              <div class="form-text-hint">
+                <i class="fa-solid fa-circle-info"></i> Standard role identification code
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <label for="inputRoleName" class="form-label custom-form-label">
+                {{ 'role.roleName' | translate }} <span class="text-danger fw-bold">*</span>
+              </label>
+              <div class="input-group custom-input-group">
+                <span class="input-group-text"><i class="fa-solid fa-user-shield"></i></span>
+                <input
+                  type="text"
+                  class="form-control custom-form-control"
+                  id="inputRoleName"
+                  placeholder="e.g. Administrator, Manager"
+                  formControlName="roleName"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="col-6">
+              <div class="form-check form-switch pt-1">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  role="switch"
+                  id="inputIsSystemRole"
+                  formControlName="isSystemRole"
+                />
+                <label class="form-check-label fw-semibold ms-2" for="inputIsSystemRole">
+                  <i class="fa-solid fa-gear text-primary"></i>
+                  {{ 'role.isSystemRole' | translate }}
+                </label>
+              </div>
+            </div>
+
+            <div class="col-6">
+              <div class="form-check form-switch pt-1">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  role="switch"
+                  id="inputIsActive"
+                  formControlName="isActive"
+                />
+                <label class="form-check-label fw-semibold ms-2" for="inputIsActive">
+                  <i class="fa-solid fa-circle-check text-primary"></i>
+                  {{ 'role.isActive' | translate }}
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Form Section 2: Additional Info & Note -->
+        <div class="form-section-card">
+          <div class="form-section-header">
+            <div class="d-flex align-items-center gap-2">
+              <i class="fa-solid fa-align-left text-primary"></i>
+              <span class="fw-bold">
+                {{ 'common.otherInfo' | translate }}
+              </span>
+            </div>
+            <span class="badge-soft badge-indigo">
+              <i class="fa-solid fa-list-check"></i> 1 {{ 'common.fields' | translate }}
+            </span>
+          </div>
+
+          <div class="row g-3">
+            <div class="col-12">
+              <label for="inputRoleNote" class="form-label custom-form-label">
+                {{ 'common.note' | translate }}
+              </label>
+              <div class="input-group custom-input-group">
+                <span class="input-group-text"><i class="fa-solid fa-align-left"></i></span>
+                <textarea
+                  class="form-control custom-form-control"
+                  id="inputRoleNote"
+                  rows="3"
+                  placeholder="{{ 'common.placeholderNote' | translate }}"
+                  formControlName="note"
+                ></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </ng-container>
+
+  <ng-container modal-actions>
+    <button
+      type="submit"
+      form="roleEditorForm"
+      class="btn btn-sm btn-pastel-purple px-4 py-2 rounded-3"
+    >
+      @if (isSaving()) {
+        <span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+        {{ 'common.saving' | translate }}
+      } @else {
+        <i class="fa-solid fa-floppy-disk me-1"></i> {{ 'common.save' | translate }}
+      }
+    </button>
+  </ng-container>
+</app-modal>

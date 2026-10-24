@@ -54,8 +54,11 @@
     "softDeleted": "已软删除",
     "country": "国家",
     "employee": "员工",
+    "role": "角色",
+    "all": "全部",
+    "active": "启用",
+    "inactive": "停用",
     "liveSync": "实时同步",
-    "geographicIdentification": "地理标识",
     "fields": "字段",
     "searchNameCode": "搜索名称、代码...",
     "filter": "筛选",
@@ -131,8 +134,8 @@
     "createdBy": "创建人",
     "updatedAt": "更新时间",
     "updatedBy": "更新人",
-    "employeeStatus": "员工状态",
-    "otherInfo": "附加信息与备注"
+    "otherInfo": "附加信息与备注",
+    "placeholderNote": "输入描述或附加备注..."
   },
   "sidebar": {
     "dashboard": "仪表板",
@@ -145,6 +148,8 @@
     "province": "省份 / 城市",
     "ward": "区 / 街道",
     "settings": "系统设置",
+    "user": "用户",
+    "role": "角色",
     "operational": "运行正常",
     "uptime": "运行时间"
   },
@@ -172,13 +177,12 @@
     "countryName": "国家名称",
     "capital": "首都",
     "selectRegion": "-- 选择地区 --",
-    "placeholderNote": "输入国家描述或备注..."
+    "countryInfo": "国家信息"
   },
   "employee": {
     "title": "员工管理",
     "modalTitle": "人力资源与员工管理模块",
     "description": "管理员工档案、职位、所属部门及在职状态。",
-    "employeeStatus": "状态",
     "active": "在职",
     "remote": "远程办公",
     "leave": "休假中",
@@ -200,7 +204,7 @@
     "address": "联系地址",
     "hireDate": "入职日期",
     "terminationDate": "离职日期",
-    "employmentStatus": "聘用状态",
+    "employmentStatus": "员工状态",
     "isMultiStore": "多门店",
     "photo": "照片",
     "healthInsuranceNumber": "医保卡号",
@@ -219,8 +223,16 @@
     "female": "女",
     "selectStatus": "-- 选择状态 --",
     "selectGender": "-- 选择性别 --",
-    "selectCountry": "-- 选择国家 --",
-    "placeholderNote": "输入员工附加备注..."
+    "selectCountry": "-- 选择国家 --"
+  },
+  "role": {
+    "title": "角色与权限管理",
+    "modalTitle": "系统角色与权限档案",
+    "description": "管理系统角色、功能权限和激活状态。",
+    "roleCode": "角色代码",
+    "roleName": "角色名称",
+    "isSystemRole": "系统角色",
+    "isActive": "启用状态",
+    "roleInfo": "角色信息"
   }
 }
-

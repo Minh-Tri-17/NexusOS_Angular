@@ -54,8 +54,11 @@
     "softDeleted": "Supprimé temporairement",
     "country": "Pays",
     "employee": "Employé",
+    "role": "Rôle",
+    "all": "Tous",
+    "active": "Actif",
+    "inactive": "Inactif",
     "liveSync": "Synchronisation en direct",
-    "geographicIdentification": "Identification géographique",
     "fields": "champs",
     "searchNameCode": "Rechercher par nom, code...",
     "filter": "Filtrer",
@@ -131,8 +134,8 @@
     "createdBy": "Créé par",
     "updatedAt": "Date de mise à jour",
     "updatedBy": "Mis à jour par",
-    "employeeStatus": "Statut de l'employé",
-    "otherInfo": "Informations supplémentaires et notes"
+    "otherInfo": "Informations supplémentaires et notes",
+    "placeholderNote": "Entrez une description ou des remarques supplémentaires..."
   },
   "sidebar": {
     "dashboard": "Tableau de bord",
@@ -145,6 +148,8 @@
     "province": "Province",
     "ward": "Quartier",
     "settings": "Paramètres",
+    "user": "Utilisateur",
+    "role": "Rôle",
     "operational": "Opérationnel",
     "uptime": "Disponibilité"
   },
@@ -172,13 +177,12 @@
     "countryName": "Nom du pays",
     "capital": "Capitale",
     "selectRegion": "-- Sélectionner la région --",
-    "placeholderNote": "Entrez une description ou une remarque sur le pays..."
+    "countryInfo": "Informations sur le pays"
   },
   "employee": {
     "title": "Gestion des employés",
     "modalTitle": "Module Personnel & Main-d'œuvre",
     "description": "Gérer les dossiers du personnel, les postes, les départements et les statuts professionnels.",
-    "employeeStatus": "Statut",
     "active": "Actif",
     "remote": "À distance",
     "leave": "En congé",
@@ -200,7 +204,7 @@
     "address": "Adresse",
     "hireDate": "Date d'embauche",
     "terminationDate": "Date de fin",
-    "employmentStatus": "Statut d'emploi",
+    "employmentStatus": "Statut de l'employé",
     "isMultiStore": "Multi-magasin",
     "photo": "Photo",
     "healthInsuranceNumber": "N° assurance maladie",
@@ -219,8 +223,16 @@
     "female": "Femme",
     "selectStatus": "-- Sélectionner le statut --",
     "selectGender": "-- Sélectionner le genre --",
-    "selectCountry": "-- Sélectionner un pays --",
-    "placeholderNote": "Entrez des notes supplémentaires..."
+    "selectCountry": "-- Sélectionner un pays --"
+  },
+  "role": {
+    "title": "Gestion des rôles & autorisations",
+    "modalTitle": "Profil des rôles & autorisations du système",
+    "description": "Gérer les rôles système, les autorisations d'accès et l'état d'activation.",
+    "roleCode": "Code de rôle",
+    "roleName": "Nom du rôle",
+    "isSystemRole": "Rôle système",
+    "isActive": "Statut actif",
+    "roleInfo": "Informations sur le rôle"
   }
 }
-
