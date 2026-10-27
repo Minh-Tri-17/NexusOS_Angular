@@ -135,7 +135,12 @@
     "updatedAt": "Updated At",
     "updatedBy": "Updated By",
     "otherInfo": "Additional Information & Notes",
-    "placeholderNote": "Enter description or additional notes..."
+    "placeholderNote": "Enter description or additional notes...",
+    "user": "User",
+    "province": "Province / City",
+    "ward": "Ward / Commune",
+    "selectCountry": "-- Select Country --",
+    "selectProvince": "-- Select Province --"
   },
   "sidebar": {
     "dashboard": "Dashboard",
@@ -188,12 +193,9 @@
     "leave": "On Leave",
     "probation": "Probation",
     "resigned": "Resigned",
-    "departmentId": "Department",
-    "jobTitleId": "Job Title",
-    "storeId": "Store",
-    "countryId": "Country",
-    "provinceId": "Province / City",
-    "wardId": "Ward / District",
+    "countryName": "Country",
+    "provinceName": "Province / City",
+    "wardName": "Ward / District",
     "employeeCode": "Employee Code",
     "employeeName": "Employee Name",
     "gender": "Gender",
@@ -221,9 +223,13 @@
     "bankingAndEmergency": "Banking & Emergency Contact",
     "male": "Male",
     "female": "Female",
+    "other": "Other",
     "selectStatus": "-- Select Status --",
     "selectGender": "-- Select Gender --",
-    "selectCountry": "-- Select Country --"
+    "selectWard": "-- Select Ward / Commune --",
+    "departmentName": "Department",
+    "jobTitleName": "Job Title",
+    "storeName": "Store"
   },
   "role": {
     "title": "Role & Permission Management",
@@ -234,5 +240,43 @@
     "isSystemRole": "System Role",
     "isActive": "Active Status",
     "roleInfo": "Role Information"
+  },
+  "user": {
+    "title": "User Management",
+    "modalTitle": "System User Profile",
+    "description": "Manage user accounts, access status, and security settings.",
+    "userInfo": "User Information",
+    "userCode": "User Code",
+    "username": "Username",
+    "email": "Email",
+    "phoneNumber": "Phone Number",
+    "userStatus": "Status",
+    "userType": "User Type",
+    "active": "Active",
+    "inactive": "Inactive",
+    "locked": "Locked",
+    "employee": "Employee",
+    "external": "External",
+    "system": "System",
+    "requirePasswordChange": "Require Password Change",
+    "twoFactorEnabled": "Two-factor Authentication"
+  },
+  "province": {
+    "title": "Province & City Management",
+    "modalTitle": "Province & City Profile",
+    "description": "Manage provinces, municipalities, and their corresponding countries.",
+    "provinceCode": "Province Code",
+    "provinceName": "Province Name",
+    "countryName": "Country",
+    "provinceInfo": "Province Information"
+  },
+  "ward": {
+    "title": "Ward & Commune Management",
+    "modalTitle": "Ward & Commune Profile",
+    "description": "Manage wards, communes, and their corresponding provinces.",
+    "wardCode": "Ward Code",
+    "wardName": "Ward Name",
+    "provinceName": "Province",
+    "wardInfo": "Ward Information"
   }
 }

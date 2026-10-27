@@ -16,7 +16,8 @@
     <ng-container active-filters>
       @if (filterEmploymentStatus()) {
         <span class="filter-chip">
-          <i class="fa-solid fa-compass chip-icon"></i> {{ 'employee.employmentStatus' | translate }}:
+          <i class="fa-solid fa-compass chip-icon"></i>
+          {{ 'employee.employmentStatus' | translate }}:
           <strong>{{
             'employee.' + filterEmploymentStatus()!.toLocaleLowerCase() | translate
           }}</strong>
@@ -155,21 +156,15 @@
               </td>
 
               <td class="text-nowrap">
-                <span class="text-muted small">
-                  <i class="fa-regular fa-user"></i>{{ employee.departmentId }}</span
-                >
+                <span class="text-muted"> {{ employee.departmentName }}</span>
               </td>
 
               <td class="text-nowrap">
-                <span class="text-muted small">
-                  <i class="fa-regular fa-user"></i>{{ employee.jobTitleId }}</span
-                >
+                <span class="text-muted"> {{ employee.jobTitleName }}</span>
               </td>
 
               <td class="text-nowrap">
-                <span class="text-muted small">
-                  <i class="fa-regular fa-user"></i>{{ employee.storeId }}</span
-                >
+                <span class="text-muted"> {{ employee.storeName }}</span>
               </td>
 
               <td class="text-nowrap">
@@ -177,25 +172,29 @@
               </td>
 
               <td class="text-nowrap">
-                <span class="text-muted small">
-                  <i class="fa-regular fa-user"></i>{{ employee.provinceId }}</span
-                >
+                <span class="text-muted"> {{ employee.provinceName }}</span>
               </td>
 
               <td class="text-nowrap">
-                <span class="text-muted small">
-                  <i class="fa-regular fa-user"></i>{{ employee.wardId }}</span
-                >
+                <span class="text-muted"> {{ employee.wardName }}</span>
               </td>
 
               <td class="text-nowrap">
-                <span
-                  class="badge-soft"
-                  [class]="employee.gender == 'Male' ? 'badge-rose' : 'badge-teal'"
-                >
-                  <i class="fa-solid fa-venus-mars"></i>
-                  {{ employee.gender }}</span
-                >
+                @if (employee.gender) {
+                  <span
+                    class="badge-soft"
+                    [class]="
+                      employee.gender === 'Male'
+                        ? 'badge-blue'
+                        : employee.gender === 'Female'
+                          ? 'badge-rose'
+                          : 'badge-teal'
+                    "
+                  >
+                    <i class="fa-solid fa-venus-mars"></i>
+                    {{ 'employee.' + employee.gender.toLocaleLowerCase() | translate }}
+                  </span>
+                }
               </td>
 
               <td class="text-nowrap">

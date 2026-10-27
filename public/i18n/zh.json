@@ -135,7 +135,12 @@
     "updatedAt": "更新时间",
     "updatedBy": "更新人",
     "otherInfo": "附加信息与备注",
-    "placeholderNote": "输入描述或附加备注..."
+    "placeholderNote": "输入描述或附加备注...",
+    "user": "User",
+    "province": "省份 / 城市",
+    "ward": "区县 / 乡镇",
+    "selectCountry": "-- 选择国家 --",
+    "selectProvince": "-- 选择省市 --"
   },
   "sidebar": {
     "dashboard": "仪表板",
@@ -148,7 +153,7 @@
     "province": "省份 / 城市",
     "ward": "区 / 街道",
     "settings": "系统设置",
-    "user": "用户",
+    "user": "User",
     "role": "角色",
     "operational": "运行正常",
     "uptime": "运行时间"
@@ -188,12 +193,9 @@
     "leave": "休假中",
     "probation": "试用期",
     "resigned": "已离职",
-    "departmentId": "部门",
-    "jobTitleId": "职位",
-    "storeId": "门店",
-    "countryId": "国家",
-    "provinceId": "省份 / 城市",
-    "wardId": "区 / 街道",
+    "countryName": "国家",
+    "provinceName": "省份 / 城市",
+    "wardName": "区 / 街道",
     "employeeCode": "员工编号",
     "employeeName": "员工姓名",
     "gender": "性别",
@@ -221,9 +223,13 @@
     "bankingAndEmergency": "银行账户与紧急联系人",
     "male": "男",
     "female": "女",
+    "other": "其他",
     "selectStatus": "-- 选择状态 --",
     "selectGender": "-- 选择性别 --",
-    "selectCountry": "-- 选择国家 --"
+    "selectWard": "-- 选择区/坊/镇 --",
+    "departmentName": "部门",
+    "jobTitleName": "职位",
+    "storeName": "门店"
   },
   "role": {
     "title": "角色与权限管理",
@@ -234,5 +240,43 @@
     "isSystemRole": "系统角色",
     "isActive": "启用状态",
     "roleInfo": "角色信息"
+  },
+  "user": {
+    "title": "User Management",
+    "modalTitle": "System User Profile",
+    "description": "Manage user accounts, access status, and security settings.",
+    "userInfo": "User Information",
+    "userCode": "User Code",
+    "username": "Username",
+    "email": "Email",
+    "phoneNumber": "Phone Number",
+    "userStatus": "Status",
+    "userType": "User Type",
+    "active": "Active",
+    "inactive": "Inactive",
+    "locked": "Locked",
+    "employee": "Employee",
+    "external": "External",
+    "system": "System",
+    "requirePasswordChange": "Require Password Change",
+    "twoFactorEnabled": "Two-factor Authentication"
+  },
+  "province": {
+    "title": "省市管理",
+    "modalTitle": "省市档案",
+    "description": "管理省份、直辖市及所属国家。",
+    "provinceCode": "省市代码",
+    "provinceName": "省市名称",
+    "countryName": "国家",
+    "provinceInfo": "省市信息"
+  },
+  "ward": {
+    "title": "区县乡镇管理",
+    "modalTitle": "区县乡镇档案",
+    "description": "管理区县、街道、乡镇及所属省市。",
+    "wardCode": "区县代码",
+    "wardName": "区县名称",
+    "provinceName": "省市",
+    "wardInfo": "区县信息"
   }
 }

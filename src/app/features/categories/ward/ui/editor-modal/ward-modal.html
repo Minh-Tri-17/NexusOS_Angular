@@ -1,0 +1,134 @@
+<app-modal>
+  <ng-container modal-eyebrow>{{ 'ward.modalTitle' | translate }}</ng-container>
+  <ng-container modal-title>
+    {{ title() | translate }} {{ 'common.ward' | translate }}
+  </ng-container>
+  <ng-container modal-header-extra>
+    <span class="badge-soft badge-teal d-none d-sm-inline-flex">
+      <i class="fa-solid fa-bolt"></i> {{ 'common.liveSync' | translate }}
+    </span>
+  </ng-container>
+
+  <ng-container modal-form>
+    <form id="wardEditorForm" [formGroup]="wardForm" ngNativeValidate (ngSubmit)="handleSave()">
+      <div class="modal-body px-4 py-3 position-relative z-1">
+        <!-- Form Section 1: Ward Info -->
+        <div class="form-section-card mb-4">
+          <div class="form-section-header">
+            <div class="d-flex align-items-center gap-2">
+              <i class="fa-solid fa-location-dot text-primary"></i>
+              <span class="fw-bold">{{ 'ward.wardInfo' | translate }}</span>
+            </div>
+            <span class="badge-soft badge-indigo">
+              <i class="fa-solid fa-list-check"></i> 3 {{ 'common.fields' | translate }}
+            </span>
+          </div>
+
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label for="inputWardCode" class="form-label custom-form-label">
+                {{ 'ward.wardCode' | translate }}
+              </label>
+              <div class="input-group custom-input-group">
+                <span class="input-group-text"><i class="fa-solid fa-barcode"></i></span>
+                <input
+                  type="text"
+                  class="form-control custom-form-control"
+                  id="inputWardCode"
+                  placeholder="e.g. W01, P12, TT01"
+                  formControlName="wardCode"
+                />
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <label for="inputWardName" class="form-label custom-form-label">
+                {{ 'ward.wardName' | translate }} <span class="text-danger">*</span>
+              </label>
+              <div class="input-group custom-input-group">
+                <span class="input-group-text"><i class="fa-solid fa-map-pin"></i></span>
+                <input
+                  type="text"
+                  class="form-control custom-form-control"
+                  id="inputWardName"
+                  placeholder="e.g. Phường Bến Nghé, Xã Tân Triều"
+                  formControlName="wardName"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="col-md-12">
+              <label for="inputProvinceId" class="form-label custom-form-label">
+                {{ 'ward.provinceName' | translate }} <span class="text-danger">*</span>
+              </label>
+              <div class="input-group custom-input-group">
+                <span class="input-group-text"><i class="fa-solid fa-map"></i></span>
+                <select
+                  class="form-select custom-form-select"
+                  id="inputProvinceId"
+                  formControlName="provinceId"
+                  required
+                >
+                  <option [ngValue]="null">
+                    {{ 'common.selectProvince' | translate }}
+                  </option>
+                  @for (province of provinces(); track province.id) {
+                    <option [ngValue]="province.id">
+                      {{ province.provinceName }}
+                    </option>
+                  }
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Form Section 2: Additional Info & Note -->
+        <div class="form-section-card">
+          <div class="form-section-header">
+            <div class="d-flex align-items-center gap-2">
+              <i class="fa-solid fa-align-left text-primary"></i>
+              <span class="fw-bold">{{ 'common.otherInfo' | translate }}</span>
+            </div>
+            <span class="badge-soft badge-indigo">
+              <i class="fa-solid fa-list-check"></i> 1 {{ 'common.fields' | translate }}
+            </span>
+          </div>
+
+          <div class="row g-3">
+            <div class="col-12">
+              <label for="inputWardNote" class="form-label custom-form-label">
+                {{ 'common.note' | translate }}
+              </label>
+              <div class="input-group custom-input-group">
+                <span class="input-group-text"><i class="fa-solid fa-align-left"></i></span>
+                <textarea
+                  class="form-control custom-form-control"
+                  id="inputWardNote"
+                  rows="3"
+                  placeholder="{{ 'common.placeholderNote' | translate }}"
+                  formControlName="note"
+                ></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </ng-container>
+
+  <ng-container modal-actions>
+    <button
+      type="submit"
+      form="wardEditorForm"
+      class="btn btn-sm btn-pastel-purple px-4 py-2 rounded-3"
+    >
+      @if (isSaving()) {
+        <span class="spinner-border spinner-border-sm me-1"></span>{{ 'common.saving' | translate }}
+      } @else {
+        <i class="fa-solid fa-floppy-disk me-1"></i>{{ 'common.save' | translate }}
+      }
+    </button>
+  </ng-container>
+</app-modal>

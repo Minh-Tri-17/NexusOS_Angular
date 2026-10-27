@@ -201,7 +201,7 @@
 
             <div class="col-md-4">
               <label for="inputDepartmentId" class="form-label custom-form-label">
-                {{ 'employee.departmentId' | translate }}
+                {{ 'employee.departmentName' | translate }}
               </label>
               <div class="input-group custom-input-group">
                 <span class="input-group-text"><i class="fa-solid fa-building"></i></span>
@@ -216,7 +216,7 @@
 
             <div class="col-md-4">
               <label for="inputJobTitleId" class="form-label custom-form-label">
-                {{ 'employee.jobTitleId' | translate }}
+                {{ 'employee.jobTitleName' | translate }}
               </label>
               <div class="input-group custom-input-group">
                 <span class="input-group-text"><i class="fa-solid fa-user-tie"></i></span>
@@ -231,7 +231,7 @@
 
             <div class="col-md-4">
               <label for="inputStoreId" class="form-label custom-form-label">
-                {{ 'employee.storeId' | translate }}
+                {{ 'employee.storeName' | translate }}
               </label>
               <div class="input-group custom-input-group">
                 <span class="input-group-text"><i class="fa-solid fa-store"></i></span>
@@ -304,8 +304,11 @@
                   formControlName="gender"
                 >
                   <option [ngValue]="null">{{ 'employee.selectGender' | translate }}</option>
-                  <option [ngValue]="'Male'">{{ 'employee.male' | translate }}</option>
-                  <option [ngValue]="'Female'">{{ 'employee.female' | translate }}</option>
+                  @for (gender of genders; track gender) {
+                    <option [ngValue]="gender">
+                      {{ 'employee.' + gender.toLocaleLowerCase() | translate }}
+                    </option>
+                  }
                 </select>
               </div>
             </div>
@@ -344,7 +347,7 @@
 
             <div class="col-md-4">
               <label for="inputCountryId" class="form-label custom-form-label">
-                {{ 'employee.countryId' | translate }}
+                {{ 'employee.countryName' | translate }}
               </label>
               <div class="input-group custom-input-group">
                 <span class="input-group-text"><i class="fa-solid fa-globe"></i></span>
@@ -354,7 +357,7 @@
                   formControlName="countryId"
                 >
                   <option [ngValue]="null">
-                    {{ 'employee.selectCountry' | translate }}
+                    {{ 'common.selectCountry' | translate }}
                   </option>
                   @for (country of countries(); track country.id) {
                     <option [ngValue]="country.id">
@@ -367,31 +370,47 @@
 
             <div class="col-md-4">
               <label for="inputProvinceId" class="form-label custom-form-label">
-                {{ 'employee.provinceId' | translate }}
+                {{ 'employee.provinceName' | translate }}
               </label>
               <div class="input-group custom-input-group">
                 <span class="input-group-text"><i class="fa-solid fa-map-location-dot"></i></span>
-                <input
-                  type="text"
-                  class="form-control custom-form-control"
+                <select
+                  class="form-select custom-form-select"
                   id="inputProvinceId"
                   formControlName="provinceId"
-                />
+                >
+                  <option [ngValue]="null">
+                    {{ 'common.selectProvince' | translate }}
+                  </option>
+                  @for (province of provinces(); track province.id) {
+                    <option [ngValue]="province.id">
+                      {{ province.provinceName }}
+                    </option>
+                  }
+                </select>
               </div>
             </div>
 
             <div class="col-md-4">
               <label for="inputWardId" class="form-label custom-form-label">
-                {{ 'employee.wardId' | translate }}
+                {{ 'employee.wardName' | translate }}
               </label>
               <div class="input-group custom-input-group">
                 <span class="input-group-text"><i class="fa-solid fa-location-pin"></i></span>
-                <input
-                  type="text"
-                  class="form-control custom-form-control"
+                <select
+                  class="form-select custom-form-select"
                   id="inputWardId"
                   formControlName="wardId"
-                />
+                >
+                  <option [ngValue]="null">
+                    {{ 'employee.selectWard' | translate }}
+                  </option>
+                  @for (ward of wards(); track ward.id) {
+                    <option [ngValue]="ward.id">
+                      {{ ward.wardName }}
+                    </option>
+                  }
+                </select>
               </div>
             </div>
           </div>

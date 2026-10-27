@@ -5,3 +5,9 @@ export enum EmploymentStatus {
   probation = 'Probation',
   resigned = 'Resigned',
 }
+
+export enum Gender {
+  male = 'Male',
+  female = 'Female',
+  other = 'Other',
+}

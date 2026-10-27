@@ -135,7 +135,12 @@
     "updatedAt": "Date de mise à jour",
     "updatedBy": "Mis à jour par",
     "otherInfo": "Informations supplémentaires et notes",
-    "placeholderNote": "Entrez une description ou des remarques supplémentaires..."
+    "placeholderNote": "Entrez une description ou des remarques supplémentaires...",
+    "user": "User",
+    "province": "Province / Ville",
+    "ward": "Commune / Quartier",
+    "selectCountry": "-- Sélectionner un pays --",
+    "selectProvince": "-- Sélectionner une province --"
   },
   "sidebar": {
     "dashboard": "Tableau de bord",
@@ -148,7 +153,7 @@
     "province": "Province",
     "ward": "Quartier",
     "settings": "Paramètres",
-    "user": "Utilisateur",
+    "user": "User",
     "role": "Rôle",
     "operational": "Opérationnel",
     "uptime": "Disponibilité"
@@ -188,12 +193,9 @@
     "leave": "En congé",
     "probation": "Période d'essai",
     "resigned": "Démissionnaire",
-    "departmentId": "Département",
-    "jobTitleId": "Poste",
-    "storeId": "Magasin",
-    "countryId": "Pays",
-    "provinceId": "Province / Ville",
-    "wardId": "Quartier / Commune",
+    "countryName": "Pays",
+    "provinceName": "Province / Ville",
+    "wardName": "Quartier / Commune",
     "employeeCode": "Code employé",
     "employeeName": "Nom de l'employé",
     "gender": "Genre",
@@ -221,9 +223,13 @@
     "bankingAndEmergency": "Informations bancaires et urgence",
     "male": "Homme",
     "female": "Femme",
+    "other": "Autre",
     "selectStatus": "-- Sélectionner le statut --",
     "selectGender": "-- Sélectionner le genre --",
-    "selectCountry": "-- Sélectionner un pays --"
+    "selectWard": "-- Sélectionner un quartier / commune --",
+    "departmentName": "Département",
+    "jobTitleName": "Poste",
+    "storeName": "Magasin"
   },
   "role": {
     "title": "Gestion des rôles & autorisations",
@@ -234,5 +240,43 @@
     "isSystemRole": "Rôle système",
     "isActive": "Statut actif",
     "roleInfo": "Informations sur le rôle"
+  },
+  "user": {
+    "title": "User Management",
+    "modalTitle": "System User Profile",
+    "description": "Manage user accounts, access status, and security settings.",
+    "userInfo": "User Information",
+    "userCode": "User Code",
+    "username": "Username",
+    "email": "Email",
+    "phoneNumber": "Phone Number",
+    "userStatus": "Status",
+    "userType": "User Type",
+    "active": "Active",
+    "inactive": "Inactive",
+    "locked": "Locked",
+    "employee": "Employee",
+    "external": "External",
+    "system": "System",
+    "requirePasswordChange": "Require Password Change",
+    "twoFactorEnabled": "Two-factor Authentication"
+  },
+  "province": {
+    "title": "Gestion des provinces et villes",
+    "modalTitle": "Profil de la province / ville",
+    "description": "Gérer les provinces, municipalités et leurs pays correspondants.",
+    "provinceCode": "Code de la province",
+    "provinceName": "Nom de la province",
+    "countryName": "Pays",
+    "provinceInfo": "Informations sur la province"
+  },
+  "ward": {
+    "title": "Gestion des communes et quartiers",
+    "modalTitle": "Profil de la commune / du quartier",
+    "description": "Gérer les communes, quartiers et leurs provinces correspondantes.",
+    "wardCode": "Code du quartier",
+    "wardName": "Nom du quartier",
+    "provinceName": "Province",
+    "wardInfo": "Informations sur le quartier"
   }
 }

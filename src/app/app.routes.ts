@@ -24,12 +24,26 @@ export const routes: Routes = [
           import('./features/categories/country/ui/country').then((m) => m.Country),
       },
       {
+        path: 'province',
+        loadComponent: () =>
+          import('./features/categories/province/ui/province').then((m) => m.Province),
+      },
+      {
+        path: 'ward',
+        loadComponent: () =>
+          import('./features/categories/ward/ui/ward').then((m) => m.Ward),
+      },
+      {
         path: 'employee',
         loadComponent: () => import('./features/employee/ui/employee').then((m) => m.Employee),
       },
       {
         path: 'role',
         loadComponent: () => import('./features/system/roles/ui/role').then((m) => m.Role),
+      },
+      {
+        path: 'user',
+        loadComponent: () => import('./features/system/users/ui/user').then((m) => m.User),
       },
     ],
   },

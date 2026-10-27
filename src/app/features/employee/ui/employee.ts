@@ -69,6 +69,12 @@ export class Employee {
   readonly employeeStatus = Object.values(EmploymentStatus);
   readonly employeeColumns = Object.keys(EmployeeFields).filter(
     (key) =>
+      key !== 'departmentId' &&
+      key !== 'jobTitleId' &&
+      key !== 'storeId' &&
+      key !== 'countryId' &&
+      key !== 'provinceId' &&
+      key !== 'wardId' &&
       key !== 'id' &&
       key !== 'note' &&
       key !== 'createdAt' &&

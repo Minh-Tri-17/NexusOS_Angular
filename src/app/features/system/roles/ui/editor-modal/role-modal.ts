@@ -27,7 +27,6 @@ export class RoleModal {
   //#region //@ STATE
 
   readonly isSaving = signal(false);
-
   readonly roleForm = new FormGroup({
     id: new FormControl<string | null>(null),
     roleCode: new FormControl<string | null>(null),
@@ -74,15 +73,15 @@ export class RoleModal {
   }
 
   async handleSave() {
-    if (this.roleForm.invalid) return;
+    if (this.roleForm.invalid) {
+      //* markAllAsTouched() đánh dấu tất cả các field đã được tương tác để hiển thị lỗi validation.
+      this.roleForm.markAllAsTouched();
+      return;
+    }
+
     this.isSaving.set(true);
-
     //* getRawValue() lấy toàn bộ giá trị của form, kể cả ô bị disabled
-    const rawValues = this.roleForm.getRawValue();
-
-    const payload: RoleModel = {
-      ...(rawValues as unknown as RoleModel),
-    };
+    const payload = this.roleForm.getRawValue() as unknown as RoleModel;
 
     try {
       if (payload.id) {
@@ -91,7 +90,6 @@ export class RoleModal {
         payload.id = NIL_GUID;
         await this.facade.create(payload);
       }
-
       this.saveSuccess.emit();
       this.initCreateForm();
       this.baseService.closeModal();

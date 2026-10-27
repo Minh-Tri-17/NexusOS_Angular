@@ -1,15 +1,22 @@
+import { EmploymentStatus, Gender } from './employee.enum';
+
 export interface EmployeeModel {
   id: string;
   employeeCode?: string | null;
   employeeName: string;
   departmentId?: string | null;
+  departmentName?: string | null;
   jobTitleId?: string | null;
+  jobTitleName?: string | null;
   storeId?: string | null;
+  storeName?: string | null;
   countryId?: string | null;
   countryName?: string | null;
   provinceId?: string | null;
+  provinceName?: string | null;
   wardId?: string | null;
-  gender?: string | null;
+  wardName?: string | null;
+  gender?: Gender | string | null;
   dateOfBirth?: Date | null;
   phoneNumber?: string | null;
   email?: string | null;
@@ -17,7 +24,7 @@ export interface EmployeeModel {
   address?: string | null;
   hireDate?: Date | null;
   terminationDate?: Date | null;
-  employmentStatus?: string | null;
+  employmentStatus?: EmploymentStatus | string | null;
   isMultiStore?: boolean | null;
   photo?: string | null;
   healthInsuranceNumber?: string | null;
@@ -41,12 +48,17 @@ export const EmployeeFields: Record<keyof EmployeeModel, string> = {
   employeeCode: 'EmployeeCode',
   employeeName: 'EmployeeName',
   departmentId: 'DepartmentId',
+  departmentName: 'DepartmentName',
   jobTitleId: 'JobTitleId',
+  jobTitleName: 'JobTitleName',
   storeId: 'StoreId',
+  storeName: 'StoreName',
   countryId: 'CountryId',
   countryName: 'CountryName',
   provinceId: 'ProvinceId',
+  provinceName: 'ProvinceName',
   wardId: 'WardId',
+  wardName: 'WardName',
   gender: 'Gender',
   dateOfBirth: 'DateOfBirth',
   phoneNumber: 'PhoneNumber',

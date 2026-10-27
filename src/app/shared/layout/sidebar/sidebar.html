@@ -28,14 +28,14 @@
       <a
         class="nav-link collapse-toggle collapsed"
         role="button"
-        [attr.aria-expanded]="!isCollapsed"
-        (click)="isCollapsed = !isCollapsed"
+        [attr.aria-expanded]="openSubmenu() === 'categories'"
+        (click)="toggleSubmenu('categories')"
       >
         <i class="fa-solid fa-layer-group"></i>
         <span>{{ 'sidebar.categories' | translate }}</span>
         <i class="fa-solid fa-plus toggle-chevron ms-auto"></i>
       </a>
-      <div class="collapse" [ngbCollapse]="isCollapsed">
+      <div class="collapse" [ngbCollapse]="openSubmenu() !== 'categories'">
         <div class="submenu-list">
           <div class="submenu-header">{{ 'sidebar.geography' | translate }}</div>
           <a
@@ -47,11 +47,11 @@
             <i class="fa-solid fa-globe"></i>
             <span>{{ 'sidebar.country' | translate }}</span>
           </a>
-          <a class="submenu-link" title="Province" [routerLink]="['/']">
+          <a class="submenu-link" title="Province" [routerLink]="['/province']" routerLinkActive="active">
             <i class="fa-solid fa-map"></i>
             <span>{{ 'sidebar.province' | translate }}</span>
           </a>
-          <a class="submenu-link" title="Ward" [routerLink]="['/']">
+          <a class="submenu-link" title="Ward" [routerLink]="['/ward']" routerLinkActive="active">
             <i class="fa-solid fa-location-dot"></i>
             <span>{{ 'sidebar.ward' | translate }}</span>
           </a>
@@ -62,16 +62,16 @@
       <a
         class="nav-link collapse-toggle collapsed"
         role="button"
-        [attr.aria-expanded]="!isSettingsCollapsed"
-        (click)="isSettingsCollapsed = !isSettingsCollapsed"
+        [attr.aria-expanded]="openSubmenu() === 'settings'"
+        (click)="toggleSubmenu('settings')"
       >
         <i class="fa-solid fa-gear"></i>
         <span>{{ 'sidebar.settings' | translate }}</span>
         <i class="fa-solid fa-plus toggle-chevron ms-auto"></i>
       </a>
-      <div class="collapse" [ngbCollapse]="isSettingsCollapsed">
+      <div class="collapse" [ngbCollapse]="openSubmenu() !== 'settings'">
         <div class="submenu-list">
-          <a class="submenu-link" title="User" [routerLink]="['/']">
+          <a class="submenu-link" title="User" [routerLink]="['/user']" routerLinkActive="active">
             <i class="fa-solid fa-user"></i>
             <span>{{ 'sidebar.user' | translate }}</span>
           </a>

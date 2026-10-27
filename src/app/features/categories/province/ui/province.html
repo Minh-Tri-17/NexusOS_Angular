@@ -1,0 +1,191 @@
+<app-summary>
+  <ng-container title-header>
+    {{ 'province.title' | translate }}
+  </ng-container>
+  <ng-container description>
+    {{ 'province.description' | translate }}
+  </ng-container>
+</app-summary>
+
+<div class="erp-card p-4 shadow-sm rounded-4">
+  <app-toolbar
+    [(searchText)]="searchText"
+    (clearFilters)="handleClearFilter()"
+    [(filterIsDelete)]="filterIsDelete"
+  >
+    <ng-container active-filters>
+      @if (filterCountryId()) {
+        <span class="filter-chip">
+          <i class="fa-solid fa-globe chip-icon"></i> {{ 'province.countryName' | translate }}:
+          <strong>{{ getCountryName(filterCountryId()) }}</strong>
+          <i class="fa-solid fa-xmark chip-remove-btn" (click)="filterCountryId.set(null)"></i>
+        </span>
+      }
+    </ng-container>
+
+    <ng-container action-buttons>
+      <div class="d-flex align-items-center gap-2">
+        <button
+          type="button"
+          class="btn btn-sm btn-pastel-green d-inline-flex align-items-center gap-2 px-3 py-2 rounded-3 shadow-xs"
+          (click)="handleOpenCreate()"
+        >
+          <i class="fa-solid fa-plus"></i> {{ 'common.create' | translate }}
+        </button>
+        <button
+          type="button"
+          class="btn btn-sm btn-pastel-orange d-inline-flex align-items-center gap-2 px-3 py-2 rounded-3 shadow-xs"
+          [disabled]="selectedIds().size !== 1"
+          (click)="handleOpenUpdate()"
+        >
+          <i class="fa-solid fa-pen-to-square"></i> {{ 'common.edit' | translate }}
+        </button>
+        <button
+          type="button"
+          class="btn btn-sm btn-pastel-red d-inline-flex align-items-center gap-2 px-3 py-2 rounded-3 shadow-xs"
+          [disabled]="selectedIds().size < 1"
+          (click)="handleDeleteSelected()"
+        >
+          <i class="fa-solid fa-trash-can"></i> {{ 'common.delete' | translate }}
+        </button>
+      </div>
+
+      <div class="action-bar-divider mx-1"></div>
+
+      <div class="d-flex align-items-center gap-2">
+        <button
+          type="button"
+          class="btn btn-sm btn-pastel-indigo d-inline-flex align-items-center gap-2 px-3 py-2 rounded-3 shadow-xs"
+          (click)="openImportModal()"
+        >
+          <i class="fa-solid fa-file-import"></i> {{ 'common.import' | translate }}
+        </button>
+        <button
+          type="button"
+          class="btn btn-sm btn-pastel-indigo d-inline-flex align-items-center gap-2 px-3 py-2 rounded-3 shadow-xs"
+          (click)="openExportModal()"
+        >
+          <i class="fa-solid fa-file-export"></i> {{ 'common.export' | translate }}
+        </button>
+      </div>
+    </ng-container>
+
+    <ng-container filter-matrix>
+      <div class="col-md-3">
+        <label class="form-label small fw-semibold text-muted">{{
+          'province.countryName' | translate
+        }}</label>
+        <select
+          class="form-select form-select-sm rounded-3 filter-select w-100"
+          [ngModel]="filterCountryId()"
+          (ngModelChange)="filterCountryId.set($event)"
+        >
+          <option [ngValue]="null">{{ 'common.selectCountry' | translate }}</option>
+          @for (country of countries(); track country.id) {
+            <option [ngValue]="country.id">{{ country.countryName }}</option>
+          }
+        </select>
+      </div>
+    </ng-container>
+  </app-toolbar>
+
+  <app-table>
+    <ng-container table-header>
+      <tr>
+        <th class="col-pin" style="width: 36px; min-width: 36px">
+          <input
+            type="checkbox"
+            aria-label="Select all"
+            [checked]="isSelectedAll()"
+            (click)="handleToggleSelectAll()"
+          />
+        </th>
+        <th class="text-center" style="width: 50px">#</th>
+        @for (column of provinceColumns; track column) {
+          <th>{{ 'province.' + column | translate }}</th>
+        }
+        <th style="min-width: 220px">{{ 'common.note' | translate }}</th>
+        <th>{{ 'common.createdAt' | translate }}</th>
+        <th>{{ 'common.createdBy' | translate }}</th>
+        <th>{{ 'common.updatedAt' | translate }}</th>
+        <th>{{ 'common.updatedBy' | translate }}</th>
+      </tr>
+    </ng-container>
+
+    <ng-container table-body>
+      @if (isLoading()) {
+        <app-placeholder [modelColumns]="provinceColumns"></app-placeholder>
+      } @else {
+        @for (province of provinces(); track province.id; let idx = $index) {
+          <tr [class.deleted-row]="filterIsDelete()">
+            <td class="col-pin">
+              <input
+                type="checkbox"
+                [aria-label]="province.provinceName"
+                [checked]="isSelected(province.id)"
+                (click)="handleToggleSelect(province.id)"
+              />
+            </td>
+            <td class="td-cell text-center">{{ fromRecord() + idx }}</td>
+
+            <td class="text-nowrap">
+              <span class="badge-soft badge-blue">#{{ province.provinceCode }}</span>
+            </td>
+
+            <td class="text-nowrap">
+              <div
+                class="fw-semibold text-main"
+                [class.text-decoration-line-through]="filterIsDelete()"
+              >
+                {{ province.provinceName }}
+              </div>
+              @if (filterIsDelete()) {
+                <span
+                  class="badge bg-danger-subtle text-danger border border-danger-subtle fs-xs rounded-pill px-2 py-0.5 mt-1"
+                >
+                  <i class="fa-solid fa-trash-can me-1"></i> {{ 'common.softDeleted' | translate }}
+                </span>
+              }
+            </td>
+
+            <td class="text-nowrap">
+              <span class="text-muted"> {{ province.countryName }} </span>
+            </td>
+
+            <td>
+              <span class="text-muted small fst-italic">{{ province.note }}</span>
+            </td>
+
+            <td class="text-nowrap">
+              <span class="text-muted small">{{ province.createdAt | date }}</span>
+            </td>
+
+            <td class="text-nowrap">
+              <span class="text-muted small">
+                <i class="fa-regular fa-user"></i>{{ province.createdBy }}</span
+              >
+            </td>
+
+            <td class="text-nowrap">
+              <span class="text-muted small">{{ province.updatedAt | date }}</span>
+            </td>
+
+            <td class="text-nowrap">
+              <span class="text-muted small">
+                <i class="fa-regular fa-user"></i>{{ province.updatedBy }}</span
+              >
+            </td>
+          </tr>
+        }
+      }
+    </ng-container>
+  </app-table>
+
+  <app-pagination
+    [(pageIndex)]="pageIndex"
+    [(pageSize)]="pageSize"
+    [totalRecord]="totalRecord()"
+    [recordRange]="recordRange()"
+    [pageCount]="pageCount()"
+  ></app-pagination>
+</div>

@@ -135,7 +135,12 @@
     "updatedAt": "Ngày cập nhật",
     "updatedBy": "Người cập nhật",
     "otherInfo": "Thông tin bổ sung & Ghi chú",
-    "placeholderNote": "Nhập mô tả hoặc ghi chú thêm..."
+    "placeholderNote": "Nhập mô tả hoặc ghi chú thêm...",
+    "user": "Người dùng",
+    "province": "Tỉnh / Thành phố",
+    "ward": "Phường / Xã",
+    "selectCountry": "-- Chọn quốc gia --",
+    "selectProvince": "-- Chọn tỉnh / thành phố --"
   },
   "sidebar": {
     "dashboard": "Bảng điều khiển",
@@ -188,12 +193,9 @@
     "leave": "Nghỉ phép",
     "probation": "Thử việc",
     "resigned": "Đã thôi việc",
-    "departmentId": "Phòng ban",
-    "jobTitleId": "Chức vụ",
-    "storeId": "Cửa hàng",
-    "countryId": "Quốc gia",
-    "provinceId": "Tỉnh / Thành",
-    "wardId": "Phường / Xã",
+    "countryName": "Quốc gia",
+    "provinceName": "Tỉnh / Thành",
+    "wardName": "Phường / Xã",
     "employeeCode": "Mã nhân viên",
     "employeeName": "Tên nhân viên",
     "gender": "Giới tính",
@@ -221,9 +223,13 @@
     "bankingAndEmergency": "Ngân hàng & Liên hệ khẩn cấp",
     "male": "Nam",
     "female": "Nữ",
+    "other": "Khác",
     "selectStatus": "-- Chọn trạng thái --",
     "selectGender": "-- Chọn giới tính --",
-    "selectCountry": "-- Chọn quốc gia --"
+    "selectWard": "-- Chọn phường / xã --",
+    "departmentName": "Phòng ban",
+    "jobTitleName": "Chức vụ",
+    "storeName": "Cửa hàng"
   },
   "role": {
     "title": "Quản lý vai trò & quyền hạn",
@@ -234,5 +240,43 @@
     "isSystemRole": "Vai trò hệ thống",
     "isActive": "Đang hoạt động",
     "roleInfo": "Thông tin vai trò"
+  },
+  "user": {
+    "title": "Quản lý người dùng",
+    "modalTitle": "Hồ sơ người dùng hệ thống",
+    "description": "Quản lý tài khoản, trạng thái truy cập và bảo mật người dùng.",
+    "userInfo": "Thông tin người dùng",
+    "userCode": "Mã người dùng",
+    "username": "Tên đăng nhập",
+    "email": "Email",
+    "phoneNumber": "Số điện thoại",
+    "userStatus": "Trạng thái",
+    "userType": "Loại người dùng",
+    "active": "Đang hoạt động",
+    "inactive": "Không hoạt động",
+    "locked": "Đã khóa",
+    "employee": "Nhân viên",
+    "external": "Bên ngoài",
+    "system": "Hệ thống",
+    "requirePasswordChange": "Yêu cầu đổi mật khẩu",
+    "twoFactorEnabled": "Bật xác thực hai lớp"
+  },
+  "province": {
+    "title": "Quản lý tỉnh / thành phố",
+    "modalTitle": "Hồ sơ tỉnh / thành phố",
+    "description": "Quản lý danh sách các tỉnh, thành phố trực thuộc và quốc gia tương ứng.",
+    "provinceCode": "Mã tỉnh / thành",
+    "provinceName": "Tên tỉnh / thành",
+    "countryName": "Quốc gia",
+    "provinceInfo": "Thông tin tỉnh / thành phố"
+  },
+  "ward": {
+    "title": "Quản lý phường / xã",
+    "modalTitle": "Hồ sơ phường / xã",
+    "description": "Quản lý danh sách các phường, xã, thị trấn trực thuộc tỉnh / thành phố.",
+    "wardCode": "Mã phường / xã",
+    "wardName": "Tên phường / xã",
+    "provinceName": "Tỉnh / thành phố",
+    "wardInfo": "Thông tin phường / xã"
   }
 }

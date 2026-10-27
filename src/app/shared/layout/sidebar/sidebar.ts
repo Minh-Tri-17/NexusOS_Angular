@@ -1,4 +1,4 @@
-import { Component, inject, ViewEncapsulation } from '@angular/core';
+import { Component, inject, signal, ViewEncapsulation } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { NgbCollapse } from '@ng-bootstrap/ng-bootstrap';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -13,6 +13,9 @@ import { ThemeService } from '../../../core/services/theme.service';
 })
 export class Sidebar {
   protected readonly themeService = inject(ThemeService);
-  isCollapsed = false;
-  isSettingsCollapsed = false;
+  readonly openSubmenu = signal<string | null>(null);
+
+  toggleSubmenu(menu: string) {
+    this.openSubmenu.update((curr) => (curr === menu ? null : menu));
+  }
 }

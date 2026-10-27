@@ -1,9 +1,11 @@
+import { Region } from './country.enum';
+
 export interface CountryModel {
   id: string;
   countryCode?: string | null;
   countryName: string;
   capital: string;
-  region: string;
+  region: Region | string;
 
   note?: string | null;
   createdAt?: Date | null;

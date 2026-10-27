@@ -80,15 +80,15 @@ export class CountryModal {
   }
 
   async handleSave() {
-    if (this.countryForm.invalid) return;
+    if (this.countryForm.invalid) {
+      //* markAllAsTouched() đánh dấu tất cả các field đã được tương tác để hiển thị lỗi validation.
+      this.countryForm.markAllAsTouched();
+      return;
+    }
+
     this.isSaving.set(true);
-
     //* getRawValue() lấy toàn bộ giá trị của form, kể cả ô bị disabled
-    const rawValues = this.countryForm.getRawValue();
-
-    const payload: CountryModel = {
-      ...(rawValues as unknown as CountryModel),
-    };
+    const payload = this.countryForm.getRawValue() as unknown as CountryModel;
 
     try {
       if (payload.id) {
@@ -97,7 +97,6 @@ export class CountryModal {
         payload.id = NIL_GUID;
         await this.facade.create(payload);
       }
-
       this.saveSuccess.emit();
       this.initCreateForm();
       this.baseService.closeModal();

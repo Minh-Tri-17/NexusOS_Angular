@@ -135,7 +135,12 @@
     "updatedAt": "更新日時",
     "updatedBy": "更新者",
     "otherInfo": "追加情報および備考",
-    "placeholderNote": "説明または追加のメモを入力..."
+    "placeholderNote": "説明または追加のメモを入力...",
+    "user": "User",
+    "province": "都道府県 / 市",
+    "ward": "市区町村",
+    "selectCountry": "-- 国を選択 --",
+    "selectProvince": "-- 都道府県を選択 --"
   },
   "sidebar": {
     "dashboard": "ダッシュボード",
@@ -148,7 +153,7 @@
     "province": "都道府県",
     "ward": "市区町村",
     "settings": "設定",
-    "user": "ユーザー",
+    "user": "User",
     "role": "ロール",
     "operational": "稼働中",
     "uptime": "稼働率"
@@ -188,12 +193,9 @@
     "leave": "休職中",
     "probation": "試用期間",
     "resigned": "退職済",
-    "departmentId": "部署",
-    "jobTitleId": "役職",
-    "storeId": "店舗",
-    "countryId": "国",
-    "provinceId": "都道府県",
-    "wardId": "市区町村",
+    "countryName": "国",
+    "provinceName": "都道府県",
+    "wardName": "市区町村",
     "employeeCode": "従業員コード",
     "employeeName": "従業員名",
     "gender": "性別",
@@ -221,9 +223,13 @@
     "bankingAndEmergency": "銀行口座および緊急連絡先",
     "male": "男性",
     "female": "女性",
+    "other": "その他",
     "selectStatus": "-- ステータスを選択 --",
     "selectGender": "-- 性別を選択 --",
-    "selectCountry": "-- 国を選択 --"
+    "selectWard": "-- 市区町村を選択 --",
+    "departmentName": "部署",
+    "jobTitleName": "役職",
+    "storeName": "店舗"
   },
   "role": {
     "title": "役割・権限管理",
@@ -234,5 +240,43 @@
     "isSystemRole": "システム役割",
     "isActive": "有効ステータス",
     "roleInfo": "役割情報"
+  },
+  "user": {
+    "title": "User Management",
+    "modalTitle": "System User Profile",
+    "description": "Manage user accounts, access status, and security settings.",
+    "userInfo": "User Information",
+    "userCode": "User Code",
+    "username": "Username",
+    "email": "Email",
+    "phoneNumber": "Phone Number",
+    "userStatus": "Status",
+    "userType": "User Type",
+    "active": "Active",
+    "inactive": "Inactive",
+    "locked": "Locked",
+    "employee": "Employee",
+    "external": "External",
+    "system": "System",
+    "requirePasswordChange": "Require Password Change",
+    "twoFactorEnabled": "Two-factor Authentication"
+  },
+  "province": {
+    "title": "都道府県・都市管理",
+    "modalTitle": "都道府県・都市プロファイル",
+    "description": "都道府県、直轄市、および対応する国を管理します。",
+    "provinceCode": "都道府県コード",
+    "provinceName": "都道府県名",
+    "countryName": "国",
+    "provinceInfo": "都道府県情報"
+  },
+  "ward": {
+    "title": "市区町村管理",
+    "modalTitle": "市区町村プロファイル",
+    "description": "市区町村、町、および対応する都道府県を管理します。",
+    "wardCode": "市区町村コード",
+    "wardName": "市区町村名",
+    "provinceName": "都道府県",
+    "wardInfo": "市区町村情報"
   }
 }

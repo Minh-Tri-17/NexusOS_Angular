@@ -8,9 +8,14 @@ import { BaseService } from '../../../../core/services/base.service';
 import { Modal } from '../../../../shared/components/modal/modal';
 import { CountryFacade } from '../../../categories/country/data-access/country.facade';
 import { CountryModel } from '../../../categories/country/data-access/country.model';
-import { EmploymentStatus } from '../../data-access/employee.enum';
+import { ProvinceFacade } from '../../../categories/province/data-access/province.facade';
+import { ProvinceModel } from '../../../categories/province/data-access/province.model';
+import { WardFacade } from '../../../categories/ward/data-access/ward.facade';
+import { WardModel } from '../../../categories/ward/data-access/ward.model';
+import { EmploymentStatus, Gender } from '../../data-access/employee.enum';
 import { EmployeeFacade } from '../../data-access/employee.facade';
 import { EmployeeModel } from '../../data-access/employee.model';
+import { UserModel } from '../../../system/users/data-access/user.model';
 
 @Component({
   selector: 'app-employee-modal',
@@ -22,6 +27,8 @@ export class EmployeeModal {
   private readonly baseService = inject(BaseService);
   private readonly facade = inject(EmployeeFacade);
   private readonly countryFacade = inject(CountryFacade);
+  private readonly provinceFacade = inject(ProvinceFacade);
+  private readonly wardFacade = inject(WardFacade);
 
   //#region //@ PROPS
 
@@ -34,7 +41,10 @@ export class EmployeeModal {
   readonly isSaving = signal(false);
   readonly photoPreview = signal<string>('');
   readonly countries = signal<CountryModel[]>([]);
+  readonly provinces = signal<ProvinceModel[]>([]);
+  readonly wards = signal<WardModel[]>([]);
   readonly employmentStatus = Object.values(EmploymentStatus);
+  readonly genders = Object.values(Gender);
 
   readonly employeeForm = new FormGroup({
     id: new FormControl<string | null>(null),
@@ -54,8 +64,8 @@ export class EmployeeModal {
     jobTitleId: new FormControl<string | null>({ value: null, disabled: true }),
     storeId: new FormControl<string | null>({ value: null, disabled: true }),
     countryId: new FormControl<string | null>(null),
-    provinceId: new FormControl<string | null>({ value: null, disabled: true }),
-    wardId: new FormControl<string | null>({ value: null, disabled: true }),
+    provinceId: new FormControl<string | null>(null),
+    wardId: new FormControl<string | null>(null),
 
     email: new FormControl<string | null>(null),
     phoneNumber: new FormControl<string | null>(null),
@@ -63,7 +73,7 @@ export class EmployeeModal {
     emergencyContactPhone: new FormControl<string | null>(null),
 
     dateOfBirth: new FormControl<string | null>(null),
-    gender: new FormControl<string | null>(null),
+    gender: new FormControl<Gender | string | null>(null),
     educationLevel: new FormControl<string | null>(null),
     address: new FormControl<string | null>(null),
 
@@ -207,26 +217,15 @@ export class EmployeeModal {
   }
 
   async handleSave() {
-    if (this.employeeForm.invalid) return;
+    if (this.employeeForm.invalid) {
+      //* markAllAsTouched() đánh dấu tất cả các field đã được tương tác để hiển thị lỗi validation.
+      this.employeeForm.markAllAsTouched();
+      return;
+    }
+
     this.isSaving.set(true);
-
     //* getRawValue() lấy toàn bộ giá trị của form, kể cả ô bị disabled
-    const rawValues = this.employeeForm.getRawValue();
-
-    const payload: EmployeeModel = {
-      ...(rawValues as unknown as EmployeeModel),
-      departmentId: rawValues.departmentId || null,
-      jobTitleId: rawValues.jobTitleId || null,
-      storeId: rawValues.storeId || null,
-      countryId: rawValues.countryId || null,
-      provinceId: rawValues.provinceId || null,
-      wardId: rawValues.wardId || null,
-      dateOfBirth: rawValues.dateOfBirth ? new Date(rawValues.dateOfBirth) : (null as any),
-      hireDate: rawValues.hireDate ? new Date(rawValues.hireDate) : (null as any),
-      terminationDate: rawValues.terminationDate
-        ? new Date(rawValues.terminationDate)
-        : (null as any),
-    };
+    const payload = this.employeeForm.getRawValue() as unknown as EmployeeModel;
 
     try {
       if (payload.id) {
@@ -245,7 +244,7 @@ export class EmployeeModal {
   }
 
   async loadComboboxData() {
-    await Promise.allSettled([this.loadCountries()]);
+    await Promise.allSettled([this.loadCountries(), this.loadProvinces(), this.loadWards()]);
   }
 
   private async loadCountries() {
@@ -257,6 +256,30 @@ export class EmployeeModal {
       this.countries.set(res.result?.items || []);
     } catch {
       this.countries.set([]);
+    }
+  }
+
+  private async loadProvinces() {
+    if (this.provinces().length > 0) return;
+
+    try {
+      const filter = this.buildFilter();
+      const res = await this.provinceFacade.getPaging(filter);
+      this.provinces.set(res.result?.items || []);
+    } catch {
+      this.provinces.set([]);
+    }
+  }
+
+  private async loadWards() {
+    if (this.wards().length > 0) return;
+
+    try {
+      const filter = this.buildFilter();
+      const res = await this.wardFacade.getPaging(filter);
+      this.wards.set(res.result?.items || []);
+    } catch {
+      this.wards.set([]);
     }
   }
 
