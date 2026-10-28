@@ -1,5 +1,13 @@
 import { isPlatformBrowser } from '@angular/common';
-import { Component, DestroyRef, inject, NgZone, PLATFORM_ID, signal, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  DestroyRef,
+  inject,
+  NgZone,
+  PLATFORM_ID,
+  signal,
+  ViewEncapsulation,
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
@@ -32,7 +40,13 @@ export class Header {
 
     this.ngZone.runOutsideAngular(() => {
       fromEvent(window, 'scroll', { passive: true })
-        .pipe(auditTime(20), takeUntilDestroyed(this.destroyRef))
+        .pipe(
+          //* auditTime() giới hạn số lượng giá trị tối đa được phát ra trong một khoảng thời gian nhất định, giúp giảm số lần xử lý
+          auditTime(20),
+          //* takeUntilDestroyed() tự động hủy đăng ký (unsubscribe) luồng Observable khi component bị hủy (destroy), tránh rò rỉ bộ nhớ (memory leak)
+          takeUntilDestroyed(this.destroyRef),
+        )
+        //* subscribe() đăng ký nhận giá trị từ Observable, thực hiện hành động khi có giá trị mới
         .subscribe(() => {
           const scrolled = window.scrollY > 10;
           if (this.isScrolled() !== scrolled) {

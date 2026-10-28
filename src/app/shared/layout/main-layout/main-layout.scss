@@ -1,4 +1,7 @@
-/* Layout Wrapper */
+app-sidebar,
+app-header {
+  display: contents;
+}
 
 .app-wrapper {
   display: flex;

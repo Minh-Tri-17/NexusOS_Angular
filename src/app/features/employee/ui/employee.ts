@@ -260,6 +260,7 @@ export class Employee {
       scrollable: true,
       windowClass: 'custom-modal',
     });
+    //* subscribe() đăng ký nhận giá trị từ Observable, thực hiện hành động khi có giá trị mới
     modalRef.componentInstance.saveSuccess.subscribe(() => this.loadListData());
     modalRef.componentInstance.initCreateForm();
   }
@@ -274,6 +275,7 @@ export class Employee {
       scrollable: true,
       windowClass: 'custom-modal',
     });
+    //* subscribe() đăng ký nhận giá trị từ Observable, thực hiện hành động khi có giá trị mới
     modalRef.componentInstance.saveSuccess.subscribe(() => this.loadListData());
     modalRef.componentInstance.initUpdateForm(item);
   }
@@ -299,6 +301,7 @@ export class Employee {
         providers: [{ provide: IMPORT_MODAL_CONTEXT, useValue: { importFn: this.importFn } }],
       }),
     });
+    //* subscribe() đăng ký nhận giá trị từ Observable, thực hiện hành động khi có giá trị mới
     modalRef.componentInstance.importSuccess.subscribe(() => this.loadListData());
   }
 

@@ -1,4 +1,7 @@
-/* Sidebar Styling */
+:host,
+app-sidebar {
+  display: contents;
+}
 
 .app-sidebar {
   width: var(--sidebar-width);
@@ -16,8 +19,6 @@
     transform 0.3s ease;
   overflow: hidden;
 }
-
-/* Collapsed Sidebar Mode (Icon-Only) */
 
 .sidebar-collapsed .app-sidebar,
 .app-wrapper.sidebar-collapsed .app-sidebar {
@@ -142,20 +143,6 @@
     color: var(--submenu-node-active-color) !important;
   }
 }
-
-/* Vertical Icon Submenu Accordion under Category in Collapsed Mode */
-
-/* Option: Tree Connector Rail + Squircle Node Icons in Collapsed Mode */
-
-/* Vertical Connecting Branch Rail Line down the center */
-
-/* Submenu Icon Nodes sitting on top of the rail line */
-
-/* Hierarchy Icon Size (13px vs 20px) */
-
-/* Hover State - Soft lift */
-
-/* Active State - Solid primary blue node + white icon */
 
 .sidebar-collapsed .sidebar-footer-graphic,
 .app-wrapper.sidebar-collapsed .sidebar-footer-graphic {
@@ -316,10 +303,6 @@
   color: var(--text-sidebar-hover);
 }
 
-/* Pure CSS Plus & Minus Morph Icon (Bulletproof across VS Code, Live Server & all environments) */
-
-/* When expanded: Vertical line rotates & shrinks to turn Plus into Minus */
-
 .collapse-toggle[aria-expanded='true'] .toggle-chevron::before {
   transform: rotate(180deg);
   opacity: 1;
@@ -411,8 +394,6 @@
   height: 2px;
 }
 
-/* Sidebar Bottom Vector Graphic (Image 2 style) */
-
 .sidebar-footer-graphic {
   padding: 1rem;
   position: relative;
@@ -457,10 +438,6 @@
   }
 }
 
-/* Subtle top gradient line */
-
-/* Status Indicator Pill */
-
 .status-indicator-pill {
   display: inline-flex;
   align-items: center;
@@ -488,8 +465,6 @@
   }
 }
 
-/* Version Badge */
-
 .version-badge {
   font-size: 0.68rem;
   font-weight: 700;
@@ -499,8 +474,6 @@
   color: var(--text-muted, #64748b);
   border: 1px solid var(--border-color, #e2e8f0);
 }
-
-/* Brand Title */
 
 .status-brand-title {
   display: flex;
@@ -516,8 +489,6 @@
     font-size: 0.85rem;
   }
 }
-
-/* Subtext Footer */
 
 .status-footer-sub {
   display: flex;

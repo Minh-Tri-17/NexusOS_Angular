@@ -236,6 +236,7 @@ export class Province {
       scrollable: true,
       windowClass: 'custom-modal',
     });
+    //* subscribe() đăng ký nhận giá trị từ Observable, thực hiện hành động khi có giá trị mới
     modalRef.componentInstance.saveSuccess.subscribe(() => this.loadListData());
     modalRef.componentInstance.initCreateForm();
     modalRef.componentInstance.loadComboboxData();
@@ -251,6 +252,7 @@ export class Province {
       scrollable: true,
       windowClass: 'custom-modal',
     });
+    //* subscribe() đăng ký nhận giá trị từ Observable, thực hiện hành động khi có giá trị mới
     modalRef.componentInstance.saveSuccess.subscribe(() => this.loadListData());
     modalRef.componentInstance.initUpdateForm(item);
     modalRef.componentInstance.loadComboboxData();
@@ -283,6 +285,7 @@ export class Province {
         providers: [{ provide: IMPORT_MODAL_CONTEXT, useValue: { importFn: this.importFn } }],
       }),
     });
+    //* subscribe() đăng ký nhận giá trị từ Observable, thực hiện hành động khi có giá trị mới
     modalRef.componentInstance.importSuccess.subscribe(() => this.loadListData());
   }
 

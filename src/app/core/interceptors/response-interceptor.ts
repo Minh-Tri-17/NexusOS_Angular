@@ -39,6 +39,7 @@ export const responseInterceptor: HttpInterceptorFn = (req, next) => {
           type: 'danger',
         });
       } else if (error.status === 401) {
+        //* subscribe() đăng ký nhận giá trị từ Observable, thực hiện hành động khi có giá trị mới
         translateService.get('common.errorOccurred').subscribe((translatedMsg: string) => {
           showToast({
             message: translatedMsg,

@@ -1,4 +1,7 @@
-/* Import Modal Dropzone & File Upload Styling */
+:host,
+app-import {
+  display: contents;
+}
 
 .import-dropzone {
   border: 2px dashed rgba(99, 102, 241, 0.35);
@@ -64,16 +67,12 @@
   background-color: rgba(99, 102, 241, 0.12) !important;
 }
 
-/* Custom Import Progress Bar */
-
 .custom-import-progress {
   height: 8px;
   border-radius: 999px;
   background: rgba(99, 102, 241, 0.12) !important;
   overflow: hidden;
 }
-
-/* Custom Radio Card Styling for Export Range */
 
 .custom-radio-card {
   transition: all 0.2s ease-in-out;
