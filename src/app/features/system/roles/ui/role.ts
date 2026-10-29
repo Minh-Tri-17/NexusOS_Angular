@@ -66,6 +66,7 @@ export class Role {
   readonly pageIndex = linkedSignal({
     source: () => ({
       search: this.searchText(),
+      isActive: this.filterIsActive(),
       isDelete: this.filterIsDelete(),
       pageSize: this.pageSize(),
     }),

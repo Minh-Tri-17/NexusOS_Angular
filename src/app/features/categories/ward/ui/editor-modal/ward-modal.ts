@@ -35,7 +35,7 @@ export class WardModal {
 
   readonly wardForm = new FormGroup({
     id: new FormControl<string | null>(null),
-    provinceId: new FormControl<string | null>(null, {
+    provinceId: new FormControl<string>('', {
       validators: [Validators.required],
     }),
     wardCode: new FormControl<string | null>(null),
@@ -72,7 +72,7 @@ export class WardModal {
   initCreateForm() {
     this.wardForm.reset({
       id: null,
-      provinceId: null,
+      provinceId: '',
       wardCode: null,
       wardName: null,
       note: null,
@@ -82,7 +82,7 @@ export class WardModal {
   initUpdateForm(item: WardModel) {
     this.wardForm.patchValue({
       id: item.id || null,
-      provinceId: item.provinceId || null,
+      provinceId: item.provinceId || '',
       wardCode: item.wardCode || null,
       wardName: item.wardName || null,
       note: item.note || null,

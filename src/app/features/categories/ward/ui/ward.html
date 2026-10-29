@@ -77,12 +77,12 @@
         }}</label>
         <select
           class="form-select form-select-sm rounded-3 filter-select w-100"
-          [ngModel]="filterProvinceId()"
-          (ngModelChange)="filterProvinceId.set($event)"
+          [value]="filterProvinceId() ?? ''"
+          (change)="filterProvinceId.set($any($event.target).value || null)"
         >
-          <option [ngValue]="null">{{ 'common.selectProvince' | translate }}</option>
+          <option [selected]="!filterProvinceId()" value="">{{ 'common.selectProvince' | translate }}</option>
           @for (province of provinces(); track province.id) {
-            <option [ngValue]="province.id">{{ province.provinceName }}</option>
+            <option [selected]="filterProvinceId() === province.id" [value]="province.id">{{ province.provinceName }}</option>
           }
         </select>
       </div>

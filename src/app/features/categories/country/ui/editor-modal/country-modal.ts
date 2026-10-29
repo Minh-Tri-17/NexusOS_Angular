@@ -39,7 +39,7 @@ export class CountryModal {
     capital: new FormControl<string | null>(null, {
       validators: [Validators.required],
     }),
-    region: new FormControl<Region | string | null>(null, {
+    region: new FormControl<Region | string>('', {
       validators: [Validators.required],
     }),
     note: new FormControl<string | null>(null),
@@ -63,7 +63,7 @@ export class CountryModal {
       countryCode: null,
       countryName: null,
       capital: null,
-      region: null,
+      region: '',
       note: null,
     });
   }
@@ -74,7 +74,7 @@ export class CountryModal {
       countryCode: item.countryCode || null,
       countryName: item.countryName || null,
       capital: item.capital || null,
-      region: (item.region as Region) || null,
+      region: (item.region as Region) || '',
       note: item.note || null,
     });
   }

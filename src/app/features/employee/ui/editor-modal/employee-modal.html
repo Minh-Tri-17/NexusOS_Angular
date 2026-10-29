@@ -84,9 +84,9 @@
                   formControlName="employmentStatus"
                   required
                 >
-                  <option [ngValue]="null">{{ 'employee.selectStatus' | translate }}</option>
+                  <option value="">{{ 'employee.selectStatus' | translate }}</option>
                   @for (status of employmentStatus; track status) {
-                    <option [ngValue]="status">
+                    <option [value]="status">
                       {{ 'employee.' + status.toLocaleLowerCase() | translate }}
                     </option>
                   }
@@ -303,9 +303,9 @@
                   id="inputEmployeeGender"
                   formControlName="gender"
                 >
-                  <option [ngValue]="null">{{ 'employee.selectGender' | translate }}</option>
+                  <option value="">{{ 'employee.selectGender' | translate }}</option>
                   @for (gender of genders; track gender) {
-                    <option [ngValue]="gender">
+                    <option [value]="gender">
                       {{ 'employee.' + gender.toLocaleLowerCase() | translate }}
                     </option>
                   }
@@ -356,11 +356,11 @@
                   id="inputCountryId"
                   formControlName="countryId"
                 >
-                  <option [ngValue]="null">
+                  <option value="">
                     {{ 'common.selectCountry' | translate }}
                   </option>
                   @for (country of countries(); track country.id) {
-                    <option [ngValue]="country.id">
+                    <option [value]="country.id">
                       {{ country.countryName }}
                     </option>
                   }
@@ -379,11 +379,11 @@
                   id="inputProvinceId"
                   formControlName="provinceId"
                 >
-                  <option [ngValue]="null">
+                  <option value="">
                     {{ 'common.selectProvince' | translate }}
                   </option>
                   @for (province of provinces(); track province.id) {
-                    <option [ngValue]="province.id">
+                    <option [value]="province.id">
                       {{ province.provinceName }}
                     </option>
                   }
@@ -402,11 +402,11 @@
                   id="inputWardId"
                   formControlName="wardId"
                 >
-                  <option [ngValue]="null">
+                  <option value="">
                     {{ 'employee.selectWard' | translate }}
                   </option>
                   @for (ward of wards(); track ward.id) {
-                    <option [ngValue]="ward.id">
+                    <option [value]="ward.id">
                       {{ ward.wardName }}
                     </option>
                   }

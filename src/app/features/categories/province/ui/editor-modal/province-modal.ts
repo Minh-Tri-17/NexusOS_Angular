@@ -35,7 +35,7 @@ export class ProvinceModal {
 
   readonly provinceForm = new FormGroup({
     id: new FormControl<string | null>(null),
-    countryId: new FormControl<string | null>(null, {
+    countryId: new FormControl<string>('', {
       validators: [Validators.required],
     }),
     provinceCode: new FormControl<string | null>(null),
@@ -72,7 +72,7 @@ export class ProvinceModal {
   initCreateForm() {
     this.provinceForm.reset({
       id: null,
-      countryId: null,
+      countryId: '',
       provinceCode: null,
       provinceName: null,
       note: null,
@@ -82,7 +82,7 @@ export class ProvinceModal {
   initUpdateForm(item: ProvinceModel) {
     this.provinceForm.patchValue({
       id: item.id || null,
-      countryId: item.countryId || null,
+      countryId: item.countryId || '',
       provinceCode: item.provinceCode || null,
       provinceName: item.provinceName || null,
       note: item.note || null,

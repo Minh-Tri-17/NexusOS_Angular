@@ -75,13 +75,13 @@
         }}</label
         ><select
           class="form-select form-select-sm rounded-3 filter-select w-100"
-          [ngModel]="filterUserStatus()"
-          (ngModelChange)="filterUserStatus.set($event)"
+          [value]="filterUserStatus() ?? ''"
+          (change)="filterUserStatus.set($any($event.target).value || null)"
         >
-          <option [ngValue]="null">{{ 'common.all' | translate }}</option>
-          <option value="Active">{{ 'user.active' | translate }}</option>
-          <option value="Inactive">{{ 'user.inactive' | translate }}</option>
-          <option value="Locked">{{ 'user.locked' | translate }}</option>
+          <option [selected]="!filterUserStatus()" value="">{{ 'common.all' | translate }}</option>
+          <option [selected]="filterUserStatus() === 'Active'" value="Active">{{ 'user.active' | translate }}</option>
+          <option [selected]="filterUserStatus() === 'Inactive'" value="Inactive">{{ 'user.inactive' | translate }}</option>
+          <option [selected]="filterUserStatus() === 'Locked'" value="Locked">{{ 'user.locked' | translate }}</option>
         </select>
       </div>
       <div class="col-md-3">
@@ -90,13 +90,13 @@
         }}</label
         ><select
           class="form-select form-select-sm rounded-3 filter-select w-100"
-          [ngModel]="filterUserType()"
-          (ngModelChange)="filterUserType.set($event)"
+          [value]="filterUserType() ?? ''"
+          (change)="filterUserType.set($any($event.target).value || null)"
         >
-          <option [ngValue]="null">{{ 'common.all' | translate }}</option>
-          <option value="Employee">{{ 'user.employee' | translate }}</option>
-          <option value="External">{{ 'user.external' | translate }}</option>
-          <option value="System">{{ 'user.system' | translate }}</option>
+          <option [selected]="!filterUserType()" value="">{{ 'common.all' | translate }}</option>
+          <option [selected]="filterUserType() === 'Employee'" value="Employee">{{ 'user.employee' | translate }}</option>
+          <option [selected]="filterUserType() === 'External'" value="External">{{ 'user.external' | translate }}</option>
+          <option [selected]="filterUserType() === 'System'" value="System">{{ 'user.system' | translate }}</option>
         </select>
       </div>
     </ng-container>

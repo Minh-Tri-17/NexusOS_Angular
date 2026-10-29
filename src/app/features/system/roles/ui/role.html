@@ -79,12 +79,12 @@
         }}</label>
         <select
           class="form-select form-select-sm rounded-3 filter-select w-100"
-          [ngModel]="filterIsActive()"
-          (ngModelChange)="filterIsActive.set($event)"
+          [value]="filterIsActive() === null ? '' : (filterIsActive() ? 'true' : 'false')"
+          (change)="filterIsActive.set($any($event.target).value === '' ? null : $any($event.target).value === 'true')"
         >
-          <option [ngValue]="null">{{ 'common.all' | translate }}</option>
-          <option [ngValue]="true">{{ 'common.active' | translate }}</option>
-          <option [ngValue]="false">{{ 'common.inactive' | translate }}</option>
+          <option [selected]="filterIsActive() === null" value="">{{ 'common.all' | translate }}</option>
+          <option [selected]="filterIsActive() === true" value="true">{{ 'common.active' | translate }}</option>
+          <option [selected]="filterIsActive() === false" value="false">{{ 'common.inactive' | translate }}</option>
         </select>
       </div>
     </ng-container>

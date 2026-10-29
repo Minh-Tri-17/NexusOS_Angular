@@ -80,12 +80,12 @@
         }}</label>
         <select
           class="form-select form-select-sm rounded-3 filter-select w-100"
-          [ngModel]="filterEmploymentStatus()"
-          (ngModelChange)="filterEmploymentStatus.set($event)"
+          [value]="filterEmploymentStatus()"
+          (change)="filterEmploymentStatus.set($any($event.target).value)"
         >
-          <option [ngValue]="null">{{ 'employee.selectStatus' | translate }}</option>
+          <option [selected]="!filterEmploymentStatus()" value="">{{ 'employee.selectStatus' | translate }}</option>
           @for (status of employeeStatus; track status) {
-            <option [ngValue]="status">
+            <option [selected]="filterEmploymentStatus() === status" [value]="status">
               {{ 'employee.' + status.toLocaleLowerCase() | translate }}
             </option>
           }

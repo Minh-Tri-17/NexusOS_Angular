@@ -52,7 +52,7 @@ export class EmployeeModal {
     employeeName: new FormControl<string | null>(null, {
       validators: [Validators.required],
     }),
-    employmentStatus: new FormControl<EmploymentStatus | string | null>(null, {
+    employmentStatus: new FormControl<EmploymentStatus | string>('', {
       validators: [Validators.required],
     }),
     photo: new FormControl<string | null>(null),
@@ -63,9 +63,9 @@ export class EmployeeModal {
     departmentId: new FormControl<string | null>({ value: null, disabled: true }),
     jobTitleId: new FormControl<string | null>({ value: null, disabled: true }),
     storeId: new FormControl<string | null>({ value: null, disabled: true }),
-    countryId: new FormControl<string | null>(null),
-    provinceId: new FormControl<string | null>(null),
-    wardId: new FormControl<string | null>(null),
+    countryId: new FormControl<string>(''),
+    provinceId: new FormControl<string>(''),
+    wardId: new FormControl<string>(''),
 
     email: new FormControl<string | null>(null),
     phoneNumber: new FormControl<string | null>(null),
@@ -73,7 +73,7 @@ export class EmployeeModal {
     emergencyContactPhone: new FormControl<string | null>(null),
 
     dateOfBirth: new FormControl<string | null>(null),
-    gender: new FormControl<Gender | string | null>(null),
+    gender: new FormControl<Gender | string>(''),
     educationLevel: new FormControl<string | null>(null),
     address: new FormControl<string | null>(null),
 
@@ -128,7 +128,7 @@ export class EmployeeModal {
       id: null,
       employeeCode: null,
       employeeName: null,
-      employmentStatus: null,
+      employmentStatus: '',
       photo: null,
       hireDate: null,
       terminationDate: null,
@@ -136,15 +136,15 @@ export class EmployeeModal {
       departmentId: null,
       jobTitleId: null,
       storeId: null,
-      countryId: null,
-      provinceId: null,
-      wardId: null,
+      countryId: '',
+      provinceId: '',
+      wardId: '',
       email: null,
       phoneNumber: null,
       emergencyContactName: null,
       emergencyContactPhone: null,
       dateOfBirth: null,
-      gender: null,
+      gender: '',
       educationLevel: null,
       address: null,
       identityNumber: null,
@@ -170,7 +170,7 @@ export class EmployeeModal {
       phoneNumber: item.phoneNumber || null,
       emergencyContactName: item.emergencyContactName || null,
       emergencyContactPhone: item.emergencyContactPhone || null,
-      gender: item.gender || null,
+      gender: item.gender || '',
       educationLevel: item.educationLevel || null,
       address: item.address || null,
       identityNumber: item.identityNumber || null,
@@ -183,10 +183,10 @@ export class EmployeeModal {
       departmentId: item.departmentId || null,
       jobTitleId: item.jobTitleId || null,
       storeId: item.storeId || null,
-      countryId: item.countryId || null,
-      provinceId: item.provinceId || null,
-      wardId: item.wardId || null,
-      employmentStatus: item.employmentStatus || null,
+      countryId: item.countryId || '',
+      provinceId: item.provinceId || '',
+      wardId: item.wardId || '',
+      employmentStatus: item.employmentStatus || '',
       dateOfBirth: this.formatDateForInput(item.dateOfBirth),
       hireDate: this.formatDateForInput(item.hireDate),
       terminationDate: this.formatDateForInput(item.terminationDate),
@@ -226,6 +226,10 @@ export class EmployeeModal {
     this.isSaving.set(true);
     //* getRawValue() lấy toàn bộ giá trị của form, kể cả ô bị disabled
     const payload = this.employeeForm.getRawValue() as unknown as EmployeeModel;
+    payload.countryId = payload.countryId || null;
+    payload.provinceId = payload.provinceId || null;
+    payload.wardId = payload.wardId || null;
+    payload.gender = payload.gender || null;
 
     try {
       if (payload.id) {

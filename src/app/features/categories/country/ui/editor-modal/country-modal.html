@@ -82,11 +82,11 @@
                   formControlName="region"
                   required
                 >
-                  <option [ngValue]="null">
+                  <option value="">
                     {{ 'country.selectRegion' | translate }}
                   </option>
                   @for (region of regions; track region) {
-                    <option [ngValue]="region">
+                    <option [value]="region">
                       {{ 'country.' + region.toLocaleLowerCase() | translate }}
                     </option>
                   }

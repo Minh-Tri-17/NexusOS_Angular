@@ -77,12 +77,12 @@
         }}</label>
         <select
           class="form-select form-select-sm rounded-3 filter-select w-100"
-          [ngModel]="filterRegion()"
-          (ngModelChange)="filterRegion.set($event)"
+          [value]="filterRegion() ?? ''"
+          (change)="filterRegion.set($any($event.target).value || null)"
         >
-          <option [ngValue]="null">{{ 'country.selectRegion' | translate }}</option>
+          <option [selected]="!filterRegion()" value="">{{ 'country.selectRegion' | translate }}</option>
           @for (region of regions; track region) {
-            <option [ngValue]="region">
+            <option [selected]="filterRegion() === region" [value]="region">
               {{ 'country.' + region.toLocaleLowerCase() | translate }}
             </option>
           }

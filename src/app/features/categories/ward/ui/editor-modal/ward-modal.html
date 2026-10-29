@@ -70,11 +70,11 @@
                   formControlName="provinceId"
                   required
                 >
-                  <option [ngValue]="null">
+                  <option value="">
                     {{ 'common.selectProvince' | translate }}
                   </option>
                   @for (province of provinces(); track province.id) {
-                    <option [ngValue]="province.id">
+                    <option [value]="province.id">
                       {{ province.provinceName }}
                     </option>
                   }
