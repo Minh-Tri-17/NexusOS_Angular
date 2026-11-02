@@ -64,13 +64,19 @@ app-header {
     transition: all 0.2s ease;
   }
 
-  i {
+  i.fa-magnifying-glass {
     position: absolute;
     left: 1rem;
     top: 50%;
     transform: translateY(-50%);
     color: var(--text-light);
     font-size: 0.95rem;
+  }
+
+  button {
+    border: none;
+    background: transparent;
+    z-index: 2;
   }
 }
 

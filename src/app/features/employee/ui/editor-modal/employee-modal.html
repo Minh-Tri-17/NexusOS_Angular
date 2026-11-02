@@ -84,11 +84,9 @@
                   formControlName="employmentStatus"
                   required
                 >
-                  <option value="">{{ 'employee.selectStatus' | translate }}</option>
-                  @for (status of employmentStatus; track status) {
-                    <option [value]="status">
-                      {{ 'employee.' + status.toLocaleLowerCase() | translate }}
-                    </option>
+                  <option value="">{{ 'common.selectStatus' | translate }}</option>
+                  @for (status of employmentStatuses; track status.value) {
+                    <option [value]="status.value">{{ status.label | translate }}</option>
                   }
                 </select>
               </div>
@@ -303,11 +301,9 @@
                   id="inputEmployeeGender"
                   formControlName="gender"
                 >
-                  <option value="">{{ 'employee.selectGender' | translate }}</option>
-                  @for (gender of genders; track gender) {
-                    <option [value]="gender">
-                      {{ 'employee.' + gender.toLocaleLowerCase() | translate }}
-                    </option>
+                  <option value="">{{ 'common.selectGender' | translate }}</option>
+                  @for (gender of genders; track gender.value) {
+                    <option [value]="gender.value">{{ gender.label | translate }}</option>
                   }
                 </select>
               </div>
@@ -319,13 +315,16 @@
               </label>
               <div class="input-group custom-input-group">
                 <span class="input-group-text"><i class="fa-solid fa-graduation-cap"></i></span>
-                <input
-                  type="text"
-                  class="form-control custom-form-control"
+                <select
+                  class="form-select custom-form-select"
                   id="inputEmployeeEducation"
-                  placeholder="e.g. Đại học / Bachelor"
                   formControlName="educationLevel"
-                />
+                >
+                  <option value="">{{ 'common.selectEducationLevel' | translate }}</option>
+                  @for (level of educationLevels; track level.value) {
+                    <option [value]="level.value">{{ level.label | translate }}</option>
+                  }
+                </select>
               </div>
             </div>
 
@@ -403,7 +402,7 @@
                   formControlName="wardId"
                 >
                   <option value="">
-                    {{ 'employee.selectWard' | translate }}
+                    {{ 'common.selectWard' | translate }}
                   </option>
                   @for (ward of wards(); track ward.id) {
                     <option [value]="ward.id">

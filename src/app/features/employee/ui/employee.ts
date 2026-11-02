@@ -18,38 +18,17 @@ import { Placeholder } from '../../../shared/components/placeholder/placeholder'
 import { Summary } from '../../../shared/components/summary/summary';
 import { Table } from '../../../shared/components/table/table';
 import { Toolbar } from '../../../shared/components/toolbar/toolbar';
-import { EmploymentStatus } from '../data-access/employee.enum';
+import {
+  EDUCATION_LEVEL_CONFIG,
+  EDUCATION_LEVEL_OPTIONS,
+  EMPLOYMENT_STATUS_CONFIG,
+  EMPLOYMENT_STATUS_OPTIONS,
+  GENDER_CONFIG,
+  GENDER_OPTIONS,
+} from '../data-access/employee.enum';
 import { EmployeeFacade } from '../data-access/employee.facade';
 import { EmployeeFields, EmployeeModel } from '../data-access/employee.model';
 import { EmployeeModal } from './editor-modal/employee-modal';
-
-interface StatusBadgeConfig {
-  icon: string;
-  cssClass: string;
-}
-
-export const STATUS_CONFIG: Record<string, StatusBadgeConfig> = {
-  [EmploymentStatus.active]: {
-    icon: 'fa-circle-check',
-    cssClass: 'badge-green',
-  },
-  [EmploymentStatus.remote]: {
-    icon: 'fa-laptop-house',
-    cssClass: 'badge-purple',
-  },
-  [EmploymentStatus.leave]: {
-    icon: 'fa-baby',
-    cssClass: 'badge-cyan',
-  },
-  [EmploymentStatus.probation]: {
-    icon: 'fa-hourglass-half',
-    cssClass: 'badge-amber',
-  },
-  [EmploymentStatus.resigned]: {
-    icon: 'fa-circle-xmark',
-    cssClass: 'badge-red',
-  },
-};
 
 @Component({
   selector: 'app-employee',
@@ -65,8 +44,13 @@ export class Employee {
 
   //#region //@ PROPS
 
-  protected readonly statusConfig = STATUS_CONFIG;
-  readonly employeeStatus = Object.values(EmploymentStatus);
+  readonly employmentStatuses = EMPLOYMENT_STATUS_OPTIONS;
+  readonly employmentStatusConfig = EMPLOYMENT_STATUS_CONFIG;
+  readonly genders = GENDER_OPTIONS;
+  readonly genderConfig = GENDER_CONFIG;
+  readonly educationLevels = EDUCATION_LEVEL_OPTIONS;
+  readonly educationLevelConfig = EDUCATION_LEVEL_CONFIG;
+
   readonly employeeColumns = Object.keys(EmployeeFields).filter(
     (key) =>
       key !== 'departmentId' &&

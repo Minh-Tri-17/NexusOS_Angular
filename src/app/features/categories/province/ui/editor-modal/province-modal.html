@@ -38,17 +38,20 @@
                 <span class="input-group-text"><i class="fa-solid fa-barcode"></i></span>
                 <input
                   type="text"
-                  class="form-control custom-form-control"
+                  class="form-control custom-form-control disabled"
                   id="inputProvinceCode"
                   placeholder="e.g. HN, HCM, DN"
                   formControlName="provinceCode"
                 />
               </div>
+              <div class="form-text-hint">
+                <i class="fa-solid fa-circle-info"></i> Standard province identification code
+              </div>
             </div>
 
             <div class="col-md-6">
               <label for="inputProvinceName" class="form-label custom-form-label">
-                {{ 'province.provinceName' | translate }} <span class="text-danger">*</span>
+                {{ 'province.provinceName' | translate }} <span class="text-danger fw-bold">*</span>
               </label>
               <div class="input-group custom-input-group">
                 <span class="input-group-text"><i class="fa-solid fa-map"></i></span>
@@ -65,7 +68,7 @@
 
             <div class="col-md-12">
               <label for="inputCountryId" class="form-label custom-form-label">
-                {{ 'province.countryName' | translate }} <span class="text-danger">*</span>
+                {{ 'province.countryName' | translate }} <span class="text-danger fw-bold">*</span>
               </label>
               <div class="input-group custom-input-group">
                 <span class="input-group-text"><i class="fa-solid fa-globe"></i></span>
@@ -128,11 +131,13 @@
       type="submit"
       form="provinceEditorForm"
       class="btn btn-sm btn-pastel-purple px-4 py-2 rounded-3"
+      [disabled]="isSaving()"
     >
       @if (isSaving()) {
-        <span class="spinner-border spinner-border-sm me-1"></span>{{ 'common.saving' | translate }}
+        <span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+        {{ 'common.saving' | translate }}
       } @else {
-        <i class="fa-solid fa-floppy-disk me-1"></i>{{ 'common.save' | translate }}
+        <i class="fa-solid fa-floppy-disk me-1"></i> {{ 'common.save' | translate }}
       }
     </button>
   </ng-container>

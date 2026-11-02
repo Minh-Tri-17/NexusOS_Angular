@@ -129,51 +129,83 @@
             <td class="td-cell text-center">{{ fromRecord() + idx }}</td>
 
             <td class="text-nowrap">
-              <span class="badge-soft badge-blue">#{{ ward.wardCode }}</span>
-            </td>
-
-            <td class="text-nowrap">
-              <div
-                class="fw-semibold text-main"
-                [class.text-decoration-line-through]="filterIsDelete()"
-              >
-                {{ ward.wardName }}
-              </div>
-              @if (filterIsDelete()) {
-                <span
-                  class="badge bg-danger-subtle text-danger border border-danger-subtle fs-xs rounded-pill px-2 py-0.5 mt-1"
-                >
-                  <i class="fa-solid fa-trash-can me-1"></i> {{ 'common.softDeleted' | translate }}
-                </span>
+              @if (ward.wardCode) {
+                <span class="badge-soft badge-blue">#{{ ward.wardCode }}</span>
+              } @else {
+                <span class="text-muted opacity-50">—</span>
               }
             </td>
 
             <td class="text-nowrap">
-              <span class="text-muted"> {{ ward.provinceName }} </span>
+              @if (ward.wardName) {
+                <div
+                  class="fw-semibold text-main"
+                  [class.text-decoration-line-through]="filterIsDelete()"
+                >
+                  {{ ward.wardName }}
+                </div>
+                @if (filterIsDelete()) {
+                  <span
+                    class="badge bg-danger-subtle text-danger border border-danger-subtle fs-xs rounded-pill px-2 py-0.5 mt-1"
+                  >
+                    <i class="fa-solid fa-trash-can me-1"></i> {{ 'common.softDeleted' | translate }}
+                  </span>
+                }
+              } @else {
+                <span class="text-muted opacity-50">—</span>
+              }
+            </td>
+
+            <td class="text-nowrap">
+              @if (ward.provinceName) {
+                <span class="text-muted">{{ ward.provinceName }}</span>
+              } @else {
+                <span class="text-muted opacity-50">—</span>
+              }
             </td>
 
             <td>
-              <span class="text-muted small fst-italic">{{ ward.note }}</span>
+              @if (ward.note) {
+                <span class="text-muted small fst-italic">{{ ward.note }}</span>
+              } @else {
+                <span class="text-muted opacity-50">—</span>
+              }
             </td>
 
             <td class="text-nowrap">
-              <span class="text-muted small">{{ ward.createdAt | date }}</span>
+              @if (ward.createdAt) {
+                <span class="text-muted small">{{ ward.createdAt | date }}</span>
+              } @else {
+                <span class="text-muted opacity-50">—</span>
+              }
             </td>
 
             <td class="text-nowrap">
-              <span class="text-muted small">
-                <i class="fa-regular fa-user"></i>{{ ward.createdBy }}</span
-              >
+              @if (ward.createdBy) {
+                <span class="text-muted small">
+                  <i class="fa-regular fa-user me-1"></i>{{ ward.createdBy }}</span
+                >
+              } @else {
+                <span class="text-muted opacity-50">—</span>
+              }
             </td>
 
             <td class="text-nowrap">
-              <span class="text-muted small">{{ ward.updatedAt | date }}</span>
+              @if (ward.updatedAt) {
+                <span class="text-muted small">{{ ward.updatedAt | date }}</span>
+              } @else {
+                <span class="text-muted opacity-50">—</span>
+              }
             </td>
 
             <td class="text-nowrap">
-              <span class="text-muted small">
-                <i class="fa-regular fa-user"></i>{{ ward.updatedBy }}</span
-              >
+              @if (ward.updatedBy) {
+                <span class="text-muted small">
+                  <i class="fa-regular fa-user me-1"></i>{{ ward.updatedBy }}</span
+                >
+              } @else {
+                <span class="text-muted opacity-50">—</span>
+              }
             </td>
           </tr>
         }

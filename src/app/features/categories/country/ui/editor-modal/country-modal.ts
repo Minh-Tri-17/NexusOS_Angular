@@ -5,7 +5,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { NIL as NIL_GUID } from 'uuid';
 import { BaseService } from '../../../../../core/services/base.service';
 import { Modal } from '../../../../../shared/components/modal/modal';
-import { Region } from '../../data-access/country.enum';
+import { Region, REGION_OPTIONS } from '../../data-access/country.enum';
 import { CountryFacade } from '../../data-access/country.facade';
 import { CountryModel } from '../../data-access/country.model';
 
@@ -22,13 +22,13 @@ export class CountryModal {
   //#region //@ PROPS
 
   readonly saveSuccess = output<void>();
+  readonly regions = REGION_OPTIONS;
 
   //#endregion
 
   //#region //@ STATE
 
   readonly isSaving = signal(false);
-  readonly regions = Object.values(Region);
 
   readonly countryForm = new FormGroup({
     id: new FormControl<string | null>(null),

@@ -10,11 +10,22 @@
       <input
         #searchInput
         type="text"
-        class="form-control form-control-sm ps-5 pe-3 rounded-3 filter-input"
+        class="form-control form-control-sm ps-5 pe-4 rounded-3 filter-input"
         placeholder=" {{ 'common.searchNameCode' | translate }}"
         [value]="searchText()"
+        (input)="handleInputChange(searchInput.value)"
         (keyup.enter)="handleSearch(searchInput.value)"
       />
+      @if (searchText() || currentInput()) {
+        <button
+          type="button"
+          class="btn btn-link position-absolute top-50 end-0 translate-middle-y py-0 px-2 text-muted"
+          (click)="handleClear(searchInput)"
+          [attr.aria-label]="'common.clear' | translate"
+        >
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      }
     </div>
 
     <button

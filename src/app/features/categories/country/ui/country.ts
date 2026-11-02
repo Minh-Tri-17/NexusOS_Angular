@@ -18,32 +18,10 @@ import { Placeholder } from '../../../../shared/components/placeholder/placehold
 import { Summary } from '../../../../shared/components/summary/summary';
 import { Table } from '../../../../shared/components/table/table';
 import { Toolbar } from '../../../../shared/components/toolbar/toolbar';
-import { Region } from '../data-access/country.enum';
+import { REGION_CONFIG, REGION_OPTIONS } from '../data-access/country.enum';
 import { CountryFacade } from '../data-access/country.facade';
 import { CountryFields, CountryModel } from '../data-access/country.model';
 import { CountryModal } from './editor-modal/country-modal';
-
-interface StatusBadgeConfig {
-  cssClass: string;
-}
-
-export const STATUS_CONFIG: Record<string, StatusBadgeConfig> = {
-  [Region.asia]: {
-    cssClass: 'badge-teal',
-  },
-  [Region.africa]: {
-    cssClass: 'badge-purple',
-  },
-  [Region.americas]: {
-    cssClass: 'badge-cyan',
-  },
-  [Region.europe]: {
-    cssClass: 'badge-rose',
-  },
-  [Region.oceania]: {
-    cssClass: 'badge-indigo',
-  },
-};
 
 @Component({
   selector: 'app-country',
@@ -59,9 +37,8 @@ export class Country {
 
   //#region //@ PROPS
 
-  protected readonly statusConfig = STATUS_CONFIG;
-
-  readonly regions = Object.values(Region);
+  readonly regions = REGION_OPTIONS;
+  readonly regionConfig = REGION_CONFIG;
   readonly countryColumns = Object.keys(CountryFields).filter(
     (key) =>
       key !== 'id' &&

@@ -20,16 +20,32 @@ export class Toolbar {
   //#region //@ STATE
 
   readonly filterCollapsed = signal(true);
+  readonly currentInput = signal('');
 
   //#endregion
 
   //#region //@ METHODS
 
   handleSearch(value: string) {
+    this.currentInput.set(value);
     this.searchText.set(value);
   }
 
+  handleInputChange(value: string) {
+    this.currentInput.set(value);
+    if (!value) {
+      this.searchText.set('');
+    }
+  }
+
+  handleClear(input: HTMLInputElement) {
+    input.value = '';
+    this.currentInput.set('');
+    this.searchText.set('');
+  }
+
   handleClearFilters() {
+    this.currentInput.set('');
     this.clearFilters.emit();
   }
 

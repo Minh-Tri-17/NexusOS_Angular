@@ -129,51 +129,83 @@
             <td class="td-cell text-center">{{ fromRecord() + idx }}</td>
 
             <td class="text-nowrap">
-              <span class="badge-soft badge-blue">#{{ province.provinceCode }}</span>
-            </td>
-
-            <td class="text-nowrap">
-              <div
-                class="fw-semibold text-main"
-                [class.text-decoration-line-through]="filterIsDelete()"
-              >
-                {{ province.provinceName }}
-              </div>
-              @if (filterIsDelete()) {
-                <span
-                  class="badge bg-danger-subtle text-danger border border-danger-subtle fs-xs rounded-pill px-2 py-0.5 mt-1"
-                >
-                  <i class="fa-solid fa-trash-can me-1"></i> {{ 'common.softDeleted' | translate }}
-                </span>
+              @if (province.provinceCode) {
+                <span class="badge-soft badge-blue">#{{ province.provinceCode }}</span>
+              } @else {
+                <span class="text-muted opacity-50">—</span>
               }
             </td>
 
             <td class="text-nowrap">
-              <span class="text-muted"> {{ province.countryName }} </span>
+              @if (province.provinceName) {
+                <div
+                  class="fw-semibold text-main"
+                  [class.text-decoration-line-through]="filterIsDelete()"
+                >
+                  {{ province.provinceName }}
+                </div>
+                @if (filterIsDelete()) {
+                  <span
+                    class="badge bg-danger-subtle text-danger border border-danger-subtle fs-xs rounded-pill px-2 py-0.5 mt-1"
+                  >
+                    <i class="fa-solid fa-trash-can me-1"></i> {{ 'common.softDeleted' | translate }}
+                  </span>
+                }
+              } @else {
+                <span class="text-muted opacity-50">—</span>
+              }
+            </td>
+
+            <td class="text-nowrap">
+              @if (province.countryName) {
+                <span class="text-muted">{{ province.countryName }}</span>
+              } @else {
+                <span class="text-muted opacity-50">—</span>
+              }
             </td>
 
             <td>
-              <span class="text-muted small fst-italic">{{ province.note }}</span>
+              @if (province.note) {
+                <span class="text-muted small fst-italic">{{ province.note }}</span>
+              } @else {
+                <span class="text-muted opacity-50">—</span>
+              }
             </td>
 
             <td class="text-nowrap">
-              <span class="text-muted small">{{ province.createdAt | date }}</span>
+              @if (province.createdAt) {
+                <span class="text-muted small">{{ province.createdAt | date }}</span>
+              } @else {
+                <span class="text-muted opacity-50">—</span>
+              }
             </td>
 
             <td class="text-nowrap">
-              <span class="text-muted small">
-                <i class="fa-regular fa-user"></i>{{ province.createdBy }}</span
-              >
+              @if (province.createdBy) {
+                <span class="text-muted small">
+                  <i class="fa-regular fa-user me-1"></i>{{ province.createdBy }}</span
+                >
+              } @else {
+                <span class="text-muted opacity-50">—</span>
+              }
             </td>
 
             <td class="text-nowrap">
-              <span class="text-muted small">{{ province.updatedAt | date }}</span>
+              @if (province.updatedAt) {
+                <span class="text-muted small">{{ province.updatedAt | date }}</span>
+              } @else {
+                <span class="text-muted opacity-50">—</span>
+              }
             </td>
 
             <td class="text-nowrap">
-              <span class="text-muted small">
-                <i class="fa-regular fa-user"></i>{{ province.updatedBy }}</span
-              >
+              @if (province.updatedBy) {
+                <span class="text-muted small">
+                  <i class="fa-regular fa-user me-1"></i>{{ province.updatedBy }}</span
+                >
+              } @else {
+                <span class="text-muted opacity-50">—</span>
+              }
             </td>
           </tr>
         }

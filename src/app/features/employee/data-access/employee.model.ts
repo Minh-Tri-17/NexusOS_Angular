@@ -1,4 +1,4 @@
-import { EmploymentStatus, Gender } from './employee.enum';
+import { EducationLevel, EmploymentStatus, Gender } from './employee.enum';
 
 export interface EmployeeModel {
   id: string;
@@ -31,7 +31,7 @@ export interface EmployeeModel {
   socialInsuranceNumber?: string | null;
   bankAccountNumber?: string | null;
   bankName?: string | null;
-  educationLevel?: string | null;
+  educationLevel?: EducationLevel | string | null;
   taxCode?: string | null;
   emergencyContactName?: string | null;
   emergencyContactPhone?: string | null;

@@ -12,7 +12,14 @@ import { ProvinceFacade } from '../../../categories/province/data-access/provinc
 import { ProvinceModel } from '../../../categories/province/data-access/province.model';
 import { WardFacade } from '../../../categories/ward/data-access/ward.facade';
 import { WardModel } from '../../../categories/ward/data-access/ward.model';
-import { EmploymentStatus, Gender } from '../../data-access/employee.enum';
+import {
+  EducationLevel,
+  EDUCATION_LEVEL_OPTIONS,
+  EMPLOYMENT_STATUS_OPTIONS,
+  EmploymentStatus,
+  GENDER_OPTIONS,
+  Gender,
+} from '../../data-access/employee.enum';
 import { EmployeeFacade } from '../../data-access/employee.facade';
 import { EmployeeModel } from '../../data-access/employee.model';
 import { UserModel } from '../../../system/users/data-access/user.model';
@@ -33,6 +40,9 @@ export class EmployeeModal {
   //#region //@ PROPS
 
   readonly saveSuccess = output<void>();
+  readonly employmentStatuses = EMPLOYMENT_STATUS_OPTIONS;
+  readonly genders = GENDER_OPTIONS;
+  readonly educationLevels = EDUCATION_LEVEL_OPTIONS;
 
   //#endregion
 
@@ -43,8 +53,6 @@ export class EmployeeModal {
   readonly countries = signal<CountryModel[]>([]);
   readonly provinces = signal<ProvinceModel[]>([]);
   readonly wards = signal<WardModel[]>([]);
-  readonly employmentStatus = Object.values(EmploymentStatus);
-  readonly genders = Object.values(Gender);
 
   readonly employeeForm = new FormGroup({
     id: new FormControl<string | null>(null),
@@ -74,7 +82,7 @@ export class EmployeeModal {
 
     dateOfBirth: new FormControl<string | null>(null),
     gender: new FormControl<Gender | string>(''),
-    educationLevel: new FormControl<string | null>(null),
+    educationLevel: new FormControl<EducationLevel | string>(''),
     address: new FormControl<string | null>(null),
 
     identityNumber: new FormControl<string | null>(null),
@@ -145,7 +153,7 @@ export class EmployeeModal {
       emergencyContactPhone: null,
       dateOfBirth: null,
       gender: '',
-      educationLevel: null,
+      educationLevel: '',
       address: null,
       identityNumber: null,
       taxCode: null,
@@ -171,7 +179,7 @@ export class EmployeeModal {
       emergencyContactName: item.emergencyContactName || null,
       emergencyContactPhone: item.emergencyContactPhone || null,
       gender: item.gender || '',
-      educationLevel: item.educationLevel || null,
+      educationLevel: item.educationLevel || '',
       address: item.address || null,
       identityNumber: item.identityNumber || null,
       taxCode: item.taxCode || null,
@@ -230,6 +238,7 @@ export class EmployeeModal {
     payload.provinceId = payload.provinceId || null;
     payload.wardId = payload.wardId || null;
     payload.gender = payload.gender || null;
+    payload.educationLevel = payload.educationLevel || null;
 
     try {
       if (payload.id) {

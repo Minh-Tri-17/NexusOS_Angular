@@ -16,6 +16,7 @@ app-table {
   overflow: auto;
   padding-right: 2px;
   border-radius: 12px;
+  background-color: #ffffff;
 
   &::-webkit-scrollbar {
     width: 6px;
@@ -33,6 +34,15 @@ app-table {
 
   &::-webkit-scrollbar-thumb:hover {
     background: var(--primary-500, #3b82f6);
+  }
+}
+
+[data-theme='dark'] {
+  #empListView .table-responsive,
+  #leaveListView .table-responsive,
+  #recruitmentListView .table-responsive,
+  .app-table-scroll {
+    background-color: var(--bg-surface);
   }
 }
 

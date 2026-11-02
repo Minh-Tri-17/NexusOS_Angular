@@ -19,7 +19,9 @@
           <i class="fa-solid fa-compass chip-icon"></i>
           {{ 'employee.employmentStatus' | translate }}:
           <strong>{{
-            'employee.' + filterEmploymentStatus()!.toLocaleLowerCase() | translate
+            employmentStatusConfig[filterEmploymentStatus()]?.label
+              ? (employmentStatusConfig[filterEmploymentStatus()].label | translate)
+              : filterEmploymentStatus()
           }}</strong>
           <i class="fa-solid fa-xmark chip-remove-btn" (click)="filterEmploymentStatus.set('')"></i>
         </span>
@@ -83,10 +85,10 @@
           [value]="filterEmploymentStatus()"
           (change)="filterEmploymentStatus.set($any($event.target).value)"
         >
-          <option [selected]="!filterEmploymentStatus()" value="">{{ 'employee.selectStatus' | translate }}</option>
-          @for (status of employeeStatus; track status) {
-            <option [selected]="filterEmploymentStatus() === status" [value]="status">
-              {{ 'employee.' + status.toLocaleLowerCase() | translate }}
+          <option [selected]="!filterEmploymentStatus()" value="">{{ 'common.selectStatus' | translate }}</option>
+          @for (status of employmentStatuses; track status.value) {
+            <option [selected]="filterEmploymentStatus() === status.value" [value]="status.value">
+              {{ status.label | translate }}
             </option>
           }
         </select>
@@ -135,111 +137,173 @@
               <td class="td-cell text-center">{{ fromRecord() + idx }}</td>
 
               <td class="text-nowrap">
-                <span class="badge-soft badge-blue">#{{ employee.employeeCode }}</span>
-              </td>
-
-              <td class="text-nowrap">
-                <div
-                  class="fw-semibold text-main"
-                  [class.text-decoration-line-through]="filterIsDelete()"
-                >
-                  {{ employee.employeeName }}
-                </div>
-                @if (filterIsDelete()) {
-                  <span
-                    class="badge bg-danger-subtle text-danger border border-danger-subtle fs-xs rounded-pill px-2 py-0.5 mt-1"
-                  >
-                    <i class="fa-solid fa-trash-can me-1"></i>
-                    {{ 'common.softDeleted' | translate }}
-                  </span>
+                @if (employee.employeeCode) {
+                  <span class="badge-soft badge-blue">#{{ employee.employeeCode }}</span>
+                } @else {
+                  <span class="text-muted opacity-50">—</span>
                 }
               </td>
 
               <td class="text-nowrap">
-                <span class="text-muted"> {{ employee.departmentName }}</span>
+                @if (employee.employeeName) {
+                  <div
+                    class="fw-semibold text-main"
+                    [class.text-decoration-line-through]="filterIsDelete()"
+                  >
+                    {{ employee.employeeName }}
+                  </div>
+                  @if (filterIsDelete()) {
+                    <span
+                      class="badge bg-danger-subtle text-danger border border-danger-subtle fs-xs rounded-pill px-2 py-0.5 mt-1"
+                    >
+                      <i class="fa-solid fa-trash-can me-1"></i>
+                      {{ 'common.softDeleted' | translate }}
+                    </span>
+                  }
+                } @else {
+                  <span class="text-muted opacity-50">—</span>
+                }
               </td>
 
               <td class="text-nowrap">
-                <span class="text-muted"> {{ employee.jobTitleName }}</span>
+                @if (employee.departmentName) {
+                  <span class="text-muted">{{ employee.departmentName }}</span>
+                } @else {
+                  <span class="text-muted opacity-50">—</span>
+                }
               </td>
 
               <td class="text-nowrap">
-                <span class="text-muted"> {{ employee.storeName }}</span>
+                @if (employee.jobTitleName) {
+                  <span class="text-muted">{{ employee.jobTitleName }}</span>
+                } @else {
+                  <span class="text-muted opacity-50">—</span>
+                }
               </td>
 
               <td class="text-nowrap">
-                <span class="text-muted"> {{ employee.countryName }}</span>
+                @if (employee.storeName) {
+                  <span class="text-muted">{{ employee.storeName }}</span>
+                } @else {
+                  <span class="text-muted opacity-50">—</span>
+                }
               </td>
 
               <td class="text-nowrap">
-                <span class="text-muted"> {{ employee.provinceName }}</span>
+                @if (employee.countryName) {
+                  <span class="text-muted">{{ employee.countryName }}</span>
+                } @else {
+                  <span class="text-muted opacity-50">—</span>
+                }
               </td>
 
               <td class="text-nowrap">
-                <span class="text-muted"> {{ employee.wardName }}</span>
+                @if (employee.provinceName) {
+                  <span class="text-muted">{{ employee.provinceName }}</span>
+                } @else {
+                  <span class="text-muted opacity-50">—</span>
+                }
+              </td>
+
+              <td class="text-nowrap">
+                @if (employee.wardName) {
+                  <span class="text-muted">{{ employee.wardName }}</span>
+                } @else {
+                  <span class="text-muted opacity-50">—</span>
+                }
               </td>
 
               <td class="text-nowrap">
                 @if (employee.gender) {
                   <span
                     class="badge-soft"
-                    [class]="
-                      employee.gender === 'Male'
-                        ? 'badge-blue'
-                        : employee.gender === 'Female'
-                          ? 'badge-rose'
-                          : 'badge-teal'
-                    "
+                    [class]="genderConfig[employee.gender]?.cssClass ?? 'badge-secondary'"
                   >
                     <i class="fa-solid fa-venus-mars"></i>
-                    {{ 'employee.' + employee.gender.toLocaleLowerCase() | translate }}
+                    {{ genderConfig[employee.gender]?.label ? (genderConfig[employee.gender].label | translate) : employee.gender }}
                   </span>
+                } @else {
+                  <span class="text-muted opacity-50">—</span>
                 }
               </td>
 
               <td class="text-nowrap">
-                <span class="text-muted small">{{ employee.dateOfBirth | date }}</span>
+                @if (employee.dateOfBirth) {
+                  <span class="text-muted small">{{ employee.dateOfBirth | date }}</span>
+                } @else {
+                  <span class="text-muted opacity-50">—</span>
+                }
               </td>
 
               <td class="text-nowrap">
-                <span class="text-muted small">{{ employee.phoneNumber }}</span>
+                @if (employee.phoneNumber) {
+                  <span class="text-muted small">{{ employee.phoneNumber }}</span>
+                } @else {
+                  <span class="text-muted opacity-50">—</span>
+                }
               </td>
 
               <td class="text-nowrap">
-                <span class="text-muted small">{{ employee.email }}</span>
+                @if (employee.email) {
+                  <span class="text-muted small">{{ employee.email }}</span>
+                } @else {
+                  <span class="text-muted opacity-50">—</span>
+                }
               </td>
 
               <td class="text-nowrap">
-                <span class="text-muted small">{{ employee.identityNumber }}</span>
+                @if (employee.identityNumber) {
+                  <span class="text-muted small">{{ employee.identityNumber }}</span>
+                } @else {
+                  <span class="text-muted opacity-50">—</span>
+                }
               </td>
 
               <td class="text-nowrap">
-                <span class="text-muted small">
-                  <i class="fa-solid fa-location-dot text-primary"></i>{{ employee.address }}</span
-                >
+                @if (employee.address) {
+                  <span class="text-muted small">
+                    <i class="fa-solid fa-location-dot text-primary me-1"></i>{{ employee.address }}</span
+                  >
+                } @else {
+                  <span class="text-muted opacity-50">—</span>
+                }
               </td>
 
               <td class="text-nowrap">
-                <span class="text-muted small">{{ employee.hireDate | date }}</span>
+                @if (employee.hireDate) {
+                  <span class="text-muted small">{{ employee.hireDate | date }}</span>
+                } @else {
+                  <span class="text-muted opacity-50">—</span>
+                }
               </td>
 
               <td class="text-nowrap">
-                <span class="text-muted small">{{ employee.terminationDate | date }}</span>
+                @if (employee.terminationDate) {
+                  <span class="text-muted small">{{ employee.terminationDate | date }}</span>
+                } @else {
+                  <span class="text-muted opacity-50">—</span>
+                }
               </td>
 
               <td class="text-center">
-                <span
-                  class="badge-soft"
-                  [class]="statusConfig[employee.employmentStatus || '']?.cssClass"
-                >
-                  <i
-                    class="fa-solid"
-                    [class]="statusConfig[employee.employmentStatus || '']?.icon"
-                  ></i>
-                  {{
-                    'employee.' + (employee.employmentStatus || '').toLocaleLowerCase() | translate
-                  }}</span
-                >
+                @if (employee.employmentStatus) {
+                  <span
+                    class="badge-soft"
+                    [class]="employmentStatusConfig[employee.employmentStatus]?.cssClass ?? 'badge-secondary'"
+                  >
+                    <i
+                      class="fa-solid"
+                      [class]="employmentStatusConfig[employee.employmentStatus]?.icon"
+                    ></i>
+                    {{
+                      employmentStatusConfig[employee.employmentStatus]?.label
+                        ? (employmentStatusConfig[employee.employmentStatus].label | translate)
+                        : employee.employmentStatus
+                    }}</span
+                  >
+                } @else {
+                  <span class="text-muted opacity-50">—</span>
+                }
               </td>
 
               <td class="text-center">
@@ -247,63 +311,129 @@
               </td>
 
               <td class="text-nowrap">
-                <span class="text-muted">{{ employee.photo }}</span>
+                @if (employee.photo) {
+                  <span class="text-muted">{{ employee.photo }}</span>
+                } @else {
+                  <span class="text-muted opacity-50">—</span>
+                }
               </td>
 
               <td class="text-nowrap">
-                <span class="text-muted small">{{ employee.healthInsuranceNumber }}</span>
+                @if (employee.healthInsuranceNumber) {
+                  <span class="text-muted small">{{ employee.healthInsuranceNumber }}</span>
+                } @else {
+                  <span class="text-muted opacity-50">—</span>
+                }
               </td>
 
               <td class="text-nowrap">
-                <span class="text-muted small">{{ employee.socialInsuranceNumber }}</span>
+                @if (employee.socialInsuranceNumber) {
+                  <span class="text-muted small">{{ employee.socialInsuranceNumber }}</span>
+                } @else {
+                  <span class="text-muted opacity-50">—</span>
+                }
               </td>
 
               <td class="text-nowrap">
-                <span class="text-muted small">{{ employee.bankAccountNumber }}</span>
+                @if (employee.bankAccountNumber) {
+                  <span class="text-muted small">{{ employee.bankAccountNumber }}</span>
+                } @else {
+                  <span class="text-muted opacity-50">—</span>
+                }
               </td>
 
               <td class="text-nowrap">
-                <span class="text-muted small">{{ employee.bankName }}</span>
+                @if (employee.bankName) {
+                  <span class="text-muted small">{{ employee.bankName }}</span>
+                } @else {
+                  <span class="text-muted opacity-50">—</span>
+                }
               </td>
 
               <td class="text-nowrap">
-                <span class="text-muted small">{{ employee.educationLevel }}</span>
+                @if (employee.educationLevel) {
+                  <span
+                    class="badge-soft"
+                    [class]="educationLevelConfig[employee.educationLevel]?.cssClass ?? 'badge-secondary'"
+                  >
+                    <i class="fa-solid fa-graduation-cap me-1"></i>
+                    {{
+                      educationLevelConfig[employee.educationLevel]?.label
+                        ? (educationLevelConfig[employee.educationLevel].label | translate)
+                        : employee.educationLevel
+                    }}
+                  </span>
+                } @else {
+                  <span class="text-muted opacity-50">—</span>
+                }
               </td>
 
               <td class="text-nowrap">
-                <span class="text-muted small">{{ employee.taxCode }}</span>
+                @if (employee.taxCode) {
+                  <span class="text-muted small">{{ employee.taxCode }}</span>
+                } @else {
+                  <span class="text-muted opacity-50">—</span>
+                }
               </td>
 
               <td class="text-nowrap">
-                <span class="text-muted small">{{ employee.emergencyContactName }}</span>
+                @if (employee.emergencyContactName) {
+                  <span class="text-muted small">{{ employee.emergencyContactName }}</span>
+                } @else {
+                  <span class="text-muted opacity-50">—</span>
+                }
               </td>
 
               <td class="text-nowrap">
-                <span class="text-muted small">{{ employee.emergencyContactPhone }}</span>
+                @if (employee.emergencyContactPhone) {
+                  <span class="text-muted small">{{ employee.emergencyContactPhone }}</span>
+                } @else {
+                  <span class="text-muted opacity-50">—</span>
+                }
               </td>
 
               <td>
-                <span class="text-muted small fst-italic">{{ employee.note }}</span>
+                @if (employee.note) {
+                  <span class="text-muted small fst-italic">{{ employee.note }}</span>
+                } @else {
+                  <span class="text-muted opacity-50">—</span>
+                }
               </td>
 
               <td class="text-nowrap">
-                <span class="text-muted small">{{ employee.createdAt | date }}</span>
+                @if (employee.createdAt) {
+                  <span class="text-muted small">{{ employee.createdAt | date }}</span>
+                } @else {
+                  <span class="text-muted opacity-50">—</span>
+                }
               </td>
 
               <td class="text-nowrap">
-                <span class="text-muted small">
-                  <i class="fa-regular fa-user"></i>{{ employee.createdBy }}</span
-                >
+                @if (employee.createdBy) {
+                  <span class="text-muted small">
+                    <i class="fa-regular fa-user me-1"></i>{{ employee.createdBy }}</span
+                  >
+                } @else {
+                  <span class="text-muted opacity-50">—</span>
+                }
               </td>
 
               <td class="text-nowrap">
-                <span class="text-muted small">{{ employee.updatedAt | date }}</span>
+                @if (employee.updatedAt) {
+                  <span class="text-muted small">{{ employee.updatedAt | date }}</span>
+                } @else {
+                  <span class="text-muted opacity-50">—</span>
+                }
               </td>
 
               <td class="text-nowrap">
-                <span class="text-muted small">
-                  <i class="fa-regular fa-user"></i>{{ employee.updatedBy }}</span
-                >
+                @if (employee.updatedBy) {
+                  <span class="text-muted small">
+                    <i class="fa-regular fa-user me-1"></i>{{ employee.updatedBy }}</span
+                  >
+                } @else {
+                  <span class="text-muted opacity-50">—</span>
+                }
               </td>
             </tr>
           }

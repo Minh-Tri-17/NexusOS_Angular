@@ -34,6 +34,12 @@ export class Header {
   protected readonly themeService = inject(ThemeService);
   protected readonly authService = inject(AuthService);
   readonly isScrolled = signal(false);
+  readonly topbarSearchText = signal('');
+
+  handleClearTopbarSearch(input: HTMLInputElement) {
+    input.value = '';
+    this.topbarSearchText.set('');
+  }
 
   ngOnInit() {
     if (!this.isBrowser) return;

@@ -17,7 +17,7 @@
       @if (filterRegion()) {
         <span class="filter-chip">
           <i class="fa-solid fa-compass chip-icon"></i> {{ 'country.region' | translate }}:
-          <strong>{{ 'country.' + filterRegion()!.toLocaleLowerCase() | translate }}</strong>
+          <strong>{{ regionConfig[filterRegion()]?.label ? (regionConfig[filterRegion()].label | translate) : filterRegion() }}</strong>
           <i class="fa-solid fa-xmark chip-remove-btn" (click)="filterRegion.set('')"></i>
         </span>
       }
@@ -80,10 +80,10 @@
           [value]="filterRegion() ?? ''"
           (change)="filterRegion.set($any($event.target).value || null)"
         >
-          <option [selected]="!filterRegion()" value="">{{ 'country.selectRegion' | translate }}</option>
-          @for (region of regions; track region) {
-            <option [selected]="filterRegion() === region" [value]="region">
-              {{ 'country.' + region.toLocaleLowerCase() | translate }}
+          <option [selected]="!filterRegion()" value="">{{ 'common.selectRegion' | translate }}</option>
+          @for (region of regions; track region.value) {
+            <option [selected]="filterRegion() === region.value" [value]="region.value">
+              {{ region.label | translate }}
             </option>
           }
         </select>
@@ -131,60 +131,96 @@
             <td class="td-cell text-center">{{ fromRecord() + idx }}</td>
 
             <td class="text-nowrap">
-              <span class="badge-soft badge-blue">#{{ country.countryCode }}</span>
+              @if (country.countryCode) {
+                <span class="badge-soft badge-blue">#{{ country.countryCode }}</span>
+              } @else {
+                <span class="text-muted opacity-50">—</span>
+              }
             </td>
 
             <td class="text-nowrap">
-              <div
-                class="fw-semibold text-main"
-                [class.text-decoration-line-through]="filterIsDelete()"
-              >
-                {{ country.countryName }}
-              </div>
-              @if (filterIsDelete()) {
-                <span
-                  class="badge bg-danger-subtle text-danger border border-danger-subtle fs-xs rounded-pill px-2 py-0.5 mt-1"
+              @if (country.countryName) {
+                <div
+                  class="fw-semibold text-main"
+                  [class.text-decoration-line-through]="filterIsDelete()"
                 >
-                  <i class="fa-solid fa-trash-can me-1"></i> {{ 'common.softDeleted' | translate }}
-                </span>
+                  {{ country.countryName }}
+                </div>
+                @if (filterIsDelete()) {
+                  <span
+                    class="badge bg-danger-subtle text-danger border border-danger-subtle fs-xs rounded-pill px-2 py-0.5 mt-1"
+                  >
+                    <i class="fa-solid fa-trash-can me-1"></i> {{ 'common.softDeleted' | translate }}
+                  </span>
+                }
+              } @else {
+                <span class="text-muted opacity-50">—</span>
               }
             </td>
 
             <td>
-              <span class="text-muted small">
-                <i class="fa-solid fa-location-dot text-primary"></i>{{ country.capital }}</span
-              >
+              @if (country.capital) {
+                <span class="text-muted small">
+                  <i class="fa-solid fa-location-dot text-primary me-1"></i>{{ country.capital }}</span
+                >
+              } @else {
+                <span class="text-muted opacity-50">—</span>
+              }
             </td>
 
             <td class="text-nowrap">
-              <span class="badge-soft" [class]="statusConfig[country.region]?.cssClass">
-                <i class="fa-solid fa-globe-asia"></i
-                >{{ 'country.' + country.region.toLocaleLowerCase() | translate }}</span
-              >
+              @if (country.region) {
+                <span class="badge-soft" [class]="regionConfig[country.region]?.cssClass">
+                  <i class="fa-solid fa-globe-asia me-1"></i>
+                  {{ regionConfig[country.region]?.label ? (regionConfig[country.region].label | translate) : country.region }}
+                </span>
+              } @else {
+                <span class="text-muted opacity-50">—</span>
+              }
             </td>
 
             <td>
-              <span class="text-muted small fst-italic">{{ country.note }}</span>
+              @if (country.note) {
+                <span class="text-muted small fst-italic">{{ country.note }}</span>
+              } @else {
+                <span class="text-muted opacity-50">—</span>
+              }
             </td>
 
             <td class="text-nowrap">
-              <span class="text-muted small">{{ country.createdAt | date }}</span>
+              @if (country.createdAt) {
+                <span class="text-muted small">{{ country.createdAt | date }}</span>
+              } @else {
+                <span class="text-muted opacity-50">—</span>
+              }
             </td>
 
             <td class="text-nowrap">
-              <span class="text-muted small">
-                <i class="fa-regular fa-user"></i>{{ country.createdBy }}</span
-              >
+              @if (country.createdBy) {
+                <span class="text-muted small">
+                  <i class="fa-regular fa-user me-1"></i>{{ country.createdBy }}</span
+                >
+              } @else {
+                <span class="text-muted opacity-50">—</span>
+              }
             </td>
 
             <td class="text-nowrap">
-              <span class="text-muted small">{{ country.updatedAt | date }}</span>
+              @if (country.updatedAt) {
+                <span class="text-muted small">{{ country.updatedAt | date }}</span>
+              } @else {
+                <span class="text-muted opacity-50">—</span>
+              }
             </td>
 
             <td class="text-nowrap">
-              <span class="text-muted small">
-                <i class="fa-regular fa-user"></i>{{ country.updatedBy }}</span
-              >
+              @if (country.updatedBy) {
+                <span class="text-muted small">
+                  <i class="fa-regular fa-user me-1"></i>{{ country.updatedBy }}</span
+                >
+              } @else {
+                <span class="text-muted opacity-50">—</span>
+              }
             </td>
           </tr>
         }
