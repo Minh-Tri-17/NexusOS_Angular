@@ -60,11 +60,8 @@ export class ThemeService {
         const collapsed = this.isCollapsed();
         const root = this.document.documentElement;
 
-        if (collapsed) {
-          root.classList.add('sidebar-collapsed');
-        } else {
-          root.classList.remove('sidebar-collapsed');
-        }
+        if (collapsed) root.classList.add('sidebar-collapsed');
+        else root.classList.remove('sidebar-collapsed');
 
         localStorage.setItem(BASE_CONSTANTS.collapsedStorageKey, collapsed.toString());
       }
@@ -81,11 +78,8 @@ export class ThemeService {
 
   toggleCollapsed() {
     const view = this.document.defaultView;
-    if (view && view.innerWidth < 992) {
-      this.isMobileOpen.update((open) => !open);
-    } else {
-      this.isCollapsed.update((collapsed) => !collapsed);
-    }
+    if (view && view.innerWidth < 992) this.isMobileOpen.update((open) => !open);
+    else this.isCollapsed.update((collapsed) => !collapsed);
   }
 
   closeMobileSidebar() {

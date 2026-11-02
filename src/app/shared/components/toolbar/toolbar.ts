@@ -33,9 +33,7 @@ export class Toolbar {
 
   handleInputChange(value: string) {
     this.currentInput.set(value);
-    if (!value) {
-      this.searchText.set('');
-    }
+    if (!value) this.searchText.set('');
   }
 
   handleClear(input: HTMLInputElement) {

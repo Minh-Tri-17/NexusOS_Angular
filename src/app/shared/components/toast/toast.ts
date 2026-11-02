@@ -49,9 +49,7 @@ export class Toast {
   //#region //@ METHODS
 
   dismiss() {
-    if (this.toastId() !== undefined) {
-      toast.dismiss(this.toastId());
-    }
+    if (this.toastId() !== undefined) toast.dismiss(this.toastId());
   }
 
   //#endregion

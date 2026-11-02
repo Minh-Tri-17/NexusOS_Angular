@@ -87,9 +87,7 @@ export class RoleModal implements OnInit {
 
     for (const code of list) {
       const parts = code.split('.');
-      if (parts.length >= 2) {
-        actionSet.add(parts[1]);
-      }
+      if (parts.length >= 2) actionSet.add(parts[1]);
     }
 
     //* Thứ tự ưu tiên hiển thị các action cơ bản quen thuộc nếu có trong danh sách

@@ -219,9 +219,7 @@ export class EmployeeModal {
   removePhoto(fileInput?: HTMLInputElement) {
     this.photoPreview.set('');
     this.employeeForm.controls.photo.setValue(null);
-    if (fileInput) {
-      fileInput.value = '';
-    }
+    if (fileInput) fileInput.value = '';
   }
 
   async handleSave() {

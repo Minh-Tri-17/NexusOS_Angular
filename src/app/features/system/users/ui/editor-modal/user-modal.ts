@@ -111,9 +111,7 @@ export class UserModal {
     this.isSaving.set(true);
     //* getRawValue() lấy toàn bộ giá trị của form, kể cả ô bị disabled
     const payload = this.userForm.getRawValue() as unknown as UserModel;
-    if (!payload.employeeId) {
-      payload.employeeId = null;
-    }
+    if (!payload.employeeId) payload.employeeId = null;
 
     try {
       if (payload.id) {

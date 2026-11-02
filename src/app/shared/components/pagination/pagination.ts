@@ -36,9 +36,7 @@ export class Pagination {
     const current = this.pageIndex();
     const delta = 1;
 
-    if (total <= 7) {
-      return Array.from({ length: total }, (_, i) => i + 1);
-    }
+    if (total <= 7) return Array.from({ length: total }, (_, i) => i + 1);
 
     const range: number[] = [];
 
@@ -47,15 +45,11 @@ export class Pagination {
     }
 
     const pages: (number | string)[] = [1];
-    if (current - delta > 2) {
-      pages.push('...');
-    }
+    if (current - delta > 2) pages.push('...');
 
     pages.push(...range);
 
-    if (current + delta < total - 1) {
-      pages.push('...');
-    }
+    if (current + delta < total - 1) pages.push('...');
 
     pages.push(total);
 
