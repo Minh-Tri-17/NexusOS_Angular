@@ -2,16 +2,18 @@ import { UserStatus, UserType } from './user.enum';
 
 export interface UserModel {
   id: string;
-  storeId?: string | null;
-  employeeId?: string | null;
   userCode?: string | null;
   username?: string | null;
+  employeeName?: string | null;
   email?: string | null;
   phoneNumber?: string | null;
-  passwordHash?: string | null;
-  passwordSalt?: string | null;
   userStatus?: UserStatus | string | null;
   userType?: UserType | string | null;
+
+  storeId?: string | null;
+  employeeId?: string | null;
+  passwordHash?: string | null;
+  passwordSalt?: string | null;
   lastLoginAt?: Date | null;
   failedLoginCount?: number | null;
   passwordExpiredAt?: Date | null;
@@ -27,16 +29,18 @@ export interface UserModel {
 
 export const UserFields: Record<keyof UserModel, string> = {
   id: 'Id',
-  storeId: 'StoreId',
-  employeeId: 'EmployeeId',
   userCode: 'UserCode',
   username: 'Username',
+  employeeName: 'EmployeeName',
   email: 'Email',
   phoneNumber: 'PhoneNumber',
-  passwordHash: 'PasswordHash',
-  passwordSalt: 'PasswordSalt',
   userStatus: 'UserStatus',
   userType: 'UserType',
+
+  storeId: 'StoreId',
+  employeeId: 'EmployeeId',
+  passwordHash: 'PasswordHash',
+  passwordSalt: 'PasswordSalt',
   lastLoginAt: 'LastLoginAt',
   failedLoginCount: 'FailedLoginCount',
   passwordExpiredAt: 'PasswordExpiredAt',

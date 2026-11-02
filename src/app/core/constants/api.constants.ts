@@ -65,4 +65,5 @@ export const API_CONSTANTS = {
     resetPass: 'Account/ResetPassword',
     validateOtp: 'Account/ValidateOtp',
   },
+  rolePermission: { getPermission: 'RolePermission/GetPermission' },
 } as const;

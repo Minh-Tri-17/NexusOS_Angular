@@ -43,5 +43,19 @@ export class RoleFacade {
     return this.api.export(filter);
   }
 
+  async getPermission(): Promise<string[]> {
+    try {
+      const res = await this.api.getPermission();
+      if (Array.isArray(res)) return res;
+
+      if (res && typeof res === 'object' && Array.isArray((res as any).result))
+        return (res as any).result;
+
+      return [];
+    } catch {
+      return [];
+    }
+  }
+
   //#endregion
 }

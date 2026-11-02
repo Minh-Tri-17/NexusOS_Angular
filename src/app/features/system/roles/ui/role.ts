@@ -216,7 +216,7 @@ export class Role {
 
   handleOpenCreate() {
     const modalRef = this.modal.open(RoleModal, {
-      size: 'lg',
+      size: 'xl',
       centered: true,
       scrollable: true,
       windowClass: 'custom-modal',
@@ -231,7 +231,7 @@ export class Role {
     if (!item) return;
 
     const modalRef = this.modal.open(RoleModal, {
-      size: 'lg',
+      size: 'xl',
       centered: true,
       scrollable: true,
       windowClass: 'custom-modal',
@@ -254,7 +254,7 @@ export class Role {
 
   openImportModal() {
     const modalRef = this.modal.open(Import, {
-      size: 'lg',
+      size: 'xl',
       centered: true,
       windowClass: 'custom-modal',
       injector: Injector.create({
@@ -268,7 +268,7 @@ export class Role {
 
   openExportModal() {
     this.modal.open(Export, {
-      size: 'lg',
+      size: 'xl',
       centered: true,
       windowClass: 'custom-modal',
       injector: Injector.create({

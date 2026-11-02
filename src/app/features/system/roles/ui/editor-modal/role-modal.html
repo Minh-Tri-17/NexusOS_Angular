@@ -97,7 +97,161 @@
           </div>
         </div>
 
-        <!-- Form Section 2: Additional Info & Note -->
+        <!-- Form Section 2: Permission Matrix Table (8 Columns) -->
+        <div class="form-section-card permission-section mb-4">
+          <div class="form-section-header permission-section-header">
+            <div class="d-flex align-items-center gap-2">
+              <i class="fa-solid fa-lock text-primary"></i>
+              <span class="fw-bold">
+                {{ 'role.permissionsMatrix' | translate }}
+              </span>
+            </div>
+
+            <div
+              class="d-flex align-items-center gap-2 flex-nowrap ms-auto permission-toolbar-controls"
+            >
+              <div class="position-relative search-permission-group">
+                <i
+                  class="fa-solid fa-magnifying-glass position-absolute top-50 start-0 translate-middle-y ms-3 filter-search-icon"
+                ></i>
+                <input
+                  type="text"
+                  class="form-control form-control-sm ps-5 pe-3 rounded-3 filter-input"
+                  [placeholder]="'role.searchPermissions' | translate"
+                  [ngModel]="filterKeyword()"
+                  (ngModelChange)="filterKeyword.set($event)"
+                  [ngModelOptions]="{ standalone: true }"
+                />
+                @if (filterKeyword()) {
+                  <button
+                    type="button"
+                    class="btn btn-link position-absolute top-50 end-0 translate-middle-y py-0 px-2 text-muted"
+                    (click)="filterKeyword.set('')"
+                    [attr.aria-label]="'common.clear' | translate"
+                  >
+                    <i class="fa-solid fa-xmark"></i>
+                  </button>
+                }
+              </div>
+
+              <span class="badge-soft badge-indigo">
+                <i class="fa-solid fa-key"></i>
+                {{ grantedCount() }} / {{ totalCount() }}
+              </span>
+            </div>
+          </div>
+
+          <app-table [minWidth]="minTableWidth()" maxHeight="min(48vh, 420px)" containerClass="border mb-0">
+            <ng-container table-header>
+              <tr>
+                <th class="text-center" style="width: 44px">
+                  <input
+                    type="checkbox"
+                    class="form-check-input"
+                    [checked]="isAllSelected()"
+                    [indeterminate]="isAllIndeterminate()"
+                    (change)="toggleAll()"
+                    [attr.aria-label]="'role.selectAll' | translate"
+                    [title]="(isAllSelected() ? 'role.deselectAll' : 'role.selectAll') | translate"
+                  />
+                </th>
+
+                <th style="min-width: 220px">
+                  {{ 'role.namePermission' | translate }}
+                </th>
+
+                @for (action of availableActions(); track action) {
+                  <th style="min-width: 90px">
+                    <div
+                      class="d-flex align-items-center justify-content-between w-100 cursor-pointer user-select-none"
+                      (click)="toggleColumn(action)"
+                      [title]="'Click để bật/tắt toàn bộ ' + getActionLabel(action)"
+                    >
+                      <input
+                        type="checkbox"
+                        class="form-check-input"
+                        [checked]="isColumnAllSelected(action)"
+                        [indeterminate]="isColumnIndeterminate(action)"
+                        (click)="$event.stopPropagation()"
+                        (change)="toggleColumn(action)"
+                        [attr.aria-label]="'Toggle all ' + action"
+                      />
+                      <span>{{ getActionLabel(action) }}</span>
+                    </div>
+                  </th>
+                }
+              </tr>
+            </ng-container>
+
+            <ng-container table-body>
+              @if (isLoadingPermissions()) {
+                <tr>
+                  <td [attr.colspan]="availableActions().length + 2" class="text-center py-4 text-muted">
+                    <span class="spinner-border spinner-border-sm me-2" role="status"></span>
+                    {{ 'common.requestingData' | translate }}
+                  </td>
+                </tr>
+              } @else if (filteredRows().length === 0) {
+                <tr>
+                  <td [attr.colspan]="availableActions().length + 2" class="text-center py-4 text-muted fst-italic">
+                    {{ 'common.noRecordsFound' | translate }}
+                  </td>
+                </tr>
+              } @else {
+                @for (row of filteredRows(); track row.scope) {
+                  <tr [class.table-active]="isRowAllSelected(row)">
+                    <td>
+                      <input
+                        type="checkbox"
+                        class="form-check-input"
+                        [checked]="isRowAllSelected(row)"
+                        [indeterminate]="isRowIndeterminate(row)"
+                        (click)="toggleRow(row)"
+                        title="Chọn tất cả quyền của {{ row.scope }}"
+                        [aria-label]="'Select all permissions for ' + row.scope"
+                      />
+                    </td>
+
+                    <td>
+                      <div class="d-flex align-items-center gap-2">
+                        <span class="scope-icon-box">
+                          <i [class]="getScopeIcon(row.scope)"></i>
+                        </span>
+                        <div>
+                          <div class="fw-semibold text-main text-nowrap">
+                            {{ row.displayName | translate }}
+                          </div>
+                          <span class="badge-soft badge-blue font-monospace fs-xs">
+                            {{ row.scope }}
+                          </span>
+                        </div>
+                      </div>
+                    </td>
+
+                    @for (action of availableActions(); track action) {
+                      <td>
+                        @if (row.actions[action]; as code) {
+                          <input
+                            type="checkbox"
+                            class="form-check-input"
+                            [checked]="isGranted(code)"
+                            (change)="togglePermission(code)"
+                            [title]="code"
+                            [aria-label]="code"
+                          />
+                        } @else {
+                          <span class="text-muted opacity-25">—</span>
+                        }
+                      </td>
+                    }
+                  </tr>
+                }
+              }
+            </ng-container>
+          </app-table>
+        </div>
+
+        <!-- Form Section 3: Additional Info & Note -->
         <div class="form-section-card">
           <div class="form-section-header">
             <div class="d-flex align-items-center gap-2">
@@ -138,6 +292,7 @@
       type="submit"
       form="roleEditorForm"
       class="btn btn-sm btn-pastel-purple px-4 py-2 rounded-3"
+      [disabled]="isSaving()"
     >
       @if (isSaving()) {
         <span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>

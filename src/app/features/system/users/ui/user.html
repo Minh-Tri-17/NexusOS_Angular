@@ -79,9 +79,11 @@
           (change)="filterUserStatus.set($any($event.target).value || null)"
         >
           <option [selected]="!filterUserStatus()" value="">{{ 'common.all' | translate }}</option>
-          <option [selected]="filterUserStatus() === 'Active'" value="Active">{{ 'user.active' | translate }}</option>
-          <option [selected]="filterUserStatus() === 'Inactive'" value="Inactive">{{ 'user.inactive' | translate }}</option>
-          <option [selected]="filterUserStatus() === 'Locked'" value="Locked">{{ 'user.locked' | translate }}</option>
+          @for (status of userStatuses; track status.value) {
+            <option [selected]="filterUserStatus() === status.value" [value]="status.value">
+              {{ status.label | translate }}
+            </option>
+          }
         </select>
       </div>
       <div class="col-md-3">
@@ -94,9 +96,11 @@
           (change)="filterUserType.set($any($event.target).value || null)"
         >
           <option [selected]="!filterUserType()" value="">{{ 'common.all' | translate }}</option>
-          <option [selected]="filterUserType() === 'Employee'" value="Employee">{{ 'user.employee' | translate }}</option>
-          <option [selected]="filterUserType() === 'External'" value="External">{{ 'user.external' | translate }}</option>
-          <option [selected]="filterUserType() === 'System'" value="System">{{ 'user.system' | translate }}</option>
+          @for (type of userTypes; track type.value) {
+            <option [selected]="filterUserType() === type.value" [value]="type.value">
+              {{ type.label | translate }}
+            </option>
+          }
         </select>
       </div>
     </ng-container>
@@ -137,35 +141,82 @@
             </td>
             <td class="td-cell text-center">{{ fromRecord() + idx }}</td>
             <td class="text-nowrap">
-              <span class="badge-soft badge-blue">#{{ user.userCode }}</span>
+              @if (user.userCode) {
+                <span class="badge-soft badge-blue">#{{ user.userCode }}</span>
+              } @else {
+                <span class="text-muted opacity-50">—</span>
+              }
             </td>
-            <td class="text-nowrap fw-semibold">{{ user.username }}</td>
-            <td>{{ user.email }}</td>
-            <td>{{ user.phoneNumber }}</td>
-            <td>
-              <span
-                class="badge-soft"
-                [class]="
-                  user.userStatus === 'Active'
-                    ? 'badge-teal'
-                    : user.userStatus === 'Locked'
-                      ? 'badge-rose'
-                      : 'badge-orange'
-                "
-                >{{ user.userStatus }}</span
-              >
-            </td>
-            <td>
-              <span class="badge-soft badge-indigo">{{ user.userType }}</span>
-            </td>
-            <td>
-              <span class="text-muted small fst-italic">{{ user.note }}</span>
+            <td class="text-nowrap fw-semibold">
+              @if (user.username) {
+                {{ user.username }}
+              } @else {
+                <span class="text-muted opacity-50">—</span>
+              }
             </td>
             <td class="text-nowrap">
-              <span class="text-muted small">{{ user.createdAt | date }}</span>
+              @if (user.employeeName) {
+                <span class="text-main fw-medium">{{ user.employeeName }}</span>
+              } @else {
+                <span class="text-muted opacity-50">—</span>
+              }
+            </td>
+            <td>
+              @if (user.email) {
+                {{ user.email }}
+              } @else {
+                <span class="text-muted opacity-50">—</span>
+              }
+            </td>
+            <td>
+              @if (user.phoneNumber) {
+                {{ user.phoneNumber }}
+              } @else {
+                <span class="text-muted opacity-50">—</span>
+              }
+            </td>
+            <td>
+              @if (user.userStatus) {
+                <span
+                  class="badge-soft"
+                  [class]="userStatusConfig[user.userStatus]?.cssClass ?? 'badge-secondary'"
+                  >{{ userStatusConfig[user.userStatus]?.label ? (userStatusConfig[user.userStatus].label | translate) : user.userStatus }}</span
+                >
+              } @else {
+                <span class="text-muted opacity-50">—</span>
+              }
+            </td>
+            <td>
+              @if (user.userType) {
+                <span
+                  class="badge-soft"
+                  [class]="userTypeConfig[user.userType]?.cssClass ?? 'badge-indigo'"
+                  >{{ userTypeConfig[user.userType]?.label ? (userTypeConfig[user.userType].label | translate) : user.userType }}</span
+                >
+              } @else {
+                <span class="text-muted opacity-50">—</span>
+              }
+            </td>
+            <td>
+              @if (user.note) {
+                <span class="text-muted small fst-italic">{{ user.note }}</span>
+              } @else {
+                <span class="text-muted opacity-50">—</span>
+              }
             </td>
             <td class="text-nowrap">
-              <span class="text-muted small">{{ user.updatedAt | date }}</span>
+              @if (user.createdAt) {
+                <span class="text-muted small">{{ user.createdAt | date }}</span>
+              } @else {
+                <span class="text-muted opacity-50">—</span>
+              }
+            </td>
+            <td class="text-nowrap">
+              @if (user.updatedAt) {
+                <span class="text-muted small">{{ user.updatedAt | date }}</span>
+              } @else {
+                <span class="text-muted opacity-50">—</span>
+              }
             </td>
           </tr>
         }

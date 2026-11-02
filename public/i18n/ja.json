@@ -140,7 +140,22 @@
     "province": "都道府県 / 市",
     "ward": "市区町村",
     "selectCountry": "-- 国を選択 --",
-    "selectProvince": "-- 都道府県を選択 --"
+    "selectProvince": "-- 都道府県を選択 --",
+    "noRecordsFound": "データが見つかりません",
+    "status": "ステータス",
+    "email": "メール",
+    "phoneNumber": "電話番号",
+    "gender": "性別",
+    "male": "男性",
+    "female": "女性",
+    "other": "その他",
+    "selectStatus": "-- ステータスを選択 --",
+    "selectRegion": "-- 地域を選択 --",
+    "selectGender": "-- 性別を選択 --",
+    "selectWard": "-- 町村・地区を選択 --",
+    "selectEmployee": "-- 従業員を選択 --",
+    "selectUserType": "-- ユーザータイプを選択 --",
+    "selectEducationLevel": "学歴を選択"
   },
   "sidebar": {
     "dashboard": "ダッシュボード",
@@ -149,12 +164,7 @@
     "leaveManagement": "休暇管理",
     "categories": "カテゴリー",
     "geography": "地域・地理",
-    "country": "国",
-    "province": "都道府県",
-    "ward": "市区町村",
     "settings": "設定",
-    "user": "User",
-    "role": "ロール",
     "operational": "稼働中",
     "uptime": "稼働率"
   },
@@ -181,7 +191,6 @@
     "countryCode": "国コード",
     "countryName": "国名",
     "capital": "首都",
-    "selectRegion": "-- 地域を選択 --",
     "countryInfo": "国情報"
   },
   "employee": {
@@ -224,12 +233,14 @@
     "male": "男性",
     "female": "女性",
     "other": "その他",
-    "selectStatus": "-- ステータスを選択 --",
-    "selectGender": "-- 性別を選択 --",
-    "selectWard": "-- 市区町村を選択 --",
     "departmentName": "部署",
     "jobTitleName": "役職",
-    "storeName": "店舗"
+    "storeName": "店舗",
+    "highSchool": "高等学校",
+    "associate": "短期大学 / 専門学校",
+    "bachelor": "学士 / 大学",
+    "master": "修士 / 大学院",
+    "doctorate": "博士 / PhD"
   },
   "role": {
     "title": "役割・権限管理",
@@ -239,7 +250,14 @@
     "roleName": "役割名",
     "isSystemRole": "システム役割",
     "isActive": "有効ステータス",
-    "roleInfo": "役割情報"
+    "roleInfo": "役割情報",
+    "permissionsMatrix": "権限マトリックス",
+    "namePermission": "機能モジュール / 権限名",
+    "view": "閲覧",
+    "selectAll": "すべて選択",
+    "deselectAll": "すべての選択を解除",
+    "grantedCount": "{{granted}} / {{total}} 件の権限を付与",
+    "searchPermissions": "権限モジュールを検索..."
   },
   "user": {
     "title": "User Management",
@@ -248,12 +266,11 @@
     "userInfo": "User Information",
     "userCode": "User Code",
     "username": "Username",
+    "employeeName": "従業員名",
     "email": "Email",
     "phoneNumber": "Phone Number",
     "userStatus": "Status",
     "userType": "User Type",
-    "active": "Active",
-    "inactive": "Inactive",
     "locked": "Locked",
     "employee": "Employee",
     "external": "External",

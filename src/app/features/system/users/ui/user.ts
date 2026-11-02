@@ -18,6 +18,12 @@ import { Placeholder } from '../../../../shared/components/placeholder/placehold
 import { Summary } from '../../../../shared/components/summary/summary';
 import { Table } from '../../../../shared/components/table/table';
 import { Toolbar } from '../../../../shared/components/toolbar/toolbar';
+import {
+  USER_STATUS_CONFIG,
+  USER_STATUS_OPTIONS,
+  USER_TYPE_CONFIG,
+  USER_TYPE_OPTIONS,
+} from '../data-access/user.enum';
 import { UserFacade } from '../data-access/user.facade';
 import { UserFields, UserModel } from '../data-access/user.model';
 import { UserModal } from './editor-modal/user-modal';
@@ -36,7 +42,30 @@ export class User {
 
   //#region //@ PROPS
 
-  readonly userColumns = ['userCode', 'username', 'email', 'phoneNumber', 'userStatus', 'userType'];
+  readonly userStatuses = USER_STATUS_OPTIONS;
+  readonly userTypes = USER_TYPE_OPTIONS;
+  readonly userStatusConfig = USER_STATUS_CONFIG;
+  readonly userTypeConfig = USER_TYPE_CONFIG;
+
+  readonly userColumns = Object.keys(UserFields).filter(
+    (key) =>
+      key !== 'id' &&
+      key !== 'storeId' &&
+      key !== 'employeeId' &&
+      key !== 'passwordHash' &&
+      key !== 'passwordSalt' &&
+      key !== 'lastLoginAt' &&
+      key !== 'failedLoginCount' &&
+      key !== 'passwordExpiredAt' &&
+      key !== 'requirePasswordChange' &&
+      key !== 'twoFactorEnabled' &&
+      key !== 'isDelete' &&
+      key !== 'note' &&
+      key !== 'createdAt' &&
+      key !== 'createdBy' &&
+      key !== 'updatedAt' &&
+      key !== 'updatedBy',
+  );
 
   //#endregion
 
@@ -98,7 +127,7 @@ export class User {
     const text = this.searchText().trim();
     if (text)
       filter.filters!.push({
-        filterName: `${UserFields.userCode},${UserFields.username},${UserFields.email}`,
+        filterName: `${UserFields.userCode},${UserFields.username},${UserFields.employeeName},${UserFields.email}`,
         filterValue: text,
         filterType: FilterType.string,
         filterOperator: FilterOperator.like,
@@ -213,6 +242,7 @@ export class User {
     //* subscribe() đăng ký nhận giá trị từ Observable, thực hiện hành động khi có giá trị mới
     modalRef.componentInstance.saveSuccess.subscribe(() => this.loadListData());
     modalRef.componentInstance.initCreateForm();
+    modalRef.componentInstance.loadComboboxData();
   }
 
   handleOpenUpdate() {
@@ -228,6 +258,7 @@ export class User {
     //* subscribe() đăng ký nhận giá trị từ Observable, thực hiện hành động khi có giá trị mới
     modalRef.componentInstance.saveSuccess.subscribe(() => this.loadListData());
     modalRef.componentInstance.initUpdateForm(item);
+    modalRef.componentInstance.loadComboboxData();
   }
 
   getSelectedItem(): UserModel | null {

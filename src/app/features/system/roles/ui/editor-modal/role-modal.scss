@@ -1,0 +1,41 @@
+.permission-section {
+  min-width: 0;
+  overflow: hidden;
+}
+
+.permission-section-header {
+  align-items: flex-start;
+  padding-bottom: 1rem;
+}
+
+.permission-section-header > .d-flex:last-child {
+  min-width: 0;
+}
+
+.permission-toolbar-controls {
+  flex-shrink: 0;
+}
+
+.scope-icon-box {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background-color: var(--primary-50, rgba(99, 102, 241, 0.1));
+  color: var(--primary-600, #4f46e5);
+  font-size: 0.85rem;
+  flex-shrink: 0;
+}
+
+@media (max-width: 575.98px) {
+  .permission-section-header > .d-flex:last-child {
+    width: 100%;
+    margin-left: 0 !important;
+  }
+
+  .search-permission-group {
+    flex: 1 1 160px;
+  }
+}

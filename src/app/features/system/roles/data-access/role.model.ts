@@ -1,3 +1,5 @@
+import { PermissionModel } from './permission.model';
+
 export interface RoleModel {
   id: string;
   roleCode?: string | null;
@@ -10,9 +12,11 @@ export interface RoleModel {
   createdBy?: string | null;
   updatedAt?: Date | null;
   updatedBy?: string | null;
+
+  permissions?: PermissionModel[] | null;
 }
 
-export const RoleFields: Record<keyof RoleModel, string> = {
+export const RoleFields: Record<keyof Omit<RoleModel, 'permissions'>, string> = {
   id: 'Id',
   roleCode: 'RoleCode',
   roleName: 'RoleName',

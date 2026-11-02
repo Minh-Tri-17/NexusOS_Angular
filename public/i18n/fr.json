@@ -140,7 +140,22 @@
     "province": "Province / Ville",
     "ward": "Commune / Quartier",
     "selectCountry": "-- Sélectionner un pays --",
-    "selectProvince": "-- Sélectionner une province --"
+    "selectProvince": "-- Sélectionner une province --",
+    "noRecordsFound": "Aucun enregistrement trouvé",
+    "status": "Statut",
+    "email": "Email",
+    "phoneNumber": "Numéro de téléphone",
+    "gender": "Genre",
+    "male": "Masculin",
+    "female": "Féminin",
+    "other": "Autre",
+    "selectStatus": "-- Sélectionner un statut --",
+    "selectRegion": "-- Sélectionner une région --",
+    "selectGender": "-- Sélectionner un genre --",
+    "selectWard": "-- Sélectionner un quartier / commune --",
+    "selectEmployee": "-- Sélectionner un employé --",
+    "selectUserType": "-- Sélectionner un type d'utilisateur --",
+    "selectEducationLevel": "Sélectionner le niveau d'études"
   },
   "sidebar": {
     "dashboard": "Tableau de bord",
@@ -149,12 +164,7 @@
     "leaveManagement": "Gestion des congés",
     "categories": "Catégories",
     "geography": "Géographie",
-    "country": "Pays",
-    "province": "Province",
-    "ward": "Quartier",
     "settings": "Paramètres",
-    "user": "User",
-    "role": "Rôle",
     "operational": "Opérationnel",
     "uptime": "Disponibilité"
   },
@@ -181,7 +191,6 @@
     "countryCode": "Code pays",
     "countryName": "Nom du pays",
     "capital": "Capitale",
-    "selectRegion": "-- Sélectionner la région --",
     "countryInfo": "Informations sur le pays"
   },
   "employee": {
@@ -224,12 +233,14 @@
     "male": "Homme",
     "female": "Femme",
     "other": "Autre",
-    "selectStatus": "-- Sélectionner le statut --",
-    "selectGender": "-- Sélectionner le genre --",
-    "selectWard": "-- Sélectionner un quartier / commune --",
     "departmentName": "Département",
     "jobTitleName": "Poste",
-    "storeName": "Magasin"
+    "storeName": "Magasin",
+    "highSchool": "Lycée",
+    "associate": "DUT / BTS",
+    "bachelor": "Licence / Bac+3",
+    "master": "Master / Bac+5",
+    "doctorate": "Doctorat / PhD"
   },
   "role": {
     "title": "Gestion des rôles & autorisations",
@@ -239,7 +250,14 @@
     "roleName": "Nom du rôle",
     "isSystemRole": "Rôle système",
     "isActive": "Statut actif",
-    "roleInfo": "Informations sur le rôle"
+    "roleInfo": "Informations sur le rôle",
+    "permissionsMatrix": "Matrice des autorisations",
+    "namePermission": "Module / Nom de l'autorisation",
+    "view": "Voir",
+    "selectAll": "Tout sélectionner",
+    "deselectAll": "Tout désélectionner",
+    "grantedCount": "{{granted}} / {{total}} autorisations accordées",
+    "searchPermissions": "Rechercher un module..."
   },
   "user": {
     "title": "User Management",
@@ -248,12 +266,11 @@
     "userInfo": "User Information",
     "userCode": "User Code",
     "username": "Username",
+    "employeeName": "Nom de l'employé",
     "email": "Email",
     "phoneNumber": "Phone Number",
     "userStatus": "Status",
     "userType": "User Type",
-    "active": "Active",
-    "inactive": "Inactive",
     "locked": "Locked",
     "employee": "Employee",
     "external": "External",

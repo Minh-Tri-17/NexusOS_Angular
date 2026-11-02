@@ -1,141 +1,230 @@
 <app-modal>
   <ng-container modal-eyebrow>{{ 'user.modalTitle' | translate }}</ng-container>
   <ng-container modal-title>{{ title() | translate }} {{ 'common.user' | translate }}</ng-container>
-  <ng-container modal-header-extra
-    ><span class="badge-soft badge-teal d-none d-sm-inline-flex"
-      ><i class="fa-solid fa-bolt"></i> {{ 'common.liveSync' | translate }}</span
-    ></ng-container
-  >
+  <ng-container modal-header-extra>
+    <span class="badge-soft badge-teal d-none d-sm-inline-flex">
+      <i class="fa-solid fa-bolt"></i> {{ 'common.liveSync' | translate }}
+    </span>
+  </ng-container>
+
   <ng-container modal-form>
     <form id="userEditorForm" [formGroup]="userForm" ngNativeValidate (ngSubmit)="handleSave()">
       <div class="modal-body px-4 py-3 position-relative z-1">
+        <!-- Form Section 1: User Information -->
         <div class="form-section-card mb-4">
           <div class="form-section-header">
             <div class="d-flex align-items-center gap-2">
-              <i class="fa-solid fa-user-shield text-primary"></i
-              ><span class="fw-bold">{{ 'user.userInfo' | translate }}</span>
+              <i class="fa-solid fa-user-shield text-primary"></i>
+              <span class="fw-bold">{{ 'user.userInfo' | translate }}</span>
             </div>
-            <span class="badge-soft badge-indigo"
-              ><i class="fa-solid fa-list-check"></i> 7 {{ 'common.fields' | translate }}</span
-            >
+            <span class="badge-soft badge-indigo">
+              <i class="fa-solid fa-list-check"></i> 8 {{ 'common.fields' | translate }}
+            </span>
           </div>
+
           <div class="row g-3">
             <div class="col-md-6">
-              <label for="userCode" class="form-label custom-form-label">{{
-                'user.userCode' | translate
-              }}</label
-              ><input
-                class="form-control custom-form-control"
-                id="userCode"
-                formControlName="userCode"
-              />
+              <label for="inputUserCode" class="form-label custom-form-label">
+                {{ 'user.userCode' | translate }}
+              </label>
+              <div class="input-group custom-input-group">
+                <span class="input-group-text"><i class="fa-solid fa-id-badge"></i></span>
+                <input
+                  type="text"
+                  class="form-control custom-form-control disabled"
+                  id="inputUserCode"
+                  placeholder="e.g. USR-001"
+                  formControlName="userCode"
+                />
+              </div>
+              <div class="form-text-hint">
+                <i class="fa-solid fa-circle-info"></i> Standard user identification code
+              </div>
             </div>
+
             <div class="col-md-6">
-              <label for="username" class="form-label custom-form-label"
-                >{{ 'user.username' | translate }} <span class="text-danger">*</span></label
-              ><input
-                class="form-control custom-form-control"
-                id="username"
-                formControlName="username"
-                required
-              />
+              <label for="inputUsername" class="form-label custom-form-label">
+                {{ 'user.username' | translate }} <span class="text-danger fw-bold">*</span>
+              </label>
+              <div class="input-group custom-input-group">
+                <span class="input-group-text"><i class="fa-solid fa-user"></i></span>
+                <input
+                  type="text"
+                  class="form-control custom-form-control"
+                  id="inputUsername"
+                  placeholder="e.g. johndoe"
+                  formControlName="username"
+                  required
+                />
+              </div>
             </div>
+
+            <div class="col-md-12">
+              <label for="selectEmployeeId" class="form-label custom-form-label">
+                {{ 'user.employeeName' | translate }}
+              </label>
+              <div class="input-group custom-input-group">
+                <span class="input-group-text"><i class="fa-solid fa-id-card"></i></span>
+                <select
+                  class="form-select custom-form-select"
+                  id="selectEmployeeId"
+                  formControlName="employeeId"
+                >
+                  <option value="">{{ 'common.selectEmployee' | translate }}</option>
+                  @for (employee of employees(); track employee.id) {
+                    <option [value]="employee.id">
+                      {{ employee.employeeName }} ({{ employee.employeeCode }})
+                    </option>
+                  }
+                </select>
+              </div>
+            </div>
+
             <div class="col-md-6">
-              <label for="email" class="form-label custom-form-label">{{
-                'user.email' | translate
-              }}</label
-              ><input
-                type="email"
-                class="form-control custom-form-control"
-                id="email"
-                formControlName="email"
-              />
+              <label for="inputEmail" class="form-label custom-form-label">
+                {{ 'user.email' | translate }}
+              </label>
+              <div class="input-group custom-input-group">
+                <span class="input-group-text"><i class="fa-solid fa-envelope"></i></span>
+                <input
+                  type="email"
+                  class="form-control custom-form-control"
+                  id="inputEmail"
+                  placeholder="e.g. user@example.com"
+                  formControlName="email"
+                />
+              </div>
             </div>
+
             <div class="col-md-6">
-              <label for="phoneNumber" class="form-label custom-form-label">{{
-                'user.phoneNumber' | translate
-              }}</label
-              ><input
-                class="form-control custom-form-control"
-                id="phoneNumber"
-                formControlName="phoneNumber"
-              />
+              <label for="inputPhoneNumber" class="form-label custom-form-label">
+                {{ 'user.phoneNumber' | translate }}
+              </label>
+              <div class="input-group custom-input-group">
+                <span class="input-group-text"><i class="fa-solid fa-phone"></i></span>
+                <input
+                  type="text"
+                  class="form-control custom-form-control"
+                  id="inputPhoneNumber"
+                  placeholder="e.g. 0901234567"
+                  formControlName="phoneNumber"
+                />
+              </div>
             </div>
+
             <div class="col-md-6">
-              <label for="userStatus" class="form-label custom-form-label">{{
-                'user.userStatus' | translate
-              }}</label
-              ><select
-                class="form-select custom-form-control"
-                id="userStatus"
-                formControlName="userStatus"
-              >
-                <option value="Active">{{ 'user.active' | translate }}</option>
-                <option value="Inactive">{{ 'user.inactive' | translate }}</option>
-                <option value="Locked">{{ 'user.locked' | translate }}</option>
-              </select>
+              <label for="selectUserStatus" class="form-label custom-form-label">
+                {{ 'user.userStatus' | translate }} <span class="text-danger fw-bold">*</span>
+              </label>
+              <div class="input-group custom-input-group">
+                <span class="input-group-text"><i class="fa-solid fa-circle-check"></i></span>
+                <select
+                  class="form-select custom-form-select"
+                  id="selectUserStatus"
+                  formControlName="userStatus"
+                  required
+                >
+                  <option value="">{{ 'common.selectStatus' | translate }}</option>
+                  @for (status of userStatuses; track status.value) {
+                    <option [value]="status.value">{{ status.label | translate }}</option>
+                  }
+                </select>
+              </div>
             </div>
+
             <div class="col-md-6">
-              <label for="userType" class="form-label custom-form-label">{{
-                'user.userType' | translate
-              }}</label
-              ><select
-                class="form-select custom-form-control"
-                id="userType"
-                formControlName="userType"
-              >
-                <option value="Employee">{{ 'user.employee' | translate }}</option>
-                <option value="External">{{ 'user.external' | translate }}</option>
-                <option value="System">{{ 'user.system' | translate }}</option>
-              </select>
+              <label for="selectUserType" class="form-label custom-form-label">
+                {{ 'user.userType' | translate }} <span class="text-danger fw-bold">*</span>
+              </label>
+              <div class="input-group custom-input-group">
+                <span class="input-group-text"><i class="fa-solid fa-user-tag"></i></span>
+                <select
+                  class="form-select custom-form-select"
+                  id="selectUserType"
+                  formControlName="userType"
+                  required
+                >
+                  <option value="">{{ 'common.selectUserType' | translate }}</option>
+                  @for (type of userTypes; track type.value) {
+                    <option [value]="type.value">{{ type.label | translate }}</option>
+                  }
+                </select>
+              </div>
             </div>
+
             <div class="col-md-6 form-check form-switch ps-5">
               <input
                 class="form-check-input"
                 type="checkbox"
                 id="requirePasswordChange"
                 formControlName="requirePasswordChange"
-              /><label class="form-check-label" for="requirePasswordChange">{{
-                'user.requirePasswordChange' | translate
-              }}</label>
+              />
+              <label class="form-check-label" for="requirePasswordChange">
+                {{ 'user.requirePasswordChange' | translate }}
+              </label>
             </div>
+
             <div class="col-md-6 form-check form-switch ps-5">
               <input
                 class="form-check-input"
                 type="checkbox"
                 id="twoFactorEnabled"
                 formControlName="twoFactorEnabled"
-              /><label class="form-check-label" for="twoFactorEnabled">{{
-                'user.twoFactorEnabled' | translate
-              }}</label>
+              />
+              <label class="form-check-label" for="twoFactorEnabled">
+                {{ 'user.twoFactorEnabled' | translate }}
+              </label>
             </div>
           </div>
         </div>
+
+        <!-- Form Section 2: Additional Info & Note -->
         <div class="form-section-card">
           <div class="form-section-header">
-            <span class="fw-bold">{{ 'common.otherInfo' | translate }}</span>
+            <div class="d-flex align-items-center gap-2">
+              <i class="fa-solid fa-align-left text-primary"></i>
+              <span class="fw-bold">{{ 'common.otherInfo' | translate }}</span>
+            </div>
+            <span class="badge-soft badge-indigo">
+              <i class="fa-solid fa-list-check"></i> 1 {{ 'common.fields' | translate }}
+            </span>
           </div>
-          <textarea
-            class="form-control custom-form-control"
-            rows="3"
-            formControlName="note"
-            placeholder="{{ 'common.placeholderNote' | translate }}"
-          ></textarea>
+
+          <div class="row g-3">
+            <div class="col-12">
+              <label for="inputUserNote" class="form-label custom-form-label">
+                {{ 'common.note' | translate }}
+              </label>
+              <div class="input-group custom-input-group">
+                <span class="input-group-text"><i class="fa-solid fa-align-left"></i></span>
+                <textarea
+                  class="form-control custom-form-control"
+                  id="inputUserNote"
+                  rows="3"
+                  placeholder="{{ 'common.placeholderNote' | translate }}"
+                  formControlName="note"
+                ></textarea>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </form>
   </ng-container>
-  <ng-container modal-actions
-    ><button
+
+  <ng-container modal-actions>
+    <button
       type="submit"
       form="userEditorForm"
       class="btn btn-sm btn-pastel-purple px-4 py-2 rounded-3"
+      [disabled]="isSaving()"
     >
       @if (isSaving()) {
-        <span class="spinner-border spinner-border-sm me-1"></span>{{ 'common.saving' | translate }}
+        <span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+        {{ 'common.saving' | translate }}
       } @else {
-        <i class="fa-solid fa-floppy-disk me-1"></i>{{ 'common.save' | translate }}
+        <i class="fa-solid fa-floppy-disk me-1"></i> {{ 'common.save' | translate }}
       }
-    </button></ng-container
-  >
+    </button>
+  </ng-container>
 </app-modal>

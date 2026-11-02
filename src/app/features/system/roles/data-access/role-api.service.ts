@@ -45,5 +45,9 @@ export class RoleApiService extends BaseApiService {
     return this.postBlobHttp(API_CONSTANTS.role.export, data);
   }
 
+  getPermission() {
+    return this.getHttp<string[] | Result<string[]>>(API_CONSTANTS.rolePermission.getPermission);
+  }
+
   //#endregion
 }

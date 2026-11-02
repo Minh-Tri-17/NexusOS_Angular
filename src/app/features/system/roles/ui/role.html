@@ -130,22 +130,30 @@
             <td class="td-cell text-center">{{ fromRecord() + idx }}</td>
 
             <td class="text-nowrap">
-              <span class="badge-soft badge-blue">#{{ role.roleCode }}</span>
+              @if (role.roleCode) {
+                <span class="badge-soft badge-blue">#{{ role.roleCode }}</span>
+              } @else {
+                <span class="text-muted opacity-50">—</span>
+              }
             </td>
 
             <td class="text-nowrap">
-              <div
-                class="fw-semibold text-main"
-                [class.text-decoration-line-through]="filterIsDelete()"
-              >
-                {{ role.roleName }}
-              </div>
-              @if (filterIsDelete()) {
-                <span
-                  class="badge bg-danger-subtle text-danger border border-danger-subtle fs-xs rounded-pill px-2 py-0.5 mt-1"
+              @if (role.roleName) {
+                <div
+                  class="fw-semibold text-main"
+                  [class.text-decoration-line-through]="filterIsDelete()"
                 >
-                  <i class="fa-solid fa-trash-can me-1"></i> {{ 'common.softDeleted' | translate }}
-                </span>
+                  {{ role.roleName }}
+                </div>
+                @if (filterIsDelete()) {
+                  <span
+                    class="badge bg-danger-subtle text-danger border border-danger-subtle fs-xs rounded-pill px-2 py-0.5 mt-1"
+                  >
+                    <i class="fa-solid fa-trash-can me-1"></i> {{ 'common.softDeleted' | translate }}
+                  </span>
+                }
+              } @else {
+                <span class="text-muted opacity-50">—</span>
               }
             </td>
 
@@ -154,40 +162,64 @@
             </td>
 
             <td class="text-nowrap">
-              <span
-                class="badge-soft"
-                [class]="role.isActive == true ? 'badge-teal' : 'badge-rose'"
-              >
-                <i
-                  class="fa-solid"
-                  [class]="role.isActive == true ? 'fa-toggle-on' : 'fa-toggle-off'"
-                ></i>
-                {{ (role.isActive ? 'common.active' : 'common.inactive') | translate }}</span
-              >
+              @if (role.isActive !== null && role.isActive !== undefined) {
+                <span
+                  class="badge-soft"
+                  [class]="role.isActive == true ? 'badge-teal' : 'badge-rose'"
+                >
+                  <i
+                    class="fa-solid"
+                    [class]="role.isActive == true ? 'fa-toggle-on' : 'fa-toggle-off'"
+                  ></i>
+                  {{ (role.isActive ? 'common.active' : 'common.inactive') | translate }}</span
+                >
+              } @else {
+                <span class="text-muted opacity-50">—</span>
+              }
             </td>
 
             <td>
-              <span class="text-muted small fst-italic">{{ role.note }}</span>
+              @if (role.note) {
+                <span class="text-muted small fst-italic">{{ role.note }}</span>
+              } @else {
+                <span class="text-muted opacity-50">—</span>
+              }
             </td>
 
             <td class="text-nowrap">
-              <span class="text-muted small">{{ role.createdAt | date }}</span>
+              @if (role.createdAt) {
+                <span class="text-muted small">{{ role.createdAt | date }}</span>
+              } @else {
+                <span class="text-muted opacity-50">—</span>
+              }
             </td>
 
             <td class="text-nowrap">
-              <span class="text-muted small">
-                <i class="fa-regular fa-user"></i>{{ role.createdBy }}</span
-              >
+              @if (role.createdBy) {
+                <span class="text-muted small">
+                  <i class="fa-regular fa-user me-1"></i>{{ role.createdBy }}</span
+                >
+              } @else {
+                <span class="text-muted opacity-50">—</span>
+              }
             </td>
 
             <td class="text-nowrap">
-              <span class="text-muted small">{{ role.updatedAt | date }}</span>
+              @if (role.updatedAt) {
+                <span class="text-muted small">{{ role.updatedAt | date }}</span>
+              } @else {
+                <span class="text-muted opacity-50">—</span>
+              }
             </td>
 
             <td class="text-nowrap">
-              <span class="text-muted small">
-                <i class="fa-regular fa-user"></i>{{ role.updatedBy }}</span
-              >
+              @if (role.updatedBy) {
+                <span class="text-muted small">
+                  <i class="fa-regular fa-user me-1"></i>{{ role.updatedBy }}</span
+                >
+              } @else {
+                <span class="text-muted opacity-50">—</span>
+              }
             </td>
           </tr>
         }
