@@ -276,7 +276,11 @@
     "external": "External",
     "system": "System",
     "requirePasswordChange": "Require Password Change",
-    "twoFactorEnabled": "Two-factor Authentication"
+    "twoFactorEnabled": "Two-factor Authentication",
+    "password": "パスワード",
+    "passwordHint": "現在のパスワードを維持する場合は空白のままにしてください",
+    "roles": "割り当てられた役割",
+    "selectRoles": "このユーザーの役割を選択してください"
   },
   "province": {
     "title": "都道府県・都市管理",

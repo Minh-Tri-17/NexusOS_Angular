@@ -276,7 +276,11 @@
     "external": "External",
     "system": "System",
     "requirePasswordChange": "Require Password Change",
-    "twoFactorEnabled": "Two-factor Authentication"
+    "twoFactorEnabled": "Two-factor Authentication",
+    "password": "密码",
+    "passwordHint": "留空以保留当前密码",
+    "roles": "分配的角色",
+    "selectRoles": "为此用户选择角色"
   },
   "province": {
     "title": "省市管理",

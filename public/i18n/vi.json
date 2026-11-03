@@ -279,7 +279,11 @@
     "external": "Bên ngoài",
     "system": "Hệ thống",
     "requirePasswordChange": "Yêu cầu đổi mật khẩu",
-    "twoFactorEnabled": "Bật xác thực hai lớp"
+    "twoFactorEnabled": "Bật xác thực hai lớp",
+    "password": "Mật khẩu",
+    "passwordHint": "Để trống nếu không muốn đổi mật khẩu",
+    "roles": "Vai trò phân quyền",
+    "selectRoles": "Chọn vai trò cho người dùng này"
   },
   "province": {
     "title": "Quản lý tỉnh / thành phố",

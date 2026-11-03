@@ -4,6 +4,8 @@ export interface UserModel {
   id: string;
   userCode?: string | null;
   username?: string | null;
+  password?: string | null;
+  roleIds?: string[] | null;
   employeeName?: string | null;
   email?: string | null;
   phoneNumber?: string | null;
@@ -31,6 +33,8 @@ export const UserFields: Record<keyof UserModel, string> = {
   id: 'Id',
   userCode: 'UserCode',
   username: 'Username',
+  password: 'Password',
+  roleIds: 'RoleIds',
   employeeName: 'EmployeeName',
   email: 'Email',
   phoneNumber: 'PhoneNumber',

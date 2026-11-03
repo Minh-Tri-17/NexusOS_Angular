@@ -18,7 +18,7 @@
               <span class="fw-bold">{{ 'user.userInfo' | translate }}</span>
             </div>
             <span class="badge-soft badge-indigo">
-              <i class="fa-solid fa-list-check"></i> 8 {{ 'common.fields' | translate }}
+              <i class="fa-solid fa-list-check"></i> 9 {{ 'common.fields' | translate }}
             </span>
           </div>
 
@@ -59,7 +59,44 @@
               </div>
             </div>
 
-            <div class="col-md-12">
+            <div class="col-md-6">
+              <label for="inputPassword" class="form-label custom-form-label">
+                {{ 'user.password' | translate }}
+                @if (!isEditMode()) {
+                  <span class="text-danger fw-bold">*</span>
+                }
+              </label>
+              <div class="input-group custom-input-group">
+                <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
+                <input
+                  [type]="showPassword() ? 'text' : 'password'"
+                  class="form-control custom-form-control"
+                  id="inputPassword"
+                  placeholder="••••••••"
+                  formControlName="password"
+                  [required]="!isEditMode()"
+                />
+                <button
+                  type="button"
+                  class="toggle-pwd"
+                  (click)="toggleShowPassword()"
+                  tabindex="-1"
+                  title="Toggle Password Visibility"
+                >
+                  <i class="fa-regular" [class]="showPassword() ? 'fa-eye-slash' : 'fa-eye'"></i>
+                </button>
+              </div>
+              <div class="form-text-hint">
+                <i class="fa-solid fa-circle-info"></i>
+                @if (isEditMode()) {
+                  {{ 'user.passwordHint' | translate }}
+                } @else {
+                  Min 8 chars, including letters and numbers
+                }
+              </div>
+            </div>
+
+            <div class="col-md-6">
               <label for="selectEmployeeId" class="form-label custom-form-label">
                 {{ 'user.employeeName' | translate }}
               </label>
@@ -178,7 +215,49 @@
           </div>
         </div>
 
-        <!-- Form Section 2: Additional Info & Note -->
+        <!-- Form Section 2: Roles Assignment -->
+        <div class="form-section-card mb-4">
+          <div class="form-section-header">
+            <div class="d-flex align-items-center gap-2">
+              <i class="fa-solid fa-shield-halved text-primary"></i>
+              <span class="fw-bold">{{ 'user.roles' | translate }}</span>
+            </div>
+            <span class="badge-soft badge-indigo">
+              <i class="fa-solid fa-user-check"></i> {{ userForm.controls.roleIds.value.length }} {{ 'common.all' | translate }}
+            </span>
+          </div>
+
+          <div class="p-3">
+            @if (roles().length === 0) {
+              <div class="text-muted small py-2">
+                <i class="fa-solid fa-circle-exclamation me-1"></i> {{ 'common.noRecordsFound' | translate }}
+              </div>
+            } @else {
+              <div class="d-flex flex-wrap gap-2">
+                @for (role of roles(); track role.id) {
+                  <button
+                    type="button"
+                    class="btn btn-sm rounded-pill d-inline-flex align-items-center gap-2 py-1 px-3 transition-all"
+                    [class.btn-primary]="isRoleSelected(role.id)"
+                    [class.btn-outline-secondary]="!isRoleSelected(role.id)"
+                    (click)="toggleRole(role.id)"
+                  >
+                    <i [class]="isRoleSelected(role.id) ? 'fa-solid fa-circle-check text-white' : 'fa-regular fa-circle text-muted'"></i>
+                    <span class="fw-medium">{{ role.roleName }}</span>
+                    @if (role.isSystemRole) {
+                      <span class="badge bg-warning text-dark px-1 py-0 font-monospace" style="font-size: 0.65rem;">SYS</span>
+                    }
+                  </button>
+                }
+              </div>
+            }
+            <div class="form-text-hint mt-2">
+              <i class="fa-solid fa-circle-info"></i> {{ 'user.selectRoles' | translate }}
+            </div>
+          </div>
+        </div>
+
+        <!-- Form Section 3: Additional Info & Note -->
         <div class="form-section-card">
           <div class="form-section-header">
             <div class="d-flex align-items-center gap-2">

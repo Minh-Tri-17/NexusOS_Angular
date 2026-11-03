@@ -282,7 +282,11 @@
     "external": "External",
     "system": "System",
     "requirePasswordChange": "Require Password Change",
-    "twoFactorEnabled": "Two-factor Authentication"
+    "twoFactorEnabled": "Two-factor Authentication",
+    "password": "Password",
+    "passwordHint": "Leave blank to keep current password",
+    "roles": "Assigned Roles",
+    "selectRoles": "Select roles for this user"
   },
   "province": {
     "title": "Province & City Management",

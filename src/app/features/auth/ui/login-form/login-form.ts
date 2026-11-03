@@ -102,7 +102,7 @@ export class LoginForm {
     }
   }
 
-  private updateFormAccount(): void {
+  private updateFormAccount() {
     const currentRole = this.currentFill();
     if (!currentRole) return;
 
@@ -117,12 +117,12 @@ export class LoginForm {
     });
   }
 
-  handleFillAccount(role: DemoRole): void {
+  handleFillAccount(role: DemoRole) {
     this.currentFill.set(role);
     this.updateFormAccount();
   }
 
-  handleToggleTab(tab: LoginTab): void {
+  handleToggleTab(tab: LoginTab) {
     this.currentTab.set(tab);
     this.updateFormAccount();
   }

@@ -276,7 +276,11 @@
     "external": "External",
     "system": "System",
     "requirePasswordChange": "Require Password Change",
-    "twoFactorEnabled": "Two-factor Authentication"
+    "twoFactorEnabled": "Two-factor Authentication",
+    "password": "Mot de passe",
+    "passwordHint": "Laisser vide pour conserver le mot de passe actuel",
+    "roles": "Rôles attribués",
+    "selectRoles": "Sélectionner les rôles pour cet utilisateur"
   },
   "province": {
     "title": "Gestion des provinces et villes",

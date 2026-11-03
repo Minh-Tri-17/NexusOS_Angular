@@ -158,8 +158,8 @@
           <span class="avatar-status-online" title="Online"></span>
         </div>
         <div class="user-info-text d-none d-md-block">
-          <p class="user-name">Tristan Nguyen</p>
-          <p class="user-role">Administrator</p>
+          <p class="user-name">{{ displayName() }}</p>
+          <p class="user-role">{{ displayRole() }}</p>
         </div>
         <i class="fa-solid fa-chevron-down dropdown-chevron ms-1 text-muted"></i>
       </div>
@@ -167,12 +167,12 @@
         <li class="dropdown-header-info">
           <img
             src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=120&auto=format&fit=crop&q=80"
-            alt="Tristan Nguyen"
+            alt="User Avatar"
             class="header-avatar"
           />
           <div class="header-details">
-            <div class="header-name">Tristan Nguyen</div>
-            <div class="header-email">tristan.nguyen@nexusost.com</div>
+            <div class="header-name">{{ displayName() }}</div>
+            <div class="header-email">{{ currentUser()?.username || '' }}</div>
           </div>
         </li>
         <li><hr class="dropdown-divider" /></li>

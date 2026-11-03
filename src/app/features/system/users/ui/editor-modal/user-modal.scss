@@ -1,0 +1,22 @@
+.toggle-pwd {
+  background: transparent !important;
+  border: none !important;
+  color: var(--text-muted, #64748b);
+  cursor: pointer;
+  padding: 0 0.85rem;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease, transform 0.15s ease;
+
+  &:hover {
+    color: var(--primary-color, #2563eb);
+  }
+
+  &:focus {
+    outline: none !important;
+    box-shadow: none !important;
+  }
+}
+

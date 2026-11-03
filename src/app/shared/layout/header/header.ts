@@ -1,9 +1,11 @@
 import { isPlatformBrowser } from '@angular/common';
 import {
   Component,
+  computed,
   DestroyRef,
   inject,
   NgZone,
+  OnInit,
   PLATFORM_ID,
   signal,
   ViewEncapsulation,
@@ -15,6 +17,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { auditTime, fromEvent } from 'rxjs';
 import { AuthService } from '../../../core/services/auth.service';
 import { ThemeService } from '../../../core/services/theme.service';
+import { RoleFacade } from '../../../features/system/roles/data-access/role.facade';
 import { Languages } from '../../components/languages/languages';
 
 @Component({
@@ -24,17 +27,42 @@ import { Languages } from '../../components/languages/languages';
   styleUrl: './header.scss',
   encapsulation: ViewEncapsulation.None,
 })
-export class Header {
+export class Header implements OnInit {
   private readonly router = inject(Router);
   private readonly ngZone = inject(NgZone);
   private readonly platformId = inject(PLATFORM_ID);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly roleFacade = inject(RoleFacade);
   private readonly isBrowser = isPlatformBrowser(this.platformId);
 
   protected readonly themeService = inject(ThemeService);
   protected readonly authService = inject(AuthService);
+
+  //#region //@ STATE
+
   readonly isScrolled = signal(false);
   readonly topbarSearchText = signal('');
+  readonly currentUser = this.authService.currentUser;
+  readonly userInitials = computed(() => {
+    const user = this.currentUser();
+    if (!user) return 'U';
+    const name = user.fullName || user.username || 'User';
+    const words = name.trim().split(/\s+/);
+    if (words.length === 1) return words[0].substring(0, 2).toUpperCase();
+    return (words[0][0] + words[words.length - 1][0]).toUpperCase();
+  });
+
+  //* computed() dùng để tính toán giá trị dựa trên state khác
+  readonly displayName = computed(() => {
+    const user = this.currentUser();
+    return user?.fullName || user?.username || 'User';
+  });
+  readonly displayRole = computed(() => {
+    const user = this.currentUser();
+    return user?.roleName || 'Member';
+  });
+
+  //#endregion
 
   handleClearTopbarSearch(input: HTMLInputElement) {
     input.value = '';
@@ -42,6 +70,8 @@ export class Header {
   }
 
   ngOnInit() {
+    this.loadUserRole();
+
     if (!this.isBrowser) return;
 
     this.ngZone.runOutsideAngular(() => {
@@ -67,6 +97,18 @@ export class Header {
   }
 
   //#region //@ METHODS
+
+  private async loadUserRole() {
+    const roleId = this.currentUser()?.roleId;
+    if (!roleId) return;
+
+    try {
+      const res = await this.roleFacade.getById(roleId);
+      if (res?.result?.roleName) {
+        this.authService.setRoleName(res.result.roleName);
+      }
+    } catch {}
+  }
 
   handleToggleTheme() {
     this.themeService.toggleTheme();

@@ -1,4 +1,11 @@
-import { Component, computed, HostListener, inject, signal, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  computed,
+  HostListener,
+  inject,
+  signal,
+  ViewEncapsulation,
+} from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -129,7 +136,7 @@ export class ForgotPasswordModal {
     this.startCountdown$.next(seconds);
   }
 
-  private updateDigit(index: number, val: string): void {
+  private updateDigit(index: number, val: string) {
     this.otpDigits.update((digits) => {
       const next = [...digits];
       next[index] = val;
@@ -225,7 +232,7 @@ export class ForgotPasswordModal {
     this.baseService.closeModal();
   }
 
-  handleOtpKeydown(event: KeyboardEvent, index: number): void {
+  handleOtpKeydown(event: KeyboardEvent, index: number) {
     const input = event.currentTarget as HTMLInputElement;
 
     if (event.key === 'Backspace') {
@@ -259,7 +266,7 @@ export class ForgotPasswordModal {
     }
   }
 
-  handleOtpInput(event: Event, index: number): void {
+  handleOtpInput(event: Event, index: number) {
     const input = event.target as HTMLInputElement;
     const digit = input.value.replace(/\D/g, '').slice(-1);
 
@@ -274,7 +281,7 @@ export class ForgotPasswordModal {
     }
   }
 
-  handleOtpPaste(event: ClipboardEvent, startIndex: number): void {
+  handleOtpPaste(event: ClipboardEvent, startIndex: number) {
     event.preventDefault();
     const pasted = event.clipboardData?.getData('text') ?? '';
     const digits = pasted.replace(/\D/g, '').slice(0, 6);
@@ -295,7 +302,7 @@ export class ForgotPasswordModal {
     }
   }
 
-  handleOtpFocus(event: FocusEvent, index: number): void {
+  handleOtpFocus(event: FocusEvent, index: number) {
     const firstEmptyIndex = this.otpDigits().findIndex((val) => !val);
 
     if (firstEmptyIndex !== -1 && firstEmptyIndex < index) {
