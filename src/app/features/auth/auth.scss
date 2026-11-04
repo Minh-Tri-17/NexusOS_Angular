@@ -8,10 +8,6 @@
   width: 100%;
 }
 
-/* ==========================================================================
-   AUTHENTICATION & LOGIN PAGE STYLES (NexusOST ENTERPRISE SYSTEM)
-   ========================================================================== */
-
 app-auth,
 .auth-body {
   min-height: 100vh;
@@ -24,8 +20,6 @@ app-auth,
   position: relative;
   overflow-x: hidden;
 }
-
-/* Background Ambient Texture */
 
 .auth-bg-gradient {
   position: fixed;
@@ -40,8 +34,6 @@ app-auth,
   pointer-events: none;
   z-index: 0;
 }
-
-/* Fixed Top Control Pill Island Bar (Matching Reference Image 2) */
 
 .auth-topbar {
   position: fixed;
@@ -63,8 +55,6 @@ app-auth,
   z-index: 10;
 }
 
-/* Login Card Container matching NexusOST Cards */
-
 .auth-card {
   width: 100%;
   max-width: 1020px;
@@ -83,8 +73,6 @@ app-auth,
     max-width: 500px;
   }
 }
-
-/* Left Brand Panel (NexusOST System Card Aesthetic) */
 
 .auth-brand-side {
   background: var(--bg-secondary);
@@ -132,8 +120,6 @@ app-auth,
   margin-bottom: 2rem;
 }
 
-/* Topic Image Box in Brand Side */
-
 .topic-showcase {
   border-radius: 1.25rem;
   overflow: hidden;
@@ -173,8 +159,6 @@ app-auth,
     box-shadow: 0 22px 50px rgba(0, 0, 0, 0.15);
   }
 }
-
-/* Ambient Floating Mesh Orbs */
 
 .auth-glow-orb {
   position: fixed;
@@ -237,11 +221,17 @@ app-auth,
   display: block;
 }
 
-/* System Status Footer Box (Matching Sidebar Footer) */
-
 .auth-status-box {
   background: var(--bg-card);
   border: 1px solid var(--border-color);
   border-radius: 1rem;
   padding: 1rem 1.25rem;
+}
+
+[data-theme='dark'] {
+  .auth-bg-gradient {
+    background:
+      radial-gradient(circle at 15% 20%, rgba(59, 130, 246, 0.12), transparent 50%),
+      radial-gradient(circle at 85% 80%, rgba(168, 85, 247, 0.1), transparent 50%);
+  }
 }

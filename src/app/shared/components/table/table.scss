@@ -3,11 +3,6 @@ app-table {
   display: contents;
 }
 
-/* ======================================================
-   ENTERPRISE DATA TABLE SCROLLABLE CONTAINER
-   (Employee, Leave Request, Recruitment, Country, Settings Roles)
-   ====================================================== */
-
 #empListView .table-responsive,
 #leaveListView .table-responsive,
 #recruitmentListView .table-responsive,
@@ -46,11 +41,6 @@ app-table {
   }
 }
 
-/* ======================================================
-   REUSABLE PINNED / STICKY COLUMN SYSTEM (.col-pin)
-   Allows pinning any single or multiple columns on the left
-   ====================================================== */
-
 .col-pin,
 th.col-pin,
 td.col-pin {
@@ -75,4 +65,64 @@ td.col-pin,
 tr:hover td.col-pin,
 .app-list-table tbody tr:hover td.col-pin {
   background: var(--bg-hover) !important;
+}
+
+.app-list-table {
+  width: 100%;
+  min-width: 1400px;
+  border-collapse: separate;
+  border-spacing: 0;
+
+  thead th {
+    background: var(--bg-header-table);
+    color: var(--text-muted);
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border-color);
+    white-space: nowrap;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+
+    &:first-child {
+      border-radius: 10px 0 0 0;
+    }
+
+    &:last-child {
+      border-radius: 0 10px 0 0;
+    }
+  }
+
+  tbody tr {
+    border-bottom: 1px solid var(--border-light);
+    transition: background 0.15s;
+    cursor: pointer;
+
+    &:hover {
+      background: var(--bg-hover);
+    }
+
+    &:last-child td {
+      border-bottom: none;
+    }
+
+    &.deleted-row {
+      background-color: rgba(239, 68, 68, 0.05) !important;
+      transition: background-color 0.2s ease;
+
+      &:hover {
+        background-color: rgba(239, 68, 68, 0.1) !important;
+      }
+    }
+  }
+
+  td {
+    padding: 12px 14px;
+    font-size: 0.83rem;
+    color: var(--text-main);
+    vertical-align: middle;
+  }
 }

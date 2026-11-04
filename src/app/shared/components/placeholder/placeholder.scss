@@ -2,10 +2,6 @@
   display: contents;
 }
 
-/* ==========================================================================
-   BOOTSTRAP PLACEHOLDERS TABLE SKELETON STYLING
-   ========================================================================== */
-
 .skeleton-row {
   transition: opacity 0.25s ease;
 
@@ -18,5 +14,15 @@
     display: inline-block;
     vertical-align: middle;
     border-radius: 4px;
+  }
+}
+
+[data-theme='dark'] {
+  .skeleton-row .placeholder {
+    background-color: rgba(255, 255, 255, 0.14) !important;
+  }
+
+  .placeholder-glow .placeholder {
+    animation-duration: 1.6s;
   }
 }
