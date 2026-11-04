@@ -57,6 +57,22 @@ export class WardModal {
 
   //#region //@ HELPERS
 
+  async loadComboboxData() {
+    await Promise.allSettled([this.loadProvinces()]);
+  }
+
+  private async loadProvinces() {
+    if (this.provinces().length > 0) return;
+
+    try {
+      const filter = this.buildFilter();
+      const res = await this.provinceFacade.getPaging(filter);
+      this.provinces.set(res.result?.items || []);
+    } catch {
+      this.provinces.set([]);
+    }
+  }
+
   private buildFilter(): PagingRequest {
     const filter: PagingRequest = {
       allowPaging: false,
@@ -113,22 +129,6 @@ export class WardModal {
     } catch {
     } finally {
       this.isSaving.set(false);
-    }
-  }
-
-  async loadComboboxData() {
-    await Promise.allSettled([this.loadProvinces()]);
-  }
-
-  private async loadProvinces() {
-    if (this.provinces().length > 0) return;
-
-    try {
-      const filter = this.buildFilter();
-      const res = await this.provinceFacade.getPaging(filter);
-      this.provinces.set(res.result?.items || []);
-    } catch {
-      this.provinces.set([]);
     }
   }
 

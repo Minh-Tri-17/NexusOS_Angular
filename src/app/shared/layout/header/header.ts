@@ -64,10 +64,23 @@ export class Header implements OnInit {
 
   //#endregion
 
-  handleClearTopbarSearch(input: HTMLInputElement) {
-    input.value = '';
-    this.topbarSearchText.set('');
+  //#region //@ HELPERS
+
+  private async loadUserRole() {
+    const roleId = this.currentUser()?.roleId;
+    if (!roleId) return;
+
+    try {
+      const res = await this.roleFacade.getById(roleId);
+      if (res?.result?.roleName) {
+        this.authService.setRoleName(res.result.roleName);
+      }
+    } catch {}
   }
+
+  //#endregion
+
+  //#region //@ METHODS
 
   ngOnInit() {
     this.loadUserRole();
@@ -96,18 +109,9 @@ export class Header implements OnInit {
     if (window.scrollY > 10) this.isScrolled.set(true);
   }
 
-  //#region //@ METHODS
-
-  private async loadUserRole() {
-    const roleId = this.currentUser()?.roleId;
-    if (!roleId) return;
-
-    try {
-      const res = await this.roleFacade.getById(roleId);
-      if (res?.result?.roleName) {
-        this.authService.setRoleName(res.result.roleName);
-      }
-    } catch {}
+  handleClearTopbarSearch(input: HTMLInputElement) {
+    input.value = '';
+    this.topbarSearchText.set('');
   }
 
   handleToggleTheme() {

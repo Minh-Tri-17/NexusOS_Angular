@@ -176,11 +176,90 @@ export class RoleModal implements OnInit {
 
   //#endregion
 
+  //#region //@ HELPERS
+
+  //* Cập nhật hàng loạt trạng thái quyền
+  private setPermissionStates(codes: string[], isGranted: boolean) {
+    this.permissionStates.update((prev) => {
+      const next = { ...prev };
+      for (const code of codes) {
+        next[code] = isGranted;
+      }
+      return next;
+    });
+  }
+
+  //* Lấy danh sách tất cả mã quyền hợp lệ của một hàng
+  private getRowCodes(row: PermissionMatrixScopeRow): string[] {
+    return Object.values(row.actions).filter((c): c is string => !!c);
+  }
+
+  //* Lấy danh sách tất cả mã quyền hợp lệ của một cột thao tác
+  private getColumnCodes(action: string): string[] {
+    return this.matrixRows()
+      .map((r) => r.actions[action])
+      .filter((c): c is string => !!c);
+  }
+
+  //* Kiểm tra mã quyền cụ thể đã được cấp hay chưa
+  isGranted(code: string | null): boolean {
+    if (!code) return false;
+    return !!this.permissionStates()[code];
+  }
+
+  //* Kiểm tra tất cả quyền trong hàng đã được chọn hết chưa
+  isRowAllSelected(row: PermissionMatrixScopeRow): boolean {
+    const codes = this.getRowCodes(row);
+    if (codes.length === 0) return false;
+
+    const states = this.permissionStates();
+    return codes.every((code) => !!states[code]);
+  }
+
+  //* Kiểm tra hàng chỉ mới được chọn một phần quyền
+  isRowIndeterminate(row: PermissionMatrixScopeRow): boolean {
+    const codes = this.getRowCodes(row);
+    if (codes.length === 0) return false;
+
+    const states = this.permissionStates();
+    const checkedCount = codes.filter((code) => !!states[code]).length;
+    return checkedCount > 0 && checkedCount < codes.length;
+  }
+
+  //* Kiểm tra tất cả quyền trong cột thao tác đã được chọn hết chưa
+  isColumnAllSelected(action: string): boolean {
+    const codes = this.getColumnCodes(action);
+    if (codes.length === 0) return false;
+    const states = this.permissionStates();
+    return codes.every((code) => !!states[code]);
+  }
+
+  //* Kiểm tra cột thao tác chỉ mới được chọn một phần quyền
+  isColumnIndeterminate(action: string): boolean {
+    const codes = this.getColumnCodes(action);
+    if (codes.length === 0) return false;
+    const states = this.permissionStates();
+    const checkedCount = codes.filter((code) => !!states[code]).length;
+    return checkedCount > 0 && checkedCount < codes.length;
+  }
+
+  getScopeIcon(scope: string): string {
+    return SCOPE_DISPLAY_INFO[scope]?.icon || 'fa-solid fa-layer-group';
+  }
+
+  getActionLabel(action: string): string {
+    const key = `role.${action.toLowerCase()}`;
+    const translated = this.translate.instant(key);
+    return translated !== key ? translated : action;
+  }
+
+  //#endregion
+
+  //#region //@ METHODS
+
   ngOnInit() {
     this.loadPermissions();
   }
-
-  //#region //@ METHODS
 
   initCreateForm() {
     this.roleForm.reset({
@@ -297,81 +376,6 @@ export class RoleModal implements OnInit {
   toggleAll() {
     const targetState = !this.isAllSelected();
     this.setPermissionStates(this.rawPermissions(), targetState);
-  }
-
-  //* Cập nhật hàng loạt trạng thái quyền
-  private setPermissionStates(codes: string[], isGranted: boolean) {
-    this.permissionStates.update((prev) => {
-      const next = { ...prev };
-      for (const code of codes) {
-        next[code] = isGranted;
-      }
-      return next;
-    });
-  }
-
-  //* Kiểm tra mã quyền cụ thể đã được cấp hay chưa
-  isGranted(code: string | null): boolean {
-    if (!code) return false;
-    return !!this.permissionStates()[code];
-  }
-
-  //* Kiểm tra tất cả quyền trong hàng đã được chọn hết chưa
-  isRowAllSelected(row: PermissionMatrixScopeRow): boolean {
-    const codes = this.getRowCodes(row);
-    if (codes.length === 0) return false;
-
-    const states = this.permissionStates();
-    return codes.every((code) => !!states[code]);
-  }
-
-  //* Kiểm tra hàng chỉ mới được chọn một phần quyền
-  isRowIndeterminate(row: PermissionMatrixScopeRow): boolean {
-    const codes = this.getRowCodes(row);
-    if (codes.length === 0) return false;
-
-    const states = this.permissionStates();
-    const checkedCount = codes.filter((code) => !!states[code]).length;
-    return checkedCount > 0 && checkedCount < codes.length;
-  }
-
-  //* Kiểm tra tất cả quyền trong cột thao tác đã được chọn hết chưa
-  isColumnAllSelected(action: string): boolean {
-    const codes = this.getColumnCodes(action);
-    if (codes.length === 0) return false;
-    const states = this.permissionStates();
-    return codes.every((code) => !!states[code]);
-  }
-
-  //* Kiểm tra cột thao tác chỉ mới được chọn một phần quyền
-  isColumnIndeterminate(action: string): boolean {
-    const codes = this.getColumnCodes(action);
-    if (codes.length === 0) return false;
-    const states = this.permissionStates();
-    const checkedCount = codes.filter((code) => !!states[code]).length;
-    return checkedCount > 0 && checkedCount < codes.length;
-  }
-
-  //* Lấy danh sách tất cả mã quyền hợp lệ của một hàng
-  getRowCodes(row: PermissionMatrixScopeRow): string[] {
-    return Object.values(row.actions).filter((c): c is string => !!c);
-  }
-
-  //* Lấy danh sách tất cả mã quyền hợp lệ của một cột thao tác
-  getColumnCodes(action: string): string[] {
-    return this.matrixRows()
-      .map((r) => r.actions[action])
-      .filter((c): c is string => !!c);
-  }
-
-  getScopeIcon(scope: string): string {
-    return SCOPE_DISPLAY_INFO[scope]?.icon || 'fa-solid fa-layer-group';
-  }
-
-  getActionLabel(action: string): string {
-    const key = `role.${action.toLowerCase()}`;
-    const translated = this.translate.instant(key);
-    return translated !== key ? translated : action;
   }
 
   //#endregion

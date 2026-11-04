@@ -74,6 +74,38 @@ export class UserModal {
 
   //#endregion
 
+  //#region //@ HELPERS
+
+  private async loadEmployees() {
+    if (this.employees().length > 0) return;
+
+    try {
+      const filter: PagingRequest = { allowPaging: false };
+      const res = await this.employeeFacade.getPaging(filter);
+      this.employees.set(res.result?.items || []);
+    } catch {
+      this.employees.set([]);
+    }
+  }
+
+  private async loadRoles() {
+    if (this.roles().length > 0) return;
+
+    try {
+      const filter: PagingRequest = { allowPaging: false };
+      const res = await this.roleFacade.getPaging(filter);
+      this.roles.set(res.result?.items || []);
+    } catch {
+      this.roles.set([]);
+    }
+  }
+
+  async loadComboboxData() {
+    await Promise.allSettled([this.loadEmployees(), this.loadRoles()]);
+  }
+
+  //#endregion
+
   //#region //@ METHODS
 
   initCreateForm() {
@@ -172,34 +204,6 @@ export class UserModal {
     } catch {
     } finally {
       this.isSaving.set(false);
-    }
-  }
-
-  async loadComboboxData() {
-    await Promise.allSettled([this.loadEmployees(), this.loadRoles()]);
-  }
-
-  private async loadEmployees() {
-    if (this.employees().length > 0) return;
-
-    try {
-      const filter: PagingRequest = { allowPaging: false };
-      const res = await this.employeeFacade.getPaging(filter);
-      this.employees.set(res.result?.items || []);
-    } catch {
-      this.employees.set([]);
-    }
-  }
-
-  private async loadRoles() {
-    if (this.roles().length > 0) return;
-
-    try {
-      const filter: PagingRequest = { allowPaging: false };
-      const res = await this.roleFacade.getPaging(filter);
-      this.roles.set(res.result?.items || []);
-    } catch {
-      this.roles.set([]);
     }
   }
 

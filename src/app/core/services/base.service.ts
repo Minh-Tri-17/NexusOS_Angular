@@ -5,9 +5,17 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
   providedIn: 'root',
 })
 export class BaseService {
+  //#region //@ STATE
+
   private readonly modal = inject(NgbModal);
+
+  //#endregion
+
+  //#region //@ METHODS
 
   closeModal() {
     this.modal.dismissAll();
   }
+
+  //#endregion
 }

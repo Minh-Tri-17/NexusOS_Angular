@@ -12,7 +12,7 @@ export class AuthService {
 
   //#endregion
 
-  //#region Helpers
+  //#region //@ HELPERS
 
   private decodeToken(token: string): any {
     try {

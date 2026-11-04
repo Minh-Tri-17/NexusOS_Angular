@@ -22,7 +22,7 @@ export class ThemeService {
 
   //#endregion
 
-  //#region Helpers
+  //#region //@ HELPERS
 
   private getInitialTheme(): Theme {
     if (this.isBrowser) {

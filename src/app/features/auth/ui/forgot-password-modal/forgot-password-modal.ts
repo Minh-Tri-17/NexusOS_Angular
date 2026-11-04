@@ -130,7 +130,7 @@ export class ForgotPasswordModal {
 
   //#endregion
 
-  //#region //@ HELPER
+  //#region //@ HELPERS
 
   private startOtpCountDown(seconds = 60) {
     this.startCountdown$.next(seconds);

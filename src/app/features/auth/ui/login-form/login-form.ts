@@ -43,6 +43,8 @@ export class LoginForm {
   private readonly authService = inject(AuthService);
   private readonly modal = inject(NgbModal);
 
+  //#region //@ PROPS
+
   readonly demoRoles = [
     {
       key: 'director',
@@ -62,6 +64,8 @@ export class LoginForm {
   ] as const;
   readonly loginTabs: readonly LoginTab[] = ['email', 'empId'] as const;
 
+  //#endregion
+
   //#region //@ STATE
 
   readonly loginForm = new FormGroup({
@@ -74,6 +78,25 @@ export class LoginForm {
   readonly currentFill = signal<DemoRole | null>(null);
   readonly isSigning = signal(false);
   readonly isVisibility = signal(false);
+
+  //#endregion
+
+  //#region //@ HELPERS
+
+  private updateFormAccount() {
+    const currentRole = this.currentFill();
+    if (!currentRole) return;
+
+    const acc = DEMO_ACCOUNTS[currentRole];
+    if (!acc) return;
+
+    const identifier = this.currentTab() === 'email' ? acc.email : acc.username;
+
+    this.loginForm.patchValue({
+      username: identifier,
+      password: acc.pwd,
+    });
+  }
 
   //#endregion
 
@@ -100,21 +123,6 @@ export class LoginForm {
     } finally {
       this.isSigning.set(false);
     }
-  }
-
-  private updateFormAccount() {
-    const currentRole = this.currentFill();
-    if (!currentRole) return;
-
-    const acc = DEMO_ACCOUNTS[currentRole];
-    if (!acc) return;
-
-    const identifier = this.currentTab() === 'email' ? acc.email : acc.username;
-
-    this.loginForm.patchValue({
-      username: identifier,
-      password: acc.pwd,
-    });
   }
 
   handleFillAccount(role: DemoRole) {

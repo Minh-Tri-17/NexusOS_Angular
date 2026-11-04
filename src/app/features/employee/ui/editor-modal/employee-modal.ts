@@ -108,6 +108,46 @@ export class EmployeeModal {
 
   //#region //@ HELPERS
 
+  async loadComboboxData() {
+    await Promise.allSettled([this.loadCountries(), this.loadProvinces(), this.loadWards()]);
+  }
+
+  private async loadCountries() {
+    if (this.countries().length > 0) return;
+
+    try {
+      const filter = this.buildFilter();
+      const res = await this.countryFacade.getPaging(filter);
+      this.countries.set(res.result?.items || []);
+    } catch {
+      this.countries.set([]);
+    }
+  }
+
+  private async loadProvinces() {
+    if (this.provinces().length > 0) return;
+
+    try {
+      const filter = this.buildFilter();
+      const res = await this.provinceFacade.getPaging(filter);
+      this.provinces.set(res.result?.items || []);
+    } catch {
+      this.provinces.set([]);
+    }
+  }
+
+  private async loadWards() {
+    if (this.wards().length > 0) return;
+
+    try {
+      const filter = this.buildFilter();
+      const res = await this.wardFacade.getPaging(filter);
+      this.wards.set(res.result?.items || []);
+    } catch {
+      this.wards.set([]);
+    }
+  }
+
   private buildFilter(): PagingRequest {
     const filter: PagingRequest = {
       allowPaging: false,
@@ -251,46 +291,6 @@ export class EmployeeModal {
     } catch {
     } finally {
       this.isSaving.set(false);
-    }
-  }
-
-  async loadComboboxData() {
-    await Promise.allSettled([this.loadCountries(), this.loadProvinces(), this.loadWards()]);
-  }
-
-  private async loadCountries() {
-    if (this.countries().length > 0) return;
-
-    try {
-      const filter = this.buildFilter();
-      const res = await this.countryFacade.getPaging(filter);
-      this.countries.set(res.result?.items || []);
-    } catch {
-      this.countries.set([]);
-    }
-  }
-
-  private async loadProvinces() {
-    if (this.provinces().length > 0) return;
-
-    try {
-      const filter = this.buildFilter();
-      const res = await this.provinceFacade.getPaging(filter);
-      this.provinces.set(res.result?.items || []);
-    } catch {
-      this.provinces.set([]);
-    }
-  }
-
-  private async loadWards() {
-    if (this.wards().length > 0) return;
-
-    try {
-      const filter = this.buildFilter();
-      const res = await this.wardFacade.getPaging(filter);
-      this.wards.set(res.result?.items || []);
-    } catch {
-      this.wards.set([]);
     }
   }
 

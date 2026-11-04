@@ -57,6 +57,22 @@ export class ProvinceModal {
 
   //#region //@ HELPERS
 
+  async loadComboboxData() {
+    await Promise.allSettled([this.loadCountries()]);
+  }
+
+  private async loadCountries() {
+    if (this.countries().length > 0) return;
+
+    try {
+      const filter = this.buildFilter();
+      const res = await this.countryFacade.getPaging(filter);
+      this.countries.set(res.result?.items || []);
+    } catch {
+      this.countries.set([]);
+    }
+  }
+
   private buildFilter(): PagingRequest {
     const filter: PagingRequest = {
       allowPaging: false,
@@ -113,22 +129,6 @@ export class ProvinceModal {
     } catch {
     } finally {
       this.isSaving.set(false);
-    }
-  }
-
-  async loadComboboxData() {
-    await Promise.allSettled([this.loadCountries()]);
-  }
-
-  private async loadCountries() {
-    if (this.countries().length > 0) return;
-
-    try {
-      const filter = this.buildFilter();
-      const res = await this.countryFacade.getPaging(filter);
-      this.countries.set(res.result?.items || []);
-    } catch {
-      this.countries.set([]);
     }
   }
 
