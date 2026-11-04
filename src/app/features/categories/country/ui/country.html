@@ -170,9 +170,18 @@
 
             <td class="text-nowrap">
               @if (country.region) {
-                <span class="badge-soft" [class]="regionConfig[country.region]?.cssClass">
-                  <i class="fa-solid fa-globe-asia me-1"></i>
-                  {{ regionConfig[country.region]?.label ? (regionConfig[country.region].label | translate) : country.region }}
+                <span
+                  class="badge-soft"
+                  [class]="regionConfig[country.region]?.cssClass ?? 'badge-secondary'"
+                >
+                  @if (regionConfig[country.region]?.icon) {
+                    <i class="fa-solid" [class]="regionConfig[country.region]!.icon"></i>
+                  }
+                  {{
+                    regionConfig[country.region]?.label
+                      ? (regionConfig[country.region]!.label | translate)
+                      : country.region
+                  }}
                 </span>
               } @else {
                 <span class="text-muted opacity-50">—</span>

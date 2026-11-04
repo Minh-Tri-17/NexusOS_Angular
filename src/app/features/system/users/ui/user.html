@@ -12,14 +12,22 @@
       @if (filterUserStatus()) {
         <span class="filter-chip"
           ><i class="fa-solid fa-filter chip-icon"></i> {{ 'user.userStatus' | translate }}:
-          <strong>{{ filterUserStatus() }}</strong
+          <strong>{{
+            userStatusConfig[filterUserStatus()!]?.label
+              ? (userStatusConfig[filterUserStatus()!]!.label | translate)
+              : filterUserStatus()
+          }}</strong
           ><i class="fa-solid fa-xmark chip-remove-btn" (click)="filterUserStatus.set(null)"></i
         ></span>
       }
       @if (filterUserType()) {
         <span class="filter-chip"
           ><i class="fa-solid fa-filter chip-icon"></i> {{ 'user.userType' | translate }}:
-          <strong>{{ filterUserType() }}</strong
+          <strong>{{
+            userTypeConfig[filterUserType()!]?.label
+              ? (userTypeConfig[filterUserType()!]!.label | translate)
+              : filterUserType()
+          }}</strong
           ><i class="fa-solid fa-xmark chip-remove-btn" (click)="filterUserType.set(null)"></i
         ></span>
       }
@@ -180,8 +188,16 @@
                 <span
                   class="badge-soft"
                   [class]="userStatusConfig[user.userStatus]?.cssClass ?? 'badge-secondary'"
-                  >{{ userStatusConfig[user.userStatus]?.label ? (userStatusConfig[user.userStatus].label | translate) : user.userStatus }}</span
                 >
+                  @if (userStatusConfig[user.userStatus]?.icon) {
+                    <i class="fa-solid" [class]="userStatusConfig[user.userStatus]!.icon"></i>
+                  }
+                  {{
+                    userStatusConfig[user.userStatus]?.label
+                      ? (userStatusConfig[user.userStatus]!.label | translate)
+                      : user.userStatus
+                  }}
+                </span>
               } @else {
                 <span class="text-muted opacity-50">—</span>
               }
@@ -190,9 +206,17 @@
               @if (user.userType) {
                 <span
                   class="badge-soft"
-                  [class]="userTypeConfig[user.userType]?.cssClass ?? 'badge-indigo'"
-                  >{{ userTypeConfig[user.userType]?.label ? (userTypeConfig[user.userType].label | translate) : user.userType }}</span
+                  [class]="userTypeConfig[user.userType]?.cssClass ?? 'badge-secondary'"
                 >
+                  @if (userTypeConfig[user.userType]?.icon) {
+                    <i class="fa-solid" [class]="userTypeConfig[user.userType]!.icon"></i>
+                  }
+                  {{
+                    userTypeConfig[user.userType]?.label
+                      ? (userTypeConfig[user.userType]!.label | translate)
+                      : user.userType
+                  }}
+                </span>
               } @else {
                 <span class="text-muted opacity-50">—</span>
               }

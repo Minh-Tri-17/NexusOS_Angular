@@ -3,3 +3,5 @@ export interface Result<T> {
   message?: string | null;
   result?: T | null;
 }
+
+export * from './enum.model';
