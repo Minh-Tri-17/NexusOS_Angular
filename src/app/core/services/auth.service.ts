@@ -1,16 +1,24 @@
-import { Injectable, signal } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
+import { RoleFacade } from '../../features/system/roles/data-access/role.facade';
 import { JwtUserPayload } from '../models/jwt-payload.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
+  private readonly roleFacade = inject(RoleFacade);
+
   //#region //@ STATE
 
   private readonly TOKEN_KEY = 'auth_token';
   readonly currentUser = signal<JwtUserPayload | null>(this.getUserFromToken());
 
   //#endregion
+
+  constructor() {
+    const user = this.currentUser();
+    if (user) this.loadRoleName(user);
+  }
 
   //#region //@ HELPERS
 
@@ -49,8 +57,16 @@ export class AuthService {
     return {
       userId: payload['UserID'] || '',
       ownerId: payload['OwnerID'] || null,
-      username: payload['unique_name'] || payload['name'] || '',
-      fullName: payload['given_name'] || payload['unique_name'] || 'User',
+      username:
+        payload['unique_name'] ||
+        payload['name'] ||
+        payload['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'] ||
+        '',
+      fullName:
+        payload['given_name'] ||
+        payload['givenname'] ||
+        payload['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname'] ||
+        'User',
       roleId: roleId,
       roleName: null,
       exp: payload['exp'],
@@ -64,13 +80,28 @@ export class AuthService {
     return this.parseUser(token);
   }
 
+  private async loadRoleName(user: JwtUserPayload) {
+    if (!user.roleId) return;
+
+    try {
+      const role = await this.roleFacade.getById(user.roleId);
+      this.currentUser.update((current) => {
+        if (!current || current.roleId !== user.roleId) return current;
+
+        return { ...current, roleName: role?.result?.roleName || null };
+      });
+    } catch {}
+  }
+
   //#endregion
 
   //#region //@ METHODS
 
   setToken(token: string) {
     localStorage.setItem(this.TOKEN_KEY, token);
-    this.currentUser.set(this.parseUser(token));
+    const user = this.parseUser(token);
+    this.currentUser.set(user);
+    if (user) this.loadRoleName(user);
   }
 
   getToken(): string | null {

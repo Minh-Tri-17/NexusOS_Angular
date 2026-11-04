@@ -17,7 +17,6 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { auditTime, fromEvent } from 'rxjs';
 import { AuthService } from '../../../core/services/auth.service';
 import { ThemeService } from '../../../core/services/theme.service';
-import { RoleFacade } from '../../../features/system/roles/data-access/role.facade';
 import { Languages } from '../../components/languages/languages';
 
 @Component({
@@ -32,7 +31,6 @@ export class Header implements OnInit {
   private readonly ngZone = inject(NgZone);
   private readonly platformId = inject(PLATFORM_ID);
   private readonly destroyRef = inject(DestroyRef);
-  private readonly roleFacade = inject(RoleFacade);
   private readonly isBrowser = isPlatformBrowser(this.platformId);
 
   protected readonly themeService = inject(ThemeService);
@@ -64,27 +62,9 @@ export class Header implements OnInit {
 
   //#endregion
 
-  //#region //@ HELPERS
-
-  private async loadUserRole() {
-    const roleId = this.currentUser()?.roleId;
-    if (!roleId) return;
-
-    try {
-      const res = await this.roleFacade.getById(roleId);
-      if (res?.result?.roleName) {
-        this.authService.setRoleName(res.result.roleName);
-      }
-    } catch {}
-  }
-
-  //#endregion
-
   //#region //@ METHODS
 
   ngOnInit() {
-    this.loadUserRole();
-
     if (!this.isBrowser) return;
 
     this.ngZone.runOutsideAngular(() => {
