@@ -158,7 +158,16 @@
     "selectWard": "-- 选择区/街道 --",
     "selectEmployee": "-- 选择员工 --",
     "selectUserType": "-- 选择用户类型 --",
-    "selectEducationLevel": "选择学历"
+    "selectEducationLevel": "选择学历",
+    "cardView": "卡片视图",
+    "listView": "列表视图",
+    "department": "部门",
+    "leaveType": "请假类型",
+    "selectManager": "-- 选择负责人 --",
+    "contractType": "合同类型",
+    "contract": "合同",
+    "selectDepartment": "-- 选择部门 --",
+    "selectContractType": "-- 选择合同类型 --"
   },
   "sidebar": {
     "dashboard": "仪表板",
@@ -169,7 +178,9 @@
     "geography": "地理信息",
     "settings": "系统设置",
     "operational": "运行正常",
-    "uptime": "运行时间"
+    "uptime": "运行时间",
+    "general": "通用",
+    "contracts": "劳动合同"
   },
   "header": {
     "searchPlaceholder": "搜索员工、销售交易、报告...",
@@ -243,7 +254,8 @@
     "associate": "大专 / 高职",
     "bachelor": "本科 / 学士",
     "master": "硕士 / 研究生",
-    "doctorate": "博士 / PhD"
+    "doctorate": "博士 / PhD",
+    "manager": "主管"
   },
   "role": {
     "title": "角色与权限管理",
@@ -305,5 +317,74 @@
     "wardName": "区县名称",
     "provinceName": "省市",
     "wardInfo": "区县信息"
+  },
+  "department": {
+    "title": "部门管理",
+    "modalTitle": "部门档案",
+    "description": "管理部门架构、部门编号、负责人及运营信息。",
+    "departmentCode": "部门编号",
+    "departmentName": "部门名称",
+    "managerName": "部门负责人",
+    "manager": "部门负责人 / 主管",
+    "departmentInfo": "部门信息",
+    "codeHint": "部门唯一识别码"
+  },
+  "leaveType": {
+    "title": "请假类型管理",
+    "modalTitle": "请假类型档案",
+    "description": "管理请假类别、假期规定与休假分类。",
+    "leaveTypeCode": "请假类型编号",
+    "leaveTypeName": "请假类型名称",
+    "leaveTypeInfo": "请假类型信息",
+    "codeHint": "请假类型唯一识别码"
+  },
+  "contractType": {
+    "title": "合同类型管理",
+    "modalTitle": "合同类型档案",
+    "description": "管理劳动合同类别、期限及员工合同分类。",
+    "contractTypeCode": "合同类型编号",
+    "contractTypeName": "合同类型名称",
+    "contractTypeInfo": "合同类型信息",
+    "codeHint": "合同类型唯一识别码"
+  },
+  "contract": {
+    "title": "劳动合同管理",
+    "modalTitle": "劳动合同档案",
+    "description": "管理劳动合同、合同期限、薪酬福利、审批流程及有效状态。",
+    "contractCode": "合同编号",
+    "contractName": "合同名称",
+    "employeeName": "员工",
+    "contractTypeName": "合同类型",
+    "contractStatus": "合同状态",
+    "approvalStatus": "审批状态",
+    "startDate": "生效日期",
+    "endDate": "终止日期",
+    "baseSalary": "基本工资",
+    "salaryUnit": "币种",
+    "workingHoursPerWeek": "每周工时",
+    "otrate": "加班费率",
+    "allowanceAmount": "补贴金额",
+    "insuranceContribution": "社保缴纳基数",
+    "signedDate": "签署日期",
+    "signedBy": "签署代表",
+    "draft": "草稿",
+    "canceled": "已取消",
+    "active": "生效中",
+    "expired": "已到期",
+    "terminated": "已终止",
+    "renewed": "已续签",
+    "pending": "待审批",
+    "approved": "已批准",
+    "rejected": "已驳回",
+    "cancelled": "已取消",
+    "selectContractStatus": "-- 选择合同状态 --",
+    "selectApprovalStatus": "-- 选择审批状态 --",
+    "indefinite": "无固定期限",
+    "contractInfo": "合同基础信息",
+    "termAndWorkingHours": "期限与工作时间",
+    "compensationAndInsurance": "薪酬、津贴与保险",
+    "signingAndNotes": "签署与备注",
+    "codeHint": "合同唯一编号",
+    "endDateHint": "如为无固定期限合同请留空"
   }
 }

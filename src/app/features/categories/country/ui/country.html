@@ -161,7 +161,7 @@
             <td>
               @if (country.capital) {
                 <span class="text-muted small">
-                  <i class="fa-solid fa-location-dot text-primary me-1"></i>{{ country.capital }}</span
+                  <i class="fa-solid fa-location-dot text-secondary opacity-75 me-1"></i>{{ country.capital }}</span
                 >
               } @else {
                 <span class="text-muted opacity-50">—</span>
@@ -207,7 +207,7 @@
             <td class="text-nowrap">
               @if (country.createdBy) {
                 <span class="text-muted small">
-                  <i class="fa-regular fa-user me-1"></i>{{ country.createdBy }}</span
+                  <i class="fa-regular fa-user me-1 text-secondary opacity-75"></i>{{ country.createdBy }}</span
                 >
               } @else {
                 <span class="text-muted opacity-50">—</span>
@@ -225,7 +225,7 @@
             <td class="text-nowrap">
               @if (country.updatedBy) {
                 <span class="text-muted small">
-                  <i class="fa-regular fa-user me-1"></i>{{ country.updatedBy }}</span
+                  <i class="fa-regular fa-user me-1 text-secondary opacity-75"></i>{{ country.updatedBy }}</span
                 >
               } @else {
                 <span class="text-muted opacity-50">—</span>

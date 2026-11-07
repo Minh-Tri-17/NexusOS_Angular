@@ -23,7 +23,6 @@
           type="button"
           class="btn btn-link position-absolute top-50 end-0 translate-middle-y py-0 px-3 text-muted"
           (click)="handleClearTopbarSearch(topbarSearchInput)"
-          [attr.aria-label]="'common.clear' | translate"
         >
           <i class="fa-solid fa-xmark"></i>
         </button>
@@ -108,7 +107,9 @@
                   <span>Contract Expiring Soon</span>
                   <span class="unread-dot"></span>
                 </div>
-                <div class="notif-item-desc">5 employee contracts are expiring within the next 7 days.</div>
+                <div class="notif-item-desc">
+                  5 employee contracts are expiring within the next 7 days.
+                </div>
                 <div class="notif-time"><i class="fa-regular fa-clock me-1"></i>1 hour ago</div>
               </div>
             </div>
@@ -165,11 +166,7 @@
       </div>
       <ul class="dropdown-menu dropdown-menu-end user-dropdown-menu" ngbDropdownMenu>
         <li class="dropdown-header-info">
-          <img
-            src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=120&auto=format&fit=crop&q=80"
-            alt="User Avatar"
-            class="header-avatar"
-          />
+          <img src="/images/avatar.jpg" alt="User Avatar" class="header-avatar" />
           <div class="header-details">
             <div class="header-name">{{ displayName() }}</div>
             <div class="header-email">{{ currentUser()?.username || '' }}</div>

@@ -36,6 +36,7 @@ export class WardModal {
   readonly wardForm = new FormGroup({
     id: new FormControl<string | null>(null),
     provinceId: new FormControl<string>('', {
+      nonNullable: true,
       validators: [Validators.required],
     }),
     wardCode: new FormControl<string | null>(null),

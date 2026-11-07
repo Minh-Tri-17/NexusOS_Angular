@@ -35,6 +35,9 @@ export interface EmployeeModel {
   taxCode?: string | null;
   emergencyContactName?: string | null;
   emergencyContactPhone?: string | null;
+  managerName?: string | null;
+  contractName?: string | null;
+  contractTypeName?: string | null;
 
   note?: string | null;
   createdAt?: Date | null;
@@ -78,6 +81,9 @@ export const EmployeeFields: Record<keyof EmployeeModel, string> = {
   taxCode: 'TaxCode',
   emergencyContactName: 'EmergencyContactName',
   emergencyContactPhone: 'EmergencyContactPhone',
+  managerName: 'ManagerName',
+  contractName: 'ContractName',
+  contractTypeName: 'ContractTypeName',
 
   note: 'Note',
   createdAt: 'CreatedAt',

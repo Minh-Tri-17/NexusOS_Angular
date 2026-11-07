@@ -1,0 +1,404 @@
+<app-modal>
+  <ng-container modal-eyebrow>{{ 'contract.modalTitle' | translate }}</ng-container>
+
+  <ng-container modal-title
+    >{{ title() | translate }} {{ 'common.contract' | translate }}</ng-container
+  >
+
+  <ng-container modal-header-extra>
+    <span class="badge-soft badge-teal d-none d-sm-inline-flex">
+      <i class="fa-solid fa-bolt"></i> {{ 'common.liveSync' | translate }}
+    </span>
+  </ng-container>
+
+  <ng-container modal-form>
+    <form
+      id="contractEditorForm"
+      [formGroup]="contractForm"
+      ngNativeValidate
+      (ngSubmit)="handleSave()"
+    >
+      <div class="modal-body px-4 py-3 position-relative z-1">
+        <!-- Section 1: Basic Contract Info -->
+        <div class="form-section-card mb-4">
+          <div class="form-section-header">
+            <div class="d-flex align-items-center gap-2">
+              <i class="fa-solid fa-file-contract text-primary"></i>
+              <span class="fw-bold">{{ 'contract.contractInfo' | translate }}</span>
+            </div>
+            <span class="badge-soft badge-indigo">
+              <i class="fa-solid fa-list-check"></i> 6 {{ 'common.fields' | translate }}
+            </span>
+          </div>
+
+          <div class="row g-3">
+            <div class="col-md-4">
+              <label for="inputContractCode" class="form-label custom-form-label">
+                {{ 'contract.contractCode' | translate }}
+              </label>
+              <div class="input-group custom-input-group">
+                <span class="input-group-text"><i class="fa-solid fa-hashtag"></i></span>
+                <input
+                  type="text"
+                  class="form-control custom-form-control disabled"
+                  id="inputContractCode"
+                  placeholder="e.g. CTR-001"
+                  formControlName="contractCode"
+                />
+              </div>
+              <div class="form-text-hint">
+                <i class="fa-solid fa-circle-info"></i> {{ 'contract.codeHint' | translate }}
+              </div>
+            </div>
+
+            <div class="col-md-8">
+              <label for="inputContractName" class="form-label custom-form-label">
+                {{ 'contract.contractName' | translate }} <span class="text-danger fw-bold">*</span>
+              </label>
+              <div class="input-group custom-input-group">
+                <span class="input-group-text"><i class="fa-solid fa-signature"></i></span>
+                <input
+                  type="text"
+                  class="form-control custom-form-control"
+                  id="inputContractName"
+                  placeholder="e.g. Hợp đồng lao động chính thức..."
+                  formControlName="contractName"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <label for="inputEmployee" class="form-label custom-form-label">
+                {{ 'contract.employeeName' | translate }} <span class="text-danger fw-bold">*</span>
+              </label>
+              <div class="input-group custom-input-group">
+                <span class="input-group-text"><i class="fa-solid fa-user"></i></span>
+                <select
+                  class="form-select custom-form-select"
+                  id="inputEmployee"
+                  formControlName="employeeId"
+                  required
+                >
+                  <option value="">{{ 'common.selectEmployee' | translate }}</option>
+                  @for (emp of employees(); track emp.id) {
+                    <option [value]="emp.id">
+                      {{ emp.employeeCode ? ('#' + emp.employeeCode + ' - ' + emp.employeeName) : emp.employeeName }}
+                    </option>
+                  }
+                </select>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <label for="inputContractType" class="form-label custom-form-label">
+                {{ 'contract.contractTypeName' | translate }} <span class="text-danger fw-bold">*</span>
+              </label>
+              <div class="input-group custom-input-group">
+                <span class="input-group-text"><i class="fa-solid fa-tag"></i></span>
+                <select
+                  class="form-select custom-form-select"
+                  id="inputContractType"
+                  formControlName="contractTypeId"
+                  required
+                >
+                  <option value="">{{ 'common.selectContractType' | translate }}</option>
+                  @for (ct of contractTypes(); track ct.id) {
+                    <option [value]="ct.id">
+                      {{ ct.contractTypeCode ? ('#' + ct.contractTypeCode + ' - ' + ct.contractTypeName) : ct.contractTypeName }}
+                    </option>
+                  }
+                </select>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <label for="inputContractStatus" class="form-label custom-form-label">
+                {{ 'contract.contractStatus' | translate }}
+              </label>
+              <div class="input-group custom-input-group">
+                <span class="input-group-text"><i class="fa-solid fa-circle-dot"></i></span>
+                <select
+                  class="form-select custom-form-select"
+                  id="inputContractStatus"
+                  formControlName="contractStatus"
+                >
+                  @for (st of contractStatuses; track st.value) {
+                    <option [value]="st.value">{{ st.label | translate }}</option>
+                  }
+                </select>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <label for="inputApprovalStatus" class="form-label custom-form-label">
+                {{ 'contract.approvalStatus' | translate }}
+              </label>
+              <div class="input-group custom-input-group">
+                <span class="input-group-text"><i class="fa-solid fa-stamp"></i></span>
+                <select
+                  class="form-select custom-form-select"
+                  id="inputApprovalStatus"
+                  formControlName="approvalStatus"
+                >
+                  @for (st of approvalStatuses; track st.value) {
+                    <option [value]="st.value">{{ st.label | translate }}</option>
+                  }
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 2: Term & Working Hours -->
+        <div class="form-section-card mb-4">
+          <div class="form-section-header">
+            <div class="d-flex align-items-center gap-2">
+              <i class="fa-solid fa-calendar-days text-primary"></i>
+              <span class="fw-bold">{{ 'contract.termAndWorkingHours' | translate }}</span>
+            </div>
+            <span class="badge-soft badge-indigo">
+              <i class="fa-solid fa-list-check"></i> 4 {{ 'common.fields' | translate }}
+            </span>
+          </div>
+
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label for="inputStartDate" class="form-label custom-form-label">
+                {{ 'contract.startDate' | translate }} <span class="text-danger fw-bold">*</span>
+              </label>
+              <div class="input-group custom-input-group">
+                <span class="input-group-text"><i class="fa-solid fa-calendar-check"></i></span>
+                <input
+                  type="date"
+                  class="form-control custom-form-control"
+                  id="inputStartDate"
+                  formControlName="startDate"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <label for="inputEndDate" class="form-label custom-form-label">
+                {{ 'contract.endDate' | translate }}
+              </label>
+              <div class="input-group custom-input-group">
+                <span class="input-group-text"><i class="fa-solid fa-calendar-xmark"></i></span>
+                <input
+                  type="date"
+                  class="form-control custom-form-control"
+                  id="inputEndDate"
+                  formControlName="endDate"
+                />
+              </div>
+              <div class="form-text-hint">
+                <i class="fa-solid fa-circle-info"></i> {{ 'contract.endDateHint' | translate }}
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <label for="inputWorkingHours" class="form-label custom-form-label">
+                {{ 'contract.workingHoursPerWeek' | translate }}
+              </label>
+              <div class="input-group custom-input-group">
+                <span class="input-group-text"><i class="fa-solid fa-clock"></i></span>
+                <input
+                  type="number"
+                  step="0.5"
+                  min="0"
+                  class="form-control custom-form-control"
+                  id="inputWorkingHours"
+                  placeholder="e.g. 40"
+                  formControlName="workingHoursPerWeek"
+                />
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <label for="inputOtrate" class="form-label custom-form-label">
+                {{ 'contract.otrate' | translate }}
+              </label>
+              <div class="input-group custom-input-group">
+                <span class="input-group-text"><i class="fa-solid fa-percent"></i></span>
+                <input
+                  type="number"
+                  step="0.1"
+                  min="1"
+                  class="form-control custom-form-control"
+                  id="inputOtrate"
+                  placeholder="e.g. 1.5"
+                  formControlName="otrate"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 3: Compensation & Insurance -->
+        <div class="form-section-card mb-4">
+          <div class="form-section-header">
+            <div class="d-flex align-items-center gap-2">
+              <i class="fa-solid fa-money-bill-wave text-primary"></i>
+              <span class="fw-bold">{{ 'contract.compensationAndInsurance' | translate }}</span>
+            </div>
+            <span class="badge-soft badge-indigo">
+              <i class="fa-solid fa-list-check"></i> 4 {{ 'common.fields' | translate }}
+            </span>
+          </div>
+
+          <div class="row g-3">
+            <div class="col-md-8">
+              <label for="inputBaseSalary" class="form-label custom-form-label">
+                {{ 'contract.baseSalary' | translate }}
+              </label>
+              <div class="input-group custom-input-group">
+                <span class="input-group-text"><i class="fa-solid fa-coins"></i></span>
+                <input
+                  type="number"
+                  min="0"
+                  class="form-control custom-form-control"
+                  id="inputBaseSalary"
+                  placeholder="e.g. 15000000"
+                  formControlName="baseSalary"
+                />
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <label for="inputSalaryUnit" class="form-label custom-form-label">
+                {{ 'contract.salaryUnit' | translate }}
+              </label>
+              <div class="input-group custom-input-group">
+                <span class="input-group-text"><i class="fa-solid fa-money-bill"></i></span>
+                <select
+                  class="form-select custom-form-select"
+                  id="inputSalaryUnit"
+                  formControlName="salaryUnit"
+                >
+                  <option value="VND">VND</option>
+                  <option value="USD">USD</option>
+                  <option value="EUR">EUR</option>
+                  <option value="JPY">JPY</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <label for="inputAllowanceAmount" class="form-label custom-form-label">
+                {{ 'contract.allowanceAmount' | translate }}
+              </label>
+              <div class="input-group custom-input-group">
+                <span class="input-group-text"><i class="fa-solid fa-hand-holding-dollar"></i></span>
+                <input
+                  type="number"
+                  min="0"
+                  class="form-control custom-form-control"
+                  id="inputAllowanceAmount"
+                  placeholder="e.g. 1000000"
+                  formControlName="allowanceAmount"
+                />
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <label for="inputInsuranceContribution" class="form-label custom-form-label">
+                {{ 'contract.insuranceContribution' | translate }}
+              </label>
+              <div class="input-group custom-input-group">
+                <span class="input-group-text"><i class="fa-solid fa-shield-heart"></i></span>
+                <input
+                  type="number"
+                  min="0"
+                  class="form-control custom-form-control"
+                  id="inputInsuranceContribution"
+                  placeholder="e.g. 5000000"
+                  formControlName="insuranceContribution"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 4: Signing & Notes -->
+        <div class="form-section-card">
+          <div class="form-section-header">
+            <div class="d-flex align-items-center gap-2">
+              <i class="fa-solid fa-pen-nib text-primary"></i>
+              <span class="fw-bold">{{ 'contract.signingAndNotes' | translate }}</span>
+            </div>
+            <span class="badge-soft badge-indigo">
+              <i class="fa-solid fa-list-check"></i> 3 {{ 'common.fields' | translate }}
+            </span>
+          </div>
+
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label for="inputSignedDate" class="form-label custom-form-label">
+                {{ 'contract.signedDate' | translate }}
+              </label>
+              <div class="input-group custom-input-group">
+                <span class="input-group-text"><i class="fa-solid fa-calendar-day"></i></span>
+                <input
+                  type="date"
+                  class="form-control custom-form-control"
+                  id="inputSignedDate"
+                  formControlName="signedDate"
+                />
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <label for="inputSignedBy" class="form-label custom-form-label">
+                {{ 'contract.signedBy' | translate }}
+              </label>
+              <div class="input-group custom-input-group">
+                <span class="input-group-text"><i class="fa-solid fa-user-pen"></i></span>
+                <input
+                  type="text"
+                  class="form-control custom-form-control"
+                  id="inputSignedBy"
+                  placeholder="e.g. Nguyễn Văn Giám Đốc"
+                  formControlName="signedBy"
+                />
+              </div>
+            </div>
+
+            <div class="col-12">
+              <label for="inputContractNote" class="form-label custom-form-label">
+                {{ 'common.note' | translate }}
+              </label>
+              <div class="input-group custom-input-group">
+                <span class="input-group-text"><i class="fa-solid fa-align-left"></i></span>
+                <textarea
+                  class="form-control custom-form-control"
+                  id="inputContractNote"
+                  rows="3"
+                  placeholder="{{ 'common.placeholderNote' | translate }}"
+                  formControlName="note"
+                ></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </ng-container>
+
+  <ng-container modal-actions>
+    <button
+      type="submit"
+      form="contractEditorForm"
+      class="btn btn-sm btn-pastel-purple px-4 py-2 rounded-3"
+      [disabled]="isSaving()"
+    >
+      @if (isSaving()) {
+        <span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+        {{ 'common.saving' | translate }}
+      } @else {
+        <i class="fa-solid fa-floppy-disk me-1"></i> {{ 'common.save' | translate }}
+      }
+    </button>
+  </ng-container>
+</app-modal>
+

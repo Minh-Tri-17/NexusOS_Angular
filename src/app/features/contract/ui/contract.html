@@ -1,0 +1,406 @@
+<app-summary>
+  <ng-container title-header>
+    {{ 'contract.title' | translate }}
+  </ng-container>
+  <ng-container description>
+    {{ 'contract.description' | translate }}
+  </ng-container>
+</app-summary>
+
+<div class="erp-card p-4 shadow-sm rounded-4">
+  <app-toolbar
+    [(searchText)]="searchText"
+    (clearFilters)="handleClearFilter()"
+    [(filterIsDelete)]="filterIsDelete"
+  >
+    <ng-container active-filters>
+      @if (filterContractStatus()) {
+        <span class="filter-chip">
+          <i class="fa-solid fa-circle-dot chip-icon"></i> {{ 'contract.contractStatus' | translate }}:
+          <strong>{{ contractStatusConfig[filterContractStatus()]?.label ? (contractStatusConfig[filterContractStatus()].label | translate) : filterContractStatus() }}</strong>
+          <i class="fa-solid fa-xmark chip-remove-btn" (click)="filterContractStatus.set('')"></i>
+        </span>
+      }
+      @if (filterApprovalStatus()) {
+        <span class="filter-chip">
+          <i class="fa-solid fa-stamp chip-icon"></i> {{ 'contract.approvalStatus' | translate }}:
+          <strong>{{ approvalStatusConfig[filterApprovalStatus()]?.label ? (approvalStatusConfig[filterApprovalStatus()].label | translate) : filterApprovalStatus() }}</strong>
+          <i class="fa-solid fa-xmark chip-remove-btn" (click)="filterApprovalStatus.set('')"></i>
+        </span>
+      }
+    </ng-container>
+
+    <ng-container action-buttons>
+      <div class="d-flex align-items-center gap-2">
+        <button
+          type="button"
+          class="btn btn-sm btn-pastel-green d-inline-flex align-items-center gap-2 px-3 py-2 rounded-3 shadow-xs"
+          (click)="handleOpenCreate()"
+        >
+          <i class="fa-solid fa-plus"></i> {{ 'common.create' | translate }}
+        </button>
+        <button
+          type="button"
+          class="btn btn-sm btn-pastel-orange d-inline-flex align-items-center gap-2 px-3 py-2 rounded-3 shadow-xs"
+          [disabled]="selectedIds().size !== 1"
+          (click)="handleOpenUpdate()"
+        >
+          <i class="fa-solid fa-pen-to-square"></i> {{ 'common.edit' | translate }}
+        </button>
+        <button
+          type="button"
+          class="btn btn-sm btn-pastel-red d-inline-flex align-items-center gap-2 px-3 py-2 rounded-3 shadow-xs"
+          [disabled]="selectedIds().size < 1"
+          (click)="handleDeleteSelected()"
+        >
+          <i class="fa-solid fa-trash-can"></i> {{ 'common.delete' | translate }}
+        </button>
+      </div>
+
+      <div class="action-bar-divider mx-1"></div>
+
+      <div class="d-flex align-items-center gap-2">
+        <button
+          type="button"
+          class="btn btn-sm btn-pastel-indigo d-inline-flex align-items-center gap-2 px-3 py-2 rounded-3 shadow-xs"
+          (click)="openImportModal()"
+        >
+          <i class="fa-solid fa-file-import"></i> {{ 'common.import' | translate }}
+        </button>
+        <button
+          type="button"
+          class="btn btn-sm btn-pastel-indigo d-inline-flex align-items-center gap-2 px-3 py-2 rounded-3 shadow-xs"
+          (click)="openExportModal()"
+        >
+          <i class="fa-solid fa-file-export"></i> {{ 'common.export' | translate }}
+        </button>
+      </div>
+    </ng-container>
+
+    <ng-container filter-matrix>
+      <div class="col-md-3">
+        <label class="form-label small fw-semibold text-muted">{{
+          'contract.contractStatus' | translate
+        }}</label>
+        <select
+          class="form-select form-select-sm rounded-3 filter-select w-100"
+          [value]="filterContractStatus() ?? ''"
+          (change)="filterContractStatus.set($any($event.target).value || '')"
+        >
+          <option [selected]="!filterContractStatus()" value="">{{ 'contract.selectContractStatus' | translate }}</option>
+          @for (status of contractStatuses; track status.value) {
+            <option [selected]="filterContractStatus() === status.value" [value]="status.value">
+              {{ status.label | translate }}
+            </option>
+          }
+        </select>
+      </div>
+
+      <div class="col-md-3">
+        <label class="form-label small fw-semibold text-muted">{{
+          'contract.approvalStatus' | translate
+        }}</label>
+        <select
+          class="form-select form-select-sm rounded-3 filter-select w-100"
+          [value]="filterApprovalStatus() ?? ''"
+          (change)="filterApprovalStatus.set($any($event.target).value || '')"
+        >
+          <option [selected]="!filterApprovalStatus()" value="">{{ 'contract.selectApprovalStatus' | translate }}</option>
+          @for (status of approvalStatuses; track status.value) {
+            <option [selected]="filterApprovalStatus() === status.value" [value]="status.value">
+              {{ status.label | translate }}
+            </option>
+          }
+        </select>
+      </div>
+    </ng-container>
+  </app-toolbar>
+
+  <app-table>
+    <ng-container table-header>
+      <tr>
+        <th class="col-pin" style="width: 36px; min-width: 36px">
+          <input
+            type="checkbox"
+            aria-label="Select all"
+            [checked]="isSelectedAll()"
+            (click)="handleToggleSelectAll()"
+          />
+        </th>
+        <th class="text-center" style="width: 50px">#</th>
+        @for (column of contractColumns; track column) {
+          <th>{{ 'contract.' + column | translate }}</th>
+        }
+        <th style="min-width: 220px">{{ 'common.note' | translate }}</th>
+        <th>{{ 'common.createdAt' | translate }}</th>
+        <th>{{ 'common.createdBy' | translate }}</th>
+        <th>{{ 'common.updatedAt' | translate }}</th>
+        <th>{{ 'common.updatedBy' | translate }}</th>
+      </tr>
+    </ng-container>
+
+    <ng-container table-body>
+      @if (isLoading()) {
+        <app-placeholder [modelColumns]="contractColumns"></app-placeholder>
+      } @else {
+        @for (item of contracts(); track item.id; let idx = $index) {
+          <tr [class.deleted-row]="filterIsDelete()">
+            <td class="col-pin">
+              <input
+                type="checkbox"
+                [aria-label]="item.contractName"
+                [checked]="isSelected(item.id)"
+                (click)="handleToggleSelect(item.id)"
+              />
+            </td>
+            <td class="td-cell text-center">{{ fromRecord() + idx }}</td>
+
+            <!-- contractCode -->
+            <td class="text-nowrap">
+              @if (item.contractCode) {
+                <span class="badge-soft badge-blue">#{{ item.contractCode }}</span>
+              } @else {
+                <span class="text-muted opacity-50">—</span>
+              }
+            </td>
+
+            <!-- contractName -->
+            <td class="text-nowrap">
+              @if (item.contractName) {
+                <div
+                  class="fw-semibold text-main"
+                  [class.text-decoration-line-through]="filterIsDelete()"
+                >
+                  {{ item.contractName }}
+                </div>
+                @if (filterIsDelete()) {
+                  <span
+                    class="badge bg-danger-subtle text-danger border border-danger-subtle fs-xs rounded-pill px-2 py-0.5 mt-1"
+                  >
+                    <i class="fa-solid fa-trash-can me-1"></i> {{ 'common.softDeleted' | translate }}
+                  </span>
+                }
+              } @else {
+                <span class="text-muted opacity-50">—</span>
+              }
+            </td>
+
+            <!-- employeeName -->
+            <td class="text-nowrap">
+              @if (item.employeeName || (item.employeeId && employeeMap().get(item.employeeId))) {
+                <span class="text-muted small">
+                  <i class="fa-solid fa-user me-1 text-secondary opacity-75"></i>
+                  {{ item.employeeName || employeeMap().get(item.employeeId!) }}
+                </span>
+              } @else {
+                <span class="text-muted opacity-50">—</span>
+              }
+            </td>
+
+            <!-- contractTypeName -->
+            <td class="text-nowrap">
+              @if (item.contractTypeName) {
+                <span class="text-muted small">
+                  <i class="fa-solid fa-file-contract me-1 text-secondary opacity-75"></i>
+                  {{ item.contractTypeName }}
+                </span>
+              } @else {
+                <span class="text-muted opacity-50">—</span>
+              }
+            </td>
+
+            <!-- contractStatus -->
+            <td class="text-nowrap">
+              @if (item.contractStatus) {
+                <span
+                  class="badge-soft"
+                  [class]="contractStatusConfig[item.contractStatus]?.cssClass ?? 'badge-secondary'"
+                >
+                  @if (contractStatusConfig[item.contractStatus]?.icon) {
+                    <i class="fa-solid" [class]="contractStatusConfig[item.contractStatus]!.icon"></i>
+                  }
+                  {{
+                    contractStatusConfig[item.contractStatus]?.label
+                      ? (contractStatusConfig[item.contractStatus]!.label | translate)
+                      : item.contractStatus
+                  }}
+                </span>
+              } @else {
+                <span class="text-muted opacity-50">—</span>
+              }
+            </td>
+
+            <!-- approvalStatus -->
+            <td class="text-nowrap">
+              @if (item.approvalStatus) {
+                <span
+                  class="badge-soft"
+                  [class]="approvalStatusConfig[item.approvalStatus]?.cssClass ?? 'badge-secondary'"
+                >
+                  @if (approvalStatusConfig[item.approvalStatus]?.icon) {
+                    <i class="fa-solid" [class]="approvalStatusConfig[item.approvalStatus]!.icon"></i>
+                  }
+                  {{
+                    approvalStatusConfig[item.approvalStatus]?.label
+                      ? (approvalStatusConfig[item.approvalStatus]!.label | translate)
+                      : item.approvalStatus
+                  }}
+                </span>
+              } @else {
+                <span class="text-muted opacity-50">—</span>
+              }
+            </td>
+
+            <!-- startDate -->
+            <td class="text-nowrap">
+              @if (item.startDate) {
+                <span class="text-muted small">{{ item.startDate | date }}</span>
+              } @else {
+                <span class="text-muted opacity-50">—</span>
+              }
+            </td>
+
+            <!-- endDate -->
+            <td class="text-nowrap">
+              @if (item.endDate) {
+                <span class="text-muted small">{{ item.endDate | date }}</span>
+              } @else {
+                <span class="badge-soft badge-teal fs-xs">{{ 'contract.indefinite' | translate }}</span>
+              }
+            </td>
+
+            <!-- baseSalary -->
+            <td class="text-nowrap">
+              @if (item.baseSalary != null) {
+                <span class="fw-semibold text-main">
+                  {{ item.baseSalary | number }}
+                </span>
+              } @else {
+                <span class="text-muted opacity-50">—</span>
+              }
+            </td>
+
+            <!-- salaryUnit -->
+            <td class="text-nowrap">
+              @if (item.salaryUnit) {
+                <span class="badge-soft badge-blue">{{ item.salaryUnit }}</span>
+              } @else {
+                <span class="text-muted opacity-50">—</span>
+              }
+            </td>
+
+            <!-- workingHoursPerWeek -->
+            <td class="text-nowrap">
+              @if (item.workingHoursPerWeek != null) {
+                <span class="text-muted small">{{ item.workingHoursPerWeek }}h/w</span>
+              } @else {
+                <span class="text-muted opacity-50">—</span>
+              }
+            </td>
+
+            <!-- otrate -->
+            <td class="text-nowrap">
+              @if (item.otrate != null) {
+                <span class="badge-soft badge-amber">x{{ item.otrate }}</span>
+              } @else {
+                <span class="text-muted opacity-50">—</span>
+              }
+            </td>
+
+            <!-- allowanceAmount -->
+            <td class="text-nowrap">
+              @if (item.allowanceAmount != null) {
+                <span class="text-muted small">{{ item.allowanceAmount | number }}</span>
+              } @else {
+                <span class="text-muted opacity-50">—</span>
+              }
+            </td>
+
+            <!-- insuranceContribution -->
+            <td class="text-nowrap">
+              @if (item.insuranceContribution != null) {
+                <span class="text-muted small">{{ item.insuranceContribution | number }}</span>
+              } @else {
+                <span class="text-muted opacity-50">—</span>
+              }
+            </td>
+
+            <!-- signedDate -->
+            <td class="text-nowrap">
+              @if (item.signedDate) {
+                <span class="text-muted small">{{ item.signedDate | date }}</span>
+              } @else {
+                <span class="text-muted opacity-50">—</span>
+              }
+            </td>
+
+            <!-- signedBy -->
+            <td class="text-nowrap">
+              @if (item.signedBy) {
+                <span class="text-muted small">
+                  <i class="fa-solid fa-signature me-1 text-secondary opacity-75"></i>{{ item.signedBy }}
+                </span>
+              } @else {
+                <span class="text-muted opacity-50">—</span>
+              }
+            </td>
+
+            <!-- note -->
+            <td>
+              @if (item.note) {
+                <span class="text-muted small fst-italic">{{ item.note }}</span>
+              } @else {
+                <span class="text-muted opacity-50">—</span>
+              }
+            </td>
+
+            <td class="text-nowrap">
+              @if (item.createdAt) {
+                <span class="text-muted small">{{ item.createdAt | date }}</span>
+              } @else {
+                <span class="text-muted opacity-50">—</span>
+              }
+            </td>
+
+            <td class="text-nowrap">
+              @if (item.createdBy) {
+                <span class="text-muted small">
+                  <i class="fa-regular fa-user me-1 text-secondary opacity-75"></i>{{ item.createdBy }}</span
+                >
+              } @else {
+                <span class="text-muted opacity-50">—</span>
+              }
+            </td>
+
+            <td class="text-nowrap">
+              @if (item.updatedAt) {
+                <span class="text-muted small">{{ item.updatedAt | date }}</span>
+              } @else {
+                <span class="text-muted opacity-50">—</span>
+              }
+            </td>
+
+            <td class="text-nowrap">
+              @if (item.updatedBy) {
+                <span class="text-muted small">
+                  <i class="fa-regular fa-user me-1 text-secondary opacity-75"></i>{{ item.updatedBy }}</span
+                >
+              } @else {
+                <span class="text-muted opacity-50">—</span>
+              }
+            </td>
+          </tr>
+        }
+      }
+    </ng-container>
+  </app-table>
+
+  <app-pagination
+    [(pageIndex)]="pageIndex"
+    [(pageSize)]="pageSize"
+    [totalRecord]="totalRecord()"
+    [recordRange]="recordRange()"
+    [pageCount]="pageCount()"
+  ></app-pagination>
+</div>
+

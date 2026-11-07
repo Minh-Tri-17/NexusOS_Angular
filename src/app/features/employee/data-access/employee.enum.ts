@@ -74,7 +74,7 @@ export const EDUCATION_LEVEL_CONFIG: Record<string, EnumOptionConfig> = {
   [EducationLevel.HighSchool]: {
     label: 'employee.highSchool',
     icon: 'fa-school',
-    cssClass: 'badge-cyan',
+    cssClass: 'badge-orange',
   },
   [EducationLevel.Associate]: {
     label: 'employee.associate',
@@ -89,7 +89,7 @@ export const EDUCATION_LEVEL_CONFIG: Record<string, EnumOptionConfig> = {
   [EducationLevel.Master]: {
     label: 'employee.master',
     icon: 'fa-graduation-cap',
-    cssClass: 'badge-purple',
+    cssClass: 'badge-slate',
   },
   [EducationLevel.Doctorate]: {
     label: 'employee.doctorate',
@@ -99,7 +99,7 @@ export const EDUCATION_LEVEL_CONFIG: Record<string, EnumOptionConfig> = {
 };
 
 export const EMPLOYMENT_STATUS_OPTIONS: EnumOption<EmploymentStatus>[] = Object.values(
-  EmploymentStatus
+  EmploymentStatus,
 ).map((value) => ({
   value,
   label: EMPLOYMENT_STATUS_CONFIG[value]?.label ?? `employee.${value.toLowerCase()}`,
@@ -115,7 +115,7 @@ export const GENDER_OPTIONS: EnumOption<Gender>[] = Object.values(Gender).map((v
 }));
 
 export const EDUCATION_LEVEL_OPTIONS: EnumOption<EducationLevel>[] = Object.values(
-  EducationLevel
+  EducationLevel,
 ).map((value) => ({
   value,
   label: EDUCATION_LEVEL_CONFIG[value]?.label ?? `employee.${value.toLowerCase()}`,

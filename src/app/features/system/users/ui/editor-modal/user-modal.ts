@@ -43,7 +43,7 @@ export class UserModal {
 
   readonly userForm = new FormGroup({
     id: new FormControl<string | null>(null),
-    employeeId: new FormControl<string>(''),
+    employeeId: new FormControl<string>('', { nonNullable: true }),
     userCode: new FormControl<string | null>(null),
     username: new FormControl<string | null>(null, Validators.required),
     password: new FormControl<string | null>(null),

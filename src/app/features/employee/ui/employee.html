@@ -16,7 +16,7 @@
     <ng-container active-filters>
       @if (filterEmploymentStatus()) {
         <span class="filter-chip">
-          <i class="fa-solid fa-compass chip-icon"></i>
+          <i class="fa-solid fa-briefcase chip-icon"></i>
           {{ 'employee.employmentStatus' | translate }}:
           <strong>{{
             employmentStatusConfig[filterEmploymentStatus()]?.label
@@ -26,9 +26,57 @@
           <i class="fa-solid fa-xmark chip-remove-btn" (click)="filterEmploymentStatus.set('')"></i>
         </span>
       }
+      @if (filterGender()) {
+        <span class="filter-chip">
+          <i class="fa-solid fa-venus-mars chip-icon"></i>
+          {{ 'employee.gender' | translate }}:
+          <strong>{{
+            genderConfig[filterGender()]?.label
+              ? (genderConfig[filterGender()].label | translate)
+              : filterGender()
+          }}</strong>
+          <i class="fa-solid fa-xmark chip-remove-btn" (click)="filterGender.set('')"></i>
+        </span>
+      }
+      @if (filterEducationLevel()) {
+        <span class="filter-chip">
+          <i class="fa-solid fa-graduation-cap chip-icon"></i>
+          {{ 'employee.educationLevel' | translate }}:
+          <strong>{{
+            educationLevelConfig[filterEducationLevel()]?.label
+              ? (educationLevelConfig[filterEducationLevel()].label | translate)
+              : filterEducationLevel()
+          }}</strong>
+          <i class="fa-solid fa-xmark chip-remove-btn" (click)="filterEducationLevel.set('')"></i>
+        </span>
+      }
     </ng-container>
 
     <ng-container action-buttons>
+      <div class="view-toggle-group" role="group" aria-label="View mode">
+        <button
+          class="view-toggle-btn"
+          title="Card View"
+          [class.active]="isCardView()"
+          (click)="handleViewCard()"
+        >
+          <i class="fa-solid fa-grip"></i>
+          <span class="d-none d-md-inline">{{ 'common.cardView' | translate }}</span>
+        </button>
+
+        <button
+          class="view-toggle-btn"
+          title="List View"
+          [class.active]="!isCardView()"
+          (click)="handleViewList()"
+        >
+          <i class="fa-solid fa-list"></i>
+          <span class="d-none d-md-inline">{{ 'common.listView' | translate }}</span>
+        </button>
+      </div>
+
+      <div class="action-bar-divider mx-1"></div>
+
       <div class="d-flex align-items-center gap-2">
         <button
           type="button"
@@ -85,7 +133,9 @@
           [value]="filterEmploymentStatus()"
           (change)="filterEmploymentStatus.set($any($event.target).value)"
         >
-          <option [selected]="!filterEmploymentStatus()" value="">{{ 'common.selectStatus' | translate }}</option>
+          <option [selected]="!filterEmploymentStatus()" value="">
+            {{ 'common.selectStatus' | translate }}
+          </option>
           @for (status of employmentStatuses; track status.value) {
             <option [selected]="filterEmploymentStatus() === status.value" [value]="status.value">
               {{ status.label | translate }}
@@ -93,354 +143,569 @@
           }
         </select>
       </div>
+
+      <div class="col-md-3">
+        <label class="form-label small fw-semibold text-muted">{{
+          'employee.gender' | translate
+        }}</label>
+        <select
+          class="form-select form-select-sm rounded-3 filter-select w-100"
+          [value]="filterGender()"
+          (change)="filterGender.set($any($event.target).value)"
+        >
+          <option [selected]="!filterGender()" value="">
+            {{ 'common.selectGender' | translate }}
+          </option>
+          @for (gender of genders; track gender.value) {
+            <option [selected]="filterGender() === gender.value" [value]="gender.value">
+              {{ gender.label | translate }}
+            </option>
+          }
+        </select>
+      </div>
+
+      <div class="col-md-3">
+        <label class="form-label small fw-semibold text-muted">{{
+          'employee.educationLevel' | translate
+        }}</label>
+        <select
+          class="form-select form-select-sm rounded-3 filter-select w-100"
+          [value]="filterEducationLevel()"
+          (change)="filterEducationLevel.set($any($event.target).value)"
+        >
+          <option [selected]="!filterEducationLevel()" value="">
+            {{ 'common.selectEducationLevel' | translate }}
+          </option>
+          @for (level of educationLevels; track level.value) {
+            <option [selected]="filterEducationLevel() === level.value" [value]="level.value">
+              {{ level.label | translate }}
+            </option>
+          }
+        </select>
+      </div>
     </ng-container>
   </app-toolbar>
 
-  <div id="empListView">
-    <app-table>
-      <ng-container table-header>
-        <tr>
-          <th class="col-pin" style="width: 36px; min-width: 36px">
+  @if (isCardView()) {
+    <div id="empCardView" class="emp-card-grid">
+      @for (employee of employees(); track employee.id; let idx = $index) {
+        <div class="emp-card">
+          <div class="emp-card-top-bar">
             <input
+              class="emp-card-checkbox"
               type="checkbox"
-              aria-label="Select all"
-              [checked]="isSelectedAll()"
-              (click)="handleToggleSelectAll()"
+              [aria-label]="employee.employeeName"
+              [checked]="isSelected(employee.id)"
+              (click)="handleToggleSelect(employee.id)"
             />
-          </th>
-          <th class="text-center" style="width: 50px">#</th>
-          @for (column of employeeColumns; track column) {
-            <th>{{ 'employee.' + column | translate }}</th>
-          }
-          <th style="min-width: 220px">{{ 'common.note' | translate }}</th>
-          <th>{{ 'common.createdAt' | translate }}</th>
-          <th>{{ 'common.createdBy' | translate }}</th>
-          <th>{{ 'common.updatedAt' | translate }}</th>
-          <th>{{ 'common.updatedBy' | translate }}</th>
-        </tr>
-      </ng-container>
-
-      <ng-container table-body>
-        @if (isLoading()) {
-          <app-placeholder [modelColumns]="employeeColumns"></app-placeholder>
-        } @else {
-          @for (employee of employees(); track employee.id; let idx = $index) {
-            <tr [class.deleted-row]="filterIsDelete()">
-              <td class="col-pin">
-                <input
-                  type="checkbox"
-                  [aria-label]="employee.employeeName"
-                  [checked]="isSelected(employee.id)"
-                  (click)="handleToggleSelect(employee.id)"
-                />
-              </td>
-              <td class="td-cell text-center">{{ fromRecord() + idx }}</td>
-
-              <td class="text-nowrap">
-                @if (employee.employeeCode) {
-                  <span class="badge-soft badge-blue">#{{ employee.employeeCode }}</span>
-                } @else {
-                  <span class="text-muted opacity-50">—</span>
-                }
-              </td>
-
-              <td class="text-nowrap">
-                @if (employee.employeeName) {
-                  <div
-                    class="fw-semibold text-main"
-                    [class.text-decoration-line-through]="filterIsDelete()"
-                  >
-                    {{ employee.employeeName }}
-                  </div>
-                  @if (filterIsDelete()) {
-                    <span
-                      class="badge bg-danger-subtle text-danger border border-danger-subtle fs-xs rounded-pill px-2 py-0.5 mt-1"
-                    >
-                      <i class="fa-solid fa-trash-can me-1"></i>
-                      {{ 'common.softDeleted' | translate }}
-                    </span>
-                  }
-                } @else {
-                  <span class="text-muted opacity-50">—</span>
-                }
-              </td>
-
-              <td class="text-nowrap">
-                @if (employee.departmentName) {
-                  <span class="text-muted">{{ employee.departmentName }}</span>
-                } @else {
-                  <span class="text-muted opacity-50">—</span>
-                }
-              </td>
-
-              <td class="text-nowrap">
-                @if (employee.jobTitleName) {
-                  <span class="text-muted">{{ employee.jobTitleName }}</span>
-                } @else {
-                  <span class="text-muted opacity-50">—</span>
-                }
-              </td>
-
-              <td class="text-nowrap">
-                @if (employee.storeName) {
-                  <span class="text-muted">{{ employee.storeName }}</span>
-                } @else {
-                  <span class="text-muted opacity-50">—</span>
-                }
-              </td>
-
-              <td class="text-nowrap">
-                @if (employee.countryName) {
-                  <span class="text-muted">{{ employee.countryName }}</span>
-                } @else {
-                  <span class="text-muted opacity-50">—</span>
-                }
-              </td>
-
-              <td class="text-nowrap">
-                @if (employee.provinceName) {
-                  <span class="text-muted">{{ employee.provinceName }}</span>
-                } @else {
-                  <span class="text-muted opacity-50">—</span>
-                }
-              </td>
-
-              <td class="text-nowrap">
-                @if (employee.wardName) {
-                  <span class="text-muted">{{ employee.wardName }}</span>
-                } @else {
-                  <span class="text-muted opacity-50">—</span>
-                }
-              </td>
-
-              <td class="text-nowrap">
-                @if (employee.gender) {
-                  <span
-                    class="badge-soft"
-                    [class]="genderConfig[employee.gender]?.cssClass ?? 'badge-secondary'"
-                  >
-                    <i class="fa-solid fa-venus-mars"></i>
-                    {{ genderConfig[employee.gender]?.label ? (genderConfig[employee.gender].label | translate) : employee.gender }}
-                  </span>
-                } @else {
-                  <span class="text-muted opacity-50">—</span>
-                }
-              </td>
-
-              <td class="text-nowrap">
-                @if (employee.dateOfBirth) {
-                  <span class="text-muted small">{{ employee.dateOfBirth | date }}</span>
-                } @else {
-                  <span class="text-muted opacity-50">—</span>
-                }
-              </td>
-
-              <td class="text-nowrap">
-                @if (employee.phoneNumber) {
-                  <span class="text-muted small">{{ employee.phoneNumber }}</span>
-                } @else {
-                  <span class="text-muted opacity-50">—</span>
-                }
-              </td>
-
-              <td class="text-nowrap">
-                @if (employee.email) {
-                  <span class="text-muted small">{{ employee.email }}</span>
-                } @else {
-                  <span class="text-muted opacity-50">—</span>
-                }
-              </td>
-
-              <td class="text-nowrap">
-                @if (employee.identityNumber) {
-                  <span class="text-muted small">{{ employee.identityNumber }}</span>
-                } @else {
-                  <span class="text-muted opacity-50">—</span>
-                }
-              </td>
-
-              <td class="text-nowrap">
-                @if (employee.address) {
-                  <span class="text-muted small">
-                    <i class="fa-solid fa-location-dot text-primary me-1"></i>{{ employee.address }}</span
-                  >
-                } @else {
-                  <span class="text-muted opacity-50">—</span>
-                }
-              </td>
-
-              <td class="text-nowrap">
-                @if (employee.hireDate) {
-                  <span class="text-muted small">{{ employee.hireDate | date }}</span>
-                } @else {
-                  <span class="text-muted opacity-50">—</span>
-                }
-              </td>
-
-              <td class="text-nowrap">
-                @if (employee.terminationDate) {
-                  <span class="text-muted small">{{ employee.terminationDate | date }}</span>
-                } @else {
-                  <span class="text-muted opacity-50">—</span>
-                }
-              </td>
-
-              <td class="text-center">
-                @if (employee.employmentStatus) {
-                  <span
-                    class="badge-soft"
-                    [class]="employmentStatusConfig[employee.employmentStatus]?.cssClass ?? 'badge-secondary'"
-                  >
+            <div class="d-flex align-items-center gap-2">
+              @if (filterIsDelete()) {
+                <span
+                  class="badge bg-danger-subtle text-danger border border-danger-subtle fs-xs rounded-pill"
+                >
+                  <i class="fa-solid fa-trash-can me-1"></i>
+                  {{ 'common.softDeleted' | translate }}
+                </span>
+              }
+              @if (employee.employmentStatus) {
+                <span
+                  class="badge-soft"
+                  [class]="
+                    employmentStatusConfig[employee.employmentStatus]?.cssClass ?? 'badge-secondary'
+                  "
+                >
+                  @if (employmentStatusConfig[employee.employmentStatus]?.icon) {
                     <i
                       class="fa-solid"
-                      [class]="employmentStatusConfig[employee.employmentStatus]?.icon"
+                      [class]="employmentStatusConfig[employee.employmentStatus]!.icon"
                     ></i>
-                    {{
-                      employmentStatusConfig[employee.employmentStatus]?.label
-                        ? (employmentStatusConfig[employee.employmentStatus].label | translate)
-                        : employee.employmentStatus
-                    }}</span
-                  >
-                } @else {
-                  <span class="text-muted opacity-50">—</span>
+                  }
+                  {{
+                    employmentStatusConfig[employee.employmentStatus]?.label
+                      ? (employmentStatusConfig[employee.employmentStatus]!.label | translate)
+                      : employee.employmentStatus
+                  }}</span
+                >
+              }
+              <button class="emp-card-view-btn" title="View Profile">
+                <i class="fa-regular fa-eye"></i>
+              </button>
+            </div>
+          </div>
+          <div class="emp-card-hero">
+            <div class="emp-card-avatar-ring">
+              <img
+                [src]="
+                  employee.gender === Gender.Male
+                    ? '/images/avatar-male.jpg'
+                    : '/images/avatar-female.jpg'
+                "
+              />
+            </div>
+            <div class="emp-card-name-row">
+              <h3 class="emp-card-name" [class.text-decoration-line-through]="filterIsDelete()">
+                {{ employee.employeeName }}
+              </h3>
+              <span class="emp-card-id-chip">{{ employee.employeeCode }}</span>
+            </div>
+            <div class="emp-card-role">{{ employee.jobTitleName }}</div>
+          </div>
+          @if (employee.educationLevel) {
+            <div class="emp-card-badges">
+              <span
+                class="badge-soft"
+                [class]="
+                  educationLevelConfig[employee.educationLevel]?.cssClass ?? 'badge-secondary'
+                "
+              >
+                @if (educationLevelConfig[employee.educationLevel]?.icon) {
+                  <i
+                    class="fa-solid"
+                    [class]="educationLevelConfig[employee.educationLevel]!.icon"
+                  ></i>
                 }
-              </td>
-
-              <td class="text-center">
-                <input type="checkbox" [checked]="employee.isMultiStore" />
-              </td>
-
-              <td class="text-nowrap">
-                @if (employee.photo) {
-                  <span class="text-muted">{{ employee.photo }}</span>
-                } @else {
-                  <span class="text-muted opacity-50">—</span>
-                }
-              </td>
-
-              <td class="text-nowrap">
-                @if (employee.healthInsuranceNumber) {
-                  <span class="text-muted small">{{ employee.healthInsuranceNumber }}</span>
-                } @else {
-                  <span class="text-muted opacity-50">—</span>
-                }
-              </td>
-
-              <td class="text-nowrap">
-                @if (employee.socialInsuranceNumber) {
-                  <span class="text-muted small">{{ employee.socialInsuranceNumber }}</span>
-                } @else {
-                  <span class="text-muted opacity-50">—</span>
-                }
-              </td>
-
-              <td class="text-nowrap">
-                @if (employee.bankAccountNumber) {
-                  <span class="text-muted small">{{ employee.bankAccountNumber }}</span>
-                } @else {
-                  <span class="text-muted opacity-50">—</span>
-                }
-              </td>
-
-              <td class="text-nowrap">
-                @if (employee.bankName) {
-                  <span class="text-muted small">{{ employee.bankName }}</span>
-                } @else {
-                  <span class="text-muted opacity-50">—</span>
-                }
-              </td>
-
-              <td class="text-nowrap">
-                @if (employee.educationLevel) {
-                  <span
-                    class="badge-soft"
-                    [class]="educationLevelConfig[employee.educationLevel]?.cssClass ?? 'badge-secondary'"
-                  >
-                    <i class="fa-solid fa-graduation-cap me-1"></i>
-                    {{
-                      educationLevelConfig[employee.educationLevel]?.label
-                        ? (educationLevelConfig[employee.educationLevel].label | translate)
-                        : employee.educationLevel
-                    }}
-                  </span>
-                } @else {
-                  <span class="text-muted opacity-50">—</span>
-                }
-              </td>
-
-              <td class="text-nowrap">
-                @if (employee.taxCode) {
-                  <span class="text-muted small">{{ employee.taxCode }}</span>
-                } @else {
-                  <span class="text-muted opacity-50">—</span>
-                }
-              </td>
-
-              <td class="text-nowrap">
-                @if (employee.emergencyContactName) {
-                  <span class="text-muted small">{{ employee.emergencyContactName }}</span>
-                } @else {
-                  <span class="text-muted opacity-50">—</span>
-                }
-              </td>
-
-              <td class="text-nowrap">
-                @if (employee.emergencyContactPhone) {
-                  <span class="text-muted small">{{ employee.emergencyContactPhone }}</span>
-                } @else {
-                  <span class="text-muted opacity-50">—</span>
-                }
-              </td>
-
-              <td>
-                @if (employee.note) {
-                  <span class="text-muted small fst-italic">{{ employee.note }}</span>
-                } @else {
-                  <span class="text-muted opacity-50">—</span>
-                }
-              </td>
-
-              <td class="text-nowrap">
-                @if (employee.createdAt) {
-                  <span class="text-muted small">{{ employee.createdAt | date }}</span>
-                } @else {
-                  <span class="text-muted opacity-50">—</span>
-                }
-              </td>
-
-              <td class="text-nowrap">
-                @if (employee.createdBy) {
-                  <span class="text-muted small">
-                    <i class="fa-regular fa-user me-1"></i>{{ employee.createdBy }}</span
-                  >
-                } @else {
-                  <span class="text-muted opacity-50">—</span>
-                }
-              </td>
-
-              <td class="text-nowrap">
-                @if (employee.updatedAt) {
-                  <span class="text-muted small">{{ employee.updatedAt | date }}</span>
-                } @else {
-                  <span class="text-muted opacity-50">—</span>
-                }
-              </td>
-
-              <td class="text-nowrap">
-                @if (employee.updatedBy) {
-                  <span class="text-muted small">
-                    <i class="fa-regular fa-user me-1"></i>{{ employee.updatedBy }}</span
-                  >
-                } @else {
-                  <span class="text-muted opacity-50">—</span>
-                }
-              </td>
-            </tr>
+                {{
+                  educationLevelConfig[employee.educationLevel]?.label
+                    ? (educationLevelConfig[employee.educationLevel]!.label | translate)
+                    : employee.educationLevel
+                }}
+              </span>
+            </div>
           }
-        }
-      </ng-container>
-    </app-table>
-  </div>
+          <div class="emp-card-contact">
+            @if (employee.departmentName) {
+              <div class="emp-card-contact-row">
+                <i class="fa-solid fa-briefcase text-secondary opacity-75"></i>
+                <span>{{ employee.departmentName }}</span>
+              </div>
+            }
+            @if (employee.contractTypeName) {
+              <div class="emp-card-contact-row">
+                <i class="fa-solid fa-file-contract text-secondary opacity-75"></i>
+                <span>{{ employee.contractTypeName }}</span>
+              </div>
+            }
+            <div class="emp-card-contact-row emp-manager-row">
+              <i class="fa-solid fa-user-tie text-secondary opacity-75"></i>
+              {{ 'employee.manager' | translate }}:
+              <strong class="emp-manager-name">{{ employee.managerName || '—' }}</strong>
+            </div>
+            <div class="emp-card-contact-row">
+              <i class="fa-regular fa-envelope text-secondary opacity-75"></i> {{ employee.email }}
+            </div>
+            <div class="emp-card-contact-row">
+              <i class="fa-solid fa-location-dot text-secondary opacity-75"></i>
+              {{ employee.address }}
+            </div>
+            <div class="emp-card-contact-row">
+              <i class="fa-regular fa-calendar text-secondary opacity-75"></i>
+              {{ employee.hireDate | date: 'MMM y' }}
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  } @else {
+    <div id="empListView">
+      <app-table>
+        <ng-container table-header>
+          <tr>
+            <th class="col-pin" style="width: 36px; min-width: 36px">
+              <input
+                type="checkbox"
+                aria-label="Select all"
+                [checked]="isSelectedAll()"
+                (click)="handleToggleSelectAll()"
+              />
+            </th>
+            <th class="text-center" style="width: 50px">#</th>
+            @for (column of employeeColumns; track column) {
+              <th>{{ 'employee.' + column | translate }}</th>
+            }
+            <th style="min-width: 220px">{{ 'common.note' | translate }}</th>
+            <th>{{ 'common.createdAt' | translate }}</th>
+            <th>{{ 'common.createdBy' | translate }}</th>
+            <th>{{ 'common.updatedAt' | translate }}</th>
+            <th>{{ 'common.updatedBy' | translate }}</th>
+          </tr>
+        </ng-container>
+
+        <ng-container table-body>
+          @if (isLoading()) {
+            <app-placeholder [modelColumns]="employeeColumns"></app-placeholder>
+          } @else {
+            @for (employee of employees(); track employee.id; let idx = $index) {
+              <tr [class.deleted-row]="filterIsDelete()">
+                <td class="col-pin">
+                  <input
+                    type="checkbox"
+                    [aria-label]="employee.employeeName"
+                    [checked]="isSelected(employee.id)"
+                    (click)="handleToggleSelect(employee.id)"
+                  />
+                </td>
+                <td class="td-cell text-center">{{ fromRecord() + idx }}</td>
+
+                <td class="text-nowrap">
+                  @if (employee.employeeCode) {
+                    <span class="badge-soft badge-blue">#{{ employee.employeeCode }}</span>
+                  } @else {
+                    <span class="text-muted opacity-50">—</span>
+                  }
+                </td>
+
+                <td class="text-nowrap">
+                  @if (employee.employeeName) {
+                    <div
+                      class="fw-semibold text-main"
+                      [class.text-decoration-line-through]="filterIsDelete()"
+                    >
+                      {{ employee.employeeName }}
+                    </div>
+                    @if (filterIsDelete()) {
+                      <span
+                        class="badge bg-danger-subtle text-danger border border-danger-subtle fs-xs rounded-pill px-2 py-0.5 mt-1"
+                      >
+                        <i class="fa-solid fa-trash-can me-1"></i>
+                        {{ 'common.softDeleted' | translate }}
+                      </span>
+                    }
+                  } @else {
+                    <span class="text-muted opacity-50">—</span>
+                  }
+                </td>
+
+                <td class="text-nowrap">
+                  @if (employee.departmentName) {
+                    <span class="text-muted">{{ employee.departmentName }}</span>
+                  } @else {
+                    <span class="text-muted opacity-50">—</span>
+                  }
+                </td>
+
+                <td class="text-nowrap">
+                  @if (employee.jobTitleName) {
+                    <span class="text-muted">{{ employee.jobTitleName }}</span>
+                  } @else {
+                    <span class="text-muted opacity-50">—</span>
+                  }
+                </td>
+
+                <td class="text-nowrap">
+                  @if (employee.storeName) {
+                    <span class="text-muted">{{ employee.storeName }}</span>
+                  } @else {
+                    <span class="text-muted opacity-50">—</span>
+                  }
+                </td>
+
+                <td class="text-nowrap">
+                  @if (employee.countryName) {
+                    <span class="text-muted">{{ employee.countryName }}</span>
+                  } @else {
+                    <span class="text-muted opacity-50">—</span>
+                  }
+                </td>
+
+                <td class="text-nowrap">
+                  @if (employee.provinceName) {
+                    <span class="text-muted">{{ employee.provinceName }}</span>
+                  } @else {
+                    <span class="text-muted opacity-50">—</span>
+                  }
+                </td>
+
+                <td class="text-nowrap">
+                  @if (employee.wardName) {
+                    <span class="text-muted">{{ employee.wardName }}</span>
+                  } @else {
+                    <span class="text-muted opacity-50">—</span>
+                  }
+                </td>
+
+                <td class="text-nowrap">
+                  @if (employee.gender) {
+                    <span
+                      class="badge-soft"
+                      [class]="genderConfig[employee.gender]?.cssClass ?? 'badge-secondary'"
+                    >
+                      @if (genderConfig[employee.gender]?.icon) {
+                        <i class="fa-solid" [class]="genderConfig[employee.gender]!.icon"></i>
+                      }
+                      {{
+                        genderConfig[employee.gender]?.label
+                          ? (genderConfig[employee.gender]!.label | translate)
+                          : employee.gender
+                      }}
+                    </span>
+                  } @else {
+                    <span class="text-muted opacity-50">—</span>
+                  }
+                </td>
+
+                <td class="text-nowrap">
+                  @if (employee.dateOfBirth) {
+                    <span class="text-muted small">{{ employee.dateOfBirth | date }}</span>
+                  } @else {
+                    <span class="text-muted opacity-50">—</span>
+                  }
+                </td>
+
+                <td class="text-nowrap">
+                  @if (employee.phoneNumber) {
+                    <span class="text-muted small">{{ employee.phoneNumber }}</span>
+                  } @else {
+                    <span class="text-muted opacity-50">—</span>
+                  }
+                </td>
+
+                <td class="text-nowrap">
+                  @if (employee.email) {
+                    <span class="text-muted small">{{ employee.email }}</span>
+                  } @else {
+                    <span class="text-muted opacity-50">—</span>
+                  }
+                </td>
+
+                <td class="text-nowrap">
+                  @if (employee.identityNumber) {
+                    <span class="text-muted small">{{ employee.identityNumber }}</span>
+                  } @else {
+                    <span class="text-muted opacity-50">—</span>
+                  }
+                </td>
+
+                <td class="text-nowrap">
+                  @if (employee.address) {
+                    <span class="text-muted small">
+                      <i class="fa-solid fa-location-dot text-secondary opacity-75 me-1"></i
+                      >{{ employee.address }}</span
+                    >
+                  } @else {
+                    <span class="text-muted opacity-50">—</span>
+                  }
+                </td>
+
+                <td class="text-nowrap">
+                  @if (employee.hireDate) {
+                    <span class="text-muted small">{{ employee.hireDate | date }}</span>
+                  } @else {
+                    <span class="text-muted opacity-50">—</span>
+                  }
+                </td>
+
+                <td class="text-nowrap">
+                  @if (employee.terminationDate) {
+                    <span class="text-muted small">{{ employee.terminationDate | date }}</span>
+                  } @else {
+                    <span class="text-muted opacity-50">—</span>
+                  }
+                </td>
+
+                <td class="text-center">
+                  @if (employee.employmentStatus) {
+                    <span
+                      class="badge-soft"
+                      [class]="
+                        employmentStatusConfig[employee.employmentStatus]?.cssClass ??
+                        'badge-secondary'
+                      "
+                    >
+                      @if (employmentStatusConfig[employee.employmentStatus]?.icon) {
+                        <i
+                          class="fa-solid"
+                          [class]="employmentStatusConfig[employee.employmentStatus]!.icon"
+                        ></i>
+                      }
+                      {{
+                        employmentStatusConfig[employee.employmentStatus]?.label
+                          ? (employmentStatusConfig[employee.employmentStatus]!.label | translate)
+                          : employee.employmentStatus
+                      }}</span
+                    >
+                  } @else {
+                    <span class="text-muted opacity-50">—</span>
+                  }
+                </td>
+
+                <td class="text-center">
+                  <input type="checkbox" [checked]="employee.isMultiStore" />
+                </td>
+
+                <td class="text-nowrap">
+                  @if (employee.photo) {
+                    <span class="text-muted">{{ employee.photo }}</span>
+                  } @else {
+                    <span class="text-muted opacity-50">—</span>
+                  }
+                </td>
+
+                <td class="text-nowrap">
+                  @if (employee.healthInsuranceNumber) {
+                    <span class="text-muted small">{{ employee.healthInsuranceNumber }}</span>
+                  } @else {
+                    <span class="text-muted opacity-50">—</span>
+                  }
+                </td>
+
+                <td class="text-nowrap">
+                  @if (employee.socialInsuranceNumber) {
+                    <span class="text-muted small">{{ employee.socialInsuranceNumber }}</span>
+                  } @else {
+                    <span class="text-muted opacity-50">—</span>
+                  }
+                </td>
+
+                <td class="text-nowrap">
+                  @if (employee.bankAccountNumber) {
+                    <span class="text-muted small">{{ employee.bankAccountNumber }}</span>
+                  } @else {
+                    <span class="text-muted opacity-50">—</span>
+                  }
+                </td>
+
+                <td class="text-nowrap">
+                  @if (employee.bankName) {
+                    <span class="text-muted small">{{ employee.bankName }}</span>
+                  } @else {
+                    <span class="text-muted opacity-50">—</span>
+                  }
+                </td>
+
+                <td class="text-nowrap">
+                  @if (employee.educationLevel) {
+                    <span
+                      class="badge-soft"
+                      [class]="
+                        educationLevelConfig[employee.educationLevel]?.cssClass ?? 'badge-secondary'
+                      "
+                    >
+                      @if (educationLevelConfig[employee.educationLevel]?.icon) {
+                        <i
+                          class="fa-solid"
+                          [class]="educationLevelConfig[employee.educationLevel]!.icon"
+                        ></i>
+                      }
+                      {{
+                        educationLevelConfig[employee.educationLevel]?.label
+                          ? (educationLevelConfig[employee.educationLevel]!.label | translate)
+                          : employee.educationLevel
+                      }}
+                    </span>
+                  } @else {
+                    <span class="text-muted opacity-50">—</span>
+                  }
+                </td>
+
+                <td class="text-nowrap">
+                  @if (employee.taxCode) {
+                    <span class="text-muted small">{{ employee.taxCode }}</span>
+                  } @else {
+                    <span class="text-muted opacity-50">—</span>
+                  }
+                </td>
+
+                <td class="text-nowrap">
+                  @if (employee.emergencyContactName) {
+                    <span class="text-muted small">{{ employee.emergencyContactName }}</span>
+                  } @else {
+                    <span class="text-muted opacity-50">—</span>
+                  }
+                </td>
+
+                <td class="text-nowrap">
+                  @if (employee.emergencyContactPhone) {
+                    <span class="text-muted small">{{ employee.emergencyContactPhone }}</span>
+                  } @else {
+                    <span class="text-muted opacity-50">—</span>
+                  }
+                </td>
+
+                <td class="text-nowrap">
+                  @if (employee.managerName) {
+                    <span class="text-muted small">
+                      <i class="fa-solid fa-user-tie text-secondary opacity-75 me-1"></i
+                      >{{ employee.managerName }}
+                    </span>
+                  } @else {
+                    <span class="text-muted opacity-50">—</span>
+                  }
+                </td>
+
+                <td class="text-nowrap">
+                  @if (employee.contractName) {
+                    <span class="text-muted small">
+                      <i class="fa-solid fa-file-contract text-secondary opacity-75 me-1"></i
+                      >{{ employee.contractName }}
+                    </span>
+                  } @else {
+                    <span class="text-muted opacity-50">—</span>
+                  }
+                </td>
+
+                <td class="text-nowrap">
+                  @if (employee.contractTypeName) {
+                    <span class="text-muted small">
+                      <i class="fa-solid fa-file-lines text-secondary opacity-75 me-1"></i
+                      >{{ employee.contractTypeName }}
+                    </span>
+                  } @else {
+                    <span class="text-muted opacity-50">—</span>
+                  }
+                </td>
+
+                <td>
+                  @if (employee.note) {
+                    <span class="text-muted small fst-italic">{{ employee.note }}</span>
+                  } @else {
+                    <span class="text-muted opacity-50">—</span>
+                  }
+                </td>
+
+                <td class="text-nowrap">
+                  @if (employee.createdAt) {
+                    <span class="text-muted small">{{ employee.createdAt | date }}</span>
+                  } @else {
+                    <span class="text-muted opacity-50">—</span>
+                  }
+                </td>
+
+                <td class="text-nowrap">
+                  @if (employee.createdBy) {
+                    <span class="text-muted small">
+                      <i class="fa-regular fa-user me-1 text-secondary opacity-75"></i
+                      >{{ employee.createdBy }}</span
+                    >
+                  } @else {
+                    <span class="text-muted opacity-50">—</span>
+                  }
+                </td>
+
+                <td class="text-nowrap">
+                  @if (employee.updatedAt) {
+                    <span class="text-muted small">{{ employee.updatedAt | date }}</span>
+                  } @else {
+                    <span class="text-muted opacity-50">—</span>
+                  }
+                </td>
+
+                <td class="text-nowrap">
+                  @if (employee.updatedBy) {
+                    <span class="text-muted small">
+                      <i class="fa-regular fa-user me-1 text-secondary opacity-75"></i
+                      >{{ employee.updatedBy }}</span
+                    >
+                  } @else {
+                    <span class="text-muted opacity-50">—</span>
+                  }
+                </td>
+              </tr>
+            }
+          }
+        </ng-container>
+      </app-table>
+    </div>
+  }
 
   <app-pagination
     [(pageIndex)]="pageIndex"

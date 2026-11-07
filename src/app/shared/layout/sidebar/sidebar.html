@@ -16,6 +16,10 @@
       <i class="fa-solid fa-user-group"></i>
       <span>{{ 'sidebar.employees' | translate }}</span>
     </a>
+    <a class="nav-link" title="Contracts" [routerLink]="['/contract']" routerLinkActive="active">
+      <i class="fa-solid fa-file-contract"></i>
+      <span>{{ 'sidebar.contracts' | translate }}</span>
+    </a>
     <a class="nav-link" title="Recruitment" [routerLink]="['/']">
       <i class="fa-solid fa-user-plus"></i>
       <span>{{ 'sidebar.recruitment' | translate }}</span>
@@ -60,6 +64,35 @@
           <a class="submenu-link" title="Ward" [routerLink]="['/ward']" routerLinkActive="active">
             <i class="fa-solid fa-location-dot"></i>
             <span>{{ 'common.ward' | translate }}</span>
+          </a>
+
+          <div class="submenu-header mt-2">{{ 'sidebar.general' | translate }}</div>
+          <a
+            class="submenu-link"
+            title="Department"
+            [routerLink]="['/department']"
+            routerLinkActive="active"
+          >
+            <i class="fa-solid fa-sitemap"></i>
+            <span>{{ 'common.department' | translate }}</span>
+          </a>
+          <a
+            class="submenu-link"
+            title="Leave Type"
+            [routerLink]="['/leave-type']"
+            routerLinkActive="active"
+          >
+            <i class="fa-solid fa-calendar-check"></i>
+            <span>{{ 'common.leaveType' | translate }}</span>
+          </a>
+          <a
+            class="submenu-link"
+            title="Contract Type"
+            [routerLink]="['/contract-type']"
+            routerLinkActive="active"
+          >
+            <i class="fa-solid fa-file-contract"></i>
+            <span>{{ 'common.contractType' | translate }}</span>
           </a>
         </div>
       </div>

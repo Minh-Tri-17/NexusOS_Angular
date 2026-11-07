@@ -1,0 +1,127 @@
+<app-modal>
+  <ng-container modal-eyebrow>{{ 'leaveType.modalTitle' | translate }}</ng-container>
+
+  <ng-container modal-title
+    >{{ title() | translate }} {{ 'common.leaveType' | translate }}</ng-container
+  >
+
+  <ng-container modal-header-extra>
+    <span class="badge-soft badge-teal d-none d-sm-inline-flex">
+      <i class="fa-solid fa-bolt"></i> {{ 'common.liveSync' | translate }}
+    </span>
+  </ng-container>
+
+  <ng-container modal-form>
+    <form
+      id="leaveTypeEditorForm"
+      [formGroup]="leaveTypeForm"
+      ngNativeValidate
+      (ngSubmit)="handleSave()"
+    >
+      <div class="modal-body px-4 py-3 position-relative z-1">
+        <!-- Form Section 1: Leave Type Information -->
+        <div class="form-section-card mb-4">
+          <div class="form-section-header">
+            <div class="d-flex align-items-center gap-2">
+              <i class="fa-solid fa-calendar-check text-primary"></i>
+              <span class="fw-bold">
+                {{ 'leaveType.leaveTypeInfo' | translate }}
+              </span>
+            </div>
+            <span class="badge-soft badge-indigo">
+              <i class="fa-solid fa-list-check"></i> 2 {{ 'common.fields' | translate }}
+            </span>
+          </div>
+
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label for="inputLeaveTypeCode" class="form-label custom-form-label">
+                {{ 'leaveType.leaveTypeCode' | translate }}
+              </label>
+              <div class="input-group custom-input-group">
+                <span class="input-group-text"><i class="fa-solid fa-hashtag"></i></span>
+                <input
+                  type="text"
+                  class="form-control custom-form-control disabled"
+                  id="inputLeaveTypeCode"
+                  placeholder="e.g. LT-001"
+                  formControlName="leaveTypeCode"
+                />
+              </div>
+              <div class="form-text-hint">
+                <i class="fa-solid fa-circle-info"></i> {{ 'leaveType.codeHint' | translate }}
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <label for="inputLeaveTypeName" class="form-label custom-form-label">
+                {{ 'leaveType.leaveTypeName' | translate }} <span class="text-danger fw-bold">*</span>
+              </label>
+              <div class="input-group custom-input-group">
+                <span class="input-group-text"><i class="fa-solid fa-tag"></i></span>
+                <input
+                  type="text"
+                  class="form-control custom-form-control"
+                  id="inputLeaveTypeName"
+                  placeholder="e.g. Nghỉ phép năm, Nghỉ thai sản..."
+                  formControlName="leaveTypeName"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Form Section 2: Additional Info & Note -->
+        <div class="form-section-card">
+          <div class="form-section-header">
+            <div class="d-flex align-items-center gap-2">
+              <i class="fa-solid fa-align-left text-primary"></i>
+              <span class="fw-bold">
+                {{ 'common.otherInfo' | translate }}
+              </span>
+            </div>
+            <span class="badge-soft badge-indigo">
+              <i class="fa-solid fa-list-check"></i> 1 {{ 'common.fields' | translate }}
+            </span>
+          </div>
+
+          <div class="row g-3">
+            <div class="col-12">
+              <label for="inputLeaveTypeNote" class="form-label custom-form-label">
+                {{ 'common.note' | translate }}
+              </label>
+              <div class="input-group custom-input-group">
+                <span class="input-group-text"><i class="fa-solid fa-align-left"></i></span>
+                <textarea
+                  class="form-control custom-form-control"
+                  id="inputLeaveTypeNote"
+                  rows="3"
+                  placeholder="{{ 'common.placeholderNote' | translate }}"
+                  formControlName="note"
+                ></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </ng-container>
+
+  <ng-container modal-actions>
+    <button
+      type="submit"
+      form="leaveTypeEditorForm"
+      class="btn btn-sm btn-pastel-purple px-4 py-2 rounded-3"
+      [disabled]="isSaving()"
+    >
+      @if (isSaving()) {
+        <span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+        {{ 'common.saving' | translate }}
+      } @else {
+        <i class="fa-solid fa-floppy-disk me-1"></i> {{ 'common.save' | translate }}
+      }
+    </button>
+  </ng-container>
+</app-modal>
+

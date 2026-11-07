@@ -36,6 +36,7 @@ export class ProvinceModal {
   readonly provinceForm = new FormGroup({
     id: new FormControl<string | null>(null),
     countryId: new FormControl<string>('', {
+      nonNullable: true,
       validators: [Validators.required],
     }),
     provinceCode: new FormControl<string | null>(null),

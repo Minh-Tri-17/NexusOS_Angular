@@ -203,12 +203,20 @@
               </label>
               <div class="input-group custom-input-group">
                 <span class="input-group-text"><i class="fa-solid fa-building"></i></span>
-                <input
-                  type="text"
-                  class="form-control custom-form-control"
+                <select
+                  class="form-select custom-form-select"
                   id="inputDepartmentId"
                   formControlName="departmentId"
-                />
+                >
+                  <option value="">
+                    {{ 'common.selectDepartment' | translate }}
+                  </option>
+                  @for (dept of departments(); track dept.id) {
+                    <option [value]="dept.id">
+                      {{ dept.departmentName }}
+                    </option>
+                  }
+                </select>
               </div>
             </div>
 

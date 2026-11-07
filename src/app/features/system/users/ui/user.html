@@ -114,8 +114,8 @@
     </ng-container>
   </app-toolbar>
   <app-table>
-    <ng-container table-header
-      ><tr>
+    <ng-container table-header>
+      <tr>
         <th class="col-pin" style="width: 36px; min-width: 36px">
           <input
             type="checkbox"
@@ -128,11 +128,14 @@
         @for (column of userColumns; track column) {
           <th>{{ 'user.' + column | translate }}</th>
         }
-        <th>{{ 'common.note' | translate }}</th>
+        <th style="min-width: 220px">{{ 'common.note' | translate }}</th>
         <th>{{ 'common.createdAt' | translate }}</th>
+        <th>{{ 'common.createdBy' | translate }}</th>
         <th>{{ 'common.updatedAt' | translate }}</th>
-      </tr></ng-container
-    >
+        <th>{{ 'common.updatedBy' | translate }}</th>
+      </tr>
+    </ng-container>
+
     <ng-container table-body>
       @if (isLoading()) {
         <app-placeholder [modelColumns]="userColumns"></app-placeholder>
@@ -148,6 +151,7 @@
               />
             </td>
             <td class="td-cell text-center">{{ fromRecord() + idx }}</td>
+
             <td class="text-nowrap">
               @if (user.userCode) {
                 <span class="badge-soft badge-blue">#{{ user.userCode }}</span>
@@ -155,35 +159,58 @@
                 <span class="text-muted opacity-50">—</span>
               }
             </td>
-            <td class="text-nowrap fw-semibold">
+
+            <td class="text-nowrap">
               @if (user.username) {
-                {{ user.username }}
+                <div
+                  class="fw-semibold text-main"
+                  [class.text-decoration-line-through]="filterIsDelete()"
+                >
+                  {{ user.username }}
+                </div>
+                @if (filterIsDelete()) {
+                  <span
+                    class="badge bg-danger-subtle text-danger border border-danger-subtle fs-xs rounded-pill px-2 py-0.5 mt-1"
+                  >
+                    <i class="fa-solid fa-trash-can me-1"></i> {{ 'common.softDeleted' | translate }}
+                  </span>
+                }
               } @else {
                 <span class="text-muted opacity-50">—</span>
               }
             </td>
+
             <td class="text-nowrap">
               @if (user.employeeName) {
-                <span class="text-main fw-medium">{{ user.employeeName }}</span>
+                <span class="text-muted small">
+                  <i class="fa-solid fa-user me-1 text-secondary opacity-75"></i>{{ user.employeeName }}
+                </span>
               } @else {
                 <span class="text-muted opacity-50">—</span>
               }
             </td>
-            <td>
+
+            <td class="text-nowrap">
               @if (user.email) {
-                {{ user.email }}
+                <span class="text-muted small">
+                  <i class="fa-regular fa-envelope me-1 text-secondary opacity-75"></i>{{ user.email }}
+                </span>
               } @else {
                 <span class="text-muted opacity-50">—</span>
               }
             </td>
-            <td>
+
+            <td class="text-nowrap">
               @if (user.phoneNumber) {
-                {{ user.phoneNumber }}
+                <span class="text-muted small">
+                  <i class="fa-solid fa-phone me-1 text-secondary opacity-75"></i>{{ user.phoneNumber }}
+                </span>
               } @else {
                 <span class="text-muted opacity-50">—</span>
               }
             </td>
-            <td>
+
+            <td class="text-nowrap">
               @if (user.userStatus) {
                 <span
                   class="badge-soft"
@@ -202,7 +229,8 @@
                 <span class="text-muted opacity-50">—</span>
               }
             </td>
-            <td>
+
+            <td class="text-nowrap">
               @if (user.userType) {
                 <span
                   class="badge-soft"
@@ -221,6 +249,55 @@
                 <span class="text-muted opacity-50">—</span>
               }
             </td>
+
+            <td class="text-nowrap">
+              @if (user.lastLoginAt) {
+                <span class="text-muted small">{{ user.lastLoginAt | date }}</span>
+              } @else {
+                <span class="text-muted opacity-50">—</span>
+              }
+            </td>
+
+            <td class="text-nowrap">
+              @if (user.failedLoginCount != null && user.failedLoginCount > 0) {
+                <span class="badge-soft badge-rose">{{ user.failedLoginCount }}</span>
+              } @else {
+                <span class="text-muted opacity-50">0</span>
+              }
+            </td>
+
+            <td class="text-nowrap">
+              @if (user.passwordExpiredAt) {
+                <span class="text-muted small">{{ user.passwordExpiredAt | date }}</span>
+              } @else {
+                <span class="text-muted opacity-50">—</span>
+              }
+            </td>
+
+            <td class="text-nowrap">
+              @if (user.requirePasswordChange) {
+                <span class="badge-soft badge-amber">
+                  <i class="fa-solid fa-key me-1"></i>{{ 'common.yes' | translate }}
+                </span>
+              } @else {
+                <span class="badge-soft badge-secondary">
+                  {{ 'common.no' | translate }}
+                </span>
+              }
+            </td>
+
+            <td class="text-nowrap">
+              @if (user.twoFactorEnabled) {
+                <span class="badge-soft badge-teal">
+                  <i class="fa-solid fa-shield-check me-1"></i>{{ 'common.enabled' | translate }}
+                </span>
+              } @else {
+                <span class="badge-soft badge-secondary">
+                  {{ 'common.disabled' | translate }}
+                </span>
+              }
+            </td>
+
             <td>
               @if (user.note) {
                 <span class="text-muted small fst-italic">{{ user.note }}</span>
@@ -228,6 +305,7 @@
                 <span class="text-muted opacity-50">—</span>
               }
             </td>
+
             <td class="text-nowrap">
               @if (user.createdAt) {
                 <span class="text-muted small">{{ user.createdAt | date }}</span>
@@ -235,9 +313,28 @@
                 <span class="text-muted opacity-50">—</span>
               }
             </td>
+
+            <td class="text-nowrap">
+              @if (user.createdBy) {
+                <span class="text-muted small">
+                  <i class="fa-regular fa-user me-1 text-secondary opacity-75"></i>{{ user.createdBy }}</span>
+              } @else {
+                <span class="text-muted opacity-50">—</span>
+              }
+            </td>
+
             <td class="text-nowrap">
               @if (user.updatedAt) {
                 <span class="text-muted small">{{ user.updatedAt | date }}</span>
+              } @else {
+                <span class="text-muted opacity-50">—</span>
+              }
+            </td>
+
+            <td class="text-nowrap">
+              @if (user.updatedBy) {
+                <span class="text-muted small">
+                  <i class="fa-regular fa-user me-1 text-secondary opacity-75"></i>{{ user.updatedBy }}</span>
               } @else {
                 <span class="text-muted opacity-50">—</span>
               }
@@ -247,6 +344,7 @@
       }
     </ng-container>
   </app-table>
+
   <app-pagination
     [(pageIndex)]="pageIndex"
     [(pageSize)]="pageSize"

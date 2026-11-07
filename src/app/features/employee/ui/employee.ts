@@ -23,6 +23,7 @@ import {
   EDUCATION_LEVEL_OPTIONS,
   EMPLOYMENT_STATUS_CONFIG,
   EMPLOYMENT_STATUS_OPTIONS,
+  Gender,
   GENDER_CONFIG,
   GENDER_OPTIONS,
 } from '../data-access/employee.enum';
@@ -43,6 +44,8 @@ export class Employee {
   private readonly dialogService = inject(DialogService);
 
   //#region //@ PROPS
+
+  readonly Gender = Gender;
 
   readonly employmentStatuses = EMPLOYMENT_STATUS_OPTIONS;
   readonly employmentStatusConfig = EMPLOYMENT_STATUS_CONFIG;
@@ -80,14 +83,19 @@ export class Employee {
   readonly employees = signal<EmployeeModel[]>([]);
   readonly searchText = signal('');
   readonly filterEmploymentStatus = signal('');
+  readonly filterGender = signal('');
+  readonly filterEducationLevel = signal('');
   readonly filterIsDelete = signal(false);
   readonly selectedIds = signal<Set<string>>(new Set());
   readonly isLoading = signal(false);
+  readonly isCardView = signal(true);
 
   readonly pageIndex = linkedSignal({
     source: () => ({
       search: this.searchText(),
-      region: this.filterEmploymentStatus(),
+      status: this.filterEmploymentStatus(),
+      gender: this.filterGender(),
+      educationLevel: this.filterEducationLevel(),
       isDelete: this.filterIsDelete(),
       pageSize: this.pageSize(),
     }),
@@ -146,6 +154,24 @@ export class Employee {
         filterOperator: FilterOperator.like,
       });
 
+    const filterGender = this.filterGender().trim();
+    if (filterGender)
+      filter.filters.push({
+        filterName: EmployeeFields.gender,
+        filterValue: filterGender,
+        filterType: FilterType.string,
+        filterOperator: FilterOperator.like,
+      });
+
+    const filterEducationLevel = this.filterEducationLevel().trim();
+    if (filterEducationLevel)
+      filter.filters.push({
+        filterName: EmployeeFields.educationLevel,
+        filterValue: filterEducationLevel,
+        filterType: FilterType.string,
+        filterOperator: FilterOperator.like,
+      });
+
     return filter;
   }
 
@@ -178,10 +204,20 @@ export class Employee {
     }
   }
 
+  handleViewCard() {
+    this.isCardView.set(true);
+  }
+
+  handleViewList() {
+    this.isCardView.set(false);
+  }
+
   handleClearFilter() {
     this.filterIsDelete.set(false);
     this.searchText.set('');
     this.filterEmploymentStatus.set('');
+    this.filterGender.set('');
+    this.filterEducationLevel.set('');
     this.pageIndex.set(1);
   }
 

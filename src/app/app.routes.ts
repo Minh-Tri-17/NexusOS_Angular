@@ -37,8 +37,29 @@ export const routes: Routes = [
         loadComponent: () => import('./features/categories/ward/ui/ward').then((m) => m.Ward),
       },
       {
+        path: 'department',
+        loadComponent: () =>
+          import('./features/categories/department/ui/department').then((m) => m.Department),
+      },
+      {
+        path: 'leave-type',
+        loadComponent: () =>
+          import('./features/categories/leave-type/ui/leave-type').then((m) => m.LeaveType),
+      },
+      {
+        path: 'contract-type',
+        loadComponent: () =>
+          import('./features/categories/contract-type/ui/contract-type').then(
+            (m) => m.ContractType,
+          ),
+      },
+      {
         path: 'employee',
         loadComponent: () => import('./features/employee/ui/employee').then((m) => m.Employee),
+      },
+      {
+        path: 'contract',
+        loadComponent: () => import('./features/contract/ui/contract').then((m) => m.Contract),
       },
       {
         path: 'role',

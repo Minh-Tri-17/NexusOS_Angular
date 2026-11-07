@@ -158,7 +158,16 @@
     "selectWard": "-- 町村・地区を選択 --",
     "selectEmployee": "-- 従業員を選択 --",
     "selectUserType": "-- ユーザータイプを選択 --",
-    "selectEducationLevel": "学歴を選択"
+    "selectEducationLevel": "学歴を選択",
+    "cardView": "カード表示",
+    "listView": "リスト表示",
+    "department": "部門",
+    "leaveType": "休暇種別",
+    "selectManager": "-- 管理者を選択 --",
+    "contractType": "契約種別",
+    "contract": "契約",
+    "selectDepartment": "-- 部署を選択 --",
+    "selectContractType": "-- 契約種別を選択 --"
   },
   "sidebar": {
     "dashboard": "ダッシュボード",
@@ -169,7 +178,9 @@
     "geography": "地域・地理",
     "settings": "設定",
     "operational": "稼働中",
-    "uptime": "稼働率"
+    "uptime": "稼働率",
+    "general": "全般",
+    "contracts": "雇用契約"
   },
   "header": {
     "searchPlaceholder": "従業員、取引、レポートを検索...",
@@ -243,7 +254,8 @@
     "associate": "短期大学 / 専門学校",
     "bachelor": "学士 / 大学",
     "master": "修士 / 大学院",
-    "doctorate": "博士 / PhD"
+    "doctorate": "博士 / PhD",
+    "manager": "管理者"
   },
   "role": {
     "title": "役割・権限管理",
@@ -305,5 +317,74 @@
     "wardName": "市区町村名",
     "provinceName": "都道府県",
     "wardInfo": "市区町村情報"
+  },
+  "department": {
+    "title": "部門管理",
+    "modalTitle": "部門プロファイル",
+    "description": "部門構造、部門コード、責任者、業務情報を管理します。",
+    "departmentCode": "部門コード",
+    "departmentName": "部門名",
+    "managerName": "管理者",
+    "manager": "部門長 / 管理者",
+    "departmentInfo": "部門情報",
+    "codeHint": "部門識別コード"
+  },
+  "leaveType": {
+    "title": "休暇種別管理",
+    "modalTitle": "休暇種別プロファイル",
+    "description": "休暇規定、有給分類、休暇カテゴリーを管理します。",
+    "leaveTypeCode": "休暇種別コード",
+    "leaveTypeName": "休暇種別名",
+    "leaveTypeInfo": "休暇種別情報",
+    "codeHint": "休暇種別識別コード"
+  },
+  "contractType": {
+    "title": "契約種別管理",
+    "modalTitle": "契約種別プロファイル",
+    "description": "雇用契約の種類、契約期間、労働協約区分を管理します。",
+    "contractTypeCode": "契約種別コード",
+    "contractTypeName": "契約種別名",
+    "contractTypeInfo": "契約種別情報",
+    "codeHint": "契約種別識別コード"
+  },
+  "contract": {
+    "title": "雇用契約管理",
+    "modalTitle": "雇用契約プロファイル",
+    "description": "雇用契約書、契約期間、給与待遇、承認ワークフロー、有効性を管理します。",
+    "contractCode": "契約コード",
+    "contractName": "契約名",
+    "employeeName": "従業員",
+    "contractTypeName": "契約種別",
+    "contractStatus": "契約状態",
+    "approvalStatus": "承認状態",
+    "startDate": "開始日",
+    "endDate": "終了日",
+    "baseSalary": "基本給",
+    "salaryUnit": "通貨単位",
+    "workingHoursPerWeek": "週間労働時間",
+    "otrate": "残業代倍率",
+    "allowanceAmount": "手当",
+    "insuranceContribution": "社会保険料負担",
+    "signedDate": "締結日",
+    "signedBy": "締結者",
+    "draft": "下書き",
+    "canceled": "キャンセル",
+    "active": "有効",
+    "expired": "期間満了",
+    "terminated": "終了",
+    "renewed": "更新済み",
+    "pending": "承認待ち",
+    "approved": "承認済み",
+    "rejected": "却下",
+    "cancelled": "キャンセル",
+    "selectContractStatus": "-- 契約状態を選択 --",
+    "selectApprovalStatus": "-- 承認状態を選択 --",
+    "indefinite": "無期雇用",
+    "contractInfo": "契約基本情報",
+    "termAndWorkingHours": "契約期間・労働時間",
+    "compensationAndInsurance": "給与・手当・社会保険",
+    "signingAndNotes": "締結情報・備考",
+    "codeHint": "契約識別コード",
+    "endDateHint": "無期雇用の場合は空欄にしてください"
   }
 }

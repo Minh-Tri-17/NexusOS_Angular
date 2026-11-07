@@ -52,13 +52,10 @@ export class User {
       key !== 'id' &&
       key !== 'storeId' &&
       key !== 'employeeId' &&
+      key !== 'roleIds' &&
+      key !== 'password' &&
       key !== 'passwordHash' &&
       key !== 'passwordSalt' &&
-      key !== 'lastLoginAt' &&
-      key !== 'failedLoginCount' &&
-      key !== 'passwordExpiredAt' &&
-      key !== 'requirePasswordChange' &&
-      key !== 'twoFactorEnabled' &&
       key !== 'isDelete' &&
       key !== 'note' &&
       key !== 'createdAt' &&

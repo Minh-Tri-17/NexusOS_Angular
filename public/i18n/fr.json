@@ -158,7 +158,16 @@
     "selectWard": "-- Sélectionner un quartier / commune --",
     "selectEmployee": "-- Sélectionner un employé --",
     "selectUserType": "-- Sélectionner un type d'utilisateur --",
-    "selectEducationLevel": "Sélectionner le niveau d'études"
+    "selectEducationLevel": "Sélectionner le niveau d'études",
+    "cardView": "Vue en cartes",
+    "listView": "Vue en liste",
+    "department": "Département",
+    "leaveType": "Type de congé",
+    "selectManager": "-- Sélectionner un responsable --",
+    "contractType": "Type de contrat",
+    "contract": "Contrat",
+    "selectDepartment": "-- Sélectionner le département --",
+    "selectContractType": "-- Sélectionner le type de contrat --"
   },
   "sidebar": {
     "dashboard": "Tableau de bord",
@@ -169,7 +178,9 @@
     "geography": "Géographie",
     "settings": "Paramètres",
     "operational": "Opérationnel",
-    "uptime": "Disponibilité"
+    "uptime": "Disponibilité",
+    "general": "Général",
+    "contracts": "Contrats"
   },
   "header": {
     "searchPlaceholder": "Rechercher des employés, ventes, rapports...",
@@ -243,7 +254,8 @@
     "associate": "DUT / BTS",
     "bachelor": "Licence / Bac+3",
     "master": "Master / Bac+5",
-    "doctorate": "Doctorat / PhD"
+    "doctorate": "Doctorat / PhD",
+    "manager": "Responsable"
   },
   "role": {
     "title": "Gestion des rôles & autorisations",
@@ -305,5 +317,74 @@
     "wardName": "Nom du quartier",
     "provinceName": "Province",
     "wardInfo": "Informations sur le quartier"
+  },
+  "department": {
+    "title": "Gestion des départements",
+    "modalTitle": "Profil du département",
+    "description": "Gérer les départements, les codes, les responsables et les détails opérationnels.",
+    "departmentCode": "Code département",
+    "departmentName": "Nom du département",
+    "managerName": "Responsable",
+    "manager": "Chef de département / Responsable",
+    "departmentInfo": "Informations du département",
+    "codeHint": "Code d'identification du département"
+  },
+  "leaveType": {
+    "title": "Gestion des types de congés",
+    "modalTitle": "Profil des types de congés",
+    "description": "Gérer les catégories de congés, les droits et les classifications d'absence.",
+    "leaveTypeCode": "Code type de congé",
+    "leaveTypeName": "Nom du type de congé",
+    "leaveTypeInfo": "Informations sur le type de congé",
+    "codeHint": "Code d'identification du type de congé"
+  },
+  "contractType": {
+    "title": "Gestion des types de contrats",
+    "modalTitle": "Profil des types de contrats",
+    "description": "Gérer les catégories de contrats de travail, les durées et les classifications contractuelles.",
+    "contractTypeCode": "Code type de contrat",
+    "contractTypeName": "Nom du type de contrat",
+    "contractTypeInfo": "Informations sur le type de contrat",
+    "codeHint": "Code d'identification du type de contrat"
+  },
+  "contract": {
+    "title": "Gestion des contrats de travail",
+    "modalTitle": "Profil du contrat de travail",
+    "description": "Gérer les contrats de travail, les durées, les rémunérations et les flux d'approbation.",
+    "contractCode": "Code contrat",
+    "contractName": "Nom du contrat",
+    "employeeName": "Employé",
+    "contractTypeName": "Type de contrat",
+    "contractStatus": "Statut du contrat",
+    "approvalStatus": "Statut d'approbation",
+    "startDate": "Date de début",
+    "endDate": "Date de fin",
+    "baseSalary": "Salaire de base",
+    "salaryUnit": "Devise",
+    "workingHoursPerWeek": "Heures / semaine",
+    "otrate": "Taux heures sup",
+    "allowanceAmount": "Indemnités",
+    "insuranceContribution": "Cotisation assurance",
+    "signedDate": "Date de signature",
+    "signedBy": "Signé par",
+    "draft": "Brouillon",
+    "canceled": "Annulé",
+    "active": "Actif",
+    "expired": "Expiré",
+    "terminated": "Résilié",
+    "renewed": "Renouvelé",
+    "pending": "En attente",
+    "approved": "Approuvé",
+    "rejected": "Rejeté",
+    "cancelled": "Annulé",
+    "selectContractStatus": "-- Sélectionner le statut --",
+    "selectApprovalStatus": "-- Sélectionner le statut d'approbation --",
+    "indefinite": "Indéterminé",
+    "contractInfo": "Informations générales du contrat",
+    "termAndWorkingHours": "Durée et temps de travail",
+    "compensationAndInsurance": "Rémunération et assurances",
+    "signingAndNotes": "Signature et notes",
+    "codeHint": "Code d'identification du contrat",
+    "endDateHint": "Laisser vide pour les contrats à durée indéterminée"
   }
 }
