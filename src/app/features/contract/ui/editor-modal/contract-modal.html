@@ -40,7 +40,7 @@
                 <span class="input-group-text"><i class="fa-solid fa-hashtag"></i></span>
                 <input
                   type="text"
-                  class="form-control custom-form-control disabled"
+                  class="form-control custom-form-control"
                   id="inputContractCode"
                   placeholder="e.g. CTR-001"
                   formControlName="contractCode"
@@ -83,7 +83,11 @@
                   <option value="">{{ 'common.selectEmployee' | translate }}</option>
                   @for (emp of employees(); track emp.id) {
                     <option [value]="emp.id">
-                      {{ emp.employeeCode ? ('#' + emp.employeeCode + ' - ' + emp.employeeName) : emp.employeeName }}
+                      {{
+                        emp.employeeCode
+                          ? '#' + emp.employeeCode + ' - ' + emp.employeeName
+                          : emp.employeeName
+                      }}
                     </option>
                   }
                 </select>
@@ -92,7 +96,8 @@
 
             <div class="col-md-6">
               <label for="inputContractType" class="form-label custom-form-label">
-                {{ 'contract.contractTypeName' | translate }} <span class="text-danger fw-bold">*</span>
+                {{ 'contract.contractTypeName' | translate }}
+                <span class="text-danger fw-bold">*</span>
               </label>
               <div class="input-group custom-input-group">
                 <span class="input-group-text"><i class="fa-solid fa-tag"></i></span>
@@ -105,7 +110,11 @@
                   <option value="">{{ 'common.selectContractType' | translate }}</option>
                   @for (ct of contractTypes(); track ct.id) {
                     <option [value]="ct.id">
-                      {{ ct.contractTypeCode ? ('#' + ct.contractTypeCode + ' - ' + ct.contractTypeName) : ct.contractTypeName }}
+                      {{
+                        ct.contractTypeCode
+                          ? '#' + ct.contractTypeCode + ' - ' + ct.contractTypeName
+                          : ct.contractTypeName
+                      }}
                     </option>
                   }
                 </select>
@@ -289,7 +298,9 @@
                 {{ 'contract.allowanceAmount' | translate }}
               </label>
               <div class="input-group custom-input-group">
-                <span class="input-group-text"><i class="fa-solid fa-hand-holding-dollar"></i></span>
+                <span class="input-group-text"
+                  ><i class="fa-solid fa-hand-holding-dollar"></i
+                ></span>
                 <input
                   type="number"
                   min="0"
@@ -401,4 +412,3 @@
     </button>
   </ng-container>
 </app-modal>
-

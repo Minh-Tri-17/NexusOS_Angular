@@ -42,7 +42,7 @@
                 <span class="input-group-text"><i class="fa-solid fa-hashtag"></i></span>
                 <input
                   type="text"
-                  class="form-control custom-form-control disabled"
+                  class="form-control custom-form-control"
                   id="inputLeaveTypeCode"
                   placeholder="e.g. LT-001"
                   formControlName="leaveTypeCode"
@@ -55,7 +55,8 @@
 
             <div class="col-md-6">
               <label for="inputLeaveTypeName" class="form-label custom-form-label">
-                {{ 'leaveType.leaveTypeName' | translate }} <span class="text-danger fw-bold">*</span>
+                {{ 'leaveType.leaveTypeName' | translate }}
+                <span class="text-danger fw-bold">*</span>
               </label>
               <div class="input-group custom-input-group">
                 <span class="input-group-text"><i class="fa-solid fa-tag"></i></span>
@@ -124,4 +125,3 @@
     </button>
   </ng-container>
 </app-modal>
-

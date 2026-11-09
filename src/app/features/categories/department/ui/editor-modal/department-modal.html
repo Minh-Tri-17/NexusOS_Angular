@@ -42,7 +42,7 @@
                 <span class="input-group-text"><i class="fa-solid fa-hashtag"></i></span>
                 <input
                   type="text"
-                  class="form-control custom-form-control disabled"
+                  class="form-control custom-form-control"
                   id="inputDepartmentCode"
                   placeholder="e.g. DEPT-001"
                   formControlName="departmentCode"
@@ -55,7 +55,8 @@
 
             <div class="col-md-6">
               <label for="inputDepartmentName" class="form-label custom-form-label">
-                {{ 'department.departmentName' | translate }} <span class="text-danger fw-bold">*</span>
+                {{ 'department.departmentName' | translate }}
+                <span class="text-danger fw-bold">*</span>
               </label>
               <div class="input-group custom-input-group">
                 <span class="input-group-text"><i class="fa-solid fa-building"></i></span>
@@ -84,7 +85,11 @@
                   <option value="">{{ 'common.selectManager' | translate }}</option>
                   @for (emp of employees(); track emp.id) {
                     <option [value]="emp.id">
-                      {{ emp.employeeCode ? ('#' + emp.employeeCode + ' - ' + emp.employeeName) : emp.employeeName }}
+                      {{
+                        emp.employeeCode
+                          ? '#' + emp.employeeCode + ' - ' + emp.employeeName
+                          : emp.employeeName
+                      }}
                     </option>
                   }
                 </select>
@@ -145,4 +150,3 @@
     </button>
   </ng-container>
 </app-modal>
-

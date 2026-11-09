@@ -42,7 +42,7 @@
                 <span class="input-group-text"><i class="fa-solid fa-hashtag"></i></span>
                 <input
                   type="text"
-                  class="form-control custom-form-control disabled"
+                  class="form-control custom-form-control"
                   id="inputContractTypeCode"
                   placeholder="e.g. CT-001"
                   formControlName="contractTypeCode"
@@ -55,7 +55,8 @@
 
             <div class="col-md-6">
               <label for="inputContractTypeName" class="form-label custom-form-label">
-                {{ 'contractType.contractTypeName' | translate }} <span class="text-danger fw-bold">*</span>
+                {{ 'contractType.contractTypeName' | translate }}
+                <span class="text-danger fw-bold">*</span>
               </label>
               <div class="input-group custom-input-group">
                 <span class="input-group-text"><i class="fa-solid fa-file-signature"></i></span>
@@ -124,4 +125,3 @@
     </button>
   </ng-container>
 </app-modal>
-

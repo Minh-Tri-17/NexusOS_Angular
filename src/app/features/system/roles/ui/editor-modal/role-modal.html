@@ -35,7 +35,7 @@
                 <span class="input-group-text"><i class="fa-solid fa-id-badge"></i></span>
                 <input
                   type="text"
-                  class="form-control custom-form-control disabled"
+                  class="form-control custom-form-control"
                   id="inputRoleCode"
                   placeholder="e.g. ROL-001"
                   formControlName="roleCode"
@@ -140,7 +140,11 @@
             </div>
           </div>
 
-          <app-table [minWidth]="minTableWidth()" maxHeight="min(48vh, 420px)" containerClass="border mb-0">
+          <app-table
+            [minWidth]="minTableWidth()"
+            maxHeight="min(48vh, 420px)"
+            containerClass="border mb-0"
+          >
             <ng-container table-header>
               <tr>
                 <th class="text-center" style="width: 44px">
@@ -185,14 +189,20 @@
             <ng-container table-body>
               @if (isLoadingPermissions()) {
                 <tr>
-                  <td [attr.colspan]="availableActions().length + 2" class="text-center py-4 text-muted">
+                  <td
+                    [attr.colspan]="availableActions().length + 2"
+                    class="text-center py-4 text-muted"
+                  >
                     <span class="spinner-border spinner-border-sm me-2" role="status"></span>
                     {{ 'common.requestingData' | translate }}
                   </td>
                 </tr>
               } @else if (filteredRows().length === 0) {
                 <tr>
-                  <td [attr.colspan]="availableActions().length + 2" class="text-center py-4 text-muted fst-italic">
+                  <td
+                    [attr.colspan]="availableActions().length + 2"
+                    class="text-center py-4 text-muted fst-italic"
+                  >
                     {{ 'common.noRecordsFound' | translate }}
                   </td>
                 </tr>
