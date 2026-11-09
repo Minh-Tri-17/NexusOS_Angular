@@ -27,6 +27,7 @@ const SCOPE_DISPLAY_INFO: Record<string, { name: string; icon: string }> = {
   CatCountry: { name: 'common.country', icon: 'fa-solid fa-earth-americas' },
   CatProvince: { name: 'common.province', icon: 'fa-solid fa-map-location-dot' },
   CatWard: { name: 'common.ward', icon: 'fa-solid fa-tree-city' },
+  CatJobTitle: { name: 'common.jobTitle', icon: 'fa-solid fa-briefcase' },
   Employee: { name: 'common.employee', icon: 'fa-solid fa-users-gear' },
   User: { name: 'common.user', icon: 'fa-solid fa-user-shield' },
   Role: { name: 'common.role', icon: 'fa-solid fa-shield-halved' },

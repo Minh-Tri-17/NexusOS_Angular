@@ -225,13 +225,21 @@
                 {{ 'employee.jobTitleName' | translate }}
               </label>
               <div class="input-group custom-input-group">
-                <span class="input-group-text"><i class="fa-solid fa-user-tie"></i></span>
-                <input
-                  type="text"
-                  class="form-control custom-form-control"
+                <span class="input-group-text"><i class="fa-solid fa-briefcase"></i></span>
+                <select
+                  class="form-select custom-form-select"
                   id="inputJobTitleId"
                   formControlName="jobTitleId"
-                />
+                >
+                  <option value="">
+                    {{ 'common.selectJobTitle' | translate }}
+                  </option>
+                  @for (job of jobTitles(); track job.id) {
+                    <option [value]="job.id">
+                      {{ job.jobTitleName }}
+                    </option>
+                  }
+                </select>
               </div>
             </div>
 

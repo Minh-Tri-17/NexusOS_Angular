@@ -59,6 +59,16 @@ export const API_CONSTANTS = {
     import: 'CatDepartment/Import',
     export: 'CatDepartment/Export',
   },
+  jobTitle: {
+    create: 'CatJobTitle/Create',
+    update: 'CatJobTitle/Update',
+    softDelete: 'CatJobTitle/SoftDelete',
+    hardDelete: 'CatJobTitle/HardDelete',
+    getPaging: 'CatJobTitle/GetPaging/Filter',
+    getById: 'CatJobTitle/GetOne',
+    import: 'CatJobTitle/Import',
+    export: 'CatJobTitle/Export',
+  },
   role: {
     create: 'Role/Create',
     update: 'Role/Update',

@@ -162,11 +162,13 @@
     "cardView": "Dạng thẻ",
     "listView": "Dạng danh sách",
     "department": "Phòng ban",
+    "jobTitle": "Chức danh",
     "leaveType": "Loại nghỉ phép",
     "selectManager": "-- Chọn quản lý --",
     "contractType": "Loại hợp đồng",
     "contract": "Hợp đồng",
     "selectDepartment": "-- Chọn phòng ban --",
+    "selectJobTitle": "-- Chọn chức danh --",
     "selectContractType": "-- Chọn loại hợp đồng --",
     "yes": "Có",
     "no": "Không",
@@ -338,6 +340,15 @@
     "manager": "Trưởng phòng / Quản lý",
     "departmentInfo": "Thông tin phòng ban",
     "codeHint": "Mã định danh phòng ban"
+  },
+  "jobTitle": {
+    "title": "Quản lý chức danh",
+    "modalTitle": "Hồ sơ Chức danh",
+    "description": "Quản lý danh mục chức danh công việc, vị trí và nhiệm vụ chuyên môn của nhân sự.",
+    "jobTitleCode": "Mã chức danh",
+    "jobTitleName": "Tên chức danh",
+    "jobTitleInfo": "Thông tin chức danh",
+    "codeHint": "Mã định danh chức danh nghề nghiệp"
   },
   "leaveType": {
     "title": "Quản lý loại nghỉ phép",

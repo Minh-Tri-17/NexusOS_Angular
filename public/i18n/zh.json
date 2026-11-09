@@ -162,11 +162,13 @@
     "cardView": "卡片视图",
     "listView": "列表视图",
     "department": "部门",
+    "jobTitle": "职位",
     "leaveType": "请假类型",
     "selectManager": "-- 选择负责人 --",
     "contractType": "合同类型",
     "contract": "合同",
     "selectDepartment": "-- 选择部门 --",
+    "selectJobTitle": "-- 选择职位 --",
     "selectContractType": "-- 选择合同类型 --"
   },
   "sidebar": {
@@ -328,6 +330,15 @@
     "manager": "部门负责人 / 主管",
     "departmentInfo": "部门信息",
     "codeHint": "部门唯一识别码"
+  },
+  "jobTitle": {
+    "title": "职位管理",
+    "modalTitle": "职位档案",
+    "description": "管理员工职位类别、职称及专业岗位职责。",
+    "jobTitleCode": "职位编号",
+    "jobTitleName": "职位名称",
+    "jobTitleInfo": "职位信息",
+    "codeHint": "职位唯一标识码"
   },
   "leaveType": {
     "title": "请假类型管理",

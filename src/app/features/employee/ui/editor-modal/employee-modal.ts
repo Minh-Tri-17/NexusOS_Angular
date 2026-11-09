@@ -8,6 +8,8 @@ import { BaseService } from '../../../../core/services/base.service';
 import { Modal } from '../../../../shared/components/modal/modal';
 import { DepartmentFacade } from '../../../categories/department/data-access/department.facade';
 import { DepartmentModel } from '../../../categories/department/data-access/department.model';
+import { JobTitleFacade } from '../../../categories/job-title/data-access/job-title.facade';
+import { JobTitleModel } from '../../../categories/job-title/data-access/job-title.model';
 import { CountryFacade } from '../../../categories/country/data-access/country.facade';
 import { CountryModel } from '../../../categories/country/data-access/country.model';
 import { ProvinceFacade } from '../../../categories/province/data-access/province.facade';
@@ -36,6 +38,7 @@ export class EmployeeModal {
   private readonly baseService = inject(BaseService);
   private readonly facade = inject(EmployeeFacade);
   private readonly departmentFacade = inject(DepartmentFacade);
+  private readonly jobTitleFacade = inject(JobTitleFacade);
   private readonly countryFacade = inject(CountryFacade);
   private readonly provinceFacade = inject(ProvinceFacade);
   private readonly wardFacade = inject(WardFacade);
@@ -54,6 +57,7 @@ export class EmployeeModal {
   readonly isSaving = signal(false);
   readonly photoPreview = signal<string>('');
   readonly departments = signal<DepartmentModel[]>([]);
+  readonly jobTitles = signal<JobTitleModel[]>([]);
   readonly countries = signal<CountryModel[]>([]);
   readonly provinces = signal<ProvinceModel[]>([]);
   readonly wards = signal<WardModel[]>([]);
@@ -74,7 +78,7 @@ export class EmployeeModal {
     isMultiStore: new FormControl<boolean>(false, { nonNullable: true }),
 
     departmentId: new FormControl<string>('', { nonNullable: true }),
-    jobTitleId: new FormControl<string | null>({ value: null, disabled: true }),
+    jobTitleId: new FormControl<string>('', { nonNullable: true }),
     storeId: new FormControl<string | null>({ value: null, disabled: true }),
     countryId: new FormControl<string>('', { nonNullable: true }),
     provinceId: new FormControl<string>('', { nonNullable: true }),
@@ -116,6 +120,7 @@ export class EmployeeModal {
   async loadComboboxData() {
     await Promise.allSettled([
       this.loadDepartments(),
+      this.loadJobTitles(),
       this.loadCountries(),
       this.loadProvinces(),
       this.loadWards(),
@@ -131,6 +136,18 @@ export class EmployeeModal {
       this.departments.set(res.result?.items || []);
     } catch {
       this.departments.set([]);
+    }
+  }
+
+  private async loadJobTitles() {
+    if (this.jobTitles().length > 0) return;
+
+    try {
+      const filter = this.buildFilter();
+      const res = await this.jobTitleFacade.getPaging(filter);
+      this.jobTitles.set(res.result?.items || []);
+    } catch {
+      this.jobTitles.set([]);
     }
   }
 
@@ -202,7 +219,7 @@ export class EmployeeModal {
       terminationDate: null,
       isMultiStore: false,
       departmentId: '',
-      jobTitleId: null,
+      jobTitleId: '',
       storeId: null,
       countryId: '',
       provinceId: '',
@@ -248,7 +265,7 @@ export class EmployeeModal {
       bankName: item.bankName || null,
       note: item.note || null,
       departmentId: item.departmentId || '',
-      jobTitleId: item.jobTitleId || null,
+      jobTitleId: item.jobTitleId || '',
       storeId: item.storeId || null,
       countryId: item.countryId || '',
       provinceId: item.provinceId || '',

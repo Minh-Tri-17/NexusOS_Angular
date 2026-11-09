@@ -42,6 +42,11 @@ export const routes: Routes = [
           import('./features/categories/department/ui/department').then((m) => m.Department),
       },
       {
+        path: 'job-title',
+        loadComponent: () =>
+          import('./features/categories/job-title/ui/job-title').then((m) => m.JobTitle),
+      },
+      {
         path: 'leave-type',
         loadComponent: () =>
           import('./features/categories/leave-type/ui/leave-type').then((m) => m.LeaveType),

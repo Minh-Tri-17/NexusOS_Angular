@@ -162,11 +162,13 @@
     "cardView": "カード表示",
     "listView": "リスト表示",
     "department": "部門",
+    "jobTitle": "役職",
     "leaveType": "休暇種別",
     "selectManager": "-- 管理者を選択 --",
     "contractType": "契約種別",
     "contract": "契約",
     "selectDepartment": "-- 部署を選択 --",
+    "selectJobTitle": "-- 役職を選択 --",
     "selectContractType": "-- 契約種別を選択 --"
   },
   "sidebar": {
@@ -328,6 +330,15 @@
     "manager": "部門長 / 管理者",
     "departmentInfo": "部門情報",
     "codeHint": "部門識別コード"
+  },
+  "jobTitle": {
+    "title": "役職管理",
+    "modalTitle": "役職プロファイル",
+    "description": "職位、役職カテゴリ、および従業員の専門職責を管理します。",
+    "jobTitleCode": "役職コード",
+    "jobTitleName": "役職名",
+    "jobTitleInfo": "役職情報",
+    "codeHint": "役職識別コード"
   },
   "leaveType": {
     "title": "休暇種別管理",

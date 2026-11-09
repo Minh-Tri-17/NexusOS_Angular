@@ -21,7 +21,15 @@ export class Sidebar {
   readonly openSubmenu = signal<string | null>(null);
 
   private readonly submenuRoutes: Record<string, string[]> = {
-    categories: ['/country', '/province', '/ward', '/department', '/leave-type', '/contract-type'],
+    categories: [
+      '/country',
+      '/province',
+      '/ward',
+      '/department',
+      '/job-title',
+      '/leave-type',
+      '/contract-type',
+    ],
     settings: ['/user', '/role'],
   };
 

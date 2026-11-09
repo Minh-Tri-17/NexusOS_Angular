@@ -78,6 +78,15 @@
           </a>
           <a
             class="submenu-link"
+            title="Job Title"
+            [routerLink]="['/job-title']"
+            routerLinkActive="active"
+          >
+            <i class="fa-solid fa-briefcase"></i>
+            <span>{{ 'common.jobTitle' | translate }}</span>
+          </a>
+          <a
+            class="submenu-link"
             title="Leave Type"
             [routerLink]="['/leave-type']"
             routerLinkActive="active"

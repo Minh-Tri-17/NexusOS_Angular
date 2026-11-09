@@ -162,11 +162,13 @@
     "cardView": "Card View",
     "listView": "List View",
     "department": "Department",
+    "jobTitle": "Job Title",
     "leaveType": "Leave Type",
     "selectManager": "-- Select Manager --",
     "contractType": "Contract Type",
     "contract": "Contract",
     "selectDepartment": "-- Select Department --",
+    "selectJobTitle": "-- Select Job Title --",
     "selectContractType": "-- Select Contract Type --",
     "yes": "Yes",
     "no": "No",
@@ -338,6 +340,15 @@
     "manager": "Department Head / Manager",
     "departmentInfo": "Department Information",
     "codeHint": "Department identification code"
+  },
+  "jobTitle": {
+    "title": "Job Title Management",
+    "modalTitle": "Job Title Profile",
+    "description": "Manage job title categories, position designations, and employee functional roles.",
+    "jobTitleCode": "Job Title Code",
+    "jobTitleName": "Job Title Name",
+    "jobTitleInfo": "Job Title Information",
+    "codeHint": "Job title identification code"
   },
   "leaveType": {
     "title": "Leave Type Management",

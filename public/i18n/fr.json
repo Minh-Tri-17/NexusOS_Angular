@@ -162,11 +162,13 @@
     "cardView": "Vue en cartes",
     "listView": "Vue en liste",
     "department": "Département",
+    "jobTitle": "Titre du poste",
     "leaveType": "Type de congé",
     "selectManager": "-- Sélectionner un responsable --",
     "contractType": "Type de contrat",
     "contract": "Contrat",
     "selectDepartment": "-- Sélectionner le département --",
+    "selectJobTitle": "-- Sélectionner le titre du poste --",
     "selectContractType": "-- Sélectionner le type de contrat --"
   },
   "sidebar": {
@@ -328,6 +330,15 @@
     "manager": "Chef de département / Responsable",
     "departmentInfo": "Informations du département",
     "codeHint": "Code d'identification du département"
+  },
+  "jobTitle": {
+    "title": "Gestion des titres de poste",
+    "modalTitle": "Profil du titre de poste",
+    "description": "Gérer les catégories de titres d'emploi et les désignations professionnelles.",
+    "jobTitleCode": "Code titre de poste",
+    "jobTitleName": "Nom du titre de poste",
+    "jobTitleInfo": "Informations sur le titre de poste",
+    "codeHint": "Code d'identification du titre de poste"
   },
   "leaveType": {
     "title": "Gestion des types de congés",
