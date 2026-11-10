@@ -169,7 +169,11 @@
     "contract": "Contrat",
     "selectDepartment": "-- Sélectionner le département --",
     "selectJobTitle": "-- Sélectionner le titre du poste --",
-    "selectContractType": "-- Sélectionner le type de contrat --"
+    "selectContractType": "-- Sélectionner le type de contrat --",
+    "yes": "Oui",
+    "no": "Non",
+    "enabled": "Activé",
+    "disabled": "Désactivé"
   },
   "sidebar": {
     "dashboard": "Tableau de bord",
@@ -257,7 +261,10 @@
     "bachelor": "Licence / Bac+3",
     "master": "Master / Bac+5",
     "doctorate": "Doctorat / PhD",
-    "manager": "Responsable"
+    "manager": "Responsable",
+    "managerName": "Responsable",
+    "contractName": "Nom du contrat",
+    "contractTypeName": "Type de contrat"
   },
   "role": {
     "title": "Gestion des rôles & autorisations",
@@ -297,6 +304,9 @@
     "system": "System",
     "requirePasswordChange": "Require Password Change",
     "twoFactorEnabled": "Two-factor Authentication",
+    "lastLoginAt": "Dernière connexion",
+    "failedLoginCount": "Échecs de connexion",
+    "passwordExpiredAt": "Expiration du mot de passe",
     "password": "Mot de passe",
     "passwordHint": "Laisser vide pour conserver le mot de passe actuel",
     "roles": "Rôles attribués",

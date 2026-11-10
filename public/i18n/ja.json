@@ -169,7 +169,11 @@
     "contract": "契約",
     "selectDepartment": "-- 部署を選択 --",
     "selectJobTitle": "-- 役職を選択 --",
-    "selectContractType": "-- 契約種別を選択 --"
+    "selectContractType": "-- 契約種別を選択 --",
+    "yes": "はい",
+    "no": "いいえ",
+    "enabled": "有効",
+    "disabled": "無効"
   },
   "sidebar": {
     "dashboard": "ダッシュボード",
@@ -257,7 +261,10 @@
     "bachelor": "学士 / 大学",
     "master": "修士 / 大学院",
     "doctorate": "博士 / PhD",
-    "manager": "管理者"
+    "manager": "管理者",
+    "managerName": "管理者",
+    "contractName": "契約名",
+    "contractTypeName": "契約形態"
   },
   "role": {
     "title": "役割・権限管理",
@@ -297,6 +304,9 @@
     "system": "System",
     "requirePasswordChange": "Require Password Change",
     "twoFactorEnabled": "Two-factor Authentication",
+    "lastLoginAt": "最終ログイン",
+    "failedLoginCount": "ログイン失敗回数",
+    "passwordExpiredAt": "パスワード有効期限",
     "password": "パスワード",
     "passwordHint": "現在のパスワードを維持する場合は空白のままにしてください",
     "roles": "割り当てられた役割",

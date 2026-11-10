@@ -169,7 +169,11 @@
     "contract": "合同",
     "selectDepartment": "-- 选择部门 --",
     "selectJobTitle": "-- 选择职位 --",
-    "selectContractType": "-- 选择合同类型 --"
+    "selectContractType": "-- 选择合同类型 --",
+    "yes": "是",
+    "no": "否",
+    "enabled": "启用",
+    "disabled": "禁用"
   },
   "sidebar": {
     "dashboard": "仪表板",
@@ -257,7 +261,10 @@
     "bachelor": "本科 / 学士",
     "master": "硕士 / 研究生",
     "doctorate": "博士 / PhD",
-    "manager": "主管"
+    "manager": "主管",
+    "managerName": "直属主管",
+    "contractName": "合同名称",
+    "contractTypeName": "合同类型"
   },
   "role": {
     "title": "角色与权限管理",
@@ -297,6 +304,9 @@
     "system": "System",
     "requirePasswordChange": "Require Password Change",
     "twoFactorEnabled": "Two-factor Authentication",
+    "lastLoginAt": "最后登录时间",
+    "failedLoginCount": "登录失败次数",
+    "passwordExpiredAt": "密码过期时间",
     "password": "密码",
     "passwordHint": "留空以保留当前密码",
     "roles": "分配的角色",
