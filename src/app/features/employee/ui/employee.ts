@@ -18,6 +18,8 @@ import { Placeholder } from '../../../shared/components/placeholder/placeholder'
 import { Summary } from '../../../shared/components/summary/summary';
 import { Table } from '../../../shared/components/table/table';
 import { Toolbar } from '../../../shared/components/toolbar/toolbar';
+import { EmptyFallbackPipe } from '../../../shared/pipes/empty-fallback.pipe';
+import { MaskPipe } from '../../../shared/pipes/mask.pipe';
 import {
   EDUCATION_LEVEL_CONFIG,
   EDUCATION_LEVEL_OPTIONS,
@@ -33,7 +35,18 @@ import { EmployeeModal } from './editor-modal/employee-modal';
 
 @Component({
   selector: 'app-employee',
-  imports: [Pagination, Summary, Toolbar, Table, DatePipe, Placeholder, FormsModule, TranslatePipe],
+  imports: [
+    Pagination,
+    Summary,
+    Toolbar,
+    Table,
+    DatePipe,
+    Placeholder,
+    FormsModule,
+    TranslatePipe,
+    EmptyFallbackPipe,
+    MaskPipe,
+  ],
   templateUrl: './employee.html',
   styleUrl: './employee.scss',
 })

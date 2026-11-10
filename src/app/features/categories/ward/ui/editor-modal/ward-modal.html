@@ -37,6 +37,8 @@
                   id="inputWardCode"
                   placeholder="e.g. W01, P12, TT01"
                   formControlName="wardCode"
+                  appUppercase
+                  appAutoTrim
                 />
               </div>
               <div class="form-text-hint">
@@ -56,6 +58,7 @@
                   id="inputWardName"
                   placeholder="e.g. Phường Bến Nghé, Xã Tân Triều"
                   formControlName="wardName"
+                  appAutoTrim
                   required
                 />
               </div>
@@ -66,20 +69,36 @@
                 {{ 'ward.provinceName' | translate }} <span class="text-danger fw-bold">*</span>
               </label>
               <div class="input-group custom-input-group">
-                <span class="input-group-text"><i class="fa-solid fa-map"></i></span>
+                <span class="input-group-text">
+                  @if (isLoadingProvince()) {
+                    <span
+                      class="spinner-border spinner-border-sm text-primary"
+                      role="status"
+                    ></span>
+                  } @else {
+                    <i class="fa-solid fa-map"></i>
+                  }
+                </span>
                 <select
                   class="form-select custom-form-select"
                   id="inputProvinceId"
                   formControlName="provinceId"
+                  [appSelectLoading]="isLoadingProvince()"
                   required
                 >
-                  <option value="">
-                    {{ 'common.selectProvince' | translate }}
-                  </option>
-                  @for (province of provinces(); track province.id) {
-                    <option [value]="province.id">
-                      {{ province.provinceName }}
+                  @if (isLoadingProvince()) {
+                    <option value="" disabled selected>
+                      {{ 'common.loading' | translate }}
                     </option>
+                  } @else {
+                    <option value="">
+                      {{ 'common.selectProvince' | translate }}
+                    </option>
+                    @for (province of provinces(); track province.id) {
+                      <option [value]="province.id">
+                        {{ province.provinceName }}
+                      </option>
+                    }
                   }
                 </select>
               </div>
@@ -112,6 +131,7 @@
                   rows="3"
                   placeholder="{{ 'common.placeholderNote' | translate }}"
                   formControlName="note"
+                  appAutoTrim
                 ></textarea>
               </div>
             </div>

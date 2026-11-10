@@ -6,6 +6,10 @@ import { NIL as NIL_GUID } from 'uuid';
 import { PagingRequest } from '../../../../core/models/paging.model';
 import { BaseService } from '../../../../core/services/base.service';
 import { Modal } from '../../../../shared/components/modal/modal';
+import { SelectLoadingDirective } from '../../../../shared/directives/select-loading.directive';
+import { AutoTrimDirective } from '../../../../shared/directives/auto-trim.directive';
+import { UppercaseDirective } from '../../../../shared/directives/uppercase.directive';
+import { NumberOnlyDirective } from '../../../../shared/directives/number-only.directive';
 import { DepartmentFacade } from '../../../categories/department/data-access/department.facade';
 import { DepartmentModel } from '../../../categories/department/data-access/department.model';
 import { JobTitleFacade } from '../../../categories/job-title/data-access/job-title.facade';
@@ -30,7 +34,15 @@ import { UserModel } from '../../../system/users/data-access/user.model';
 
 @Component({
   selector: 'app-employee-modal',
-  imports: [Modal, ReactiveFormsModule, TranslatePipe],
+  imports: [
+    Modal,
+    ReactiveFormsModule,
+    TranslatePipe,
+    SelectLoadingDirective,
+    AutoTrimDirective,
+    UppercaseDirective,
+    NumberOnlyDirective,
+  ],
   templateUrl: './employee-modal.html',
   styleUrl: './employee-modal.scss',
 })
@@ -55,6 +67,11 @@ export class EmployeeModal {
   //#region //@ STATE
 
   readonly isSaving = signal(false);
+  readonly isLoadingDepartment = signal(false);
+  readonly isLoadingJobTitle = signal(false);
+  readonly isLoadingCountry = signal(false);
+  readonly isLoadingProvince = signal(false);
+  readonly isLoadingWard = signal(false);
   readonly photoPreview = signal<string>('');
   readonly departments = signal<DepartmentModel[]>([]);
   readonly jobTitles = signal<JobTitleModel[]>([]);
@@ -130,60 +147,75 @@ export class EmployeeModal {
   private async loadDepartments() {
     if (this.departments().length > 0) return;
 
+    this.isLoadingDepartment.set(true);
     try {
       const filter = this.buildFilter();
       const res = await this.departmentFacade.getPaging(filter);
       this.departments.set(res.result?.items || []);
     } catch {
       this.departments.set([]);
+    } finally {
+      this.isLoadingDepartment.set(false);
     }
   }
 
   private async loadJobTitles() {
     if (this.jobTitles().length > 0) return;
 
+    this.isLoadingJobTitle.set(true);
     try {
       const filter = this.buildFilter();
       const res = await this.jobTitleFacade.getPaging(filter);
       this.jobTitles.set(res.result?.items || []);
     } catch {
       this.jobTitles.set([]);
+    } finally {
+      this.isLoadingJobTitle.set(false);
     }
   }
 
   private async loadCountries() {
     if (this.countries().length > 0) return;
 
+    this.isLoadingCountry.set(true);
     try {
       const filter = this.buildFilter();
       const res = await this.countryFacade.getPaging(filter);
       this.countries.set(res.result?.items || []);
     } catch {
       this.countries.set([]);
+    } finally {
+      this.isLoadingCountry.set(false);
     }
   }
 
   private async loadProvinces() {
     if (this.provinces().length > 0) return;
 
+    this.isLoadingProvince.set(true);
     try {
       const filter = this.buildFilter();
       const res = await this.provinceFacade.getPaging(filter);
       this.provinces.set(res.result?.items || []);
     } catch {
       this.provinces.set([]);
+    } finally {
+      this.isLoadingProvince.set(false);
     }
   }
 
   private async loadWards() {
     if (this.wards().length > 0) return;
 
+    this.isLoadingWard.set(true);
     try {
       const filter = this.buildFilter();
       const res = await this.wardFacade.getPaging(filter);
       this.wards.set(res.result?.items || []);
     } catch {
       this.wards.set([]);
+    } finally {
+      this.isLoadingWard.set(false);
     }
   }
 

@@ -18,6 +18,7 @@ import { Placeholder } from '../../../../shared/components/placeholder/placehold
 import { Summary } from '../../../../shared/components/summary/summary';
 import { Table } from '../../../../shared/components/table/table';
 import { Toolbar } from '../../../../shared/components/toolbar/toolbar';
+import { EmptyFallbackPipe } from '../../../../shared/pipes/empty-fallback.pipe';
 import { CountryFacade } from '../../country/data-access/country.facade';
 import { CountryModel } from '../../country/data-access/country.model';
 import { ProvinceFacade } from '../data-access/province.facade';
@@ -26,7 +27,17 @@ import { ProvinceModal } from './editor-modal/province-modal';
 
 @Component({
   selector: 'app-province',
-  imports: [Summary, Toolbar, Pagination, Table, DatePipe, FormsModule, Placeholder, TranslatePipe],
+  imports: [
+    Summary,
+    Toolbar,
+    Pagination,
+    Table,
+    DatePipe,
+    FormsModule,
+    Placeholder,
+    TranslatePipe,
+    EmptyFallbackPipe,
+  ],
   templateUrl: './province.html',
   styleUrl: './province.scss',
 })

@@ -53,6 +53,7 @@
     "errorOccurred": "Une erreur est survenue !",
     "save": "Enregistrer",
     "saving": "Enregistrement en cours...",
+    "loading": "Chargement des données...",
     "notification": "Notification",
     "softDeleted": "Supprimé temporairement",
     "country": "Pays",

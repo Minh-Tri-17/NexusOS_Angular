@@ -159,13 +159,12 @@
             </td>
 
             <td>
-              @if (country.capital) {
-                <span class="text-muted small">
-                  <i class="fa-solid fa-location-dot text-secondary opacity-75 me-1"></i>{{ country.capital }}</span
-                >
-              } @else {
-                <span class="text-muted opacity-50">—</span>
-              }
+              <span class="text-muted small">
+                @if (country.capital) {
+                  <i class="fa-solid fa-location-dot text-secondary opacity-75 me-1"></i>
+                }
+                {{ country.capital | fallback }}
+              </span>
             </td>
 
             <td class="text-nowrap">
@@ -189,11 +188,7 @@
             </td>
 
             <td>
-              @if (country.note) {
-                <span class="text-muted small fst-italic">{{ country.note }}</span>
-              } @else {
-                <span class="text-muted opacity-50">—</span>
-              }
+              <span class="text-muted small fst-italic">{{ country.note | fallback }}</span>
             </td>
 
             <td class="text-nowrap">

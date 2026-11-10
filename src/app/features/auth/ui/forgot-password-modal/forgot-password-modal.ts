@@ -13,6 +13,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { map, Subject, switchMap, takeWhile, timer } from 'rxjs';
 import { BaseService } from '../../../../core/services/base.service';
 import { MailModel } from '../../../../core/models/mail.model';
+import { AutoTrimDirective } from '../../../../shared/directives/auto-trim.directive';
 import { showToast } from '../../../../shared/components/toast/toast.util';
 import { AuthFacade } from '../../data-access/auth.facade';
 import { AuthModel } from '../../data-access/auth.model';
@@ -26,7 +27,7 @@ interface PasswordStrengthState {
 
 @Component({
   selector: 'app-forgot-password-modal',
-  imports: [NgbModule, ReactiveFormsModule, TranslatePipe],
+  imports: [NgbModule, ReactiveFormsModule, TranslatePipe, AutoTrimDirective],
   templateUrl: './forgot-password-modal.html',
   styleUrl: './forgot-password-modal.scss',
   encapsulation: ViewEncapsulation.None,

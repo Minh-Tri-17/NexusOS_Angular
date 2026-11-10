@@ -42,6 +42,8 @@
                   id="inputProvinceCode"
                   placeholder="e.g. HN, HCM, DN"
                   formControlName="provinceCode"
+                  appUppercase
+                  appAutoTrim
                 />
               </div>
               <div class="form-text-hint">
@@ -61,6 +63,7 @@
                   id="inputProvinceName"
                   placeholder="e.g. Hà Nội, TP. Hồ Chí Minh"
                   formControlName="provinceName"
+                  appAutoTrim
                   required
                 />
               </div>
@@ -71,20 +74,36 @@
                 {{ 'province.countryName' | translate }} <span class="text-danger fw-bold">*</span>
               </label>
               <div class="input-group custom-input-group">
-                <span class="input-group-text"><i class="fa-solid fa-globe"></i></span>
+                <span class="input-group-text">
+                  @if (isLoadingCountry()) {
+                    <span
+                      class="spinner-border spinner-border-sm text-primary"
+                      role="status"
+                    ></span>
+                  } @else {
+                    <i class="fa-solid fa-globe"></i>
+                  }
+                </span>
                 <select
                   class="form-select custom-form-select"
                   id="inputCountryId"
                   formControlName="countryId"
+                  [appSelectLoading]="isLoadingCountry()"
                   required
                 >
-                  <option value="">
-                    {{ 'common.selectCountry' | translate }}
-                  </option>
-                  @for (country of countries(); track country.id) {
-                    <option [value]="country.id">
-                      {{ country.countryName }}
+                  @if (isLoadingCountry()) {
+                    <option value="" disabled selected>
+                      {{ 'common.loading' | translate }}
                     </option>
+                  } @else {
+                    <option value="">
+                      {{ 'common.selectCountry' | translate }}
+                    </option>
+                    @for (country of countries(); track country.id) {
+                      <option [value]="country.id">
+                        {{ country.countryName }}
+                      </option>
+                    }
                   }
                 </select>
               </div>
@@ -117,6 +136,7 @@
                   rows="3"
                   placeholder="{{ 'common.placeholderNote' | translate }}"
                   formControlName="note"
+                  appAutoTrim
                 ></textarea>
               </div>
             </div>

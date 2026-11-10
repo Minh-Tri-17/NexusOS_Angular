@@ -5,13 +5,21 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { NIL as NIL_GUID } from 'uuid';
 import { BaseService } from '../../../../../core/services/base.service';
 import { Modal } from '../../../../../shared/components/modal/modal';
+import { AutoTrimDirective } from '../../../../../shared/directives/auto-trim.directive';
+import { UppercaseDirective } from '../../../../../shared/directives/uppercase.directive';
 import { Region, REGION_OPTIONS } from '../../data-access/country.enum';
 import { CountryFacade } from '../../data-access/country.facade';
 import { CountryModel } from '../../data-access/country.model';
 
 @Component({
   selector: 'app-country-modal',
-  imports: [Modal, ReactiveFormsModule, TranslatePipe],
+  imports: [
+    Modal,
+    ReactiveFormsModule,
+    TranslatePipe,
+    AutoTrimDirective,
+    UppercaseDirective,
+  ],
   templateUrl: './country-modal.html',
   styleUrl: './country-modal.scss',
 })

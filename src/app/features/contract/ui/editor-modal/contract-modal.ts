@@ -6,6 +6,10 @@ import { NIL as NIL_GUID } from 'uuid';
 import { PagingRequest } from '../../../../core/models/paging.model';
 import { BaseService } from '../../../../core/services/base.service';
 import { Modal } from '../../../../shared/components/modal/modal';
+import { AutoTrimDirective } from '../../../../shared/directives/auto-trim.directive';
+import { NumberOnlyDirective } from '../../../../shared/directives/number-only.directive';
+import { SelectLoadingDirective } from '../../../../shared/directives/select-loading.directive';
+import { UppercaseDirective } from '../../../../shared/directives/uppercase.directive';
 import { ContractTypeFacade } from '../../../categories/contract-type/data-access/contract-type.facade';
 import { ContractTypeModel } from '../../../categories/contract-type/data-access/contract-type.model';
 import { EmployeeFacade } from '../../../employee/data-access/employee.facade';
@@ -15,13 +19,23 @@ import {
   ApprovalStatus,
   CONTRACT_STATUS_OPTIONS,
   ContractStatus,
+  SALARY_UNIT_OPTIONS,
+  SalaryUnit,
 } from '../../data-access/contract.enum';
 import { ContractFacade } from '../../data-access/contract.facade';
 import { ContractModel } from '../../data-access/contract.model';
 
 @Component({
   selector: 'app-contract-modal',
-  imports: [Modal, ReactiveFormsModule, TranslatePipe],
+  imports: [
+    Modal,
+    ReactiveFormsModule,
+    TranslatePipe,
+    SelectLoadingDirective,
+    AutoTrimDirective,
+    UppercaseDirective,
+    NumberOnlyDirective,
+  ],
   templateUrl: './contract-modal.html',
   styleUrl: './contract-modal.scss',
 })
@@ -37,12 +51,15 @@ export class ContractModal {
 
   readonly contractStatuses = CONTRACT_STATUS_OPTIONS;
   readonly approvalStatuses = APPROVAL_STATUS_OPTIONS;
+  readonly salaryUnits = SALARY_UNIT_OPTIONS;
 
   //#endregion
 
   //#region //@ STATE
 
   readonly isSaving = signal(false);
+  readonly isLoadingEmployee = signal(false);
+  readonly isLoadingContractType = signal(false);
   readonly employees = signal<EmployeeModel[]>([]);
   readonly contractTypes = signal<ContractTypeModel[]>([]);
 
@@ -66,12 +83,12 @@ export class ContractModal {
       validators: [Validators.required],
     }),
     endDate: new FormControl<string | null>(null),
-    baseSalary: new FormControl<number | null>(null),
-    salaryUnit: new FormControl<string>('VND'),
-    workingHoursPerWeek: new FormControl<number | null>(40),
-    otrate: new FormControl<number | null>(1.5),
-    allowanceAmount: new FormControl<number | null>(0),
-    insuranceContribution: new FormControl<number | null>(0),
+    baseSalary: new FormControl<number | string | null>(null),
+    salaryUnit: new FormControl<SalaryUnit | string>(SalaryUnit.VND),
+    workingHoursPerWeek: new FormControl<number | string | null>(40),
+    otrate: new FormControl<number | string | null>(1.5),
+    allowanceAmount: new FormControl<number | string | null>(0),
+    insuranceContribution: new FormControl<number | string | null>(0),
     signedDate: new FormControl<string | null>(null),
     signedBy: new FormControl<string | null>(null),
     note: new FormControl<string | null>(null),
@@ -104,24 +121,30 @@ export class ContractModal {
   private async loadEmployees() {
     if (this.employees().length > 0) return;
 
+    this.isLoadingEmployee.set(true);
     try {
       const filter: PagingRequest = { allowPaging: false };
       const res = await this.employeeFacade.getPaging(filter);
       this.employees.set(res.result?.items || []);
     } catch {
       this.employees.set([]);
+    } finally {
+      this.isLoadingEmployee.set(false);
     }
   }
 
   private async loadContractTypes() {
     if (this.contractTypes().length > 0) return;
 
+    this.isLoadingContractType.set(true);
     try {
       const filter: PagingRequest = { allowPaging: false };
       const res = await this.contractTypeFacade.getPaging(filter);
       this.contractTypes.set(res.result?.items || []);
     } catch {
       this.contractTypes.set([]);
+    } finally {
+      this.isLoadingContractType.set(false);
     }
   }
 
@@ -141,7 +164,7 @@ export class ContractModal {
       startDate: null,
       endDate: null,
       baseSalary: null,
-      salaryUnit: 'VND',
+      salaryUnit: SalaryUnit.VND,
       workingHoursPerWeek: 40,
       otrate: 1.5,
       allowanceAmount: 0,
@@ -165,7 +188,7 @@ export class ContractModal {
       startDate: this.formatDateForInput(item.startDate),
       endDate: this.formatDateForInput(item.endDate),
       baseSalary: item.baseSalary ?? null,
-      salaryUnit: item.salaryUnit || 'VND',
+      salaryUnit: item.salaryUnit || SalaryUnit.VND,
       workingHoursPerWeek: item.workingHoursPerWeek ?? 40,
       otrate: item.otrate ?? 1.5,
       allowanceAmount: item.allowanceAmount ?? 0,
@@ -186,10 +209,30 @@ export class ContractModal {
 
     this.isSaving.set(true);
     //* getRawValue() lấy toàn bộ giá trị của form, kể cả ô bị disabled
-    const payload = this.contractForm.getRawValue() as unknown as ContractModel;
-
-    if (!payload.employeeId) payload.employeeId = null;
-    if (!payload.contractTypeId) payload.contractTypeId = null;
+    const formValue = this.contractForm.getRawValue();
+    const payload: ContractModel = {
+      ...(formValue as unknown as ContractModel),
+      baseSalary:
+        formValue.baseSalary !== null && formValue.baseSalary !== ''
+          ? Number(formValue.baseSalary)
+          : null,
+      workingHoursPerWeek:
+        formValue.workingHoursPerWeek !== null && formValue.workingHoursPerWeek !== ''
+          ? Number(formValue.workingHoursPerWeek)
+          : null,
+      otrate:
+        formValue.otrate !== null && formValue.otrate !== '' ? Number(formValue.otrate) : null,
+      allowanceAmount:
+        formValue.allowanceAmount !== null && formValue.allowanceAmount !== ''
+          ? Number(formValue.allowanceAmount)
+          : null,
+      insuranceContribution:
+        formValue.insuranceContribution !== null && formValue.insuranceContribution !== ''
+          ? Number(formValue.insuranceContribution)
+          : null,
+      employeeId: formValue.employeeId || null,
+      contractTypeId: formValue.contractTypeId || null,
+    };
 
     try {
       if (payload.id) {

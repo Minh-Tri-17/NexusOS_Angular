@@ -5,12 +5,20 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { NIL as NIL_GUID } from 'uuid';
 import { BaseService } from '../../../../../core/services/base.service';
 import { Modal } from '../../../../../shared/components/modal/modal';
+import { AutoTrimDirective } from '../../../../../shared/directives/auto-trim.directive';
+import { UppercaseDirective } from '../../../../../shared/directives/uppercase.directive';
 import { ContractTypeFacade } from '../../data-access/contract-type.facade';
 import { ContractTypeModel } from '../../data-access/contract-type.model';
 
 @Component({
   selector: 'app-contract-type-modal',
-  imports: [Modal, ReactiveFormsModule, TranslatePipe],
+  imports: [
+    Modal,
+    ReactiveFormsModule,
+    TranslatePipe,
+    AutoTrimDirective,
+    UppercaseDirective,
+  ],
   templateUrl: './contract-type-modal.html',
   styleUrl: './contract-type-modal.scss',
 })

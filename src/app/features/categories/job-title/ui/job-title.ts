@@ -18,13 +18,24 @@ import { Placeholder } from '../../../../shared/components/placeholder/placehold
 import { Summary } from '../../../../shared/components/summary/summary';
 import { Table } from '../../../../shared/components/table/table';
 import { Toolbar } from '../../../../shared/components/toolbar/toolbar';
+import { EmptyFallbackPipe } from '../../../../shared/pipes/empty-fallback.pipe';
 import { JobTitleFacade } from '../data-access/job-title.facade';
 import { JobTitleFields, JobTitleModel } from '../data-access/job-title.model';
 import { JobTitleModal } from './editor-modal/job-title-modal';
 
 @Component({
   selector: 'app-job-title',
-  imports: [Summary, Toolbar, Pagination, Table, DatePipe, FormsModule, Placeholder, TranslatePipe],
+  imports: [
+    Summary,
+    Toolbar,
+    Pagination,
+    Table,
+    DatePipe,
+    FormsModule,
+    Placeholder,
+    TranslatePipe,
+    EmptyFallbackPipe,
+  ],
   templateUrl: './job-title.html',
   styleUrl: './job-title.scss',
 })

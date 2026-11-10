@@ -46,6 +46,8 @@
                   id="inputDepartmentCode"
                   placeholder="e.g. DEPT-001"
                   formControlName="departmentCode"
+                  appUppercase
+                  appAutoTrim
                 />
               </div>
               <div class="form-text-hint">
@@ -66,6 +68,7 @@
                   id="inputDepartmentName"
                   placeholder="e.g. IT, Nhân sự, Kế toán..."
                   formControlName="departmentName"
+                  appAutoTrim
                   required
                 />
               </div>
@@ -76,21 +79,32 @@
                 {{ 'department.manager' | translate }}
               </label>
               <div class="input-group custom-input-group">
-                <span class="input-group-text"><i class="fa-solid fa-user-tie"></i></span>
+                <span class="input-group-text">
+                  @if (isLoadingManager()) {
+                    <span class="spinner-border spinner-border-sm text-primary" role="status"></span>
+                  } @else {
+                    <i class="fa-solid fa-user-tie"></i>
+                  }
+                </span>
                 <select
                   class="form-select custom-form-select"
                   id="inputDepartmentManager"
                   formControlName="managerId"
+                  [appSelectLoading]="isLoadingManager()"
                 >
-                  <option value="">{{ 'common.selectManager' | translate }}</option>
-                  @for (emp of employees(); track emp.id) {
-                    <option [value]="emp.id">
-                      {{
-                        emp.employeeCode
-                          ? '#' + emp.employeeCode + ' - ' + emp.employeeName
-                          : emp.employeeName
-                      }}
-                    </option>
+                  @if (isLoadingManager()) {
+                    <option value="" disabled selected>{{ 'common.loading' | translate }}</option>
+                  } @else {
+                    <option value="">{{ 'common.selectManager' | translate }}</option>
+                    @for (emp of employees(); track emp.id) {
+                      <option [value]="emp.id">
+                        {{
+                          emp.employeeCode
+                            ? '#' + emp.employeeCode + ' - ' + emp.employeeName
+                            : emp.employeeName
+                        }}
+                      </option>
+                    }
                   }
                 </select>
               </div>
@@ -125,6 +139,7 @@
                   rows="3"
                   placeholder="{{ 'common.placeholderNote' | translate }}"
                   formControlName="note"
+                  appAutoTrim
                 ></textarea>
               </div>
             </div>

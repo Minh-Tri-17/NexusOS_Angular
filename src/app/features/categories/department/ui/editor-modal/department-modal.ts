@@ -6,6 +6,9 @@ import { NIL as NIL_GUID } from 'uuid';
 import { PagingRequest } from '../../../../../core/models/paging.model';
 import { BaseService } from '../../../../../core/services/base.service';
 import { Modal } from '../../../../../shared/components/modal/modal';
+import { AutoTrimDirective } from '../../../../../shared/directives/auto-trim.directive';
+import { SelectLoadingDirective } from '../../../../../shared/directives/select-loading.directive';
+import { UppercaseDirective } from '../../../../../shared/directives/uppercase.directive';
 import { EmployeeFacade } from '../../../../employee/data-access/employee.facade';
 import { EmployeeModel } from '../../../../employee/data-access/employee.model';
 import { DepartmentFacade } from '../../data-access/department.facade';
@@ -13,7 +16,14 @@ import { DepartmentModel } from '../../data-access/department.model';
 
 @Component({
   selector: 'app-department-modal',
-  imports: [Modal, ReactiveFormsModule, TranslatePipe],
+  imports: [
+    Modal,
+    ReactiveFormsModule,
+    TranslatePipe,
+    SelectLoadingDirective,
+    AutoTrimDirective,
+    UppercaseDirective,
+  ],
   templateUrl: './department-modal.html',
   styleUrl: './department-modal.scss',
 })
@@ -31,6 +41,7 @@ export class DepartmentModal {
   //#region //@ STATE
 
   readonly isSaving = signal(false);
+  readonly isLoadingManager = signal(false);
   readonly employees = signal<EmployeeModel[]>([]);
 
   readonly departmentForm = new FormGroup({
@@ -58,6 +69,7 @@ export class DepartmentModal {
   private async loadEmployees() {
     if (this.employees().length > 0) return;
 
+    this.isLoadingManager.set(true);
     try {
       const filter: PagingRequest = {
         allowPaging: false,
@@ -66,6 +78,8 @@ export class DepartmentModal {
       this.employees.set(res.result?.items || []);
     } catch {
       this.employees.set([]);
+    } finally {
+      this.isLoadingManager.set(false);
     }
   }
 

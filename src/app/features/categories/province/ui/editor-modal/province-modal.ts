@@ -6,6 +6,9 @@ import { NIL as NIL_GUID } from 'uuid';
 import { PagingRequest } from '../../../../../core/models/paging.model';
 import { BaseService } from '../../../../../core/services/base.service';
 import { Modal } from '../../../../../shared/components/modal/modal';
+import { AutoTrimDirective } from '../../../../../shared/directives/auto-trim.directive';
+import { SelectLoadingDirective } from '../../../../../shared/directives/select-loading.directive';
+import { UppercaseDirective } from '../../../../../shared/directives/uppercase.directive';
 import { CountryFacade } from '../../../country/data-access/country.facade';
 import { CountryModel } from '../../../country/data-access/country.model';
 import { ProvinceFacade } from '../../data-access/province.facade';
@@ -13,7 +16,14 @@ import { ProvinceModel } from '../../data-access/province.model';
 
 @Component({
   selector: 'app-province-modal',
-  imports: [Modal, ReactiveFormsModule, TranslatePipe],
+  imports: [
+    Modal,
+    ReactiveFormsModule,
+    TranslatePipe,
+    SelectLoadingDirective,
+    AutoTrimDirective,
+    UppercaseDirective,
+  ],
   templateUrl: './province-modal.html',
   styleUrl: './province-modal.scss',
 })
@@ -31,6 +41,7 @@ export class ProvinceModal {
   //#region //@ STATE
 
   readonly isSaving = signal(false);
+  readonly isLoadingCountry = signal(false);
   readonly countries = signal<CountryModel[]>([]);
 
   readonly provinceForm = new FormGroup({
@@ -65,12 +76,15 @@ export class ProvinceModal {
   private async loadCountries() {
     if (this.countries().length > 0) return;
 
+    this.isLoadingCountry.set(true);
     try {
       const filter = this.buildFilter();
       const res = await this.countryFacade.getPaging(filter);
       this.countries.set(res.result?.items || []);
     } catch {
       this.countries.set([]);
+    } finally {
+      this.isLoadingCountry.set(false);
     }
   }
 

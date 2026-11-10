@@ -53,6 +53,7 @@
     "errorOccurred": "エラーが発生しました",
     "save": "保存",
     "saving": "保存中...",
+    "loading": "データを読み込み中...",
     "notification": "通知",
     "softDeleted": "論理削除済み",
     "country": "国",

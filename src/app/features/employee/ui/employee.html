@@ -288,14 +288,14 @@
             <div class="emp-card-contact-row emp-manager-row">
               <i class="fa-solid fa-user-tie text-secondary opacity-75"></i>
               {{ 'employee.manager' | translate }}:
-              <strong class="emp-manager-name">{{ employee.managerName || '—' }}</strong>
+              <strong class="emp-manager-name">{{ employee.managerName | fallback }}</strong>
             </div>
             <div class="emp-card-contact-row">
-              <i class="fa-regular fa-envelope text-secondary opacity-75"></i> {{ employee.email }}
+              <i class="fa-regular fa-envelope text-secondary opacity-75"></i> {{ employee.email | mask:'email' }}
             </div>
             <div class="emp-card-contact-row">
               <i class="fa-solid fa-location-dot text-secondary opacity-75"></i>
-              {{ employee.address }}
+              {{ employee.address | fallback }}
             </div>
             <div class="emp-card-contact-row">
               <i class="fa-regular fa-calendar text-secondary opacity-75"></i>
@@ -452,38 +452,24 @@
                 </td>
 
                 <td class="text-nowrap">
-                  @if (employee.phoneNumber) {
-                    <span class="text-muted small">{{ employee.phoneNumber }}</span>
-                  } @else {
-                    <span class="text-muted opacity-50">—</span>
-                  }
+                  <span class="text-muted small">{{ employee.phoneNumber | mask:'phone' }}</span>
                 </td>
 
                 <td class="text-nowrap">
-                  @if (employee.email) {
-                    <span class="text-muted small">{{ employee.email }}</span>
-                  } @else {
-                    <span class="text-muted opacity-50">—</span>
-                  }
+                  <span class="text-muted small">{{ employee.email | mask:'email' }}</span>
                 </td>
 
                 <td class="text-nowrap">
-                  @if (employee.identityNumber) {
-                    <span class="text-muted small">{{ employee.identityNumber }}</span>
-                  } @else {
-                    <span class="text-muted opacity-50">—</span>
-                  }
+                  <span class="text-muted small">{{ employee.identityNumber | mask:'cccd' }}</span>
                 </td>
 
                 <td class="text-nowrap">
-                  @if (employee.address) {
-                    <span class="text-muted small">
-                      <i class="fa-solid fa-location-dot text-secondary opacity-75 me-1"></i
-                      >{{ employee.address }}</span
-                    >
-                  } @else {
-                    <span class="text-muted opacity-50">—</span>
-                  }
+                  <span class="text-muted small">
+                    @if (employee.address) {
+                      <i class="fa-solid fa-location-dot text-secondary opacity-75 me-1"></i>
+                    }
+                    {{ employee.address | fallback }}
+                  </span>
                 </td>
 
                 <td class="text-nowrap">
@@ -541,35 +527,19 @@
                 </td>
 
                 <td class="text-nowrap">
-                  @if (employee.healthInsuranceNumber) {
-                    <span class="text-muted small">{{ employee.healthInsuranceNumber }}</span>
-                  } @else {
-                    <span class="text-muted opacity-50">—</span>
-                  }
+                  <span class="text-muted small">{{ employee.healthInsuranceNumber | fallback }}</span>
                 </td>
 
                 <td class="text-nowrap">
-                  @if (employee.socialInsuranceNumber) {
-                    <span class="text-muted small">{{ employee.socialInsuranceNumber }}</span>
-                  } @else {
-                    <span class="text-muted opacity-50">—</span>
-                  }
+                  <span class="text-muted small">{{ employee.socialInsuranceNumber | mask:'cccd' }}</span>
                 </td>
 
                 <td class="text-nowrap">
-                  @if (employee.bankAccountNumber) {
-                    <span class="text-muted small">{{ employee.bankAccountNumber }}</span>
-                  } @else {
-                    <span class="text-muted opacity-50">—</span>
-                  }
+                  <span class="text-muted small">{{ employee.bankAccountNumber | mask:'bank' }}</span>
                 </td>
 
                 <td class="text-nowrap">
-                  @if (employee.bankName) {
-                    <span class="text-muted small">{{ employee.bankName }}</span>
-                  } @else {
-                    <span class="text-muted opacity-50">—</span>
-                  }
+                  <span class="text-muted small">{{ employee.bankName | fallback }}</span>
                 </td>
 
                 <td class="text-nowrap">
@@ -598,68 +568,46 @@
                 </td>
 
                 <td class="text-nowrap">
-                  @if (employee.taxCode) {
-                    <span class="text-muted small">{{ employee.taxCode }}</span>
-                  } @else {
-                    <span class="text-muted opacity-50">—</span>
-                  }
+                  <span class="text-muted small">{{ employee.taxCode | fallback }}</span>
                 </td>
 
                 <td class="text-nowrap">
-                  @if (employee.emergencyContactName) {
-                    <span class="text-muted small">{{ employee.emergencyContactName }}</span>
-                  } @else {
-                    <span class="text-muted opacity-50">—</span>
-                  }
+                  <span class="text-muted small">{{ employee.emergencyContactName | fallback }}</span>
                 </td>
 
                 <td class="text-nowrap">
-                  @if (employee.emergencyContactPhone) {
-                    <span class="text-muted small">{{ employee.emergencyContactPhone }}</span>
-                  } @else {
-                    <span class="text-muted opacity-50">—</span>
-                  }
+                  <span class="text-muted small">{{ employee.emergencyContactPhone | mask:'phone' }}</span>
                 </td>
 
                 <td class="text-nowrap">
-                  @if (employee.managerName) {
-                    <span class="text-muted small">
-                      <i class="fa-solid fa-user-tie text-secondary opacity-75 me-1"></i
-                      >{{ employee.managerName }}
-                    </span>
-                  } @else {
-                    <span class="text-muted opacity-50">—</span>
-                  }
+                  <span class="text-muted small">
+                    @if (employee.managerName) {
+                      <i class="fa-solid fa-user-tie text-secondary opacity-75 me-1"></i>
+                    }
+                    {{ employee.managerName | fallback }}
+                  </span>
                 </td>
 
                 <td class="text-nowrap">
-                  @if (employee.contractName) {
-                    <span class="text-muted small">
-                      <i class="fa-solid fa-file-contract text-secondary opacity-75 me-1"></i
-                      >{{ employee.contractName }}
-                    </span>
-                  } @else {
-                    <span class="text-muted opacity-50">—</span>
-                  }
+                  <span class="text-muted small">
+                    @if (employee.contractName) {
+                      <i class="fa-solid fa-file-contract text-secondary opacity-75 me-1"></i>
+                    }
+                    {{ employee.contractName | fallback }}
+                  </span>
                 </td>
 
                 <td class="text-nowrap">
-                  @if (employee.contractTypeName) {
-                    <span class="text-muted small">
-                      <i class="fa-solid fa-file-lines text-secondary opacity-75 me-1"></i
-                      >{{ employee.contractTypeName }}
-                    </span>
-                  } @else {
-                    <span class="text-muted opacity-50">—</span>
-                  }
+                  <span class="text-muted small">
+                    @if (employee.contractTypeName) {
+                      <i class="fa-solid fa-file-lines text-secondary opacity-75 me-1"></i>
+                    }
+                    {{ employee.contractTypeName | fallback }}
+                  </span>
                 </td>
 
                 <td>
-                  @if (employee.note) {
-                    <span class="text-muted small fst-italic">{{ employee.note }}</span>
-                  } @else {
-                    <span class="text-muted opacity-50">—</span>
-                  }
+                  <span class="text-muted small fst-italic">{{ employee.note | fallback }}</span>
                 </td>
 
                 <td class="text-nowrap">

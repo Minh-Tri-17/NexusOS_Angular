@@ -199,14 +199,12 @@
 
             <!-- contractTypeName -->
             <td class="text-nowrap">
-              @if (item.contractTypeName) {
-                <span class="text-muted small">
+              <span class="text-muted small">
+                @if (item.contractTypeName) {
                   <i class="fa-solid fa-file-contract me-1 text-secondary opacity-75"></i>
-                  {{ item.contractTypeName }}
-                </span>
-              } @else {
-                <span class="text-muted opacity-50">—</span>
-              }
+                }
+                {{ item.contractTypeName | fallback }}
+              </span>
             </td>
 
             <!-- contractStatus -->
@@ -273,7 +271,7 @@
             <td class="text-nowrap">
               @if (item.baseSalary != null) {
                 <span class="fw-semibold text-main">
-                  {{ item.baseSalary | number }}
+                  {{ item.baseSalary | currencyFormat:item.salaryUnit }}
                 </span>
               } @else {
                 <span class="text-muted opacity-50">—</span>
@@ -283,7 +281,12 @@
             <!-- salaryUnit -->
             <td class="text-nowrap">
               @if (item.salaryUnit) {
-                <span class="badge-soft badge-blue">{{ item.salaryUnit }}</span>
+                <span
+                  class="badge-soft"
+                  [class]="salaryUnitConfig[item.salaryUnit]?.cssClass ?? 'badge-blue'"
+                >
+                  {{ item.salaryUnit }}
+                </span>
               } @else {
                 <span class="text-muted opacity-50">—</span>
               }
@@ -310,7 +313,7 @@
             <!-- allowanceAmount -->
             <td class="text-nowrap">
               @if (item.allowanceAmount != null) {
-                <span class="text-muted small">{{ item.allowanceAmount | number }}</span>
+                <span class="text-muted small">{{ item.allowanceAmount | currencyFormat:item.salaryUnit }}</span>
               } @else {
                 <span class="text-muted opacity-50">—</span>
               }
@@ -319,7 +322,7 @@
             <!-- insuranceContribution -->
             <td class="text-nowrap">
               @if (item.insuranceContribution != null) {
-                <span class="text-muted small">{{ item.insuranceContribution | number }}</span>
+                <span class="text-muted small">{{ item.insuranceContribution | currencyFormat:item.salaryUnit }}</span>
               } @else {
                 <span class="text-muted opacity-50">—</span>
               }
@@ -336,22 +339,17 @@
 
             <!-- signedBy -->
             <td class="text-nowrap">
-              @if (item.signedBy) {
-                <span class="text-muted small">
-                  <i class="fa-solid fa-signature me-1 text-secondary opacity-75"></i>{{ item.signedBy }}
-                </span>
-              } @else {
-                <span class="text-muted opacity-50">—</span>
-              }
+              <span class="text-muted small">
+                @if (item.signedBy) {
+                  <i class="fa-solid fa-signature me-1 text-secondary opacity-75"></i>
+                }
+                {{ item.signedBy | fallback }}
+              </span>
             </td>
 
             <!-- note -->
             <td>
-              @if (item.note) {
-                <span class="text-muted small fst-italic">{{ item.note }}</span>
-              } @else {
-                <span class="text-muted opacity-50">—</span>
-              }
+              <span class="text-muted small fst-italic">{{ item.note | fallback }}</span>
             </td>
 
             <td class="text-nowrap">

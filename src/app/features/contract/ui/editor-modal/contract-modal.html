@@ -44,6 +44,8 @@
                   id="inputContractCode"
                   placeholder="e.g. CTR-001"
                   formControlName="contractCode"
+                  appUppercase
+                  appAutoTrim
                 />
               </div>
               <div class="form-text-hint">
@@ -63,6 +65,7 @@
                   id="inputContractName"
                   placeholder="e.g. Hợp đồng lao động chính thức..."
                   formControlName="contractName"
+                  appAutoTrim
                   required
                 />
               </div>
@@ -73,11 +76,21 @@
                 {{ 'contract.employeeName' | translate }} <span class="text-danger fw-bold">*</span>
               </label>
               <div class="input-group custom-input-group">
-                <span class="input-group-text"><i class="fa-solid fa-user"></i></span>
+                <span class="input-group-text">
+                  @if (isLoadingEmployee()) {
+                    <span
+                      class="spinner-border spinner-border-sm text-primary"
+                      role="status"
+                    ></span>
+                  } @else {
+                    <i class="fa-solid fa-user"></i>
+                  }
+                </span>
                 <select
                   class="form-select custom-form-select"
                   id="inputEmployee"
                   formControlName="employeeId"
+                  [appSelectLoading]="isLoadingEmployee()"
                   required
                 >
                   <option value="">{{ 'common.selectEmployee' | translate }}</option>
@@ -100,11 +113,21 @@
                 <span class="text-danger fw-bold">*</span>
               </label>
               <div class="input-group custom-input-group">
-                <span class="input-group-text"><i class="fa-solid fa-tag"></i></span>
+                <span class="input-group-text">
+                  @if (isLoadingContractType()) {
+                    <span
+                      class="spinner-border spinner-border-sm text-primary"
+                      role="status"
+                    ></span>
+                  } @else {
+                    <i class="fa-solid fa-tag"></i>
+                  }
+                </span>
                 <select
                   class="form-select custom-form-select"
                   id="inputContractType"
                   formControlName="contractTypeId"
+                  [appSelectLoading]="isLoadingContractType()"
                   required
                 >
                   <option value="">{{ 'common.selectContractType' | translate }}</option>
@@ -213,13 +236,14 @@
               <div class="input-group custom-input-group">
                 <span class="input-group-text"><i class="fa-solid fa-clock"></i></span>
                 <input
-                  type="number"
-                  step="0.5"
-                  min="0"
+                  type="text"
                   class="form-control custom-form-control"
                   id="inputWorkingHours"
                   placeholder="e.g. 40"
                   formControlName="workingHoursPerWeek"
+                  appNumberOnly
+                  [allowDecimal]="true"
+                  appAutoTrim
                 />
               </div>
             </div>
@@ -231,13 +255,14 @@
               <div class="input-group custom-input-group">
                 <span class="input-group-text"><i class="fa-solid fa-percent"></i></span>
                 <input
-                  type="number"
-                  step="0.1"
-                  min="1"
+                  type="text"
                   class="form-control custom-form-control"
                   id="inputOtrate"
                   placeholder="e.g. 1.5"
                   formControlName="otrate"
+                  appNumberOnly
+                  [allowDecimal]="true"
+                  appAutoTrim
                 />
               </div>
             </div>
@@ -264,12 +289,14 @@
               <div class="input-group custom-input-group">
                 <span class="input-group-text"><i class="fa-solid fa-coins"></i></span>
                 <input
-                  type="number"
-                  min="0"
+                  type="text"
                   class="form-control custom-form-control"
                   id="inputBaseSalary"
                   placeholder="e.g. 15000000"
                   formControlName="baseSalary"
+                  appNumberOnly
+                  [allowDecimal]="true"
+                  appAutoTrim
                 />
               </div>
             </div>
@@ -285,10 +312,9 @@
                   id="inputSalaryUnit"
                   formControlName="salaryUnit"
                 >
-                  <option value="VND">VND</option>
-                  <option value="USD">USD</option>
-                  <option value="EUR">EUR</option>
-                  <option value="JPY">JPY</option>
+                  @for (unit of salaryUnits; track unit.value) {
+                    <option [value]="unit.value">{{ unit.label }}</option>
+                  }
                 </select>
               </div>
             </div>
@@ -302,12 +328,14 @@
                   ><i class="fa-solid fa-hand-holding-dollar"></i
                 ></span>
                 <input
-                  type="number"
-                  min="0"
+                  type="text"
                   class="form-control custom-form-control"
                   id="inputAllowanceAmount"
                   placeholder="e.g. 1000000"
                   formControlName="allowanceAmount"
+                  appNumberOnly
+                  [allowDecimal]="true"
+                  appAutoTrim
                 />
               </div>
             </div>
@@ -319,12 +347,14 @@
               <div class="input-group custom-input-group">
                 <span class="input-group-text"><i class="fa-solid fa-shield-heart"></i></span>
                 <input
-                  type="number"
-                  min="0"
+                  type="text"
                   class="form-control custom-form-control"
                   id="inputInsuranceContribution"
                   placeholder="e.g. 5000000"
                   formControlName="insuranceContribution"
+                  appNumberOnly
+                  [allowDecimal]="true"
+                  appAutoTrim
                 />
               </div>
             </div>
@@ -371,6 +401,7 @@
                   id="inputSignedBy"
                   placeholder="e.g. Nguyễn Văn Giám Đốc"
                   formControlName="signedBy"
+                  appAutoTrim
                 />
               </div>
             </div>
@@ -387,6 +418,7 @@
                   rows="3"
                   placeholder="{{ 'common.placeholderNote' | translate }}"
                   formControlName="note"
+                  appAutoTrim
                 ></textarea>
               </div>
             </div>

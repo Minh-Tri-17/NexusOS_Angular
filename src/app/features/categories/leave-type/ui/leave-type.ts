@@ -18,13 +18,24 @@ import { Placeholder } from '../../../../shared/components/placeholder/placehold
 import { Summary } from '../../../../shared/components/summary/summary';
 import { Table } from '../../../../shared/components/table/table';
 import { Toolbar } from '../../../../shared/components/toolbar/toolbar';
+import { EmptyFallbackPipe } from '../../../../shared/pipes/empty-fallback.pipe';
 import { LeaveTypeFacade } from '../data-access/leave-type.facade';
 import { LeaveTypeFields, LeaveTypeModel } from '../data-access/leave-type.model';
 import { LeaveTypeModal } from './editor-modal/leave-type-modal';
 
 @Component({
   selector: 'app-leave-type',
-  imports: [Summary, Toolbar, Pagination, Table, DatePipe, FormsModule, Placeholder, TranslatePipe],
+  imports: [
+    Summary,
+    Toolbar,
+    Pagination,
+    Table,
+    DatePipe,
+    FormsModule,
+    Placeholder,
+    TranslatePipe,
+    EmptyFallbackPipe,
+  ],
   templateUrl: './leave-type.html',
   styleUrl: './leave-type.scss',
 })

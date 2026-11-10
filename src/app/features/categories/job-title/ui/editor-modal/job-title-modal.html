@@ -46,6 +46,8 @@
                   id="inputJobTitleCode"
                   placeholder="e.g. JT-001"
                   formControlName="jobTitleCode"
+                  appUppercase
+                  appAutoTrim
                 />
               </div>
               <div class="form-text-hint">
@@ -65,6 +67,7 @@
                   id="inputJobTitleName"
                   placeholder="e.g. Director, Engineer..."
                   formControlName="jobTitleName"
+                  appAutoTrim
                   required
                 />
               </div>
@@ -99,6 +102,7 @@
                   rows="3"
                   placeholder="{{ 'common.placeholderNote' | translate }}"
                   formControlName="note"
+                  appAutoTrim
                 ></textarea>
               </div>
             </div>

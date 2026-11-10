@@ -129,11 +129,7 @@
             </td>
 
             <td>
-              @if (item.note) {
-                <span class="text-muted small fst-italic">{{ item.note }}</span>
-              } @else {
-                <span class="text-muted opacity-50">—</span>
-              }
+              <span class="text-muted small fst-italic">{{ item.note | fallback }}</span>
             </td>
 
             <td class="text-nowrap">

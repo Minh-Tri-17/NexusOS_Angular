@@ -54,6 +54,7 @@
     "errorOccurred": "An error occurred!",
     "save": "Save",
     "saving": "Saving...",
+    "loading": "Loading data...",
     "notification": "Notification",
     "softDeleted": "Soft Deleted",
     "country": "Country",

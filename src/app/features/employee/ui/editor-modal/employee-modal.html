@@ -46,6 +46,8 @@
                   id="inputEmployeeCode"
                   placeholder="e.g. EMP-001"
                   formControlName="employeeCode"
+                  appUppercase
+                  appAutoTrim
                 />
               </div>
               <div class="form-text-hint">
@@ -66,6 +68,7 @@
                   id="inputEmployeeName"
                   placeholder="e.g. Nguyễn Văn A"
                   formControlName="employeeName"
+                  appAutoTrim
                   required
                 />
               </div>
@@ -104,6 +107,7 @@
                   id="inputEmployeeEmail"
                   placeholder="e.g. employee@company.com"
                   formControlName="email"
+                  appAutoTrim
                 />
               </div>
             </div>
@@ -120,6 +124,8 @@
                   id="inputEmployeePhone"
                   placeholder="e.g. 0912 345 678"
                   formControlName="phoneNumber"
+                  appNumberOnly
+                  appAutoTrim
                 />
               </div>
             </div>
@@ -202,11 +208,21 @@
                 {{ 'employee.departmentName' | translate }}
               </label>
               <div class="input-group custom-input-group">
-                <span class="input-group-text"><i class="fa-solid fa-building"></i></span>
+                <span class="input-group-text">
+                  @if (isLoadingDepartment()) {
+                    <span
+                      class="spinner-border spinner-border-sm text-primary"
+                      role="status"
+                    ></span>
+                  } @else {
+                    <i class="fa-solid fa-building"></i>
+                  }
+                </span>
                 <select
                   class="form-select custom-form-select"
                   id="inputDepartmentId"
                   formControlName="departmentId"
+                  [appSelectLoading]="isLoadingDepartment()"
                 >
                   <option value="">
                     {{ 'common.selectDepartment' | translate }}
@@ -225,11 +241,21 @@
                 {{ 'employee.jobTitleName' | translate }}
               </label>
               <div class="input-group custom-input-group">
-                <span class="input-group-text"><i class="fa-solid fa-briefcase"></i></span>
+                <span class="input-group-text">
+                  @if (isLoadingJobTitle()) {
+                    <span
+                      class="spinner-border spinner-border-sm text-primary"
+                      role="status"
+                    ></span>
+                  } @else {
+                    <i class="fa-solid fa-briefcase"></i>
+                  }
+                </span>
                 <select
                   class="form-select custom-form-select"
                   id="inputJobTitleId"
                   formControlName="jobTitleId"
+                  [appSelectLoading]="isLoadingJobTitle()"
                 >
                   <option value="">
                     {{ 'common.selectJobTitle' | translate }}
@@ -254,6 +280,7 @@
                   class="form-control custom-form-control"
                   id="inputStoreId"
                   formControlName="storeId"
+                  appAutoTrim
                 />
               </div>
             </div>
@@ -356,6 +383,7 @@
                   id="inputEmployeeAddress"
                   placeholder="e.g. 123 Nguyễn Huệ, Phường Bến Nghé, Quận 1, TP. HCM"
                   formControlName="address"
+                  appAutoTrim
                 />
               </div>
             </div>
@@ -365,11 +393,21 @@
                 {{ 'employee.countryName' | translate }}
               </label>
               <div class="input-group custom-input-group">
-                <span class="input-group-text"><i class="fa-solid fa-globe"></i></span>
+                <span class="input-group-text">
+                  @if (isLoadingCountry()) {
+                    <span
+                      class="spinner-border spinner-border-sm text-primary"
+                      role="status"
+                    ></span>
+                  } @else {
+                    <i class="fa-solid fa-globe"></i>
+                  }
+                </span>
                 <select
                   class="form-select custom-form-select"
                   id="inputCountryId"
                   formControlName="countryId"
+                  [appSelectLoading]="isLoadingCountry()"
                 >
                   <option value="">
                     {{ 'common.selectCountry' | translate }}
@@ -388,11 +426,21 @@
                 {{ 'employee.provinceName' | translate }}
               </label>
               <div class="input-group custom-input-group">
-                <span class="input-group-text"><i class="fa-solid fa-map-location-dot"></i></span>
+                <span class="input-group-text">
+                  @if (isLoadingProvince()) {
+                    <span
+                      class="spinner-border spinner-border-sm text-primary"
+                      role="status"
+                    ></span>
+                  } @else {
+                    <i class="fa-solid fa-map-location-dot"></i>
+                  }
+                </span>
                 <select
                   class="form-select custom-form-select"
                   id="inputProvinceId"
                   formControlName="provinceId"
+                  [appSelectLoading]="isLoadingProvince()"
                 >
                   <option value="">
                     {{ 'common.selectProvince' | translate }}
@@ -411,11 +459,21 @@
                 {{ 'employee.wardName' | translate }}
               </label>
               <div class="input-group custom-input-group">
-                <span class="input-group-text"><i class="fa-solid fa-location-pin"></i></span>
+                <span class="input-group-text">
+                  @if (isLoadingWard()) {
+                    <span
+                      class="spinner-border spinner-border-sm text-primary"
+                      role="status"
+                    ></span>
+                  } @else {
+                    <i class="fa-solid fa-location-pin"></i>
+                  }
+                </span>
                 <select
                   class="form-select custom-form-select"
                   id="inputWardId"
                   formControlName="wardId"
+                  [appSelectLoading]="isLoadingWard()"
                 >
                   <option value="">
                     {{ 'common.selectWard' | translate }}
@@ -458,6 +516,8 @@
                   id="inputEmployeeIdentityNumber"
                   placeholder="e.g. 001xxxxxxxxxx"
                   formControlName="identityNumber"
+                  appNumberOnly
+                  appAutoTrim
                 />
               </div>
             </div>
@@ -474,6 +534,8 @@
                   id="inputEmployeeTaxCode"
                   placeholder="e.g. 800xxxxxxx"
                   formControlName="taxCode"
+                  appNumberOnly
+                  appAutoTrim
                 />
               </div>
             </div>
@@ -490,6 +552,8 @@
                   id="inputEmployeeSocialInsurance"
                   placeholder="e.g. 79xxxxxxxx"
                   formControlName="socialInsuranceNumber"
+                  appNumberOnly
+                  appAutoTrim
                 />
               </div>
             </div>
@@ -506,6 +570,8 @@
                   id="inputEmployeeHealthInsurance"
                   placeholder="e.g. DN479xxxxxxxxxx"
                   formControlName="healthInsuranceNumber"
+                  appUppercase
+                  appAutoTrim
                 />
               </div>
             </div>
@@ -539,6 +605,8 @@
                   id="inputEmployeeBankAccount"
                   placeholder="e.g. 1903xxxxxxxxxx"
                   formControlName="bankAccountNumber"
+                  appNumberOnly
+                  appAutoTrim
                 />
               </div>
             </div>
@@ -555,6 +623,7 @@
                   id="inputEmployeeBankName"
                   placeholder="e.g. Vietcombank, Techcombank..."
                   formControlName="bankName"
+                  appAutoTrim
                 />
               </div>
             </div>
@@ -571,6 +640,7 @@
                   id="inputEmployeeEmergencyName"
                   placeholder="e.g. Trần Thị B"
                   formControlName="emergencyContactName"
+                  appAutoTrim
                 />
               </div>
             </div>
@@ -587,6 +657,8 @@
                   id="inputEmployeeEmergencyPhone"
                   placeholder="e.g. 0987 654 321"
                   formControlName="emergencyContactPhone"
+                  appNumberOnly
+                  appAutoTrim
                 />
               </div>
             </div>
@@ -620,6 +692,7 @@
                   rows="3"
                   placeholder="{{ 'common.placeholderNote' | translate }}"
                   formControlName="note"
+                  appAutoTrim
                 ></textarea>
               </div>
             </div>

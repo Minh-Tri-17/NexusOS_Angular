@@ -46,6 +46,8 @@
                   id="inputLeaveTypeCode"
                   placeholder="e.g. LT-001"
                   formControlName="leaveTypeCode"
+                  appUppercase
+                  appAutoTrim
                 />
               </div>
               <div class="form-text-hint">
@@ -66,6 +68,7 @@
                   id="inputLeaveTypeName"
                   placeholder="e.g. Nghỉ phép năm, Nghỉ thai sản..."
                   formControlName="leaveTypeName"
+                  appAutoTrim
                   required
                 />
               </div>
@@ -100,6 +103,7 @@
                   rows="3"
                   placeholder="{{ 'common.placeholderNote' | translate }}"
                   formControlName="note"
+                  appAutoTrim
                 ></textarea>
               </div>
             </div>

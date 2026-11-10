@@ -6,6 +6,10 @@ import { NIL as NIL_GUID } from 'uuid';
 import { PagingRequest } from '../../../../../core/models/paging.model';
 import { BaseService } from '../../../../../core/services/base.service';
 import { Modal } from '../../../../../shared/components/modal/modal';
+import { SelectLoadingDirective } from '../../../../../shared/directives/select-loading.directive';
+import { AutoTrimDirective } from '../../../../../shared/directives/auto-trim.directive';
+import { UppercaseDirective } from '../../../../../shared/directives/uppercase.directive';
+import { NumberOnlyDirective } from '../../../../../shared/directives/number-only.directive';
 import { EmployeeFacade } from '../../../../employee/data-access/employee.facade';
 import { EmployeeModel } from '../../../../employee/data-access/employee.model';
 import { RoleFacade } from '../../../roles/data-access/role.facade';
@@ -16,7 +20,15 @@ import { UserModel } from '../../data-access/user.model';
 
 @Component({
   selector: 'app-user-modal',
-  imports: [Modal, ReactiveFormsModule, TranslatePipe],
+  imports: [
+    Modal,
+    ReactiveFormsModule,
+    TranslatePipe,
+    SelectLoadingDirective,
+    AutoTrimDirective,
+    UppercaseDirective,
+    NumberOnlyDirective,
+  ],
   templateUrl: './user-modal.html',
   styleUrl: './user-modal.scss',
 })
@@ -37,6 +49,7 @@ export class UserModal {
   //#region //@ STATE
 
   readonly isSaving = signal(false);
+  readonly isLoadingEmployee = signal(false);
   readonly showPassword = signal(false);
   readonly employees = signal<EmployeeModel[]>([]);
   readonly roles = signal<RoleModel[]>([]);
@@ -79,12 +92,15 @@ export class UserModal {
   private async loadEmployees() {
     if (this.employees().length > 0) return;
 
+    this.isLoadingEmployee.set(true);
     try {
       const filter: PagingRequest = { allowPaging: false };
       const res = await this.employeeFacade.getPaging(filter);
       this.employees.set(res.result?.items || []);
     } catch {
       this.employees.set([]);
+    } finally {
+      this.isLoadingEmployee.set(false);
     }
   }
 
@@ -170,6 +186,7 @@ export class UserModal {
     }
 
     this.userForm.controls.roleIds.setValue(updated);
+    //* Chỉ đánh dấu control hiện tại, không làm bẩn form cha
     this.userForm.controls.roleIds.markAsDirty();
   }
 

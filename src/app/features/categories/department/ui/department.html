@@ -129,22 +129,16 @@
             </td>
 
             <td class="text-nowrap">
-              @if (item.managerName) {
-                <span class="text-muted small">
+              <span class="text-muted small">
+                @if (item.managerName) {
                   <i class="fa-solid fa-user-tie me-1 text-secondary opacity-75"></i>
-                  {{ item.managerName }}
-                </span>
-              } @else {
-                <span class="text-muted opacity-50">—</span>
-              }
+                }
+                {{ item.managerName | fallback }}
+              </span>
             </td>
 
             <td>
-              @if (item.note) {
-                <span class="text-muted small fst-italic">{{ item.note }}</span>
-              } @else {
-                <span class="text-muted opacity-50">—</span>
-              }
+              <span class="text-muted small fst-italic">{{ item.note | fallback }}</span>
             </td>
 
             <td class="text-nowrap">

@@ -5,12 +5,20 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { NIL as NIL_GUID } from 'uuid';
 import { BaseService } from '../../../../../core/services/base.service';
 import { Modal } from '../../../../../shared/components/modal/modal';
+import { AutoTrimDirective } from '../../../../../shared/directives/auto-trim.directive';
+import { UppercaseDirective } from '../../../../../shared/directives/uppercase.directive';
 import { LeaveTypeFacade } from '../../data-access/leave-type.facade';
 import { LeaveTypeModel } from '../../data-access/leave-type.model';
 
 @Component({
   selector: 'app-leave-type-modal',
-  imports: [Modal, ReactiveFormsModule, TranslatePipe],
+  imports: [
+    Modal,
+    ReactiveFormsModule,
+    TranslatePipe,
+    AutoTrimDirective,
+    UppercaseDirective,
+  ],
   templateUrl: './leave-type-modal.html',
   styleUrl: './leave-type-modal.scss',
 })

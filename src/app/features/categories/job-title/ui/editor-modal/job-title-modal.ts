@@ -4,13 +4,15 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { TranslatePipe } from '@ngx-translate/core';
 import { NIL as NIL_GUID } from 'uuid';
 import { BaseService } from '../../../../../core/services/base.service';
+import { AutoTrimDirective } from '../../../../../shared/directives/auto-trim.directive';
+import { UppercaseDirective } from '../../../../../shared/directives/uppercase.directive';
 import { Modal } from '../../../../../shared/components/modal/modal';
 import { JobTitleFacade } from '../../data-access/job-title.facade';
 import { JobTitleModel } from '../../data-access/job-title.model';
 
 @Component({
   selector: 'app-job-title-modal',
-  imports: [Modal, ReactiveFormsModule, TranslatePipe],
+  imports: [Modal, ReactiveFormsModule, TranslatePipe, AutoTrimDirective, UppercaseDirective],
   templateUrl: './job-title-modal.html',
   styleUrl: './job-title-modal.scss',
 })

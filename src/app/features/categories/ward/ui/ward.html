@@ -157,19 +157,11 @@
             </td>
 
             <td class="text-nowrap">
-              @if (ward.provinceName) {
-                <span class="text-muted">{{ ward.provinceName }}</span>
-              } @else {
-                <span class="text-muted opacity-50">—</span>
-              }
+              <span class="text-muted">{{ ward.provinceName | fallback }}</span>
             </td>
 
             <td>
-              @if (ward.note) {
-                <span class="text-muted small fst-italic">{{ ward.note }}</span>
-              } @else {
-                <span class="text-muted opacity-50">—</span>
-              }
+              <span class="text-muted small fst-italic">{{ ward.note | fallback }}</span>
             </td>
 
             <td class="text-nowrap">

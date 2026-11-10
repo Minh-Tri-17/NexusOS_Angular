@@ -39,6 +39,8 @@
                   id="inputRoleCode"
                   placeholder="e.g. ROL-001"
                   formControlName="roleCode"
+                  appUppercase
+                  appAutoTrim
                 />
               </div>
               <div class="form-text-hint">
@@ -58,6 +60,7 @@
                   id="inputRoleName"
                   placeholder="e.g. Administrator, Manager"
                   formControlName="roleName"
+                  appAutoTrim
                   required
                 />
               </div>
@@ -287,6 +290,7 @@
                   rows="3"
                   placeholder="{{ 'common.placeholderNote' | translate }}"
                   formControlName="note"
+                  appAutoTrim
                 ></textarea>
               </div>
             </div>

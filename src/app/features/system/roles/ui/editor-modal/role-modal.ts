@@ -12,6 +12,8 @@ import { NIL as NIL_GUID } from 'uuid';
 import { BaseService } from '../../../../../core/services/base.service';
 import { Modal } from '../../../../../shared/components/modal/modal';
 import { Table } from '../../../../../shared/components/table/table';
+import { AutoTrimDirective } from '../../../../../shared/directives/auto-trim.directive';
+import { UppercaseDirective } from '../../../../../shared/directives/uppercase.directive';
 import { PermissionModel } from '../../data-access/permission.model';
 import { RoleFacade } from '../../data-access/role.facade';
 import { RoleModel } from '../../data-access/role.model';
@@ -35,7 +37,15 @@ const SCOPE_DISPLAY_INFO: Record<string, { name: string; icon: string }> = {
 
 @Component({
   selector: 'app-role-modal',
-  imports: [Modal, Table, ReactiveFormsModule, FormsModule, TranslatePipe],
+  imports: [
+    Modal,
+    Table,
+    ReactiveFormsModule,
+    FormsModule,
+    TranslatePipe,
+    AutoTrimDirective,
+    UppercaseDirective,
+  ],
   templateUrl: './role-modal.html',
   styleUrl: './role-modal.scss',
 })

@@ -46,6 +46,8 @@
                   id="inputCountryCode"
                   placeholder="e.g. CTR-001"
                   formControlName="countryCode"
+                  appUppercase
+                  appAutoTrim
                 />
               </div>
               <div class="form-text-hint">
@@ -65,6 +67,7 @@
                   id="inputCountryName"
                   placeholder="e.g. Vietnam, Japan"
                   formControlName="countryName"
+                  appAutoTrim
                   required
                 />
               </div>
@@ -106,6 +109,7 @@
                   id="inputCountryCapital"
                   placeholder="e.g. Hanoi, Washington D.C., Tokyo"
                   formControlName="capital"
+                  appAutoTrim
                   required
                 />
               </div>
@@ -140,6 +144,7 @@
                   rows="3"
                   placeholder="{{ 'common.placeholderNote' | translate }}"
                   formControlName="note"
+                  appAutoTrim
                 ></textarea>
               </div>
             </div>

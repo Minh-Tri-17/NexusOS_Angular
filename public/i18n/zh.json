@@ -53,6 +53,7 @@
     "errorOccurred": "发生错误！",
     "save": "保存",
     "saving": "正在保存...",
+    "loading": "正在加载数据...",
     "notification": "通知",
     "softDeleted": "已软删除",
     "country": "国家",

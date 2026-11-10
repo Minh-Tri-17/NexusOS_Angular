@@ -157,19 +157,11 @@
             </td>
 
             <td class="text-nowrap">
-              @if (province.countryName) {
-                <span class="text-muted">{{ province.countryName }}</span>
-              } @else {
-                <span class="text-muted opacity-50">—</span>
-              }
+              <span class="text-muted">{{ province.countryName | fallback }}</span>
             </td>
 
             <td>
-              @if (province.note) {
-                <span class="text-muted small fst-italic">{{ province.note }}</span>
-              } @else {
-                <span class="text-muted opacity-50">—</span>
-              }
+              <span class="text-muted small fst-italic">{{ province.note | fallback }}</span>
             </td>
 
             <td class="text-nowrap">

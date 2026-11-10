@@ -18,6 +18,8 @@ import { Placeholder } from '../../../../shared/components/placeholder/placehold
 import { Summary } from '../../../../shared/components/summary/summary';
 import { Table } from '../../../../shared/components/table/table';
 import { Toolbar } from '../../../../shared/components/toolbar/toolbar';
+import { EmptyFallbackPipe } from '../../../../shared/pipes/empty-fallback.pipe';
+import { MaskPipe } from '../../../../shared/pipes/mask.pipe';
 import {
   USER_STATUS_CONFIG,
   USER_STATUS_OPTIONS,
@@ -30,7 +32,18 @@ import { UserModal } from './editor-modal/user-modal';
 
 @Component({
   selector: 'app-user',
-  imports: [Summary, Toolbar, Pagination, Table, DatePipe, FormsModule, Placeholder, TranslatePipe],
+  imports: [
+    Summary,
+    Toolbar,
+    Pagination,
+    Table,
+    DatePipe,
+    FormsModule,
+    Placeholder,
+    TranslatePipe,
+    EmptyFallbackPipe,
+    MaskPipe,
+  ],
   templateUrl: './user.html',
   styleUrl: './user.scss',
 })

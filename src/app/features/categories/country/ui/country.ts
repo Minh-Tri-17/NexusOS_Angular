@@ -18,6 +18,7 @@ import { Placeholder } from '../../../../shared/components/placeholder/placehold
 import { Summary } from '../../../../shared/components/summary/summary';
 import { Table } from '../../../../shared/components/table/table';
 import { Toolbar } from '../../../../shared/components/toolbar/toolbar';
+import { EmptyFallbackPipe } from '../../../../shared/pipes/empty-fallback.pipe';
 import { REGION_CONFIG, REGION_OPTIONS } from '../data-access/country.enum';
 import { CountryFacade } from '../data-access/country.facade';
 import { CountryFields, CountryModel } from '../data-access/country.model';
@@ -25,7 +26,17 @@ import { CountryModal } from './editor-modal/country-modal';
 
 @Component({
   selector: 'app-country',
-  imports: [Summary, Toolbar, Pagination, Table, DatePipe, FormsModule, Placeholder, TranslatePipe],
+  imports: [
+    Summary,
+    Toolbar,
+    Pagination,
+    Table,
+    DatePipe,
+    FormsModule,
+    Placeholder,
+    TranslatePipe,
+    EmptyFallbackPipe,
+  ],
   templateUrl: './country.html',
   styleUrl: './country.scss',
 })

@@ -17,6 +17,14 @@ export enum ApprovalStatus {
   Cancelled = 'Cancelled',
 }
 
+export enum SalaryUnit {
+  VND = 'VND',
+  USD = 'USD',
+  EUR = 'EUR',
+  JPY = 'JPY',
+  CNY = 'CNY',
+}
+
 export const CONTRACT_STATUS_CONFIG: Record<string, EnumOptionConfig> = {
   [ContractStatus.Canceled]: {
     label: 'contract.canceled',
@@ -85,4 +93,36 @@ export const APPROVAL_STATUS_OPTIONS: EnumOption<ApprovalStatus>[] = Object.valu
   cssClass: APPROVAL_STATUS_CONFIG[value]?.cssClass ?? 'badge-secondary',
   icon: APPROVAL_STATUS_CONFIG[value]?.icon,
 }));
+
+export const SALARY_UNIT_CONFIG: Record<string, EnumOptionConfig> = {
+  [SalaryUnit.VND]: {
+    label: 'VND',
+    cssClass: 'badge-blue',
+  },
+  [SalaryUnit.USD]: {
+    label: 'USD',
+    cssClass: 'badge-teal',
+  },
+  [SalaryUnit.EUR]: {
+    label: 'EUR',
+    cssClass: 'badge-indigo',
+  },
+  [SalaryUnit.JPY]: {
+    label: 'JPY',
+    cssClass: 'badge-amber',
+  },
+  [SalaryUnit.CNY]: {
+    label: 'CNY',
+    cssClass: 'badge-rose',
+  },
+};
+
+export const SALARY_UNIT_OPTIONS: EnumOption<SalaryUnit>[] = Object.values(SalaryUnit).map(
+  (value) => ({
+    value,
+    label: SALARY_UNIT_CONFIG[value]?.label ?? value,
+    cssClass: SALARY_UNIT_CONFIG[value]?.cssClass ?? 'badge-secondary',
+  }),
+);
+
 

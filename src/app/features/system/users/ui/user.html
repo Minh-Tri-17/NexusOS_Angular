@@ -181,33 +181,30 @@
             </td>
 
             <td class="text-nowrap">
-              @if (user.employeeName) {
-                <span class="text-muted small">
-                  <i class="fa-solid fa-user me-1 text-secondary opacity-75"></i>{{ user.employeeName }}
-                </span>
-              } @else {
-                <span class="text-muted opacity-50">—</span>
-              }
+              <span class="text-muted small">
+                @if (user.employeeName) {
+                  <i class="fa-solid fa-user me-1 text-secondary opacity-75"></i>
+                }
+                {{ user.employeeName | fallback }}
+              </span>
             </td>
 
             <td class="text-nowrap">
-              @if (user.email) {
-                <span class="text-muted small">
-                  <i class="fa-regular fa-envelope me-1 text-secondary opacity-75"></i>{{ user.email }}
-                </span>
-              } @else {
-                <span class="text-muted opacity-50">—</span>
-              }
+              <span class="text-muted small">
+                @if (user.email) {
+                  <i class="fa-regular fa-envelope me-1 text-secondary opacity-75"></i>
+                }
+                {{ user.email | mask:'email' }}
+              </span>
             </td>
 
             <td class="text-nowrap">
-              @if (user.phoneNumber) {
-                <span class="text-muted small">
-                  <i class="fa-solid fa-phone me-1 text-secondary opacity-75"></i>{{ user.phoneNumber }}
-                </span>
-              } @else {
-                <span class="text-muted opacity-50">—</span>
-              }
+              <span class="text-muted small">
+                @if (user.phoneNumber) {
+                  <i class="fa-solid fa-phone me-1 text-secondary opacity-75"></i>
+                }
+                {{ user.phoneNumber | mask:'phone' }}
+              </span>
             </td>
 
             <td class="text-nowrap">
@@ -299,11 +296,7 @@
             </td>
 
             <td>
-              @if (user.note) {
-                <span class="text-muted small fst-italic">{{ user.note }}</span>
-              } @else {
-                <span class="text-muted opacity-50">—</span>
-              }
+              <span class="text-muted small fst-italic">{{ user.note | fallback }}</span>
             </td>
 
             <td class="text-nowrap">

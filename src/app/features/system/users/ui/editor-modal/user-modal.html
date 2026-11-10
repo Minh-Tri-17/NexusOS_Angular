@@ -35,6 +35,8 @@
                   id="inputUserCode"
                   placeholder="e.g. USR-001"
                   formControlName="userCode"
+                  appUppercase
+                  appAutoTrim
                 />
               </div>
               <div class="form-text-hint">
@@ -54,6 +56,7 @@
                   id="inputUsername"
                   placeholder="e.g. johndoe"
                   formControlName="username"
+                  appAutoTrim
                   required
                 />
               </div>
@@ -101,11 +104,21 @@
                 {{ 'user.employeeName' | translate }}
               </label>
               <div class="input-group custom-input-group">
-                <span class="input-group-text"><i class="fa-solid fa-id-card"></i></span>
+                <span class="input-group-text">
+                  @if (isLoadingEmployee()) {
+                    <span
+                      class="spinner-border spinner-border-sm text-primary"
+                      role="status"
+                    ></span>
+                  } @else {
+                    <i class="fa-solid fa-id-card"></i>
+                  }
+                </span>
                 <select
                   class="form-select custom-form-select"
                   id="selectEmployeeId"
                   formControlName="employeeId"
+                  [appSelectLoading]="isLoadingEmployee()"
                 >
                   <option value="">{{ 'common.selectEmployee' | translate }}</option>
                   @for (employee of employees(); track employee.id) {
@@ -129,6 +142,7 @@
                   id="inputEmail"
                   placeholder="e.g. user@example.com"
                   formControlName="email"
+                  appAutoTrim
                 />
               </div>
             </div>
@@ -145,6 +159,8 @@
                   id="inputPhoneNumber"
                   placeholder="e.g. 0901234567"
                   formControlName="phoneNumber"
+                  appNumberOnly
+                  appAutoTrim
                 />
               </div>
             </div>
@@ -294,6 +310,7 @@
                   rows="3"
                   placeholder="{{ 'common.placeholderNote' | translate }}"
                   formControlName="note"
+                  appAutoTrim
                 ></textarea>
               </div>
             </div>

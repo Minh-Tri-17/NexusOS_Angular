@@ -6,6 +6,9 @@ import { NIL as NIL_GUID } from 'uuid';
 import { PagingRequest } from '../../../../../core/models/paging.model';
 import { BaseService } from '../../../../../core/services/base.service';
 import { Modal } from '../../../../../shared/components/modal/modal';
+import { AutoTrimDirective } from '../../../../../shared/directives/auto-trim.directive';
+import { SelectLoadingDirective } from '../../../../../shared/directives/select-loading.directive';
+import { UppercaseDirective } from '../../../../../shared/directives/uppercase.directive';
 import { ProvinceFacade } from '../../../province/data-access/province.facade';
 import { ProvinceModel } from '../../../province/data-access/province.model';
 import { WardFacade } from '../../data-access/ward.facade';
@@ -13,7 +16,14 @@ import { WardModel } from '../../data-access/ward.model';
 
 @Component({
   selector: 'app-ward-modal',
-  imports: [Modal, ReactiveFormsModule, TranslatePipe],
+  imports: [
+    Modal,
+    ReactiveFormsModule,
+    TranslatePipe,
+    SelectLoadingDirective,
+    AutoTrimDirective,
+    UppercaseDirective,
+  ],
   templateUrl: './ward-modal.html',
   styleUrl: './ward-modal.scss',
 })
@@ -31,6 +41,7 @@ export class WardModal {
   //#region //@ STATE
 
   readonly isSaving = signal(false);
+  readonly isLoadingProvince = signal(false);
   readonly provinces = signal<ProvinceModel[]>([]);
 
   readonly wardForm = new FormGroup({
@@ -65,12 +76,15 @@ export class WardModal {
   private async loadProvinces() {
     if (this.provinces().length > 0) return;
 
+    this.isLoadingProvince.set(true);
     try {
       const filter = this.buildFilter();
       const res = await this.provinceFacade.getPaging(filter);
       this.provinces.set(res.result?.items || []);
     } catch {
       this.provinces.set([]);
+    } finally {
+      this.isLoadingProvince.set(false);
     }
   }
 

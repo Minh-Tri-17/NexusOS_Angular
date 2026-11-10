@@ -1,4 +1,4 @@
-import { DatePipe, DecimalPipe } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { Component, computed, effect, inject, Injector, linkedSignal, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -18,6 +18,8 @@ import { Placeholder } from '../../../shared/components/placeholder/placeholder'
 import { Summary } from '../../../shared/components/summary/summary';
 import { Table } from '../../../shared/components/table/table';
 import { Toolbar } from '../../../shared/components/toolbar/toolbar';
+import { CurrencyFormatPipe } from '../../../shared/pipes/currency-format.pipe';
+import { EmptyFallbackPipe } from '../../../shared/pipes/empty-fallback.pipe';
 import { EmployeeFacade } from '../../employee/data-access/employee.facade';
 import { EmployeeModel } from '../../employee/data-access/employee.model';
 import {
@@ -25,6 +27,8 @@ import {
   APPROVAL_STATUS_OPTIONS,
   CONTRACT_STATUS_CONFIG,
   CONTRACT_STATUS_OPTIONS,
+  SALARY_UNIT_CONFIG,
+  SALARY_UNIT_OPTIONS,
 } from '../data-access/contract.enum';
 import { ContractFacade } from '../data-access/contract.facade';
 import { ContractFields, ContractModel } from '../data-access/contract.model';
@@ -38,10 +42,11 @@ import { ContractModal } from './editor-modal/contract-modal';
     Pagination,
     Table,
     DatePipe,
-    DecimalPipe,
     FormsModule,
     Placeholder,
     TranslatePipe,
+    CurrencyFormatPipe,
+    EmptyFallbackPipe,
   ],
   templateUrl: './contract.html',
   styleUrl: './contract.scss',
@@ -59,6 +64,7 @@ export class Contract {
   readonly contractStatusConfig = CONTRACT_STATUS_CONFIG;
   readonly approvalStatuses = APPROVAL_STATUS_OPTIONS;
   readonly approvalStatusConfig = APPROVAL_STATUS_CONFIG;
+  readonly salaryUnitConfig = SALARY_UNIT_CONFIG;
 
   readonly contractColumns = Object.keys(ContractFields).filter(
     (key) =>

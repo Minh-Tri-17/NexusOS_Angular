@@ -18,13 +18,24 @@ import { Placeholder } from '../../../../shared/components/placeholder/placehold
 import { Summary } from '../../../../shared/components/summary/summary';
 import { Table } from '../../../../shared/components/table/table';
 import { Toolbar } from '../../../../shared/components/toolbar/toolbar';
+import { EmptyFallbackPipe } from '../../../../shared/pipes/empty-fallback.pipe';
 import { DepartmentFacade } from '../data-access/department.facade';
 import { DepartmentFields, DepartmentModel } from '../data-access/department.model';
 import { DepartmentModal } from './editor-modal/department-modal';
 
 @Component({
   selector: 'app-department',
-  imports: [Summary, Toolbar, Pagination, Table, DatePipe, FormsModule, Placeholder, TranslatePipe],
+  imports: [
+    Summary,
+    Toolbar,
+    Pagination,
+    Table,
+    DatePipe,
+    FormsModule,
+    Placeholder,
+    TranslatePipe,
+    EmptyFallbackPipe,
+  ],
   templateUrl: './department.html',
   styleUrl: './department.scss',
 })
