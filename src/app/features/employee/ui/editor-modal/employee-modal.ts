@@ -310,6 +310,7 @@ export class EmployeeModal {
     //* getRawValue() lấy toàn bộ giá trị của form, kể cả ô bị disabled
     const payload = this.employeeForm.getRawValue() as unknown as EmployeeModel;
     payload.departmentId = payload.departmentId || null;
+    payload.jobTitleId = payload.jobTitleId || null;
     payload.countryId = payload.countryId || null;
     payload.provinceId = payload.provinceId || null;
     payload.wardId = payload.wardId || null;
