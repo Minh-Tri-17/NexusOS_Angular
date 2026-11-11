@@ -207,7 +207,8 @@
     "countryCode": "Country Code",
     "countryName": "Country Name",
     "capital": "Capital",
-    "countryInfo": "Country Information"
+    "countryInfo": "Country Information",
+    "codeHint": "Country identification code"
   },
   "employee": {
     "title": "Employee Management",
@@ -260,7 +261,8 @@
     "manager": "Manager",
     "managerName": "Manager",
     "contractName": "Contract Name",
-    "contractTypeName": "Contract Type"
+    "contractTypeName": "Contract Type",
+    "codeHint": "Employee identification code"
   },
   "role": {
     "title": "Role & Permission Management",
@@ -280,7 +282,8 @@
     "selectAll": "Select All",
     "deselectAll": "Deselect All",
     "grantedCount": "{{granted}} / {{total}} permissions granted",
-    "searchPermissions": "Search permission module..."
+    "searchPermissions": "Search permission module...",
+    "codeHint": "Role identification code"
   },
   "user": {
     "title": "User Management",
@@ -306,7 +309,8 @@
     "password": "Password",
     "passwordHint": "Leave blank to keep current password",
     "roles": "Assigned Roles",
-    "selectRoles": "Select roles for this user"
+    "selectRoles": "Select roles for this user",
+    "codeHint": "User identification code"
   },
   "province": {
     "title": "Province & City Management",
@@ -315,7 +319,8 @@
     "provinceCode": "Province Code",
     "provinceName": "Province Name",
     "countryName": "Country",
-    "provinceInfo": "Province Information"
+    "provinceInfo": "Province Information",
+    "codeHint": "Province identification code"
   },
   "ward": {
     "title": "Ward & Commune Management",
@@ -324,7 +329,8 @@
     "wardCode": "Ward Code",
     "wardName": "Ward Name",
     "provinceName": "Province",
-    "wardInfo": "Ward Information"
+    "wardInfo": "Ward Information",
+    "codeHint": "Ward identification code"
   },
   "department": {
     "title": "Department Management",

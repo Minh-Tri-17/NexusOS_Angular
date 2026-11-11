@@ -16,7 +16,7 @@
     <ng-container active-filters>
       @if (filterIsActive() !== null) {
         <span class="filter-chip">
-          <i class="fa-solid fa-filter chip-icon"></i> {{ 'role.isActive' | translate }}:
+          <i class="fa-solid fa-circle-check chip-icon"></i> {{ 'role.isActive' | translate }}:
           <strong>{{
             (filterIsActive() ? 'common.active' : 'common.inactive') | translate
           }}</strong>

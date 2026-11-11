@@ -108,6 +108,7 @@ export class WardModal {
       wardName: null,
       note: null,
     });
+    this.loadComboboxData();
   }
 
   initUpdateForm(item: WardModel) {
@@ -118,6 +119,7 @@ export class WardModal {
       wardName: item.wardName || null,
       note: item.note || null,
     });
+    this.loadComboboxData();
   }
 
   async handleSave() {

@@ -66,6 +66,10 @@ export class DepartmentModal {
 
   //#region //@ HELPERS
 
+  async loadComboboxData() {
+    await Promise.allSettled([this.loadEmployees()]);
+  }
+
   private async loadEmployees() {
     if (this.employees().length > 0) return;
 
@@ -95,7 +99,7 @@ export class DepartmentModal {
       managerId: '',
       note: null,
     });
-    this.loadEmployees();
+    this.loadComboboxData();
   }
 
   initUpdateForm(item: DepartmentModel) {
@@ -106,7 +110,7 @@ export class DepartmentModal {
       managerId: item.managerId || '',
       note: item.note || null,
     });
-    this.loadEmployees();
+    this.loadComboboxData();
   }
 
   async handleSave() {

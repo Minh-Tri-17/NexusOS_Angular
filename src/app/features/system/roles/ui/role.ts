@@ -169,6 +169,7 @@ export class Role {
 
   handleClearFilter() {
     this.filterIsDelete.set(false);
+    this.filterIsActive.set(null);
     this.searchText.set('');
     this.pageIndex.set(1);
   }
@@ -265,7 +266,7 @@ export class Role {
 
   openImportModal() {
     const modalRef = this.modal.open(Import, {
-      size: 'xl',
+      size: 'lg',
       centered: true,
       windowClass: 'custom-modal',
       injector: Injector.create({
@@ -279,7 +280,7 @@ export class Role {
 
   openExportModal() {
     this.modal.open(Export, {
-      size: 'xl',
+      size: 'lg',
       centered: true,
       windowClass: 'custom-modal',
       injector: Injector.create({

@@ -108,6 +108,7 @@ export class ProvinceModal {
       provinceName: null,
       note: null,
     });
+    this.loadComboboxData();
   }
 
   initUpdateForm(item: ProvinceModel) {
@@ -118,6 +119,7 @@ export class ProvinceModal {
       provinceName: item.provinceName || null,
       note: item.note || null,
     });
+    this.loadComboboxData();
   }
 
   async handleSave() {

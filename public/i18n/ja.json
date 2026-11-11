@@ -207,7 +207,8 @@
     "countryCode": "国コード",
     "countryName": "国名",
     "capital": "首都",
-    "countryInfo": "国情報"
+    "countryInfo": "国情報",
+    "codeHint": "国識別コード"
   },
   "employee": {
     "title": "従業員管理",
@@ -260,7 +261,8 @@
     "manager": "管理者",
     "managerName": "管理者",
     "contractName": "契約名",
-    "contractTypeName": "契約形態"
+    "contractTypeName": "契約形態",
+    "codeHint": "従業員識別コード"
   },
   "role": {
     "title": "役割・権限管理",
@@ -280,7 +282,8 @@
     "selectAll": "すべて選択",
     "deselectAll": "すべての選択を解除",
     "grantedCount": "{{granted}} / {{total}} 件の権限を付与",
-    "searchPermissions": "権限モジュールを検索..."
+    "searchPermissions": "権限モジュールを検索...",
+    "codeHint": "役割識別コード"
   },
   "user": {
     "title": "User Management",
@@ -306,7 +309,8 @@
     "password": "パスワード",
     "passwordHint": "現在のパスワードを維持する場合は空白のままにしてください",
     "roles": "割り当てられた役割",
-    "selectRoles": "このユーザーの役割を選択してください"
+    "selectRoles": "このユーザーの役割を選択してください",
+    "codeHint": "ユーザー識別コード"
   },
   "province": {
     "title": "都道府県・都市管理",
@@ -315,7 +319,8 @@
     "provinceCode": "都道府県コード",
     "provinceName": "都道府県名",
     "countryName": "国",
-    "provinceInfo": "都道府県情報"
+    "provinceInfo": "都道府県情報",
+    "codeHint": "都道府県識別コード"
   },
   "ward": {
     "title": "市区町村管理",
@@ -324,7 +329,8 @@
     "wardCode": "市区町村コード",
     "wardName": "市区町村名",
     "provinceName": "都道府県",
-    "wardInfo": "市区町村情報"
+    "wardInfo": "市区町村情報",
+    "codeHint": "市区町村識別コード"
   },
   "department": {
     "title": "部門管理",

@@ -207,7 +207,8 @@
     "countryCode": "Mã quốc gia",
     "countryName": "Tên quốc gia",
     "capital": "Thủ đô",
-    "countryInfo": "Thông tin quốc gia"
+    "countryInfo": "Thông tin quốc gia",
+    "codeHint": "Mã định danh quốc gia"
   },
   "employee": {
     "title": "Quản lý nhân viên",
@@ -260,7 +261,8 @@
     "manager": "Quản lý",
     "managerName": "Người quản lý",
     "contractName": "Tên hợp đồng",
-    "contractTypeName": "Loại hợp đồng"
+    "contractTypeName": "Loại hợp đồng",
+    "codeHint": "Mã định danh nhân viên"
   },
   "role": {
     "title": "Quản lý vai trò & quyền hạn",
@@ -280,7 +282,8 @@
     "selectAll": "Chọn tất cả",
     "deselectAll": "Bỏ chọn tất cả",
     "grantedCount": "Đã chọn {{granted}} / {{total}} quyền",
-    "searchPermissions": "Tìm kiếm chức năng..."
+    "searchPermissions": "Tìm kiếm chức năng...",
+    "codeHint": "Mã định danh vai trò"
   },
   "user": {
     "title": "Quản lý người dùng",
@@ -306,7 +309,8 @@
     "password": "Mật khẩu",
     "passwordHint": "Để trống nếu không muốn đổi mật khẩu",
     "roles": "Vai trò phân quyền",
-    "selectRoles": "Chọn vai trò cho người dùng này"
+    "selectRoles": "Chọn vai trò cho người dùng này",
+    "codeHint": "Mã định danh người dùng"
   },
   "province": {
     "title": "Quản lý tỉnh / thành phố",
@@ -315,7 +319,8 @@
     "provinceCode": "Mã tỉnh / thành",
     "provinceName": "Tên tỉnh / thành",
     "countryName": "Quốc gia",
-    "provinceInfo": "Thông tin tỉnh / thành phố"
+    "provinceInfo": "Thông tin tỉnh / thành phố",
+    "codeHint": "Mã định danh tỉnh thành"
   },
   "ward": {
     "title": "Quản lý phường / xã",
@@ -324,7 +329,8 @@
     "wardCode": "Mã phường / xã",
     "wardName": "Tên phường / xã",
     "provinceName": "Tỉnh / thành phố",
-    "wardInfo": "Thông tin phường / xã"
+    "wardInfo": "Thông tin phường / xã",
+    "codeHint": "Mã định danh phường xã"
   },
   "department": {
     "title": "Quản lý phòng ban",

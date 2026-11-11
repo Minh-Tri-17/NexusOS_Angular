@@ -207,7 +207,8 @@
     "countryCode": "Code pays",
     "countryName": "Nom du pays",
     "capital": "Capitale",
-    "countryInfo": "Informations sur le pays"
+    "countryInfo": "Informations sur le pays",
+    "codeHint": "Code d'identification du pays"
   },
   "employee": {
     "title": "Gestion des employés",
@@ -260,7 +261,8 @@
     "manager": "Responsable",
     "managerName": "Responsable",
     "contractName": "Nom du contrat",
-    "contractTypeName": "Type de contrat"
+    "contractTypeName": "Type de contrat",
+    "codeHint": "Code d'identification de l'employé"
   },
   "role": {
     "title": "Gestion des rôles & autorisations",
@@ -280,7 +282,8 @@
     "selectAll": "Tout sélectionner",
     "deselectAll": "Tout désélectionner",
     "grantedCount": "{{granted}} / {{total}} autorisations accordées",
-    "searchPermissions": "Rechercher un module..."
+    "searchPermissions": "Rechercher un module...",
+    "codeHint": "Code d'identification du rôle"
   },
   "user": {
     "title": "User Management",
@@ -306,7 +309,8 @@
     "password": "Mot de passe",
     "passwordHint": "Laisser vide pour conserver le mot de passe actuel",
     "roles": "Rôles attribués",
-    "selectRoles": "Sélectionner les rôles pour cet utilisateur"
+    "selectRoles": "Sélectionner les rôles pour cet utilisateur",
+    "codeHint": "Code d'identification de l'utilisateur"
   },
   "province": {
     "title": "Gestion des provinces et villes",
@@ -315,7 +319,8 @@
     "provinceCode": "Code de la province",
     "provinceName": "Nom de la province",
     "countryName": "Pays",
-    "provinceInfo": "Informations sur la province"
+    "provinceInfo": "Informations sur la province",
+    "codeHint": "Code d'identification de la province"
   },
   "ward": {
     "title": "Gestion des communes et quartiers",
@@ -324,7 +329,8 @@
     "wardCode": "Code du quartier",
     "wardName": "Nom du quartier",
     "provinceName": "Province",
-    "wardInfo": "Informations sur le quartier"
+    "wardInfo": "Informations sur le quartier",
+    "codeHint": "Code d'identification de la commune"
   },
   "department": {
     "title": "Gestion des départements",

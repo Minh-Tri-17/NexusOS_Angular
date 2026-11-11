@@ -207,7 +207,8 @@
     "countryCode": "国家代码",
     "countryName": "国家名称",
     "capital": "首都",
-    "countryInfo": "国家信息"
+    "countryInfo": "国家信息",
+    "codeHint": "国家识别码"
   },
   "employee": {
     "title": "员工管理",
@@ -260,7 +261,8 @@
     "manager": "主管",
     "managerName": "直属主管",
     "contractName": "合同名称",
-    "contractTypeName": "合同类型"
+    "contractTypeName": "合同类型",
+    "codeHint": "员工识别码"
   },
   "role": {
     "title": "角色与权限管理",
@@ -280,7 +282,8 @@
     "selectAll": "全选",
     "deselectAll": "取消全选",
     "grantedCount": "已分配 {{granted}} / {{total}} 项权限",
-    "searchPermissions": "搜索权限模块..."
+    "searchPermissions": "搜索权限模块...",
+    "codeHint": "角色唯一识别码"
   },
   "user": {
     "title": "User Management",
@@ -306,7 +309,8 @@
     "password": "密码",
     "passwordHint": "留空以保留当前密码",
     "roles": "分配的角色",
-    "selectRoles": "为此用户选择角色"
+    "selectRoles": "为此用户选择角色",
+    "codeHint": "用户唯一识别码"
   },
   "province": {
     "title": "省市管理",
@@ -315,7 +319,8 @@
     "provinceCode": "省市代码",
     "provinceName": "省市名称",
     "countryName": "国家",
-    "provinceInfo": "省市信息"
+    "provinceInfo": "省市信息",
+    "codeHint": "省份识别码"
   },
   "ward": {
     "title": "区县乡镇管理",
@@ -324,7 +329,8 @@
     "wardCode": "区县代码",
     "wardName": "区县名称",
     "provinceName": "省市",
-    "wardInfo": "区县信息"
+    "wardInfo": "区县信息",
+    "codeHint": "区县识别码"
   },
   "department": {
     "title": "部门管理",
