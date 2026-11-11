@@ -47,7 +47,7 @@ export class CountryModal {
     capital: new FormControl<string | null>(null, {
       validators: [Validators.required],
     }),
-    region: new FormControl<Region | string>('', {
+    region: new FormControl<Region | string>(Region.Asia, {
       validators: [Validators.required],
     }),
     note: new FormControl<string | null>(null),
@@ -71,7 +71,7 @@ export class CountryModal {
       countryCode: null,
       countryName: null,
       capital: null,
-      region: '',
+      region: Region.Asia,
       note: null,
     });
   }

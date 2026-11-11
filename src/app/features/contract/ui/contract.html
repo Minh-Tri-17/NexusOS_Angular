@@ -87,7 +87,7 @@
           [value]="filterContractStatus() ?? ''"
           (change)="filterContractStatus.set($any($event.target).value || '')"
         >
-          <option [selected]="!filterContractStatus()" value="">{{ 'contract.selectContractStatus' | translate }}</option>
+          <option [selected]="!filterContractStatus()" value="">{{ 'common.all' | translate }}</option>
           @for (status of contractStatuses; track status.value) {
             <option [selected]="filterContractStatus() === status.value" [value]="status.value">
               {{ status.label | translate }}
@@ -105,7 +105,7 @@
           [value]="filterApprovalStatus() ?? ''"
           (change)="filterApprovalStatus.set($any($event.target).value || '')"
         >
-          <option [selected]="!filterApprovalStatus()" value="">{{ 'contract.selectApprovalStatus' | translate }}</option>
+          <option [selected]="!filterApprovalStatus()" value="">{{ 'common.all' | translate }}</option>
           @for (status of approvalStatuses; track status.value) {
             <option [selected]="filterApprovalStatus() === status.value" [value]="status.value">
               {{ status.label | translate }}

@@ -81,7 +81,10 @@
               <div class="input-group custom-input-group">
                 <span class="input-group-text">
                   @if (isLoadingManager()) {
-                    <span class="spinner-border spinner-border-sm text-primary" role="status"></span>
+                    <span
+                      class="spinner-border spinner-border-sm text-primary"
+                      role="status"
+                    ></span>
                   } @else {
                     <i class="fa-solid fa-user-tie"></i>
                   }
@@ -100,7 +103,7 @@
                       <option [value]="emp.id">
                         {{
                           emp.employeeCode
-                            ? '#' + emp.employeeCode + ' - ' + emp.employeeName
+                            ? '[#' + emp.employeeCode + '] - ' + emp.employeeName
                             : emp.employeeName
                         }}
                       </option>

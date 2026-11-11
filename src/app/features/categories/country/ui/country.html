@@ -80,7 +80,7 @@
           [value]="filterRegion() ?? ''"
           (change)="filterRegion.set($any($event.target).value || null)"
         >
-          <option [selected]="!filterRegion()" value="">{{ 'common.selectRegion' | translate }}</option>
+          <option [selected]="!filterRegion()" value="">{{ 'common.all' | translate }}</option>
           @for (region of regions; track region.value) {
             <option [selected]="filterRegion() === region.value" [value]="region.value">
               {{ region.label | translate }}

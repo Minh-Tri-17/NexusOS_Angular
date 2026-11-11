@@ -82,7 +82,9 @@
         >
           <option [selected]="!filterCountryId()" value="">{{ 'common.selectCountry' | translate }}</option>
           @for (country of countries(); track country.id) {
-            <option [selected]="filterCountryId() === country.id" [value]="country.id">{{ country.countryName }}</option>
+            <option [selected]="filterCountryId() === country.id" [value]="country.id">
+              {{ country.countryCode ? '[#' + country.countryCode + '] - ' + country.countryName : country.countryName }}
+            </option>
           }
         </select>
       </div>

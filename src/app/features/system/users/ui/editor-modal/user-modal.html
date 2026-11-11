@@ -28,7 +28,7 @@
                 {{ 'user.userCode' | translate }}
               </label>
               <div class="input-group custom-input-group">
-                <span class="input-group-text"><i class="fa-solid fa-id-badge"></i></span>
+                <span class="input-group-text"><i class="fa-solid fa-hashtag"></i></span>
                 <input
                   type="text"
                   class="form-control custom-form-control"
@@ -123,7 +123,7 @@
                   <option value="">{{ 'common.selectEmployee' | translate }}</option>
                   @for (employee of employees(); track employee.id) {
                     <option [value]="employee.id">
-                      {{ employee.employeeName }} ({{ employee.employeeCode }})
+                      {{ employee.employeeCode ? '[#' + employee.employeeCode + '] - ' + employee.employeeName : employee.employeeName }}
                     </option>
                   }
                 </select>
@@ -177,7 +177,6 @@
                   formControlName="userStatus"
                   required
                 >
-                  <option value="">{{ 'common.selectStatus' | translate }}</option>
                   @for (status of userStatuses; track status.value) {
                     <option [value]="status.value">{{ status.label | translate }}</option>
                   }
@@ -197,7 +196,6 @@
                   formControlName="userType"
                   required
                 >
-                  <option value="">{{ 'common.selectUserType' | translate }}</option>
                   @for (type of userTypes; track type.value) {
                     <option [value]="type.value">{{ type.label | translate }}</option>
                   }

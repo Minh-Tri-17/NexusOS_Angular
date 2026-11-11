@@ -35,7 +35,7 @@
                 {{ 'province.provinceCode' | translate }}
               </label>
               <div class="input-group custom-input-group">
-                <span class="input-group-text"><i class="fa-solid fa-barcode"></i></span>
+                <span class="input-group-text"><i class="fa-solid fa-hashtag"></i></span>
                 <input
                   type="text"
                   class="form-control custom-form-control"
@@ -101,7 +101,7 @@
                     </option>
                     @for (country of countries(); track country.id) {
                       <option [value]="country.id">
-                        {{ country.countryName }}
+                        {{ country.countryCode ? '[#' + country.countryCode + '] - ' + country.countryName : country.countryName }}
                       </option>
                     }
                   }

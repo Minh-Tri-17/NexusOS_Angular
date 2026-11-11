@@ -39,7 +39,7 @@
                 {{ 'country.countryCode' | translate }}
               </label>
               <div class="input-group custom-input-group">
-                <span class="input-group-text"><i class="fa-solid fa-passport"></i></span>
+                <span class="input-group-text"><i class="fa-solid fa-hashtag"></i></span>
                 <input
                   type="text"
                   class="form-control custom-form-control"
@@ -85,9 +85,6 @@
                   formControlName="region"
                   required
                 >
-                  <option value="">
-                    {{ 'common.selectRegion' | translate }}
-                  </option>
                   @for (region of regions; track region.value) {
                     <option [value]="region.value">
                       {{ region.label | translate }}

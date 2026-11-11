@@ -134,7 +134,7 @@
           (change)="filterEmploymentStatus.set($any($event.target).value)"
         >
           <option [selected]="!filterEmploymentStatus()" value="">
-            {{ 'common.selectStatus' | translate }}
+            {{ 'common.all' | translate }}
           </option>
           @for (status of employmentStatuses; track status.value) {
             <option [selected]="filterEmploymentStatus() === status.value" [value]="status.value">
@@ -154,7 +154,7 @@
           (change)="filterGender.set($any($event.target).value)"
         >
           <option [selected]="!filterGender()" value="">
-            {{ 'common.selectGender' | translate }}
+            {{ 'common.all' | translate }}
           </option>
           @for (gender of genders; track gender.value) {
             <option [selected]="filterGender() === gender.value" [value]="gender.value">
@@ -174,7 +174,7 @@
           (change)="filterEducationLevel.set($any($event.target).value)"
         >
           <option [selected]="!filterEducationLevel()" value="">
-            {{ 'common.selectEducationLevel' | translate }}
+            {{ 'common.all' | translate }}
           </option>
           @for (level of educationLevels; track level.value) {
             <option [selected]="filterEducationLevel() === level.value" [value]="level.value">

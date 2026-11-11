@@ -85,7 +85,7 @@ export class EmployeeModal {
     employeeName: new FormControl<string | null>(null, {
       validators: [Validators.required],
     }),
-    employmentStatus: new FormControl<EmploymentStatus | string>('', {
+    employmentStatus: new FormControl<EmploymentStatus | string>(EmploymentStatus.Active, {
       nonNullable: true,
       validators: [Validators.required],
     }),
@@ -107,8 +107,8 @@ export class EmployeeModal {
     emergencyContactPhone: new FormControl<string | null>(null),
 
     dateOfBirth: new FormControl<string | null>(null),
-    gender: new FormControl<Gender | string>('', { nonNullable: true }),
-    educationLevel: new FormControl<EducationLevel | string>('', { nonNullable: true }),
+    gender: new FormControl<Gender | string>(Gender.Male, { nonNullable: true }),
+    educationLevel: new FormControl<EducationLevel | string>(EducationLevel.Bachelor, { nonNullable: true }),
     address: new FormControl<string | null>(null),
 
     identityNumber: new FormControl<string | null>(null),
@@ -245,7 +245,7 @@ export class EmployeeModal {
       id: null,
       employeeCode: null,
       employeeName: null,
-      employmentStatus: '',
+      employmentStatus: EmploymentStatus.Active,
       photo: null,
       hireDate: null,
       terminationDate: null,
@@ -261,8 +261,8 @@ export class EmployeeModal {
       emergencyContactName: null,
       emergencyContactPhone: null,
       dateOfBirth: null,
-      gender: '',
-      educationLevel: '',
+      gender: Gender.Male,
+      educationLevel: EducationLevel.Bachelor,
       address: null,
       identityNumber: null,
       taxCode: null,

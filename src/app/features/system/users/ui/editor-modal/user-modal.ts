@@ -14,7 +14,12 @@ import { EmployeeFacade } from '../../../../employee/data-access/employee.facade
 import { EmployeeModel } from '../../../../employee/data-access/employee.model';
 import { RoleFacade } from '../../../roles/data-access/role.facade';
 import { RoleModel } from '../../../roles/data-access/role.model';
-import { USER_STATUS_OPTIONS, USER_TYPE_OPTIONS } from '../../data-access/user.enum';
+import {
+  USER_STATUS_OPTIONS,
+  USER_TYPE_OPTIONS,
+  UserStatus,
+  UserType,
+} from '../../data-access/user.enum';
 import { UserFacade } from '../../data-access/user.facade';
 import { UserModel } from '../../data-access/user.model';
 
@@ -63,11 +68,11 @@ export class UserModal {
     roleIds: new FormControl<string[]>([], { nonNullable: true }),
     email: new FormControl<string | null>(null, Validators.email),
     phoneNumber: new FormControl<string | null>(null),
-    userStatus: new FormControl<string>('', {
+    userStatus: new FormControl<string>(UserStatus.Active, {
       nonNullable: true,
       validators: [Validators.required],
     }),
-    userType: new FormControl<string>('', {
+    userType: new FormControl<string>(UserType.Employee, {
       nonNullable: true,
       validators: [Validators.required],
     }),
@@ -137,8 +142,8 @@ export class UserModal {
       roleIds: [],
       email: null,
       phoneNumber: null,
-      userStatus: '',
-      userType: '',
+      userStatus: UserStatus.Active,
+      userType: UserType.Employee,
       requirePasswordChange: false,
       twoFactorEnabled: false,
       note: null,

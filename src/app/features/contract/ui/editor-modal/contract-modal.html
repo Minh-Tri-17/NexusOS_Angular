@@ -98,7 +98,7 @@
                     <option [value]="emp.id">
                       {{
                         emp.employeeCode
-                          ? '#' + emp.employeeCode + ' - ' + emp.employeeName
+                          ? '[#' + emp.employeeCode + '] - ' + emp.employeeName
                           : emp.employeeName
                       }}
                     </option>
@@ -131,12 +131,15 @@
                   required
                 >
                   <option value="">{{ 'common.selectContractType' | translate }}</option>
-                  @for (ct of contractTypes(); track ct.id) {
-                    <option [value]="ct.id">
+                  @for (contractType of contractTypes(); track contractType.id) {
+                    <option [value]="contractType.id">
                       {{
-                        ct.contractTypeCode
-                          ? '#' + ct.contractTypeCode + ' - ' + ct.contractTypeName
-                          : ct.contractTypeName
+                        contractType.contractTypeCode
+                          ? '[#' +
+                            contractType.contractTypeCode +
+                            '] - ' +
+                            contractType.contractTypeName
+                          : contractType.contractTypeName
                       }}
                     </option>
                   }

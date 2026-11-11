@@ -39,7 +39,7 @@
                 {{ 'employee.employeeCode' | translate }}
               </label>
               <div class="input-group custom-input-group">
-                <span class="input-group-text"><i class="fa-solid fa-passport"></i></span>
+                <span class="input-group-text"><i class="fa-solid fa-hashtag"></i></span>
                 <input
                   type="text"
                   class="form-control custom-form-control"
@@ -87,7 +87,6 @@
                   formControlName="employmentStatus"
                   required
                 >
-                  <option value="">{{ 'common.selectStatus' | translate }}</option>
                   @for (status of employmentStatuses; track status.value) {
                     <option [value]="status.value">{{ status.label | translate }}</option>
                   }
@@ -229,7 +228,7 @@
                   </option>
                   @for (dept of departments(); track dept.id) {
                     <option [value]="dept.id">
-                      {{ dept.departmentName }}
+                      {{ dept.departmentCode ? '[#' + dept.departmentCode + '] - ' + dept.departmentName : dept.departmentName }}
                     </option>
                   }
                 </select>
@@ -262,7 +261,7 @@
                   </option>
                   @for (job of jobTitles(); track job.id) {
                     <option [value]="job.id">
-                      {{ job.jobTitleName }}
+                      {{ job.jobTitleCode ? '[#' + job.jobTitleCode + '] - ' + job.jobTitleName : job.jobTitleName }}
                     </option>
                   }
                 </select>
@@ -344,7 +343,6 @@
                   id="inputEmployeeGender"
                   formControlName="gender"
                 >
-                  <option value="">{{ 'common.selectGender' | translate }}</option>
                   @for (gender of genders; track gender.value) {
                     <option [value]="gender.value">{{ gender.label | translate }}</option>
                   }
@@ -363,7 +361,6 @@
                   id="inputEmployeeEducation"
                   formControlName="educationLevel"
                 >
-                  <option value="">{{ 'common.selectEducationLevel' | translate }}</option>
                   @for (level of educationLevels; track level.value) {
                     <option [value]="level.value">{{ level.label | translate }}</option>
                   }
@@ -414,7 +411,7 @@
                   </option>
                   @for (country of countries(); track country.id) {
                     <option [value]="country.id">
-                      {{ country.countryName }}
+                      {{ country.countryCode ? '[#' + country.countryCode + '] - ' + country.countryName : country.countryName }}
                     </option>
                   }
                 </select>
@@ -447,7 +444,7 @@
                   </option>
                   @for (province of provinces(); track province.id) {
                     <option [value]="province.id">
-                      {{ province.provinceName }}
+                      {{ province.provinceCode ? '[#' + province.provinceCode + '] - ' + province.provinceName : province.provinceName }}
                     </option>
                   }
                 </select>
@@ -480,7 +477,7 @@
                   </option>
                   @for (ward of wards(); track ward.id) {
                     <option [value]="ward.id">
-                      {{ ward.wardName }}
+                      {{ ward.wardCode ? '[#' + ward.wardCode + '] - ' + ward.wardName : ward.wardName }}
                     </option>
                   }
                 </select>

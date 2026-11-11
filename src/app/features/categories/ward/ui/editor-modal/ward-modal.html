@@ -30,7 +30,7 @@
                 {{ 'ward.wardCode' | translate }}
               </label>
               <div class="input-group custom-input-group">
-                <span class="input-group-text"><i class="fa-solid fa-barcode"></i></span>
+                <span class="input-group-text"><i class="fa-solid fa-hashtag"></i></span>
                 <input
                   type="text"
                   class="form-control custom-form-control"
@@ -96,7 +96,7 @@
                     </option>
                     @for (province of provinces(); track province.id) {
                       <option [value]="province.id">
-                        {{ province.provinceName }}
+                        {{ province.provinceCode ? '[#' + province.provinceCode + '] - ' + province.provinceName : province.provinceName }}
                       </option>
                     }
                   }
