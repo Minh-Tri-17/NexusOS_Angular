@@ -4,7 +4,7 @@ WORKDIR /app
 
 # Copy package files để cài đặt dependency trước
 COPY package*.json ./
-RUN npm ci
+RUN npm ci --legacy-peer-deps
 
 # Copy toàn bộ source code frontend và tiến hành build
 COPY . .
