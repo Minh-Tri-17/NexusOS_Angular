@@ -187,6 +187,10 @@ export class RoleModal implements OnInit {
 
   //#endregion
 
+  ngOnInit() {
+    this.loadPermissions();
+  }
+
   //#region //@ HELPERS
 
   //* Cập nhật hàng loạt trạng thái quyền
@@ -267,10 +271,6 @@ export class RoleModal implements OnInit {
   //#endregion
 
   //#region //@ METHODS
-
-  ngOnInit() {
-    this.loadPermissions();
-  }
 
   initCreateForm() {
     this.roleForm.reset({

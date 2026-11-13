@@ -154,6 +154,23 @@ export class Province {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
+  private async loadComboboxData() {
+    if (this.countries().length > 0) return;
+
+    try {
+      const res = await this.countryFacade.getPaging({ allowPaging: false });
+      this.countries.set(res.result?.items || []);
+    } catch {
+      this.countries.set([]);
+    }
+  }
+
+  getCountryName(countryId?: string | null): string {
+    if (!countryId) return '';
+    const country = this.countries().find((c) => c.id === countryId);
+    return country?.countryName || countryId;
+  }
+
   //#endregion
 
   //#region //@ METHODS
@@ -176,17 +193,6 @@ export class Province {
     } catch {
     } finally {
       this.isLoading.set(false);
-    }
-  }
-
-  async loadComboboxData() {
-    if (this.countries().length > 0) return;
-
-    try {
-      const res = await this.countryFacade.getPaging({ allowPaging: false });
-      this.countries.set(res.result?.items || []);
-    } catch {
-      this.countries.set([]);
     }
   }
 
@@ -278,12 +284,6 @@ export class Province {
     if (idsArray.length !== 1) return null;
 
     return this.provinces().find((item) => item.id === idsArray[0]) ?? null;
-  }
-
-  getCountryName(countryId?: string | null): string {
-    if (!countryId) return '';
-    const country = this.countries().find((c) => c.id === countryId);
-    return country?.countryName || countryId;
   }
 
   exportFn = (filter: PagingRequest): Promise<Blob> => this.facade.export(filter);

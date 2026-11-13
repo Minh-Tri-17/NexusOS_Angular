@@ -170,7 +170,6 @@
             </td>
             <td class="td-cell text-center">{{ fromRecord() + idx }}</td>
 
-            <!-- contractCode -->
             <td class="text-nowrap">
               @if (item.contractCode) {
                 <span class="badge-soft badge-blue">#{{ item.contractCode }}</span>
@@ -179,7 +178,6 @@
               }
             </td>
 
-            <!-- contractName -->
             <td class="text-nowrap">
               @if (item.contractName) {
                 <div
@@ -200,7 +198,6 @@
               }
             </td>
 
-            <!-- employeeName -->
             <td class="text-nowrap">
               @if (item.employeeName || (item.employeeId && employeeMap().get(item.employeeId))) {
                 <span class="text-muted small">
@@ -212,7 +209,6 @@
               }
             </td>
 
-            <!-- contractTypeName -->
             <td class="text-nowrap">
               <span class="text-muted small">
                 @if (item.contractTypeName) {
@@ -222,7 +218,6 @@
               </span>
             </td>
 
-            <!-- contractStatus -->
             <td class="text-nowrap">
               @if (item.contractStatus) {
                 <span
@@ -243,7 +238,6 @@
               }
             </td>
 
-            <!-- approvalStatus -->
             <td class="text-nowrap">
               @if (item.approvalStatus) {
                 <span
@@ -264,7 +258,6 @@
               }
             </td>
 
-            <!-- startDate -->
             <td class="text-nowrap">
               @if (item.startDate) {
                 <span class="text-muted small">{{ item.startDate | date }}</span>
@@ -273,7 +266,6 @@
               }
             </td>
 
-            <!-- endDate -->
             <td class="text-nowrap">
               @if (item.endDate) {
                 <span class="text-muted small">{{ item.endDate | date }}</span>
@@ -282,7 +274,6 @@
               }
             </td>
 
-            <!-- baseSalary -->
             <td class="text-nowrap">
               @if (item.baseSalary != null) {
                 <span class="fw-semibold text-main">
@@ -293,7 +284,6 @@
               }
             </td>
 
-            <!-- salaryUnit -->
             <td class="text-nowrap">
               @if (item.salaryUnit) {
                 <span
@@ -307,7 +297,6 @@
               }
             </td>
 
-            <!-- workingHoursPerWeek -->
             <td class="text-nowrap">
               @if (item.workingHoursPerWeek != null) {
                 <span class="text-muted small">{{ item.workingHoursPerWeek }}h/w</span>
@@ -316,7 +305,6 @@
               }
             </td>
 
-            <!-- otrate -->
             <td class="text-nowrap">
               @if (item.otrate != null) {
                 <span class="badge-soft badge-amber">x{{ item.otrate }}</span>
@@ -325,7 +313,6 @@
               }
             </td>
 
-            <!-- allowanceAmount -->
             <td class="text-nowrap">
               @if (item.allowanceAmount != null) {
                 <span class="text-muted small">{{ item.allowanceAmount | currencyFormat:item.salaryUnit }}</span>
@@ -334,7 +321,6 @@
               }
             </td>
 
-            <!-- insuranceContribution -->
             <td class="text-nowrap">
               @if (item.insuranceContribution != null) {
                 <span class="text-muted small">{{ item.insuranceContribution | currencyFormat:item.salaryUnit }}</span>
@@ -343,7 +329,6 @@
               }
             </td>
 
-            <!-- signedDate -->
             <td class="text-nowrap">
               @if (item.signedDate) {
                 <span class="text-muted small">{{ item.signedDate | date }}</span>
@@ -352,7 +337,6 @@
               }
             </td>
 
-            <!-- signedBy -->
             <td class="text-nowrap">
               <span class="text-muted small">
                 @if (item.signedBy) {
@@ -362,7 +346,6 @@
               </span>
             </td>
 
-            <!-- note -->
             <td>
               <span class="text-muted small fst-italic">{{ item.note | fallback }}</span>
             </td>

@@ -87,6 +87,7 @@ export class User {
 
   readonly pageSize = signal(20);
   readonly fromRecord = signal(1);
+  readonly toRecord = signal(20);
   readonly recordRange = signal('');
   readonly totalRecord = signal(0);
   readonly pageCount = signal(0);
@@ -183,6 +184,7 @@ export class User {
       this.totalRecord.set(res.result?.totalRecord || 0);
       this.recordRange.set(res.result?.recordRange || '');
       this.fromRecord.set(res.result?.fromRecord || 0);
+      this.toRecord.set(res.result?.toRecord || 0);
       this.pageCount.set(res.result?.pageCount || 0);
       this.selectedIds.set(new Set());
     } catch {
@@ -315,7 +317,7 @@ export class User {
               currentFilter: this.buildFilter(),
               totalRecord: this.totalRecord(),
               fromRecord: this.fromRecord(),
-              toRecord: 0,
+              toRecord: this.toRecord(),
               selectedIds: this.selectedIds(),
               fileName: 'users',
             },

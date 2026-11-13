@@ -154,6 +154,23 @@ export class Ward {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
+  private async loadComboboxData() {
+    if (this.provinces().length > 0) return;
+
+    try {
+      const res = await this.provinceFacade.getPaging({ allowPaging: false });
+      this.provinces.set(res.result?.items || []);
+    } catch {
+      this.provinces.set([]);
+    }
+  }
+
+  getProvinceName(provinceId?: string | null): string {
+    if (!provinceId) return '';
+    const province = this.provinces().find((p) => p.id === provinceId);
+    return province?.provinceName || provinceId;
+  }
+
   //#endregion
 
   //#region //@ METHODS
@@ -176,17 +193,6 @@ export class Ward {
     } catch {
     } finally {
       this.isLoading.set(false);
-    }
-  }
-
-  async loadComboboxData() {
-    if (this.provinces().length > 0) return;
-
-    try {
-      const res = await this.provinceFacade.getPaging({ allowPaging: false });
-      this.provinces.set(res.result?.items || []);
-    } catch {
-      this.provinces.set([]);
     }
   }
 
@@ -278,12 +284,6 @@ export class Ward {
     if (idsArray.length !== 1) return null;
 
     return this.wards().find((item) => item.id === idsArray[0]) ?? null;
-  }
-
-  getProvinceName(provinceId?: string | null): string {
-    if (!provinceId) return '';
-    const province = this.provinces().find((p) => p.id === provinceId);
-    return province?.provinceName || provinceId;
   }
 
   exportFn = (filter: PagingRequest): Promise<Blob> => this.facade.export(filter);
