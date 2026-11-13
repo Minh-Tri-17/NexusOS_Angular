@@ -32,6 +32,8 @@ import {
 import { EmployeeFacade } from '../data-access/employee.facade';
 import { EmployeeFields, EmployeeModel } from '../data-access/employee.model';
 import { EmployeeModal } from './editor-modal/employee-modal';
+import { PERMISSIONS } from '../../../core/constants/permission.constant';
+import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-employee',
@@ -55,6 +57,8 @@ export class Employee {
   private readonly modal = inject(NgbModal);
   private readonly injector = inject(Injector);
   private readonly dialogService = inject(DialogService);
+  protected readonly authService = inject(AuthService);
+  protected readonly permissions = PERMISSIONS.employee;
 
   //#region //@ PROPS
 

@@ -11,16 +11,44 @@ export class AuthService {
   //#region //@ STATE
 
   private readonly TOKEN_KEY = 'auth_token';
+  private readonly PERMISSIONS_KEY = 'user_permissions';
   readonly currentUser = signal<JwtUserPayload | null>(this.getUserFromToken());
+  readonly userPermissions = signal<string[]>(this.getPermissionsFromStorage());
 
   //#endregion
 
   constructor() {
     const user = this.currentUser();
-    if (user) this.loadRoleName(user);
+    if (user && !this.isTokenExpired()) {
+      this.loadRoleName(user);
+      if (user.roleIds && user.roleIds.length > 0) {
+        this.loadPermissions(user.roleIds);
+      }
+    }
   }
 
   //#region //@ HELPERS
+
+  private getPermissionsFromStorage(): string[] {
+    try {
+      const raw = localStorage.getItem(this.PERMISSIONS_KEY);
+      return raw ? JSON.parse(raw) : [];
+    } catch {
+      return [];
+    }
+  }
+
+  private extractRoleIds(payload: any): string[] {
+    const roleClaim =
+      payload['role'] ||
+      payload['roles'] ||
+      payload['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+
+    if (!roleClaim) return [];
+    if (Array.isArray(roleClaim)) return roleClaim.map((r) => String(r).trim()).filter(Boolean);
+
+    return [String(roleClaim).trim()].filter(Boolean);
+  }
 
   private decodeToken(token: string): any {
     try {
@@ -46,13 +74,8 @@ export class AuthService {
     const payload = this.decodeToken(token);
     if (!payload) return null;
 
-    //* Xử lý claim Role (Backend lưu RoleId dạng GUID trong claim Role)
-    const roleClaim =
-      payload['role'] ||
-      payload['roles'] ||
-      payload['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
-
-    const roleId = Array.isArray(roleClaim) ? roleClaim[0] : roleClaim || null;
+    //* Xử lý claim Role (Backend có thể lưu nhiều RoleId dạng GUID trong claim Role)
+    const roleIds = this.extractRoleIds(payload);
 
     return {
       userId: payload['UserID'] || '',
@@ -67,7 +90,8 @@ export class AuthService {
         payload['givenname'] ||
         payload['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname'] ||
         'User',
-      roleId: roleId,
+      roleId: roleIds[0] || null,
+      roleIds: roleIds,
       roleName: null,
       exp: payload['exp'],
     };
@@ -93,19 +117,57 @@ export class AuthService {
     } catch {}
   }
 
+  async loadPermissions(roleIds: string[]): Promise<string[]> {
+    if (!roleIds || roleIds.length === 0) {
+      this.userPermissions.set([]);
+      localStorage.removeItem(this.PERMISSIONS_KEY);
+      return [];
+    }
+
+    try {
+      const permissions = await this.roleFacade.getPermissionsByRoleIds(roleIds);
+      this.userPermissions.set(permissions);
+      localStorage.setItem(this.PERMISSIONS_KEY, JSON.stringify(permissions));
+      return permissions;
+    } catch {
+      return this.userPermissions();
+    }
+  }
+
   //#endregion
 
   //#region //@ METHODS
 
-  setToken(token: string) {
+  async setToken(token: string) {
     localStorage.setItem(this.TOKEN_KEY, token);
     const user = this.parseUser(token);
-    this.currentUser.set(user);
-    if (user) this.loadRoleName(user);
+
+    if (user) {
+      this.currentUser.set(user);
+      this.loadRoleName(user);
+
+      if (user.roleIds && user.roleIds.length > 0) {
+        await this.loadPermissions(user.roleIds);
+      } else {
+        this.userPermissions.set([]);
+        localStorage.removeItem(this.PERMISSIONS_KEY);
+      }
+    }
   }
 
   getToken(): string | null {
     return localStorage.getItem(this.TOKEN_KEY);
+  }
+
+  hasPermission(permission: string): boolean {
+    if (!permission) return true;
+    return this.userPermissions().includes(permission);
+  }
+
+  hasAnyPermission(permissions: string[]): boolean {
+    if (!permissions || permissions.length === 0) return true;
+    const current = this.userPermissions();
+    return permissions.some((p) => current.includes(p));
   }
 
   isLoggedIn(): boolean {
@@ -128,7 +190,9 @@ export class AuthService {
 
   logout() {
     localStorage.removeItem(this.TOKEN_KEY);
+    localStorage.removeItem(this.PERMISSIONS_KEY);
     this.currentUser.set(null);
+    this.userPermissions.set([]);
   }
 
   //#endregion

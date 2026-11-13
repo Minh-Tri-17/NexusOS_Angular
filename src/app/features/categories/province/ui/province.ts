@@ -24,6 +24,8 @@ import { CountryModel } from '../../country/data-access/country.model';
 import { ProvinceFacade } from '../data-access/province.facade';
 import { ProvinceFields, ProvinceModel } from '../data-access/province.model';
 import { ProvinceModal } from './editor-modal/province-modal';
+import { PERMISSIONS } from '../../../../core/constants/permission.constant';
+import { AuthService } from '../../../../core/services/auth.service';
 
 @Component({
   selector: 'app-province',
@@ -47,6 +49,8 @@ export class Province {
   private readonly modal = inject(NgbModal);
   private readonly injector = inject(Injector);
   private readonly dialogService = inject(DialogService);
+  protected readonly authService = inject(AuthService);
+  protected readonly permissions = PERMISSIONS.province;
 
   //#region //@ PROPS
 

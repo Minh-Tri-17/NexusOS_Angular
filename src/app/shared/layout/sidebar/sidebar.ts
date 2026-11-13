@@ -4,6 +4,8 @@ import { NavigationEnd, Router, RouterLink, RouterLinkActive } from '@angular/ro
 import { NgbCollapse } from '@ng-bootstrap/ng-bootstrap';
 import { TranslatePipe } from '@ngx-translate/core';
 import { filter } from 'rxjs';
+import { PERMISSIONS } from '../../../core/constants/permission.constant';
+import { AuthService } from '../../../core/services/auth.service';
 import { ThemeService } from '../../../core/services/theme.service';
 
 @Component({
@@ -17,6 +19,8 @@ export class Sidebar {
   private readonly router = inject(Router);
   private readonly destroyRef = inject(DestroyRef);
   protected readonly themeService = inject(ThemeService);
+  protected readonly authService = inject(AuthService);
+  protected readonly permissions = PERMISSIONS;
 
   readonly openSubmenu = signal<string | null>(null);
 

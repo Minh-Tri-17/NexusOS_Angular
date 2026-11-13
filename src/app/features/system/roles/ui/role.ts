@@ -22,6 +22,8 @@ import { EmptyFallbackPipe } from '../../../../shared/pipes/empty-fallback.pipe'
 import { RoleFacade } from '../data-access/role.facade';
 import { RoleFields, RoleModel } from '../data-access/role.model';
 import { RoleModal } from './editor-modal/role-modal';
+import { PERMISSIONS } from '../../../../core/constants/permission.constant';
+import { AuthService } from '../../../../core/services/auth.service';
 
 @Component({
   selector: 'app-role',
@@ -44,6 +46,8 @@ export class Role {
   private readonly modal = inject(NgbModal);
   private readonly injector = inject(Injector);
   private readonly dialogService = inject(DialogService);
+  protected readonly authService = inject(AuthService);
+  protected readonly permissions = PERMISSIONS.role;
 
   //#region //@ PROPS
 

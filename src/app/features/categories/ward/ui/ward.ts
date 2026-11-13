@@ -24,6 +24,8 @@ import { ProvinceModel } from '../../province/data-access/province.model';
 import { WardFacade } from '../data-access/ward.facade';
 import { WardFields, WardModel } from '../data-access/ward.model';
 import { WardModal } from './editor-modal/ward-modal';
+import { PERMISSIONS } from '../../../../core/constants/permission.constant';
+import { AuthService } from '../../../../core/services/auth.service';
 
 @Component({
   selector: 'app-ward',
@@ -47,6 +49,8 @@ export class Ward {
   private readonly modal = inject(NgbModal);
   private readonly injector = inject(Injector);
   private readonly dialogService = inject(DialogService);
+  protected readonly authService = inject(AuthService);
+  protected readonly permissions = PERMISSIONS.ward;
 
   //#region //@ PROPS
 

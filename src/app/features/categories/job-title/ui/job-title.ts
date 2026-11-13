@@ -22,6 +22,8 @@ import { EmptyFallbackPipe } from '../../../../shared/pipes/empty-fallback.pipe'
 import { JobTitleFacade } from '../data-access/job-title.facade';
 import { JobTitleFields, JobTitleModel } from '../data-access/job-title.model';
 import { JobTitleModal } from './editor-modal/job-title-modal';
+import { PERMISSIONS } from '../../../../core/constants/permission.constant';
+import { AuthService } from '../../../../core/services/auth.service';
 
 @Component({
   selector: 'app-job-title',
@@ -44,6 +46,8 @@ export class JobTitle {
   private readonly modal = inject(NgbModal);
   private readonly injector = inject(Injector);
   private readonly dialogService = inject(DialogService);
+  protected readonly authService = inject(AuthService);
+  protected readonly permissions = PERMISSIONS.jobTitle;
 
   //#region //@ PROPS
 

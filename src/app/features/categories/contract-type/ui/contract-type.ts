@@ -22,6 +22,8 @@ import { EmptyFallbackPipe } from '../../../../shared/pipes/empty-fallback.pipe'
 import { ContractTypeFacade } from '../data-access/contract-type.facade';
 import { ContractTypeFields, ContractTypeModel } from '../data-access/contract-type.model';
 import { ContractTypeModal } from './editor-modal/contract-type-modal';
+import { PERMISSIONS } from '../../../../core/constants/permission.constant';
+import { AuthService } from '../../../../core/services/auth.service';
 
 @Component({
   selector: 'app-contract-type',
@@ -44,6 +46,8 @@ export class ContractType {
   private readonly modal = inject(NgbModal);
   private readonly injector = inject(Injector);
   private readonly dialogService = inject(DialogService);
+  protected readonly authService = inject(AuthService);
+  protected readonly permissions = PERMISSIONS.contractType;
 
   //#region //@ PROPS
 

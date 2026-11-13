@@ -33,6 +33,8 @@ import {
 import { ContractFacade } from '../data-access/contract.facade';
 import { ContractFields, ContractModel } from '../data-access/contract.model';
 import { ContractModal } from './editor-modal/contract-modal';
+import { PERMISSIONS } from '../../../core/constants/permission.constant';
+import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-contract',
@@ -57,6 +59,8 @@ export class Contract {
   private readonly modal = inject(NgbModal);
   private readonly injector = inject(Injector);
   private readonly dialogService = inject(DialogService);
+  protected readonly authService = inject(AuthService);
+  protected readonly permissions = PERMISSIONS.contract;
 
   //#region //@ PROPS
 

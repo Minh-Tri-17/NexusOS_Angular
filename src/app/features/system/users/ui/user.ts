@@ -29,6 +29,8 @@ import {
 import { UserFacade } from '../data-access/user.facade';
 import { UserFields, UserModel } from '../data-access/user.model';
 import { UserModal } from './editor-modal/user-modal';
+import { PERMISSIONS } from '../../../../core/constants/permission.constant';
+import { AuthService } from '../../../../core/services/auth.service';
 
 @Component({
   selector: 'app-user',
@@ -52,6 +54,8 @@ export class User {
   private readonly modal = inject(NgbModal);
   private readonly injector = inject(Injector);
   private readonly dialogService = inject(DialogService);
+  protected readonly authService = inject(AuthService);
+  protected readonly permissions = PERMISSIONS.user;
 
   //#region //@ PROPS
 

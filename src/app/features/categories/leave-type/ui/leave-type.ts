@@ -22,6 +22,8 @@ import { EmptyFallbackPipe } from '../../../../shared/pipes/empty-fallback.pipe'
 import { LeaveTypeFacade } from '../data-access/leave-type.facade';
 import { LeaveTypeFields, LeaveTypeModel } from '../data-access/leave-type.model';
 import { LeaveTypeModal } from './editor-modal/leave-type-modal';
+import { PERMISSIONS } from '../../../../core/constants/permission.constant';
+import { AuthService } from '../../../../core/services/auth.service';
 
 @Component({
   selector: 'app-leave-type',
@@ -44,6 +46,8 @@ export class LeaveType {
   private readonly modal = inject(NgbModal);
   private readonly injector = inject(Injector);
   private readonly dialogService = inject(DialogService);
+  protected readonly authService = inject(AuthService);
+  protected readonly permissions = PERMISSIONS.leaveType;
 
   //#region //@ PROPS
 

@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { API_CONSTANTS } from '../../../../core/constants/api.constants';
+import { FilterOperator, FilterType } from '../../../../core/constants/filter.enum';
 import { Result } from '../../../../core/models/common.model';
 import { PagingRequest, PagingResult } from '../../../../core/models/paging.model';
 import { BaseApiService } from '../../../../core/services/base-api.service';
+import { PermissionFields, PermissionModel } from './permission.model';
 import { RoleModel } from './role.model';
 
 @Injectable({
@@ -47,6 +49,28 @@ export class RoleApiService extends BaseApiService {
 
   getPermission() {
     return this.getHttp<string[] | Result<string[]>>(API_CONSTANTS.rolePermission.getPermission);
+  }
+
+  getPermissionsByRoleIds(roleIds: string[]) {
+    return this.postHttp<Result<PagingResult<PermissionModel>>>(
+      API_CONSTANTS.rolePermission.getPaging,
+      {
+        allowPaging: false,
+        filters: [
+          {
+            filterName: 'RoleId',
+            filterValue: roleIds.join(','),
+            filterType: FilterType.guid,
+            filterOperator: FilterOperator.contains,
+          },
+          {
+            filterName: PermissionFields.isGranted,
+            filterType: FilterType.boolean,
+            filterOperator: FilterOperator.equal,
+          },
+        ],
+      },
+    );
   }
 
   //#endregion

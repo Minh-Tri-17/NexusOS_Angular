@@ -23,6 +23,8 @@ import { REGION_CONFIG, REGION_OPTIONS } from '../data-access/country.enum';
 import { CountryFacade } from '../data-access/country.facade';
 import { CountryFields, CountryModel } from '../data-access/country.model';
 import { CountryModal } from './editor-modal/country-modal';
+import { PERMISSIONS } from '../../../../core/constants/permission.constant';
+import { AuthService } from '../../../../core/services/auth.service';
 
 @Component({
   selector: 'app-country',
@@ -45,6 +47,8 @@ export class Country {
   private readonly modal = inject(NgbModal);
   private readonly injector = inject(Injector);
   private readonly dialogService = inject(DialogService);
+  protected readonly authService = inject(AuthService);
+  protected readonly permissions = PERMISSIONS.country;
 
   //#region //@ PROPS
 

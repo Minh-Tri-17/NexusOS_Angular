@@ -113,7 +113,8 @@ export class LoginForm {
       const res = await this.facade.login(rawValues);
 
       if (res?.result) {
-        this.authService.setToken(res?.result || '');
+        await this.authService.setToken(res?.result || '');
+
         if (this.authService.isLoggedIn()) {
           const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
           await this.router.navigateByUrl(returnUrl);

@@ -57,5 +57,25 @@ export class RoleFacade {
     }
   }
 
+  async getPermissionsByRoleIds(roleIds: string[]): Promise<string[]> {
+    if (!roleIds || roleIds.length === 0) return [];
+
+    try {
+      const res = await this.api.getPermissionsByRoleIds(roleIds);
+      const items = res?.result?.items || [];
+
+      const grantedCodes = items.map((item) =>
+        item.permissionValue
+          ? `${item.permissionCode}.${item.permissionValue}`
+          : item.permissionCode,
+      );
+
+      //* Gộp và khử trùng lặp quyền từ nhiều vai trò
+      return Array.from(new Set(grantedCodes));
+    } catch {
+      return [];
+    }
+  }
+
   //#endregion
 }
