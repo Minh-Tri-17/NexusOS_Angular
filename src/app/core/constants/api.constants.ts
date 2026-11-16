@@ -114,6 +114,7 @@ export const API_CONSTANTS = {
     sendOTP: 'Account/SendOTP',
     resetPass: 'Account/ResetPassword',
     validateOtp: 'Account/ValidateOtp',
+    getMyAccess: 'Account/GetMyAccess',
   },
   rolePermission: {
     getPaging: 'RolePermission/GetPaging/Filter',

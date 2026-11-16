@@ -1,12 +1,12 @@
 import { inject, Injectable, signal } from '@angular/core';
-import { RoleFacade } from '../../features/system/roles/data-access/role.facade';
+import { AuthApiService } from '../../features/auth/data-access/auth-api.service';
 import { JwtUserPayload } from '../models/jwt-payload.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private readonly roleFacade = inject(RoleFacade);
+  private readonly authApi = inject(AuthApiService);
 
   //#region //@ STATE
 
@@ -20,10 +20,7 @@ export class AuthService {
   constructor() {
     const user = this.currentUser();
     if (user && !this.isTokenExpired()) {
-      this.loadRoleName(user);
-      if (user.roleIds && user.roleIds.length > 0) {
-        this.loadPermissions(user.roleIds);
-      }
+      this.loadMyAccess(false);
     }
   }
 
@@ -104,39 +101,43 @@ export class AuthService {
     return this.parseUser(token);
   }
 
-  private async loadRoleName(user: JwtUserPayload) {
-    if (!user.roleId) return;
-
-    try {
-      const role = await this.roleFacade.getById(user.roleId);
-      this.currentUser.update((current) => {
-        if (!current || current.roleId !== user.roleId) return current;
-
-        return { ...current, roleName: role?.result?.roleName || null };
-      });
-    } catch {}
-  }
-
-  async loadPermissions(roleIds: string[]): Promise<string[]> {
-    if (!roleIds || roleIds.length === 0) {
-      this.userPermissions.set([]);
-      localStorage.removeItem(this.PERMISSIONS_KEY);
-      return [];
-    }
-
-    try {
-      const permissions = await this.roleFacade.getPermissionsByRoleIds(roleIds);
-      this.userPermissions.set(permissions);
-      localStorage.setItem(this.PERMISSIONS_KEY, JSON.stringify(permissions));
-      return permissions;
-    } catch {
-      return this.userPermissions();
-    }
-  }
-
   //#endregion
 
   //#region //@ METHODS
+
+  async loadMyAccess(clearOnFail = false): Promise<string[]> {
+    try {
+      const res = await this.authApi.getMyAccess();
+      if (!res?.isSuccess || !res.result) {
+        if (clearOnFail) {
+          this.userPermissions.set([]);
+          localStorage.removeItem(this.PERMISSIONS_KEY);
+          return [];
+        }
+
+        return this.userPermissions();
+      }
+
+      const { roleName, permissions } = res.result;
+
+      this.currentUser.update((current) =>
+        current ? { ...current, roleName: roleName || null } : null,
+      );
+
+      const permissionList = permissions || [];
+      this.userPermissions.set(permissionList);
+      localStorage.setItem(this.PERMISSIONS_KEY, JSON.stringify(permissionList));
+      return permissionList;
+    } catch {
+      if (clearOnFail) {
+        this.userPermissions.set([]);
+        localStorage.removeItem(this.PERMISSIONS_KEY);
+        return [];
+      }
+
+      return this.userPermissions();
+    }
+  }
 
   async setToken(token: string) {
     localStorage.setItem(this.TOKEN_KEY, token);
@@ -144,14 +145,7 @@ export class AuthService {
 
     if (user) {
       this.currentUser.set(user);
-      this.loadRoleName(user);
-
-      if (user.roleIds && user.roleIds.length > 0) {
-        await this.loadPermissions(user.roleIds);
-      } else {
-        this.userPermissions.set([]);
-        localStorage.removeItem(this.PERMISSIONS_KEY);
-      }
+      await this.loadMyAccess(true);
     }
   }
 

@@ -5,6 +5,7 @@ import { MailModel } from '../../../core/models/mail.model';
 import { BaseApiService } from '../../../core/services/base-api.service';
 import { AuthModel } from './auth.model';
 import { OTPModel } from './otp.model';
+import { UserAccessModel } from './user-access.model';
 
 @Injectable({
   providedIn: 'root',
@@ -26,6 +27,10 @@ export class AuthApiService extends BaseApiService {
 
   resetPass(data: AuthModel) {
     return this.patchHttp<Result<boolean>>(API_CONSTANTS.account.resetPass, data);
+  }
+
+  getMyAccess() {
+    return this.getHttp<Result<UserAccessModel>>(API_CONSTANTS.account.getMyAccess);
   }
   //#endregion
 }
