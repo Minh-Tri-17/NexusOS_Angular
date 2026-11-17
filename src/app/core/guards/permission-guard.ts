@@ -8,10 +8,7 @@ export const permissionGuard: CanActivateFn = (route) => {
 
   const requiredPermission = route.data?.['permission'] as string | undefined;
 
-  if (!requiredPermission || authService.hasPermission(requiredPermission)) {
-    return true;
-  }
+  if (!requiredPermission || authService.hasPermission(requiredPermission)) return true;
 
   return router.createUrlTree(['/dashboard']);
 };
-

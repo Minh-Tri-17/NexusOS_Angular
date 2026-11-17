@@ -108,35 +108,27 @@ export class AuthService {
   async loadMyAccess(clearOnFail = false): Promise<string[]> {
     try {
       const res = await this.authApi.getMyAccess();
-      if (!res?.isSuccess || !res.result) {
-        if (clearOnFail) {
-          this.userPermissions.set([]);
-          localStorage.removeItem(this.PERMISSIONS_KEY);
-          return [];
-        }
+      if (res?.isSuccess && res.result) {
+        const { roleName, permissions } = res.result;
 
-        return this.userPermissions();
+        this.currentUser.update((current) =>
+          current ? { ...current, roleName: roleName || null } : null,
+        );
+
+        const permissionList = permissions || [];
+        this.userPermissions.set(permissionList);
+        localStorage.setItem(this.PERMISSIONS_KEY, JSON.stringify(permissionList));
+        return permissionList;
       }
+    } catch {}
 
-      const { roleName, permissions } = res.result;
-
-      this.currentUser.update((current) =>
-        current ? { ...current, roleName: roleName || null } : null,
-      );
-
-      const permissionList = permissions || [];
-      this.userPermissions.set(permissionList);
-      localStorage.setItem(this.PERMISSIONS_KEY, JSON.stringify(permissionList));
-      return permissionList;
-    } catch {
-      if (clearOnFail) {
-        this.userPermissions.set([]);
-        localStorage.removeItem(this.PERMISSIONS_KEY);
-        return [];
-      }
-
-      return this.userPermissions();
+    if (clearOnFail) {
+      this.userPermissions.set([]);
+      localStorage.removeItem(this.PERMISSIONS_KEY);
+      return [];
     }
+
+    return this.userPermissions();
   }
 
   async setToken(token: string) {
@@ -160,6 +152,7 @@ export class AuthService {
 
   hasAnyPermission(permissions: string[]): boolean {
     if (!permissions || permissions.length === 0) return true;
+
     const current = this.userPermissions();
     return permissions.some((p) => current.includes(p));
   }
@@ -185,6 +178,7 @@ export class AuthService {
   logout() {
     localStorage.removeItem(this.TOKEN_KEY);
     localStorage.removeItem(this.PERMISSIONS_KEY);
+
     this.currentUser.set(null);
     this.userPermissions.set([]);
   }
