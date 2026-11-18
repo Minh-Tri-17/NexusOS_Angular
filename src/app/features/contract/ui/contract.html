@@ -28,6 +28,13 @@
           <i class="fa-solid fa-xmark chip-remove-btn" (click)="filterApprovalStatus.set('')"></i>
         </span>
       }
+      @if (filterSalaryUnit()) {
+        <span class="filter-chip">
+          <i class="fa-solid fa-coins chip-icon"></i> {{ 'contract.salaryUnit' | translate }}:
+          <strong>{{ salaryUnitConfig[filterSalaryUnit()]?.label ?? filterSalaryUnit() }}</strong>
+          <i class="fa-solid fa-xmark chip-remove-btn" (click)="filterSalaryUnit.set('')"></i>
+        </span>
+      }
     </ng-container>
 
     <ng-container action-buttons>
@@ -124,6 +131,24 @@
           @for (status of approvalStatuses; track status.value) {
             <option [selected]="filterApprovalStatus() === status.value" [value]="status.value">
               {{ status.label | translate }}
+            </option>
+          }
+        </select>
+      </div>
+
+      <div class="col-md-3">
+        <label class="form-label small fw-semibold text-muted">{{
+          'contract.salaryUnit' | translate
+        }}</label>
+        <select
+          class="form-select form-select-sm rounded-3 filter-select w-100"
+          [value]="filterSalaryUnit() ?? ''"
+          (change)="filterSalaryUnit.set($any($event.target).value || '')"
+        >
+          <option [selected]="!filterSalaryUnit()" value="">{{ 'common.all' | translate }}</option>
+          @for (unit of salaryUnits; track unit.value) {
+            <option [selected]="filterSalaryUnit() === unit.value" [value]="unit.value">
+              {{ unit.label }}
             </option>
           }
         </select>

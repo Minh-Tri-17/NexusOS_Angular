@@ -92,8 +92,8 @@
         }}</label>
         <select
           class="form-select form-select-sm rounded-3 filter-select w-100"
-          [value]="filterRegion() ?? ''"
-          (change)="filterRegion.set($any($event.target).value || null)"
+          [value]="filterRegion()"
+          (change)="filterRegion.set($any($event.target).value || '')"
         >
           <option [selected]="!filterRegion()" value="">{{ 'common.all' | translate }}</option>
           @for (region of regions; track region.value) {

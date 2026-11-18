@@ -146,7 +146,7 @@
         <select
           class="form-select form-select-sm rounded-3 filter-select w-100"
           [value]="filterEmploymentStatus()"
-          (change)="filterEmploymentStatus.set($any($event.target).value)"
+          (change)="filterEmploymentStatus.set($any($event.target).value || '')"
         >
           <option [selected]="!filterEmploymentStatus()" value="">
             {{ 'common.all' | translate }}
@@ -166,7 +166,7 @@
         <select
           class="form-select form-select-sm rounded-3 filter-select w-100"
           [value]="filterGender()"
-          (change)="filterGender.set($any($event.target).value)"
+          (change)="filterGender.set($any($event.target).value || '')"
         >
           <option [selected]="!filterGender()" value="">
             {{ 'common.all' | translate }}
@@ -186,7 +186,7 @@
         <select
           class="form-select form-select-sm rounded-3 filter-select w-100"
           [value]="filterEducationLevel()"
-          (change)="filterEducationLevel.set($any($event.target).value)"
+          (change)="filterEducationLevel.set($any($event.target).value || '')"
         >
           <option [selected]="!filterEducationLevel()" value="">
             {{ 'common.all' | translate }}

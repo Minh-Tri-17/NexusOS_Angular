@@ -289,7 +289,7 @@ export class ContractType {
               fromRecord: this.fromRecord(),
               toRecord: this.toRecord(),
               selectedIds: this.selectedIds(),
-              fileName: 'contract_types',
+              fileName: 'contract-types',
             },
           },
         ],

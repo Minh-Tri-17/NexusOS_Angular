@@ -13,22 +13,22 @@
         <span class="filter-chip"
           ><i class="fa-solid fa-circle-check chip-icon"></i> {{ 'user.userStatus' | translate }}:
           <strong>{{
-            userStatusConfig[filterUserStatus()!]?.label
-              ? (userStatusConfig[filterUserStatus()!]!.label | translate)
+            userStatusConfig[filterUserStatus()]?.label
+              ? (userStatusConfig[filterUserStatus()].label | translate)
               : filterUserStatus()
           }}</strong
-          ><i class="fa-solid fa-xmark chip-remove-btn" (click)="filterUserStatus.set(null)"></i
+          ><i class="fa-solid fa-xmark chip-remove-btn" (click)="filterUserStatus.set('')"></i
         ></span>
       }
       @if (filterUserType()) {
         <span class="filter-chip"
           ><i class="fa-solid fa-user-tag chip-icon"></i> {{ 'user.userType' | translate }}:
           <strong>{{
-            userTypeConfig[filterUserType()!]?.label
-              ? (userTypeConfig[filterUserType()!]!.label | translate)
+            userTypeConfig[filterUserType()]?.label
+              ? (userTypeConfig[filterUserType()].label | translate)
               : filterUserType()
           }}</strong
-          ><i class="fa-solid fa-xmark chip-remove-btn" (click)="filterUserType.set(null)"></i
+          ><i class="fa-solid fa-xmark chip-remove-btn" (click)="filterUserType.set('')"></i
         ></span>
       }
     </ng-container>
@@ -98,8 +98,8 @@
         }}</label
         ><select
           class="form-select form-select-sm rounded-3 filter-select w-100"
-          [value]="filterUserStatus() ?? ''"
-          (change)="filterUserStatus.set($any($event.target).value || null)"
+          [value]="filterUserStatus()"
+          (change)="filterUserStatus.set($any($event.target).value || '')"
         >
           <option [selected]="!filterUserStatus()" value="">{{ 'common.all' | translate }}</option>
           @for (status of userStatuses; track status.value) {
@@ -115,8 +115,8 @@
         }}</label
         ><select
           class="form-select form-select-sm rounded-3 filter-select w-100"
-          [value]="filterUserType() ?? ''"
-          (change)="filterUserType.set($any($event.target).value || null)"
+          [value]="filterUserType()"
+          (change)="filterUserType.set($any($event.target).value || '')"
         >
           <option [selected]="!filterUserType()" value="">{{ 'common.all' | translate }}</option>
           @for (type of userTypes; track type.value) {

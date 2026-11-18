@@ -79,7 +79,7 @@ export class Ward {
   readonly wards = signal<WardModel[]>([]);
   readonly provinces = signal<ProvinceModel[]>([]);
   readonly searchText = signal('');
-  readonly filterProvinceId = signal<string | null>(null);
+  readonly filterProvinceId = signal('');
   readonly filterIsDelete = signal(false);
   readonly selectedIds = signal<Set<string>>(new Set());
   readonly isLoading = signal(false);
@@ -199,7 +199,7 @@ export class Ward {
   handleClearFilter() {
     this.filterIsDelete.set(false);
     this.searchText.set('');
-    this.filterProvinceId.set(null);
+    this.filterProvinceId.set('');
     this.pageIndex.set(1);
   }
 

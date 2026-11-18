@@ -79,7 +79,7 @@ export class Province {
   readonly provinces = signal<ProvinceModel[]>([]);
   readonly countries = signal<CountryModel[]>([]);
   readonly searchText = signal('');
-  readonly filterCountryId = signal<string | null>(null);
+  readonly filterCountryId = signal('');
   readonly filterIsDelete = signal(false);
   readonly selectedIds = signal<Set<string>>(new Set());
   readonly isLoading = signal(false);
@@ -199,7 +199,7 @@ export class Province {
   handleClearFilter() {
     this.filterIsDelete.set(false);
     this.searchText.set('');
-    this.filterCountryId.set(null);
+    this.filterCountryId.set('');
     this.pageIndex.set(1);
   }
 

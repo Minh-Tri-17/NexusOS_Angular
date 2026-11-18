@@ -289,7 +289,7 @@ export class LeaveType {
               fromRecord: this.fromRecord(),
               toRecord: this.toRecord(),
               selectedIds: this.selectedIds(),
-              fileName: 'leave_types',
+              fileName: 'leave-types',
             },
           },
         ],

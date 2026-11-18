@@ -68,6 +68,7 @@ export class Contract {
   readonly contractStatusConfig = CONTRACT_STATUS_CONFIG;
   readonly approvalStatuses = APPROVAL_STATUS_OPTIONS;
   readonly approvalStatusConfig = APPROVAL_STATUS_CONFIG;
+  readonly salaryUnits = SALARY_UNIT_OPTIONS;
   readonly salaryUnitConfig = SALARY_UNIT_CONFIG;
 
   readonly contractColumns = Object.keys(ContractFields).filter(
@@ -98,6 +99,7 @@ export class Contract {
   readonly searchText = signal('');
   readonly filterContractStatus = signal('');
   readonly filterApprovalStatus = signal('');
+  readonly filterSalaryUnit = signal('');
   readonly filterIsDelete = signal(false);
   readonly selectedIds = signal<Set<string>>(new Set());
   readonly isLoading = signal(false);
@@ -107,6 +109,7 @@ export class Contract {
       search: this.searchText(),
       contractStatus: this.filterContractStatus(),
       approvalStatus: this.filterApprovalStatus(),
+      salaryUnit: this.filterSalaryUnit(),
       isDelete: this.filterIsDelete(),
       pageSize: this.pageSize(),
     }),
@@ -159,6 +162,7 @@ export class Contract {
     const filterIsDeleted = this.filterIsDelete();
     const filterStatus = this.filterContractStatus().trim();
     const filterApproval = this.filterApprovalStatus().trim();
+    const filterSalaryUnit = this.filterSalaryUnit().trim();
 
     filter.filters = [];
 
@@ -188,6 +192,14 @@ export class Contract {
       filter.filters.push({
         filterName: ContractFields.approvalStatus,
         filterValue: filterApproval,
+        filterType: FilterType.string,
+        filterOperator: FilterOperator.like,
+      });
+
+    if (filterSalaryUnit)
+      filter.filters.push({
+        filterName: ContractFields.salaryUnit,
+        filterValue: filterSalaryUnit,
         filterType: FilterType.string,
         filterOperator: FilterOperator.like,
       });
@@ -229,6 +241,7 @@ export class Contract {
     this.searchText.set('');
     this.filterContractStatus.set('');
     this.filterApprovalStatus.set('');
+    this.filterSalaryUnit.set('');
     this.pageIndex.set(1);
   }
 

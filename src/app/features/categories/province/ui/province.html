@@ -18,7 +18,7 @@
         <span class="filter-chip">
           <i class="fa-solid fa-globe chip-icon"></i> {{ 'province.countryName' | translate }}:
           <strong>{{ getCountryName(filterCountryId()) }}</strong>
-          <i class="fa-solid fa-xmark chip-remove-btn" (click)="filterCountryId.set(null)"></i>
+          <i class="fa-solid fa-xmark chip-remove-btn" (click)="filterCountryId.set('')"></i>
         </span>
       }
     </ng-container>
@@ -92,10 +92,10 @@
         }}</label>
         <select
           class="form-select form-select-sm rounded-3 filter-select w-100"
-          [value]="filterCountryId() ?? ''"
-          (change)="filterCountryId.set($any($event.target).value || null)"
+          [value]="filterCountryId()"
+          (change)="filterCountryId.set($any($event.target).value || '')"
         >
-          <option [selected]="!filterCountryId()" value="">{{ 'common.selectCountry' | translate }}</option>
+          <option [selected]="!filterCountryId()" value="">{{ 'common.all' | translate }}</option>
           @for (country of countries(); track country.id) {
             <option [selected]="filterCountryId() === country.id" [value]="country.id">
               {{ country.countryCode ? '[#' + country.countryCode + '] - ' + country.countryName : country.countryName }}

@@ -94,8 +94,8 @@ export class User {
   readonly users = signal<UserModel[]>([]);
   readonly searchText = signal('');
   readonly filterIsDelete = signal(false);
-  readonly filterUserStatus = signal<string | null>(null);
-  readonly filterUserType = signal<string | null>(null);
+  readonly filterUserStatus = signal('');
+  readonly filterUserType = signal('');
   readonly selectedIds = signal<Set<string>>(new Set());
   readonly isLoading = signal(false);
 
@@ -152,14 +152,14 @@ export class User {
         filterName: UserFields.userStatus,
         filterValue: this.filterUserStatus(),
         filterType: FilterType.string,
-        filterOperator: FilterOperator.equal,
+        filterOperator: FilterOperator.like,
       });
     if (this.filterUserType())
       filter.filters!.push({
         filterName: UserFields.userType,
         filterValue: this.filterUserType(),
         filterType: FilterType.string,
-        filterOperator: FilterOperator.equal,
+        filterOperator: FilterOperator.like,
       });
     return filter;
   }
@@ -196,8 +196,8 @@ export class User {
   handleClearFilter() {
     this.filterIsDelete.set(false);
     this.searchText.set('');
-    this.filterUserStatus.set(null);
-    this.filterUserType.set(null);
+    this.filterUserStatus.set('');
+    this.filterUserType.set('');
     this.pageIndex.set(1);
   }
 
