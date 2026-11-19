@@ -1,0 +1,312 @@
+<app-modal>
+  <ng-container modal-eyebrow>{{ 'leaveRequest.modalTitle' | translate }}</ng-container>
+
+  <ng-container modal-title
+    >{{ title() | translate }} {{ 'common.leaveRequest' | translate }}</ng-container
+  >
+
+  <ng-container modal-header-extra>
+    <span class="badge-soft badge-teal d-none d-sm-inline-flex">
+      <i class="fa-solid fa-bolt"></i> {{ 'common.liveSync' | translate }}
+    </span>
+  </ng-container>
+
+  <ng-container modal-form>
+    <form
+      id="leaveRequestEditorForm"
+      [formGroup]="leaveRequestForm"
+      ngNativeValidate
+      (ngSubmit)="handleSave()"
+    >
+      <div class="modal-body px-4 py-3 position-relative z-1">
+        <!-- Form Section 1: Basic Leave Request Information -->
+        <div class="form-section-card mb-4">
+          <div class="form-section-header">
+            <div class="d-flex align-items-center gap-2">
+              <i class="fa-solid fa-calendar-minus text-primary"></i>
+              <span class="fw-bold">{{ 'leaveRequest.leaveRequestInfo' | translate }}</span>
+            </div>
+            <span class="badge-soft badge-indigo">
+              <i class="fa-solid fa-list-check"></i> 4 {{ 'common.fields' | translate }}
+            </span>
+          </div>
+
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label for="inputLeaveRequestCode" class="form-label custom-form-label">
+                {{ 'leaveRequest.leaveRequestCode' | translate }}
+              </label>
+              <div class="input-group custom-input-group">
+                <span class="input-group-text"><i class="fa-solid fa-hashtag"></i></span>
+                <input
+                  type="text"
+                  class="form-control custom-form-control"
+                  id="inputLeaveRequestCode"
+                  placeholder="e.g. LR-001"
+                  maxlength="50"
+                  formControlName="leaveRequestCode"
+                  appUppercase
+                  appAutoTrim
+                />
+              </div>
+              <div class="form-text-hint">
+                <i class="fa-solid fa-circle-info"></i> {{ 'leaveRequest.codeHint' | translate }}
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <label for="inputApprovalStatus" class="form-label custom-form-label">
+                {{ 'leaveRequest.approvalStatus' | translate }}
+              </label>
+              <div class="input-group custom-input-group">
+                <span class="input-group-text"><i class="fa-solid fa-stamp"></i></span>
+                <select
+                  class="form-select custom-form-select"
+                  id="inputApprovalStatus"
+                  formControlName="approvalStatus"
+                >
+                  @for (st of approvalStatuses; track st.value) {
+                    <option [value]="st.value">{{ st.label | translate }}</option>
+                  }
+                </select>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <label for="inputEmployee" class="form-label custom-form-label">
+                {{ 'leaveRequest.employeeName' | translate }}
+                <span class="text-danger fw-bold">*</span>
+              </label>
+              <div class="input-group custom-input-group">
+                <span class="input-group-text">
+                  @if (isLoadingEmployee()) {
+                    <span
+                      class="spinner-border spinner-border-sm text-primary"
+                      role="status"
+                    ></span>
+                  } @else {
+                    <i class="fa-solid fa-user"></i>
+                  }
+                </span>
+                <select
+                  class="form-select custom-form-select"
+                  id="inputEmployee"
+                  formControlName="employeeId"
+                  [appSelectLoading]="isLoadingEmployee()"
+                  required
+                >
+                  <option value="">{{ 'common.selectEmployee' | translate }}</option>
+                  @for (emp of employees(); track emp.id) {
+                    <option [value]="emp.id">
+                      {{
+                        emp.employeeCode
+                          ? '[#' + emp.employeeCode + '] - ' + emp.employeeName
+                          : emp.employeeName
+                      }}
+                    </option>
+                  }
+                </select>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <label for="inputLeaveType" class="form-label custom-form-label">
+                {{ 'leaveRequest.leaveTypeName' | translate }}
+                <span class="text-danger fw-bold">*</span>
+              </label>
+              <div class="input-group custom-input-group">
+                <span class="input-group-text">
+                  @if (isLoadingLeaveType()) {
+                    <span
+                      class="spinner-border spinner-border-sm text-primary"
+                      role="status"
+                    ></span>
+                  } @else {
+                    <i class="fa-solid fa-calendar-check"></i>
+                  }
+                </span>
+                <select
+                  class="form-select custom-form-select"
+                  id="inputLeaveType"
+                  formControlName="leaveTypeId"
+                  [appSelectLoading]="isLoadingLeaveType()"
+                  required
+                >
+                  <option value="">{{ 'common.selectLeaveType' | translate }}</option>
+                  @for (leaveType of leaveTypes(); track leaveType.id) {
+                    <option [value]="leaveType.id">
+                      {{
+                        leaveType.leaveTypeCode
+                          ? '[#' + leaveType.leaveTypeCode + '] - ' + leaveType.leaveTypeName
+                          : leaveType.leaveTypeName
+                      }}
+                    </option>
+                  }
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Form Section 2: Leave Schedule -->
+        <div class="form-section-card mb-4">
+          <div class="form-section-header">
+            <div class="d-flex align-items-center gap-2">
+              <i class="fa-solid fa-calendar-days text-primary"></i>
+              <span class="fw-bold">{{ 'leaveRequest.leaveSchedule' | translate }}</span>
+            </div>
+            <span class="badge-soft badge-indigo">
+              <i class="fa-solid fa-list-check"></i> 3 {{ 'common.fields' | translate }}
+            </span>
+          </div>
+
+          <div class="row g-3">
+            <div class="col-md-4">
+              <label for="inputStartDate" class="form-label custom-form-label">
+                {{ 'leaveRequest.startDate' | translate }}
+                <span class="text-danger fw-bold">*</span>
+              </label>
+              <div class="input-group custom-input-group">
+                <span class="input-group-text"><i class="fa-solid fa-calendar-check"></i></span>
+                <input
+                  type="date"
+                  class="form-control custom-form-control"
+                  id="inputStartDate"
+                  formControlName="startDate"
+                  (change)="onDateRangeChange()"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <label for="inputEndDate" class="form-label custom-form-label">
+                {{ 'leaveRequest.endDate' | translate }}
+                <span class="text-danger fw-bold">*</span>
+              </label>
+              <div class="input-group custom-input-group">
+                <span class="input-group-text"><i class="fa-solid fa-calendar-xmark"></i></span>
+                <input
+                  type="date"
+                  class="form-control custom-form-control"
+                  id="inputEndDate"
+                  formControlName="endDate"
+                  (change)="onDateRangeChange()"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <label for="inputTotalDays" class="form-label custom-form-label">
+                {{ 'leaveRequest.totalDays' | translate }}
+              </label>
+              <div class="input-group custom-input-group">
+                <span class="input-group-text"><i class="fa-solid fa-clock"></i></span>
+                <input
+                  type="text"
+                  class="form-control custom-form-control"
+                  id="inputTotalDays"
+                  placeholder="e.g. 1.5"
+                  formControlName="totalDays"
+                  appNumberOnly
+                  [allowDecimal]="true"
+                  appAutoTrim
+                />
+              </div>
+              <div class="form-text-hint">
+                <i class="fa-solid fa-circle-info"></i>
+                {{ 'leaveRequest.totalDaysHint' | translate }}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Form Section 3: Reason, Attachment & Notes -->
+        <div class="form-section-card">
+          <div class="form-section-header">
+            <div class="d-flex align-items-center gap-2">
+              <i class="fa-solid fa-file-lines text-primary"></i>
+              <span class="fw-bold">{{ 'leaveRequest.reasonAndNotes' | translate }}</span>
+            </div>
+            <span class="badge-soft badge-indigo">
+              <i class="fa-solid fa-list-check"></i> 3 {{ 'common.fields' | translate }}
+            </span>
+          </div>
+
+          <div class="row g-3">
+            <div class="col-12">
+              <label for="inputReason" class="form-label custom-form-label">
+                {{ 'leaveRequest.reason' | translate }}
+              </label>
+              <div class="input-group custom-input-group">
+                <span class="input-group-text"><i class="fa-solid fa-comment-dots"></i></span>
+                <textarea
+                  class="form-control custom-form-control"
+                  id="inputReason"
+                  rows="2"
+                  maxlength="500"
+                  placeholder="{{ 'leaveRequest.placeholderReason' | translate }}"
+                  formControlName="reason"
+                  appAutoTrim
+                ></textarea>
+              </div>
+            </div>
+
+            <div class="col-12">
+              <label for="inputFileAttach" class="form-label custom-form-label">
+                {{ 'leaveRequest.fileAttach' | translate }}
+              </label>
+              <div class="input-group custom-input-group">
+                <span class="input-group-text"><i class="fa-solid fa-paperclip"></i></span>
+                <input
+                  type="text"
+                  class="form-control custom-form-control"
+                  id="inputFileAttach"
+                  maxlength="500"
+                  placeholder="https://..."
+                  formControlName="fileAttach"
+                  appAutoTrim
+                />
+              </div>
+            </div>
+
+            <div class="col-12">
+              <label for="inputLeaveRequestNote" class="form-label custom-form-label">
+                {{ 'common.note' | translate }}
+              </label>
+              <div class="input-group custom-input-group">
+                <span class="input-group-text"><i class="fa-solid fa-align-left"></i></span>
+                <textarea
+                  class="form-control custom-form-control"
+                  id="inputLeaveRequestNote"
+                  rows="3"
+                  maxlength="500"
+                  placeholder="{{ 'common.placeholderNote' | translate }}"
+                  formControlName="note"
+                  appAutoTrim
+                ></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </ng-container>
+
+  <ng-container modal-actions>
+    <button
+      type="submit"
+      form="leaveRequestEditorForm"
+      class="btn btn-sm btn-pastel-purple px-4 py-2 rounded-3"
+      [disabled]="isSaving()"
+    >
+      @if (isSaving()) {
+        <span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+        {{ 'common.saving' | translate }}
+      } @else {
+        <i class="fa-solid fa-floppy-disk me-1"></i> {{ 'common.save' | translate }}
+      }
+    </button>
+  </ng-container>
+</app-modal>

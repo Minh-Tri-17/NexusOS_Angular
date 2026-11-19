@@ -3795,6 +3795,12 @@ svg g.apextree-selected .apextree-sleek-card {
   border: 1px solid #fdba74;
 }
 
+.leave-pill-other {
+  background: var(--badge-slate-bg);
+  color: var(--badge-slate-text);
+  border: 1px solid var(--badge-slate-border);
+}
+
 /* Dark Mode Leave Pills */
 
 .cursor-pointer {

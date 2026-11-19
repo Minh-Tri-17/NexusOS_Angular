@@ -106,14 +106,6 @@ export class ContractModal {
 
   //#region //@ HELPERS
 
-  private formatDateForInput(date: Date | string | null | undefined): string | null {
-    if (!date) return null;
-    const d = new Date(date);
-    if (isNaN(d.getTime())) return null;
-
-    return d.toISOString().split('T')[0];
-  }
-
   async loadComboboxData() {
     await Promise.allSettled([this.loadEmployees(), this.loadContractTypes()]);
   }
@@ -185,15 +177,15 @@ export class ContractModal {
       contractTypeId: item.contractTypeId || '',
       contractStatus: (item.contractStatus as ContractStatus) || ContractStatus.Active,
       approvalStatus: (item.approvalStatus as ApprovalStatus) || ApprovalStatus.Pending,
-      startDate: this.formatDateForInput(item.startDate),
-      endDate: this.formatDateForInput(item.endDate),
+      startDate: this.baseService.formatDateForInput(item.startDate),
+      endDate: this.baseService.formatDateForInput(item.endDate),
       baseSalary: item.baseSalary ?? null,
       salaryUnit: item.salaryUnit || SalaryUnit.VND,
       workingHoursPerWeek: item.workingHoursPerWeek ?? 40,
       otrate: item.otrate ?? 1.5,
       allowanceAmount: item.allowanceAmount ?? 0,
       insuranceContribution: item.insuranceContribution ?? 0,
-      signedDate: this.formatDateForInput(item.signedDate),
+      signedDate: this.baseService.formatDateForInput(item.signedDate),
       signedBy: item.signedBy || null,
       note: item.note || null,
     });

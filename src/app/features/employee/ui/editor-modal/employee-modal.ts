@@ -227,14 +227,6 @@ export class EmployeeModal {
     return filter;
   }
 
-  private formatDateForInput(date: Date | string | null | undefined): string | null {
-    if (!date) return null;
-    const d = new Date(date);
-    if (isNaN(d.getTime())) return null;
-
-    return d.toISOString().split('T')[0];
-  }
-
   //#endregion
 
   //#region //@ METHODS
@@ -303,9 +295,9 @@ export class EmployeeModal {
       provinceId: item.provinceId || '',
       wardId: item.wardId || '',
       employmentStatus: item.employmentStatus || '',
-      dateOfBirth: this.formatDateForInput(item.dateOfBirth),
-      hireDate: this.formatDateForInput(item.hireDate),
-      terminationDate: this.formatDateForInput(item.terminationDate),
+      dateOfBirth: this.baseService.formatDateForInput(item.dateOfBirth),
+      hireDate: this.baseService.formatDateForInput(item.hireDate),
+      terminationDate: this.baseService.formatDateForInput(item.terminationDate),
       isMultiStore: Boolean(item.isMultiStore),
     });
     this.loadComboboxData();

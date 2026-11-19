@@ -1,0 +1,556 @@
+<app-summary>
+  <ng-container title-header>
+    {{ 'leaveRequest.title' | translate }}
+  </ng-container>
+  <ng-container description>
+    {{ 'leaveRequest.description' | translate }}
+  </ng-container>
+</app-summary>
+
+<div class="erp-card p-4 shadow-sm rounded-4">
+  <app-toolbar
+    [(searchText)]="searchText"
+    (clearFilters)="handleClearFilter()"
+    [(filterIsDelete)]="filterIsDelete"
+  >
+    <ng-container active-filters>
+      @if (filterEmployeeId()) {
+        <span class="filter-chip">
+          <i class="fa-solid fa-user chip-icon"></i> {{ 'leaveRequest.employeeName' | translate }}:
+          <strong>{{ employeeMap().get(filterEmployeeId()) ?? filterEmployeeId() }}</strong>
+          <i class="fa-solid fa-xmark chip-remove-btn" (click)="filterEmployeeId.set('')"></i>
+        </span>
+      }
+      @if (filterLeaveTypeId()) {
+        <span class="filter-chip">
+          <i class="fa-solid fa-calendar-check chip-icon"></i>
+          {{ 'leaveRequest.leaveTypeName' | translate }}:
+          <strong>{{ leaveTypeMap().get(filterLeaveTypeId()) ?? filterLeaveTypeId() }}</strong>
+          <i class="fa-solid fa-xmark chip-remove-btn" (click)="filterLeaveTypeId.set('')"></i>
+        </span>
+      }
+      @if (filterApprovalStatus()) {
+        <span class="filter-chip">
+          <i class="fa-solid fa-stamp chip-icon"></i>
+          {{ 'leaveRequest.approvalStatus' | translate }}:
+          <strong>{{
+            approvalStatusConfig[filterApprovalStatus()]?.label
+              ? (approvalStatusConfig[filterApprovalStatus()].label | translate)
+              : filterApprovalStatus()
+          }}</strong>
+          <i class="fa-solid fa-xmark chip-remove-btn" (click)="filterApprovalStatus.set('')"></i>
+        </span>
+      }
+    </ng-container>
+
+    <ng-container action-buttons>
+      <div class="view-toggle-group" role="group" aria-label="View mode">
+        <button
+          type="button"
+          class="view-toggle-btn"
+          [title]="'common.scheduleView' | translate"
+          [class.active]="isScheduleView()"
+          (click)="handleViewSchedule()"
+        >
+          <i class="fa-solid fa-calendar-days"></i>
+          <span class="d-none d-md-inline">{{ 'common.scheduleView' | translate }}</span>
+        </button>
+
+        <button
+          type="button"
+          class="view-toggle-btn"
+          [title]="'common.listView' | translate"
+          [class.active]="!isScheduleView()"
+          (click)="handleViewList()"
+        >
+          <i class="fa-solid fa-list"></i>
+          <span class="d-none d-md-inline">{{ 'common.listView' | translate }}</span>
+        </button>
+      </div>
+
+      <div class="action-bar-divider mx-1"></div>
+
+      <div class="d-flex align-items-center gap-2">
+        @if (authService.hasPermission(permissions.create)) {
+          <button
+            type="button"
+            class="btn btn-sm btn-pastel-green d-inline-flex align-items-center gap-2 px-3 py-2 rounded-3 shadow-xs"
+            (click)="handleOpenCreate()"
+          >
+            <i class="fa-solid fa-plus"></i> {{ 'common.create' | translate }}
+          </button>
+        }
+        @if (authService.hasPermission(permissions.update)) {
+          <button
+            type="button"
+            class="btn btn-sm btn-pastel-orange d-inline-flex align-items-center gap-2 px-3 py-2 rounded-3 shadow-xs"
+            [disabled]="selectedIds().size !== 1"
+            (click)="handleOpenUpdate()"
+          >
+            <i class="fa-solid fa-pen-to-square"></i> {{ 'common.edit' | translate }}
+          </button>
+        }
+        @if (authService.hasPermission(permissions.delete)) {
+          <button
+            type="button"
+            class="btn btn-sm btn-pastel-red d-inline-flex align-items-center gap-2 px-3 py-2 rounded-3 shadow-xs"
+            [disabled]="selectedIds().size < 1"
+            (click)="handleDeleteSelected()"
+          >
+            <i class="fa-solid fa-trash-can"></i> {{ 'common.delete' | translate }}
+          </button>
+        }
+      </div>
+
+      @if (
+        authService.hasAnyPermission([permissions.import, permissions.export]) &&
+        authService.hasAnyPermission([permissions.create, permissions.update, permissions.delete])
+      ) {
+        <div class="action-bar-divider mx-1"></div>
+      }
+
+      <div class="d-flex align-items-center gap-2">
+        @if (authService.hasPermission(permissions.import)) {
+          <button
+            type="button"
+            class="btn btn-sm btn-pastel-indigo d-inline-flex align-items-center gap-2 px-3 py-2 rounded-3 shadow-xs"
+            (click)="openImportModal()"
+          >
+            <i class="fa-solid fa-file-import"></i> {{ 'common.import' | translate }}
+          </button>
+        }
+        @if (authService.hasPermission(permissions.export)) {
+          <button
+            type="button"
+            class="btn btn-sm btn-pastel-indigo d-inline-flex align-items-center gap-2 px-3 py-2 rounded-3 shadow-xs"
+            (click)="openExportModal()"
+          >
+            <i class="fa-solid fa-file-export"></i> {{ 'common.export' | translate }}
+          </button>
+        }
+      </div>
+    </ng-container>
+
+    <ng-container filter-matrix>
+      <div class="col-md-3">
+        <label class="form-label small fw-semibold text-muted">{{
+          'leaveRequest.employeeName' | translate
+        }}</label>
+        <select
+          class="form-select form-select-sm rounded-3 filter-select w-100"
+          [value]="filterEmployeeId() ?? ''"
+          (change)="filterEmployeeId.set($any($event.target).value || '')"
+        >
+          <option [selected]="!filterEmployeeId()" value="">{{ 'common.all' | translate }}</option>
+          @for (emp of employees(); track emp.id) {
+            <option [selected]="filterEmployeeId() === emp.id" [value]="emp.id">
+              {{ emp.employeeName }}
+            </option>
+          }
+        </select>
+      </div>
+
+      <div class="col-md-3">
+        <label class="form-label small fw-semibold text-muted">{{
+          'leaveRequest.leaveTypeName' | translate
+        }}</label>
+        <select
+          class="form-select form-select-sm rounded-3 filter-select w-100"
+          [value]="filterLeaveTypeId() ?? ''"
+          (change)="filterLeaveTypeId.set($any($event.target).value || '')"
+        >
+          <option [selected]="!filterLeaveTypeId()" value="">{{ 'common.all' | translate }}</option>
+          @for (lt of leaveTypes(); track lt.id) {
+            <option [selected]="filterLeaveTypeId() === lt.id" [value]="lt.id">
+              {{ lt.leaveTypeName }}
+            </option>
+          }
+        </select>
+      </div>
+
+      <div class="col-md-3">
+        <label class="form-label small fw-semibold text-muted">{{
+          'leaveRequest.approvalStatus' | translate
+        }}</label>
+        <select
+          class="form-select form-select-sm rounded-3 filter-select w-100"
+          [value]="filterApprovalStatus() ?? ''"
+          (change)="filterApprovalStatus.set($any($event.target).value || '')"
+        >
+          <option [selected]="!filterApprovalStatus()" value="">
+            {{ 'common.all' | translate }}
+          </option>
+          @for (status of approvalStatuses; track status.value) {
+            <option [selected]="filterApprovalStatus() === status.value" [value]="status.value">
+              {{ status.label | translate }}
+            </option>
+          }
+        </select>
+      </div>
+
+      <div class="col-md-3">
+        <label class="form-label small fw-semibold text-muted">{{
+          'leaveRequest.monthYear' | translate
+        }}</label>
+        <input
+          type="month"
+          class="form-control form-control-sm rounded-3 filter-input w-100 cursor-pointer"
+          [value]="filterMonthYear()"
+          (change)="filterMonthYear.set($any($event.target).value)"
+          [attr.aria-label]="'leaveRequest.monthYear' | translate"
+        />
+      </div>
+    </ng-container>
+  </app-toolbar>
+
+  @if (isScheduleView()) {
+    <!-- SCHEDULE PLANNER VIEW -->
+    <div id="leaveScheduleView">
+      <div class="schedule-nav-bar d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3">
+        <div class="d-flex align-items-center gap-2">
+          <button
+            type="button"
+            class="btn btn-sm btn-pastel-slate rounded-3 px-2 py-1"
+            [title]="'leaveRequest.prevMonth' | translate"
+            (click)="handleChangeMonth(-1)"
+          >
+            <i class="fa-solid fa-chevron-left"></i>
+          </button>
+          <span class="schedule-month-label fw-bold text-capitalize px-2">
+            <i class="fa-regular fa-calendar text-primary me-1"></i>
+            {{ currentMonthLabel() }}
+          </span>
+          <button
+            type="button"
+            class="btn btn-sm btn-pastel-slate rounded-3 px-2 py-1"
+            [title]="'leaveRequest.nextMonth' | translate"
+            (click)="handleChangeMonth(1)"
+          >
+            <i class="fa-solid fa-chevron-right"></i>
+          </button>
+          <button
+            type="button"
+            class="btn btn-sm btn-pastel-slate rounded-3 px-3 py-1 ms-1"
+            (click)="handleGoToToday()"
+          >
+            {{ 'leaveRequest.today' | translate }}
+          </button>
+        </div>
+
+        <div class="d-flex align-items-center gap-2">
+          <input
+            type="month"
+            class="form-control form-control-sm rounded-3 filter-input schedule-month-input cursor-pointer"
+            [value]="filterMonthYear()"
+            (change)="filterMonthYear.set($any($event.target).value)"
+            [attr.aria-label]="'leaveRequest.monthYear' | translate"
+          />
+        </div>
+      </div>
+
+      <div class="leave-planner-grid-wrapper mb-3">
+        @if (isLoading()) {
+          <div class="schedule-state-box">
+            <span class="spinner-border spinner-border-sm text-primary me-2" role="status"></span>
+            <span class="text-muted small">{{ 'common.loading' | translate }}</span>
+          </div>
+        } @else if (scheduleRows().length === 0) {
+          <div class="schedule-state-box">
+            <i class="fa-regular fa-calendar-xmark fa-2x text-muted opacity-50 mb-2"></i>
+            <div class="text-muted small fw-medium">
+              {{ 'leaveRequest.noScheduleInMonth' | translate }}
+            </div>
+          </div>
+        } @else {
+          <table class="leave-planner-table" id="leavePlannerTable">
+            <thead>
+              <tr>
+                <th class="col-employee">{{ 'leaveRequest.employeeName' | translate }}</th>
+                @for (day of calendarDays(); track day.day) {
+                  <th [class.is-weekend]="day.isWeekend" [class.is-today]="day.isToday">
+                    <span class="date-day-num">{{ day.day }}</span>
+                    <span class="date-day-name">{{ day.dayName }}</span>
+                  </th>
+                }
+              </tr>
+            </thead>
+            <tbody>
+              @for (row of scheduleRows(); track row.employeeKey) {
+                <tr [class.deleted-row]="filterIsDelete()">
+                  <td class="col-employee">
+                    <div class="leave-employee-profile">
+                      <img
+                        [src]="row.avatarUrl"
+                        [alt]="row.employeeName"
+                        class="leave-emp-avatar"
+                      />
+                      <div>
+                        <div
+                          class="leave-emp-name"
+                          [class.text-decoration-line-through]="filterIsDelete()"
+                        >
+                          {{ row.employeeName }}
+                        </div>
+                        @if (row.employeeSub) {
+                          <div class="leave-emp-role">{{ row.employeeSub }}</div>
+                        }
+                      </div>
+                    </div>
+                  </td>
+
+                  @for (cell of row.cells; track cell.key) {
+                    @if (cell.request) {
+                      <td [attr.colspan]="cell.colspan">
+                        <div
+                          class="leave-pill-block"
+                          [class]="cell.pillClass"
+                          [class.is-selected]="isSelected(cell.request.id)"
+                          [title]="
+                            (cell.request.leaveRequestCode ? '#' + cell.request.leaveRequestCode + ' - ' : '') +
+                            cell.leaveTypeName +
+                            ' (' +
+                            cell.dateRangeLabel +
+                            ')' +
+                            (cell.request.reason ? ' — ' + cell.request.reason : '')
+                          "
+                          (click)="handleSelectSchedulePill(cell.request)"
+                          (dblclick)="handleEditSchedulePill(cell.request)"
+                        >
+                          <div class="leave-pill-title">{{ cell.leaveTypeName }}</div>
+                          <div class="leave-pill-subtitle">{{ cell.dateRangeLabel }}</div>
+                        </div>
+                      </td>
+                    } @else {
+                      <td [class.is-weekend]="cell.isWeekend" [class.is-today]="cell.isToday"></td>
+                    }
+                  }
+                </tr>
+              }
+            </tbody>
+          </table>
+        }
+      </div>
+    </div>
+  } @else {
+    <!-- LIST / TABLE VIEW -->
+    <app-table>
+      <ng-container table-header>
+        <tr>
+          <th class="col-pin" style="width: 36px; min-width: 36px">
+            <input
+              type="checkbox"
+              aria-label="Select all"
+              [checked]="isSelectedAll()"
+              (click)="handleToggleSelectAll()"
+            />
+          </th>
+          <th class="text-center" style="width: 50px">#</th>
+          @for (column of leaveRequestColumns; track column) {
+            <th>{{ 'leaveRequest.' + column | translate }}</th>
+          }
+          <th style="min-width: 220px">{{ 'common.note' | translate }}</th>
+          <th>{{ 'common.createdAt' | translate }}</th>
+          <th>{{ 'common.createdBy' | translate }}</th>
+          <th>{{ 'common.updatedAt' | translate }}</th>
+          <th>{{ 'common.updatedBy' | translate }}</th>
+        </tr>
+      </ng-container>
+
+      <ng-container table-body>
+        @if (isLoading()) {
+          <app-placeholder [modelColumns]="leaveRequestColumns"></app-placeholder>
+        } @else {
+          @for (item of leaveRequests(); track item.id; let idx = $index) {
+            <tr [class.deleted-row]="filterIsDelete()">
+              <td class="col-pin">
+                <input
+                  type="checkbox"
+                  [aria-label]="item.leaveRequestCode || item.id"
+                  [checked]="isSelected(item.id)"
+                  (click)="handleToggleSelect(item.id)"
+                />
+              </td>
+              <td class="td-cell text-center">{{ fromRecord() + idx }}</td>
+
+              <td class="text-nowrap">
+                @if (item.leaveRequestCode) {
+                  <span class="badge-soft badge-blue">#{{ item.leaveRequestCode }}</span>
+                } @else {
+                  <span class="text-muted opacity-50">—</span>
+                }
+              </td>
+
+              <td class="text-nowrap">
+                @if (
+                  item.employeeName ||
+                  item.employee?.employeeName ||
+                  (item.employeeId && employeeMap().get(item.employeeId))
+                ) {
+                  <div
+                    class="fw-semibold text-main"
+                    [class.text-decoration-line-through]="filterIsDelete()"
+                  >
+                    <i class="fa-solid fa-user me-1 text-secondary opacity-75"></i>
+                    {{
+                      item.employeeName ||
+                        item.employee?.employeeName ||
+                        employeeMap().get(item.employeeId!)
+                    }}
+                  </div>
+                  @if (filterIsDelete()) {
+                    <span
+                      class="badge bg-danger-subtle text-danger border border-danger-subtle fs-xs rounded-pill px-2 py-0.5 mt-1"
+                    >
+                      <i class="fa-solid fa-trash-can me-1"></i>
+                      {{ 'common.softDeleted' | translate }}
+                    </span>
+                  }
+                } @else {
+                  <span class="text-muted opacity-50">—</span>
+                }
+              </td>
+
+              <td class="text-nowrap">
+                @if (
+                  item.leaveTypeName ||
+                  item.leaveType?.leaveTypeName ||
+                  (item.leaveTypeId && leaveTypeMap().get(item.leaveTypeId))
+                ) {
+                  <span class="text-muted small">
+                    <i class="fa-solid fa-calendar-check me-1 text-secondary opacity-75"></i>
+                    {{
+                      item.leaveTypeName ||
+                        item.leaveType?.leaveTypeName ||
+                        leaveTypeMap().get(item.leaveTypeId!)
+                    }}
+                  </span>
+                } @else {
+                  <span class="text-muted opacity-50">—</span>
+                }
+              </td>
+
+              <td class="text-nowrap">
+                @if (item.startDate) {
+                  <span class="text-muted small">{{ item.startDate | date }}</span>
+                } @else {
+                  <span class="text-muted opacity-50">—</span>
+                }
+              </td>
+
+              <td class="text-nowrap">
+                @if (item.endDate) {
+                  <span class="text-muted small">{{ item.endDate | date }}</span>
+                } @else {
+                  <span class="text-muted opacity-50">—</span>
+                }
+              </td>
+
+              <td class="text-nowrap">
+                @if (item.totalDays != null) {
+                  <span class="badge-soft badge-indigo">
+                    {{ item.totalDays }} {{ 'leaveRequest.days' | translate }}
+                  </span>
+                } @else {
+                  <span class="text-muted opacity-50">—</span>
+                }
+              </td>
+
+              <td style="min-width: 220px">
+                <span class="text-muted small">{{ item.reason | fallback }}</span>
+              </td>
+
+              <td class="text-nowrap">
+                @if (item.fileAttach) {
+                  <a
+                    class="badge-soft badge-blue text-decoration-none"
+                    [href]="item.fileAttach"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <i class="fa-solid fa-paperclip me-1"></i>
+                    {{ 'leaveRequest.viewAttachment' | translate }}
+                  </a>
+                } @else {
+                  <span class="text-muted opacity-50">—</span>
+                }
+              </td>
+
+              <td class="text-nowrap">
+                @if (item.approvalStatus) {
+                  <span
+                    class="badge-soft"
+                    [class]="approvalStatusConfig[item.approvalStatus]?.cssClass ?? 'badge-secondary'"
+                  >
+                    @if (approvalStatusConfig[item.approvalStatus]?.icon) {
+                      <i
+                        class="fa-solid"
+                        [class]="approvalStatusConfig[item.approvalStatus]!.icon"
+                      ></i>
+                    }
+                    {{
+                      approvalStatusConfig[item.approvalStatus]?.label
+                        ? (approvalStatusConfig[item.approvalStatus]!.label | translate)
+                        : item.approvalStatus
+                    }}
+                  </span>
+                } @else {
+                  <span class="text-muted opacity-50">—</span>
+                }
+              </td>
+
+              <td>
+                <span class="text-muted small fst-italic">{{ item.note | fallback }}</span>
+              </td>
+
+              <td class="text-nowrap">
+                @if (item.createdAt) {
+                  <span class="text-muted small">{{ item.createdAt | date }}</span>
+                } @else {
+                  <span class="text-muted opacity-50">—</span>
+                }
+              </td>
+
+              <td class="text-nowrap">
+                @if (item.createdBy) {
+                  <span class="text-muted small">
+                    <i class="fa-regular fa-user me-1 text-secondary opacity-75"></i
+                    >{{ item.createdBy }}</span
+                  >
+                } @else {
+                  <span class="text-muted opacity-50">—</span>
+                }
+              </td>
+
+              <td class="text-nowrap">
+                @if (item.updatedAt) {
+                  <span class="text-muted small">{{ item.updatedAt | date }}</span>
+                } @else {
+                  <span class="text-muted opacity-50">—</span>
+                }
+              </td>
+
+              <td class="text-nowrap">
+                @if (item.updatedBy) {
+                  <span class="text-muted small">
+                    <i class="fa-regular fa-user me-1 text-secondary opacity-75"></i
+                    >{{ item.updatedBy }}</span
+                  >
+                } @else {
+                  <span class="text-muted opacity-50">—</span>
+                }
+              </td>
+            </tr>
+          }
+        }
+      </ng-container>
+    </app-table>
+  }
+
+  <app-pagination
+    [(pageIndex)]="pageIndex"
+    [(pageSize)]="pageSize"
+    [totalRecord]="totalRecord()"
+    [recordRange]="recordRange()"
+    [pageCount]="pageCount()"
+  ></app-pagination>
+</div>

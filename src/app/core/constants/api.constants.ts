@@ -99,6 +99,16 @@ export const API_CONSTANTS = {
     import: 'Contract/Import',
     export: 'Contract/Export',
   },
+  leaveRequest: {
+    create: 'LeaveRequest/Create',
+    update: 'LeaveRequest/Update',
+    softDelete: 'LeaveRequest/SoftDelete',
+    hardDelete: 'LeaveRequest/HardDelete',
+    getPaging: 'LeaveRequest/GetPaging/Filter',
+    getById: 'LeaveRequest/GetOne',
+    import: 'LeaveRequest/Import',
+    export: 'LeaveRequest/Export',
+  },
   user: {
     create: 'User/Create',
     update: 'User/Update',

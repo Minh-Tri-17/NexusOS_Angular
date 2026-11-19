@@ -28,10 +28,17 @@
       <i class="fa-solid fa-user-plus"></i>
       <span>{{ 'sidebar.recruitment' | translate }}</span>
     </a>
-    <a class="nav-link" title="Leave Management" [routerLink]="['/']">
-      <i class="fa-solid fa-calendar-minus"></i>
-      <span>{{ 'sidebar.leaveManagement' | translate }}</span>
-    </a>
+    @if (authService.hasPermission(permissions.leaveRequest.view)) {
+      <a
+        class="nav-link"
+        title="Leave Request"
+        [routerLink]="['/leave-request']"
+        routerLinkActive="active"
+      >
+        <i class="fa-solid fa-calendar-minus"></i>
+        <span>{{ 'sidebar.leaveRequest' | translate }}</span>
+      </a>
+    }
     @if (
       authService.hasAnyPermission([
         permissions.country.view,

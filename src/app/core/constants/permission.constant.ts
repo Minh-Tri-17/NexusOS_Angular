@@ -17,6 +17,7 @@ export const PERMISSIONS = {
   jobTitle: createCrudPermissions('CatJobTitle'),
   department: createCrudPermissions('CatDepartment'),
   contract: createCrudPermissions('Contract'),
+  leaveRequest: createCrudPermissions('LeaveRequest'),
   employee: createCrudPermissions('Employee'),
   user: createCrudPermissions('User'),
   role: createCrudPermissions('Role'),

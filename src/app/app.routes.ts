@@ -87,6 +87,13 @@ export const routes: Routes = [
         loadComponent: () => import('./features/contract/ui/contract').then((m) => m.Contract),
       },
       {
+        path: 'leave-request',
+        canActivate: [permissionGuard],
+        data: { permission: PERMISSIONS.leaveRequest.view },
+        loadComponent: () =>
+          import('./features/leave-request/ui/leave-request').then((m) => m.LeaveRequest),
+      },
+      {
         path: 'role',
         canActivate: [permissionGuard],
         data: { permission: PERMISSIONS.role.view },

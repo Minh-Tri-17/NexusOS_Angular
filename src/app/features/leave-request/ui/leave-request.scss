@@ -1,0 +1,93 @@
+.view-toggle-group {
+  display: inline-flex !important;
+  align-items: center;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--bg-surface);
+  flex-shrink: 0 !important;
+  flex: 0 0 auto !important;
+  width: auto !important;
+  max-width: fit-content !important;
+}
+
+.view-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 7px 14px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    background 0.18s,
+    color 0.18s;
+  flex: 0 0 auto;
+
+  &:hover {
+    background: var(--bg-hover);
+    color: var(--text-main);
+  }
+
+  &.active {
+    background: var(--primary-600);
+    color: #fff;
+  }
+}
+
+.schedule-nav-bar {
+  padding: 0.5rem 0.75rem;
+  border-radius: 12px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light, #e2e8f0);
+}
+
+.schedule-month-label {
+  font-size: 0.9rem;
+  color: var(--text-main);
+  min-width: 140px;
+  text-align: center;
+}
+
+.schedule-month-input {
+  width: 170px;
+}
+
+.leave-emp-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 2px solid var(--border-color);
+}
+
+.leave-pill-block.is-selected {
+  outline: 2px solid var(--primary-600, #2563eb);
+  outline-offset: 1px;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.18);
+}
+
+.schedule-state-box {
+  min-height: 220px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+@media (max-width: 576px) {
+  .view-toggle-group {
+    margin-right: auto;
+  }
+
+  .view-toggle-btn {
+    padding: 6px 12px;
+  }
+}
