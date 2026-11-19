@@ -25,5 +25,9 @@ export class BaseService {
     return d.toISOString().split('T')[0];
   }
 
+  delay(ms: number): Promise<void> {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
   //#endregion
 }

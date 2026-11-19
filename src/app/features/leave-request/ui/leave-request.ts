@@ -8,6 +8,7 @@ import { FilterOperator, FilterType } from '../../../core/constants/filter.enum'
 import { PERMISSIONS } from '../../../core/constants/permission.constant';
 import { PagingRequest } from '../../../core/models/paging.model';
 import { AuthService } from '../../../core/services/auth.service';
+import { BaseService } from '../../../core/services/base.service';
 import { DialogService } from '../../../shared/components/dialog/dialog.service';
 import { Export } from '../../../shared/components/export/export';
 import { Import } from '../../../shared/components/import/import';
@@ -99,6 +100,7 @@ export class LeaveRequest {
   private readonly modal = inject(NgbModal);
   private readonly injector = inject(Injector);
   private readonly dialogService = inject(DialogService);
+  private readonly baseService = inject(BaseService);
   protected readonly authService = inject(AuthService);
   protected readonly permissions = PERMISSIONS.leaveRequest;
 
@@ -472,10 +474,6 @@ export class LeaveRequest {
     return filter;
   }
 
-  private delay(ms: number): Promise<void> {
-    return new Promise((resolve) => setTimeout(resolve, ms));
-  }
-
   //#endregion
 
   //#region //@ METHODS
@@ -486,7 +484,7 @@ export class LeaveRequest {
 
     try {
       //* Chạy song song cả API và timer tối thiểu 300ms
-      const [res] = await Promise.all([this.facade.getPaging(filter), this.delay(300)]);
+      const [res] = await Promise.all([this.facade.getPaging(filter), this.baseService.delay(300)]);
 
       this.leaveRequests.set(res.result?.items || []);
       this.totalRecord.set(res.result?.totalRecord || 0);

@@ -31,6 +31,7 @@ import { UserFields, UserModel } from '../data-access/user.model';
 import { UserModal } from './editor-modal/user-modal';
 import { PERMISSIONS } from '../../../../core/constants/permission.constant';
 import { AuthService } from '../../../../core/services/auth.service';
+import { BaseService } from '../../../../core/services/base.service';
 
 @Component({
   selector: 'app-user',
@@ -54,6 +55,7 @@ export class User {
   private readonly modal = inject(NgbModal);
   private readonly injector = inject(Injector);
   private readonly dialogService = inject(DialogService);
+  private readonly baseService = inject(BaseService);
   protected readonly authService = inject(AuthService);
   protected readonly permissions = PERMISSIONS.user;
 
@@ -164,10 +166,6 @@ export class User {
     return filter;
   }
 
-  private delay(ms: number): Promise<void> {
-    return new Promise((resolve) => setTimeout(resolve, ms));
-  }
-
   //#endregion
 
   //#region //@ METHODS
@@ -178,7 +176,7 @@ export class User {
 
     try {
       //* Chạy song song cả API và timer tối thiểu 300ms
-      const [res] = await Promise.all([this.facade.getPaging(filter), this.delay(300)]);
+      const [res] = await Promise.all([this.facade.getPaging(filter), this.baseService.delay(300)]);
 
       this.users.set(res.result?.items || []);
       this.totalRecord.set(res.result?.totalRecord || 0);

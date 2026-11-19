@@ -24,6 +24,7 @@ import { ContractTypeFields, ContractTypeModel } from '../data-access/contract-t
 import { ContractTypeModal } from './editor-modal/contract-type-modal';
 import { PERMISSIONS } from '../../../../core/constants/permission.constant';
 import { AuthService } from '../../../../core/services/auth.service';
+import { BaseService } from '../../../../core/services/base.service';
 
 @Component({
   selector: 'app-contract-type',
@@ -46,6 +47,7 @@ export class ContractType {
   private readonly modal = inject(NgbModal);
   private readonly injector = inject(Injector);
   private readonly dialogService = inject(DialogService);
+  private readonly baseService = inject(BaseService);
   protected readonly authService = inject(AuthService);
   protected readonly permissions = PERMISSIONS.contractType;
 
@@ -133,10 +135,6 @@ export class ContractType {
     return filter;
   }
 
-  private delay(ms: number): Promise<void> {
-    return new Promise((resolve) => setTimeout(resolve, ms));
-  }
-
   //#endregion
 
   //#region //@ METHODS
@@ -147,7 +145,7 @@ export class ContractType {
 
     try {
       //* Chạy song song cả API và timer tối thiểu 300ms
-      const [res] = await Promise.all([this.facade.getPaging(filter), this.delay(300)]);
+      const [res] = await Promise.all([this.facade.getPaging(filter), this.baseService.delay(300)]);
 
       this.contractTypes.set(res.result?.items || []);
       this.totalRecord.set(res.result?.totalRecord || 0);
