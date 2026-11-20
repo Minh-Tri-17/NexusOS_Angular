@@ -303,24 +303,20 @@ export class EmployeeModal {
     this.loadComboboxData();
   }
 
-  onFileSelected(event: Event) {
-    const input = event.target as HTMLInputElement;
-    if (input.files && input.files[0]) {
-      const file = input.files[0];
-      const reader = new FileReader();
-      reader.onload = () => {
-        const base64 = reader.result as string;
-        this.photoPreview.set(base64);
-        this.employeeForm.controls.photo.setValue(base64);
-      };
-      reader.readAsDataURL(file);
-    }
+  async onFileSelected(event: Event) {
+    const file = this.baseService.getSelectedFile(event);
+    if (!file) return;
+
+    try {
+      const base64 = await this.baseService.readFileAsDataUrl(file);
+      this.photoPreview.set(base64);
+      this.employeeForm.controls.photo.setValue(base64);
+    } catch {}
   }
 
   removePhoto(fileInput?: HTMLInputElement) {
     this.photoPreview.set('');
-    this.employeeForm.controls.photo.setValue(null);
-    if (fileInput) fileInput.value = '';
+    this.baseService.clearFileField(this.employeeForm.controls.photo, fileInput);
   }
 
   async handleSave() {

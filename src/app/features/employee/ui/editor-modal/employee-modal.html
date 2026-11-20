@@ -159,47 +159,53 @@
               </div>
             </div>
 
-            <div class="col-md-4">
+            <div class="col-12">
               <label for="inputEmployeePhoto" class="form-label custom-form-label">
                 {{ 'employee.photo' | translate }}
               </label>
-              <div class="input-group custom-input-group">
-                <span class="input-group-text"><i class="fa-solid fa-image"></i></span>
-                <input
-                  #photoInput
-                  type="file"
-                  class="form-control custom-form-control"
-                  id="inputEmployeePhoto"
-                  accept="image/*"
-                  (change)="onFileSelected($event)"
-                />
+              <div class="row g-3 align-items-center">
+                <div class="col-md-8">
+                  <div class="input-group custom-input-group">
+                    <span class="input-group-text"><i class="fa-solid fa-image"></i></span>
+                    <input
+                      #photoInput
+                      type="file"
+                      class="form-control custom-form-control"
+                      id="inputEmployeePhoto"
+                      accept="image/*"
+                      (change)="onFileSelected($event)"
+                    />
+                    @if (photoPreview()) {
+                      <button
+                        type="button"
+                        class="btn-file-clear"
+                        (click)="removePhoto(photoInput)"
+                        [title]="'common.delete' | translate"
+                      >
+                        <i class="fa-solid fa-xmark"></i>
+                      </button>
+                    }
+                  </div>
+                </div>
                 @if (photoPreview()) {
-                  <button
-                    type="button"
-                    class="btn btn-outline-danger btn-sm px-2 d-flex align-items-center"
-                    (click)="removePhoto(photoInput)"
-                    title="Remove Photo"
-                  >
-                    <i class="fa-solid fa-xmark"></i>
-                  </button>
+                  <div class="col-md-4">
+                    <div class="d-flex align-items-center gap-2">
+                      <img
+                        [src]="photoPreview()"
+                        alt="Photo Preview"
+                        class="rounded-circle border"
+                        width="38"
+                        height="38"
+                        style="object-fit: cover"
+                      />
+                      <span class="text-muted small">
+                        <i class="fa-solid fa-circle-check text-success me-1"></i
+                        >{{ 'employee.photo' | translate }}
+                      </span>
+                    </div>
+                  </div>
                 }
               </div>
-              @if (photoPreview()) {
-                <div class="d-flex align-items-center gap-2 mt-2">
-                  <img
-                    [src]="photoPreview()"
-                    alt="Photo Preview"
-                    class="rounded-circle border"
-                    width="32"
-                    height="32"
-                    style="object-fit: cover"
-                  />
-                  <span class="text-muted small">
-                    <i class="fa-solid fa-circle-check text-success me-1"></i
-                    >{{ 'employee.photo' | translate }}
-                  </span>
-                </div>
-              }
             </div>
 
             <div class="col-md-4">

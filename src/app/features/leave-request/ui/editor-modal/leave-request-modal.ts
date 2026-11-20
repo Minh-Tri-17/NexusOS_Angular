@@ -157,18 +157,12 @@ export class LeaveRequestModal {
     }
   }
 
-  private resetFileInput() {
-    const input = this.fileInput()?.nativeElement;
-    if (input) input.value = '';
-  }
-
   //#endregion
 
   //#region //@ METHODS
 
   handleFileSelect(event: Event) {
-    const input = event.target as HTMLInputElement;
-    const file = input.files?.[0];
+    const file = this.baseService.getSelectedFile(event);
     if (!file) return;
 
     this.selectedFile.set(file);
@@ -177,13 +171,12 @@ export class LeaveRequestModal {
 
   handleRemoveFile() {
     this.selectedFile.set(null);
-    this.leaveRequestForm.controls.fileAttach.setValue(null);
-    this.resetFileInput();
+    this.baseService.clearFileField(this.leaveRequestForm.controls.fileAttach, this.fileInput());
   }
 
   initCreateForm() {
     this.selectedFile.set(null);
-    this.resetFileInput();
+    this.baseService.resetFileInput(this.fileInput());
     this.leaveRequestForm.reset({
       id: null,
       leaveRequestCode: null,
@@ -202,7 +195,7 @@ export class LeaveRequestModal {
 
   initUpdateForm(item: LeaveRequestModel) {
     this.selectedFile.set(null);
-    this.resetFileInput();
+    this.baseService.resetFileInput(this.fileInput());
     this.leaveRequestForm.patchValue({
       id: item.id || null,
       leaveRequestCode: item.leaveRequestCode || null,
