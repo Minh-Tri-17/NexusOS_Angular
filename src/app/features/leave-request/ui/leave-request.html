@@ -41,6 +41,14 @@
           <i class="fa-solid fa-xmark chip-remove-btn" (click)="filterApprovalStatus.set('')"></i>
         </span>
       }
+      @if (!isScheduleView() && filterMonthYear()) {
+        <span class="filter-chip">
+          <i class="fa-regular fa-calendar chip-icon"></i>
+          {{ 'leaveRequest.monthYear' | translate }}:
+          <strong>{{ filterMonthYear() }}</strong>
+          <i class="fa-solid fa-xmark chip-remove-btn" (click)="filterMonthYear.set('')"></i>
+        </span>
+      }
     </ng-container>
 
     <ng-container action-buttons>
@@ -196,7 +204,7 @@
           type="month"
           class="form-control form-control-sm rounded-3 filter-input w-100 cursor-pointer"
           [value]="filterMonthYear()"
-          (change)="filterMonthYear.set($any($event.target).value)"
+          (change)="handleMonthYearChange($any($event.target).value)"
           [attr.aria-label]="'leaveRequest.monthYear' | translate"
         />
       </div>
@@ -242,7 +250,7 @@
             type="month"
             class="form-control form-control-sm rounded-3 filter-input schedule-month-input cursor-pointer"
             [value]="filterMonthYear()"
-            (change)="filterMonthYear.set($any($event.target).value)"
+            (change)="handleMonthYearChange($any($event.target).value)"
             [attr.aria-label]="'leaveRequest.monthYear' | translate"
           />
         </div>

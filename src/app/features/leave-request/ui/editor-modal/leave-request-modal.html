@@ -260,15 +260,29 @@
               <div class="input-group custom-input-group">
                 <span class="input-group-text"><i class="fa-solid fa-paperclip"></i></span>
                 <input
-                  type="text"
+                  type="file"
+                  #fileAttachInput
                   class="form-control custom-form-control"
                   id="inputFileAttach"
-                  maxlength="500"
-                  placeholder="https://..."
-                  formControlName="fileAttach"
-                  appAutoTrim
+                  (change)="handleFileSelect($event)"
                 />
+                @if (selectedFile() || leaveRequestForm.controls.fileAttach.value) {
+                  <button
+                    type="button"
+                    class="btn btn-outline-danger"
+                    (click)="handleRemoveFile()"
+                    [title]="'common.delete' | translate"
+                  >
+                    <i class="fa-solid fa-xmark"></i>
+                  </button>
+                }
               </div>
+              @if (!selectedFile() && leaveRequestForm.controls.fileAttach.value) {
+                <div class="form-text-hint">
+                  <i class="fa-solid fa-file-lines"></i>
+                  {{ leaveRequestForm.controls.fileAttach.value }}
+                </div>
+              }
             </div>
 
             <div class="col-12">

@@ -1,4 +1,4 @@
-import { Component, computed, inject, output, signal } from '@angular/core';
+import { Component, computed, ElementRef, inject, output, signal, viewChild } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -44,6 +44,7 @@ export class LeaveRequestModal {
   //#region //@ PROPS
 
   readonly saveSuccess = output<void>();
+  readonly fileInput = viewChild<ElementRef<HTMLInputElement>>('fileAttachInput');
 
   readonly approvalStatuses = LEAVE_APPROVAL_STATUS_OPTIONS;
 
@@ -54,6 +55,7 @@ export class LeaveRequestModal {
   readonly isSaving = signal(false);
   readonly isLoadingEmployee = signal(false);
   readonly isLoadingLeaveType = signal(false);
+  readonly selectedFile = signal<File | null>(null);
   readonly employees = signal<EmployeeModel[]>([]);
   readonly leaveTypes = signal<LeaveTypeModel[]>([]);
 
@@ -155,11 +157,33 @@ export class LeaveRequestModal {
     }
   }
 
+  private resetFileInput() {
+    const input = this.fileInput()?.nativeElement;
+    if (input) input.value = '';
+  }
+
   //#endregion
 
   //#region //@ METHODS
 
+  handleFileSelect(event: Event) {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+    if (!file) return;
+
+    this.selectedFile.set(file);
+    this.leaveRequestForm.controls.fileAttach.setValue(file.name);
+  }
+
+  handleRemoveFile() {
+    this.selectedFile.set(null);
+    this.leaveRequestForm.controls.fileAttach.setValue(null);
+    this.resetFileInput();
+  }
+
   initCreateForm() {
+    this.selectedFile.set(null);
+    this.resetFileInput();
     this.leaveRequestForm.reset({
       id: null,
       leaveRequestCode: null,
@@ -177,6 +201,8 @@ export class LeaveRequestModal {
   }
 
   initUpdateForm(item: LeaveRequestModel) {
+    this.selectedFile.set(null);
+    this.resetFileInput();
     this.leaveRequestForm.patchValue({
       id: item.id || null,
       leaveRequestCode: item.leaveRequestCode || null,

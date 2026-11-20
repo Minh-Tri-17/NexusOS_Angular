@@ -155,7 +155,7 @@ export class LeaveRequest {
       approvalStatus: this.filterApprovalStatus(),
       isDelete: this.filterIsDelete(),
       isScheduleView: this.isScheduleView(),
-      monthYear: this.isScheduleView() ? this.filterMonthYear() : '',
+      monthYear: this.filterMonthYear(),
       pageSize: this.pageSize(),
     }),
     computation: () => 1,
@@ -255,8 +255,12 @@ export class LeaveRequest {
     const rows: ScheduleRow[] = [];
     for (const [employeeKey, empRequests] of grouped.entries()) {
       const firstReq = empRequests[0];
-      const emp = firstReq.employeeId ? empMap.get(firstReq.employeeId) : firstReq.employee ?? undefined;
-      const employeeName = firstReq.employeeName || firstReq.employee?.employeeName || emp?.employeeName || '—';
+      const emp =
+        (firstReq.employeeId ? empMap.get(firstReq.employeeId) : undefined) ??
+        firstReq.employee ??
+        undefined;
+      const employeeName =
+        firstReq.employeeName || firstReq.employee?.employeeName || emp?.employeeName || '—';
       const employeeSub = emp?.jobTitleName || emp?.employeeCode || '';
       const avatarUrl =
         emp?.gender === Gender.Male ? '/images/avatar-male.jpg' : '/images/avatar-female.jpg';
@@ -377,7 +381,11 @@ export class LeaveRequest {
     if (normalized.includes('personal') || normalized.includes('việc riêng')) {
       return 'leave-pill-personal';
     }
-    if (normalized.includes('remote') || normalized.includes('từ xa') || normalized.includes('wfh')) {
+    if (
+      normalized.includes('remote') ||
+      normalized.includes('từ xa') ||
+      normalized.includes('wfh')
+    ) {
       return 'leave-pill-remote';
     }
 
@@ -456,7 +464,7 @@ export class LeaveRequest {
         filterOperator: FilterOperator.like,
       });
 
-    if (this.isScheduleView() && this.filterMonthYear()) {
+    if (this.filterMonthYear()) {
       const { year, month } = this.selectedYearMonth();
       const daysInMonth = new Date(year, month + 1, 0).getDate();
       const monthStr = String(month + 1).padStart(2, '0');
@@ -501,10 +509,12 @@ export class LeaveRequest {
 
   handleViewSchedule() {
     this.isScheduleView.set(true);
+    if (!this.filterMonthYear()) this.filterMonthYear.set(this.getCurrentMonthYear());
   }
 
   handleViewList() {
     this.isScheduleView.set(false);
+    this.filterMonthYear.set('');
   }
 
   handleChangeMonth(delta: number) {
@@ -519,13 +529,17 @@ export class LeaveRequest {
     this.filterMonthYear.set(this.getCurrentMonthYear());
   }
 
+  handleMonthYearChange(value: string) {
+    this.filterMonthYear.set(value || (this.isScheduleView() ? this.getCurrentMonthYear() : ''));
+  }
+
   handleClearFilter() {
     this.filterIsDelete.set(false);
     this.searchText.set('');
     this.filterEmployeeId.set('');
     this.filterLeaveTypeId.set('');
     this.filterApprovalStatus.set('');
-    this.filterMonthYear.set(this.getCurrentMonthYear());
+    this.filterMonthYear.set(this.isScheduleView() ? this.getCurrentMonthYear() : '');
     this.pageIndex.set(1);
   }
 
@@ -593,7 +607,7 @@ export class LeaveRequest {
 
   handleOpenCreate() {
     const modalRef = this.modal.open(LeaveRequestModal, {
-      size: 'xl',
+      size: 'lg',
       centered: true,
       scrollable: true,
       windowClass: 'custom-modal',
@@ -608,7 +622,7 @@ export class LeaveRequest {
     if (!item) return;
 
     const modalRef = this.modal.open(LeaveRequestModal, {
-      size: 'xl',
+      size: 'lg',
       centered: true,
       scrollable: true,
       windowClass: 'custom-modal',
