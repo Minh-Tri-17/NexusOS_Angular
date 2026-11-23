@@ -258,7 +258,6 @@ export class Ward {
     //* subscribe() đăng ký nhận giá trị từ Observable, thực hiện hành động khi có giá trị mới
     modalRef.componentInstance.saveSuccess.subscribe(() => this.loadListData());
     modalRef.componentInstance.initCreateForm();
-    modalRef.componentInstance.loadComboboxData();
   }
 
   handleOpenUpdate() {
@@ -274,7 +273,6 @@ export class Ward {
     //* subscribe() đăng ký nhận giá trị từ Observable, thực hiện hành động khi có giá trị mới
     modalRef.componentInstance.saveSuccess.subscribe(() => this.loadListData());
     modalRef.componentInstance.initUpdateForm(item);
-    modalRef.componentInstance.loadComboboxData();
   }
 
   getSelectedItem(): WardModel | null {
