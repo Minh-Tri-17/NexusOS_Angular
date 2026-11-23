@@ -5,6 +5,7 @@ import { FilterOperator, FilterType } from '../../../core/constants/filter.enum'
 import { BaseService } from '../../../core/services/base.service';
 import { Modal } from '../modal/modal';
 import { EXPORT_MODAL_CONTEXT } from '../modal/modal-context';
+import { showToast } from '../toast/toast.util';
 
 export type ExportOption =
   | typeof BASE_CONSTANTS.exportOptionAll
@@ -115,10 +116,29 @@ export class Export {
       'application/vnd.ms-excel': '.xls',
       'text/csv': '.csv',
       'application/pdf': '.pdf',
-      'application/json': '.json',
     };
 
     return mimeMap[mimeType] || '.xlsx';
+  }
+
+  private async isErrorBlob(blob: Blob): Promise<boolean> {
+    if (!blob.type.includes('application/json')) return false;
+
+    try {
+      const text = await blob.text();
+      const parsed = JSON.parse(text);
+      if (parsed && typeof parsed === 'object' && 'isSuccess' in parsed && !parsed.isSuccess) {
+        if (parsed.message)
+          showToast({
+            message: parsed.message,
+            type: 'danger',
+          });
+
+        return true;
+      }
+    } catch {}
+
+    return true;
   }
 
   private delay(ms: number) {
@@ -157,7 +177,7 @@ export class Export {
       this.animateProgress(80, 'common.processingFile');
       await this.delay(400);
 
-      if (!blob || blob.size === 0) {
+      if (!blob || blob.size === 0 || (await this.isErrorBlob(blob))) {
         this.animateProgress(0, 'common.exportFailed');
         await this.delay(3000);
       } else {

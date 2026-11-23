@@ -127,7 +127,6 @@ export const API_CONSTANTS = {
     getMyAccess: 'Account/GetMyAccess',
   },
   rolePermission: {
-    getPaging: 'RolePermission/GetPaging/Filter',
     getPermission: 'RolePermission/GetPermission',
   },
 } as const;

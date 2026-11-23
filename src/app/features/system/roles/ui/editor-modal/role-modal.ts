@@ -29,8 +29,13 @@ const SCOPE_DISPLAY_INFO: Record<string, { name: string; icon: string }> = {
   CatCountry: { name: 'common.country', icon: 'fa-solid fa-earth-americas' },
   CatProvince: { name: 'common.province', icon: 'fa-solid fa-map-location-dot' },
   CatWard: { name: 'common.ward', icon: 'fa-solid fa-tree-city' },
+  CatContractType: { name: 'common.contractType', icon: 'fa-solid fa-file-signature' },
+  CatLeaveType: { name: 'common.leaveType', icon: 'fa-solid fa-calendar-check' },
   CatJobTitle: { name: 'common.jobTitle', icon: 'fa-solid fa-briefcase' },
+  CatDepartment: { name: 'common.department', icon: 'fa-solid fa-sitemap' },
+  Contract: { name: 'common.contract', icon: 'fa-solid fa-file-contract' },
   Employee: { name: 'common.employee', icon: 'fa-solid fa-users-gear' },
+  LeaveRequest: { name: 'common.leaveRequest', icon: 'fa-solid fa-calendar-minus' },
   User: { name: 'common.user', icon: 'fa-solid fa-user-shield' },
   Role: { name: 'common.role', icon: 'fa-solid fa-shield-halved' },
 };
