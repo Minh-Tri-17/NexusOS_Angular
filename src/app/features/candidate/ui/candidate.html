@@ -423,7 +423,7 @@
     </div>
   } @else {
     <div id="recListView">
-      <app-table>
+      <app-table [isLoading]="isLoading()">
         <ng-container table-header>
           <tr>
             <th class="col-pin" style="width: 36px; min-width: 36px">
@@ -448,10 +448,7 @@
         </ng-container>
 
         <ng-container table-body>
-          @if (isLoading()) {
-            <app-placeholder [modelColumns]="candidateColumns"></app-placeholder>
-          } @else {
-            @for (candidate of candidates(); track candidate.id; let idx = $index) {
+          @for (candidate of candidates(); track candidate.id; let idx = $index) {
               <tr [class.deleted-row]="filterIsDelete()">
                 <td class="col-pin">
                   <input
@@ -707,7 +704,6 @@
                 </td>
               </tr>
             }
-          }
         </ng-container>
       </app-table>
     </div>

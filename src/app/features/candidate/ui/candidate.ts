@@ -26,7 +26,6 @@ import {
   IMPORT_MODAL_CONTEXT,
 } from '../../../shared/components/modal/modal-context';
 import { Pagination } from '../../../shared/components/pagination/pagination';
-import { Placeholder } from '../../../shared/components/placeholder/placeholder';
 import { Summary } from '../../../shared/components/summary/summary';
 import { Table } from '../../../shared/components/table/table';
 import { Toolbar } from '../../../shared/components/toolbar/toolbar';
@@ -70,7 +69,6 @@ const KANBAN_INITIAL_LIMIT = 3;
     Toolbar,
     Table,
     DatePipe,
-    Placeholder,
     FormsModule,
     TranslatePipe,
     EmptyFallbackPipe,

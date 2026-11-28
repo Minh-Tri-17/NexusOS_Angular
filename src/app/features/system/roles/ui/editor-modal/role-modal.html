@@ -144,6 +144,7 @@
           </div>
 
           <app-table
+            [isLoading]="isLoadingPermissions()"
             [minWidth]="minTableWidth()"
             maxHeight="min(48vh, 420px)"
             containerClass="border mb-0"
@@ -190,17 +191,7 @@
             </ng-container>
 
             <ng-container table-body>
-              @if (isLoadingPermissions()) {
-                <tr>
-                  <td
-                    [attr.colspan]="availableActions().length + 2"
-                    class="text-center py-4 text-muted"
-                  >
-                    <span class="spinner-border spinner-border-sm me-2" role="status"></span>
-                    {{ 'common.requestingData' | translate }}
-                  </td>
-                </tr>
-              } @else if (filteredRows().length === 0) {
+              @if (filteredRows().length === 0) {
                 <tr>
                   <td
                     [attr.colspan]="availableActions().length + 2"

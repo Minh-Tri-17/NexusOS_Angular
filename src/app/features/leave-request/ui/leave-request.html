@@ -257,13 +257,14 @@
         </div>
       </div>
 
-      <div class="leave-planner-grid-wrapper mb-3">
-        @if (isLoading()) {
-          <div class="schedule-state-box">
-            <span class="spinner-border spinner-border-sm text-primary me-2" role="status"></span>
-            <span class="text-muted small">{{ 'common.loading' | translate }}</span>
-          </div>
-        } @else if (scheduleRows().length === 0) {
+      @if (isLoading()) {
+        <div class="empty-column-placeholder my-3">
+          <span class="spinner-border spinner-border-sm text-primary mb-2" role="status"></span>
+          <div>{{ 'common.loading' | translate }}</div>
+        </div>
+      } @else {
+        <div class="leave-planner-grid-wrapper mb-3">
+          @if (scheduleRows().length === 0) {
           <div class="schedule-state-box">
             <i class="fa-regular fa-calendar-xmark fa-2x text-muted opacity-50 mb-2"></i>
             <div class="text-muted small fw-medium">
@@ -340,11 +341,12 @@
             </tbody>
           </table>
         }
-      </div>
+        </div>
+      }
     </div>
   } @else {
     <div id="leaListView">
-      <app-table>
+      <app-table [isLoading]="isLoading()">
         <ng-container table-header>
           <tr>
             <th class="col-pin" style="width: 36px; min-width: 36px">
@@ -368,10 +370,7 @@
         </ng-container>
 
         <ng-container table-body>
-          @if (isLoading()) {
-            <app-placeholder [modelColumns]="leaveRequestColumns"></app-placeholder>
-          } @else {
-            @for (item of leaveRequests(); track item.id; let idx = $index) {
+          @for (item of leaveRequests(); track item.id; let idx = $index) {
               <tr [class.deleted-row]="filterIsDelete()">
                 <td class="col-pin">
                   <input
@@ -554,7 +553,6 @@
                 </td>
               </tr>
             }
-          }
         </ng-container>
       </app-table>
     </div>

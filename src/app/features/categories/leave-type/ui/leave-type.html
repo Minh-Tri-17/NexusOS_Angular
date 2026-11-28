@@ -76,7 +76,7 @@
     </ng-container>
   </app-toolbar>
 
-  <app-table>
+  <app-table [isLoading]="isLoading()">
     <ng-container table-header>
       <tr>
         <th class="col-pin" style="width: 36px; min-width: 36px">
@@ -100,10 +100,7 @@
     </ng-container>
 
     <ng-container table-body>
-      @if (isLoading()) {
-        <app-placeholder [modelColumns]="leaveTypeColumns"></app-placeholder>
-      } @else {
-        @for (item of leaveTypes(); track item.id; let idx = $index) {
+      @for (item of leaveTypes(); track item.id; let idx = $index) {
           <tr [class.deleted-row]="filterIsDelete()">
             <td class="col-pin">
               <input
@@ -184,7 +181,6 @@
             </td>
           </tr>
         }
-      }
     </ng-container>
   </app-table>
 

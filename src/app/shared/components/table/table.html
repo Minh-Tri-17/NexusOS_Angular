@@ -1,20 +1,27 @@
-<div
-  class="table-responsive rounded-3 app-table-scroll"
-  [class]="containerClass()"
-  [style.maxHeight]="maxHeight() || null"
-  style="overflow-x: auto; max-width: 100%"
->
-  <table
-    class="app-list-table"
-    [class]="tableClass()"
-    [style.minWidth]="minWidth()"
-    style="width: 100%"
+@if (isLoading()) {
+  <div class="empty-column-placeholder my-3">
+    <span class="spinner-border spinner-border-sm text-primary mb-2" role="status"></span>
+    <div>{{ 'common.loading' | translate }}</div>
+  </div>
+} @else {
+  <div
+    class="table-responsive rounded-3 app-table-scroll"
+    [class]="containerClass()"
+    [style.maxHeight]="maxHeight() || null"
+    style="overflow-x: auto; max-width: 100%"
   >
-    <thead>
-      <ng-content select="[table-header]"></ng-content>
-    </thead>
-    <tbody>
-      <ng-content select="[table-body]"></ng-content>
-    </tbody>
-  </table>
-</div>
+    <table
+      class="app-list-table"
+      [class]="tableClass()"
+      [style.minWidth]="minWidth()"
+      style="width: 100%"
+    >
+      <thead>
+        <ng-content select="[table-header]"></ng-content>
+      </thead>
+      <tbody>
+        <ng-content select="[table-body]"></ng-content>
+      </tbody>
+    </table>
+  </div>
+}
