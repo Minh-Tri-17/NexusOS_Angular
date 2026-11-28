@@ -81,6 +81,12 @@ export const routes: Routes = [
         loadComponent: () => import('./features/employee/ui/employee').then((m) => m.Employee),
       },
       {
+        path: 'candidate',
+        canActivate: [permissionGuard],
+        data: { permission: PERMISSIONS.candidate.view },
+        loadComponent: () => import('./features/candidate/ui/candidate').then((m) => m.Candidate),
+      },
+      {
         path: 'contract',
         canActivate: [permissionGuard],
         data: { permission: PERMISSIONS.contract.view },

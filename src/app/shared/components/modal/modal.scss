@@ -241,15 +241,8 @@
 }
 
 .modal-dialog-scrollable {
-  .modal-content > * {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    min-height: 0;
-    overflow: hidden;
-  }
-
-  app-modal {
+  app-modal,
+  .candidate-detail-modal-shell {
     display: flex;
     flex-direction: column;
     height: 100%;

@@ -398,13 +398,13 @@ export class LeaveRequest {
       this.leaveTypeFacade.getPaging({ allowPaging: false }),
     ]);
 
-    if (empResult.status === 'fulfilled') {
+    if (empResult.status === BASE_CONSTANTS.promiseFulfilled) {
       this.employees.set(empResult.value.result?.items || []);
     } else {
       this.employees.set([]);
     }
 
-    if (leaveTypeResult.status === 'fulfilled') {
+    if (leaveTypeResult.status === BASE_CONSTANTS.promiseFulfilled) {
       this.leaveTypes.set(leaveTypeResult.value.result?.items || []);
     } else {
       this.leaveTypes.set([]);

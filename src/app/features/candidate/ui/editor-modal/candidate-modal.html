@@ -1,0 +1,524 @@
+<app-modal>
+  <ng-container modal-eyebrow>{{ 'candidate.modalTitle' | translate }}</ng-container>
+
+  <ng-container modal-title
+    >{{ title() | translate }} {{ 'common.candidate' | translate }}</ng-container
+  >
+
+  <ng-container modal-header-extra>
+    <span class="badge-soft badge-teal d-none d-sm-inline-flex">
+      <i class="fa-solid fa-bolt"></i> {{ 'common.liveSync' | translate }}
+    </span>
+  </ng-container>
+
+  <ng-container modal-form>
+    <form
+      id="candidateEditorForm"
+      [formGroup]="candidateForm"
+      ngNativeValidate
+      (ngSubmit)="handleSave()"
+    >
+      <div class="modal-body px-4 py-3 position-relative z-1">
+        <!-- Form Section 1: Candidate Identity & Contact -->
+        <div class="form-section-card mb-4">
+          <div class="form-section-header">
+            <div class="d-flex align-items-center gap-2">
+              <i class="fa-solid fa-id-badge text-primary"></i>
+              <span class="fw-bold">
+                {{ 'candidate.contactAndApplication' | translate }}
+              </span>
+            </div>
+            <span class="badge-soft badge-indigo">
+              <i class="fa-solid fa-list-check"></i> 12 {{ 'common.fields' | translate }}
+            </span>
+          </div>
+
+          <div class="row g-3">
+            <div class="col-md-4">
+              <label for="inputCandidateCode" class="form-label custom-form-label">
+                {{ 'candidate.candidateCode' | translate }}
+              </label>
+              <div class="input-group custom-input-group">
+                <span class="input-group-text"><i class="fa-solid fa-hashtag"></i></span>
+                <input
+                  type="text"
+                  class="form-control custom-form-control"
+                  id="inputCandidateCode"
+                  placeholder="e.g. CAND-001"
+                  maxlength="50"
+                  formControlName="candidateCode"
+                  appUppercase
+                  appAutoTrim
+                />
+              </div>
+              <div class="form-text-hint">
+                <i class="fa-solid fa-circle-info"></i> {{ 'candidate.codeHint' | translate }}
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <label for="inputCandidateName" class="form-label custom-form-label">
+                {{ 'candidate.candidateName' | translate }}
+                <span class="text-danger fw-bold">*</span>
+              </label>
+              <div class="input-group custom-input-group">
+                <span class="input-group-text"><i class="fa-solid fa-user"></i></span>
+                <input
+                  type="text"
+                  class="form-control custom-form-control"
+                  id="inputCandidateName"
+                  placeholder="e.g. Nguyễn Văn A"
+                  maxlength="250"
+                  formControlName="candidateName"
+                  appAutoTrim
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <label for="inputCandidateStage" class="form-label custom-form-label">
+                {{ 'candidate.stage' | translate }}
+                <span class="text-danger fw-bold">*</span>
+              </label>
+              <div class="input-group custom-input-group">
+                <span class="input-group-text"><i class="fa-solid fa-layer-group"></i></span>
+                <select
+                  class="form-select custom-form-select"
+                  id="inputCandidateStage"
+                  formControlName="stage"
+                  required
+                >
+                  @for (stage of stages; track stage.value) {
+                    <option [value]="stage.value">{{ stage.label | translate }}</option>
+                  }
+                </select>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <label for="inputCandidateGender" class="form-label custom-form-label">
+                {{ 'candidate.gender' | translate }}
+              </label>
+              <div class="input-group custom-input-group">
+                <span class="input-group-text"><i class="fa-solid fa-venus-mars"></i></span>
+                <select
+                  class="form-select custom-form-select"
+                  id="inputCandidateGender"
+                  formControlName="gender"
+                >
+                  @for (gender of genders; track gender.value) {
+                    <option [value]="gender.value">{{ gender.label | translate }}</option>
+                  }
+                </select>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <label for="inputCandidateEmail" class="form-label custom-form-label">
+                {{ 'candidate.email' | translate }}
+              </label>
+              <div class="input-group custom-input-group">
+                <span class="input-group-text"><i class="fa-solid fa-envelope"></i></span>
+                <input
+                  type="email"
+                  class="form-control custom-form-control"
+                  id="inputCandidateEmail"
+                  placeholder="e.g. candidate@example.com"
+                  maxlength="100"
+                  formControlName="email"
+                  appAutoTrim
+                />
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <label for="inputCandidatePhone" class="form-label custom-form-label">
+                {{ 'candidate.phoneNumber' | translate }}
+              </label>
+              <div class="input-group custom-input-group">
+                <span class="input-group-text"><i class="fa-solid fa-phone"></i></span>
+                <input
+                  type="tel"
+                  class="form-control custom-form-control"
+                  id="inputCandidatePhone"
+                  placeholder="e.g. 0912345678"
+                  maxlength="20"
+                  formControlName="phoneNumber"
+                  appNumberOnly
+                  appAutoTrim
+                />
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <label for="inputWorkLocation" class="form-label custom-form-label">
+                {{ 'candidate.workLocation' | translate }}
+              </label>
+              <div class="input-group custom-input-group">
+                <span class="input-group-text"><i class="fa-solid fa-location-dot"></i></span>
+                <input
+                  type="text"
+                  class="form-control custom-form-control"
+                  id="inputWorkLocation"
+                  placeholder="e.g. TP. Hồ Chí Minh"
+                  maxlength="250"
+                  formControlName="workLocation"
+                  appAutoTrim
+                />
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <label for="inputAppliedDate" class="form-label custom-form-label">
+                {{ 'candidate.appliedDate' | translate }}
+              </label>
+              <div class="input-group custom-input-group">
+                <span class="input-group-text"><i class="fa-solid fa-calendar-check"></i></span>
+                <input
+                  type="date"
+                  class="form-control custom-form-control"
+                  id="inputAppliedDate"
+                  formControlName="appliedDate"
+                />
+              </div>
+            </div>
+
+            <div class="col-12">
+              <label for="inputCandidatePhoto" class="form-label custom-form-label">
+                {{ 'candidate.photo' | translate }}
+              </label>
+              <div class="row g-3 align-items-center">
+                <div class="col-md-8">
+                  <div class="input-group custom-input-group">
+                    <span class="input-group-text"><i class="fa-solid fa-image"></i></span>
+                    <input
+                      #photoInput
+                      type="file"
+                      class="form-control custom-form-control"
+                      id="inputCandidatePhoto"
+                      accept="image/*"
+                      (change)="onPhotoSelected($event)"
+                    />
+                    @if (photoPreview() || candidateForm.controls.photo.value) {
+                      <button
+                        type="button"
+                        class="btn-file-clear"
+                        (click)="removePhoto(photoInput)"
+                        [title]="'common.delete' | translate"
+                      >
+                        <i class="fa-solid fa-xmark"></i>
+                      </button>
+                    }
+                  </div>
+                </div>
+                @if (photoPreview()) {
+                  <div class="col-md-4">
+                    <div class="d-flex align-items-center gap-2">
+                      <img
+                        [src]="photoPreview()"
+                        alt="Photo Preview"
+                        class="rounded-circle border"
+                        width="38"
+                        height="38"
+                        style="object-fit: cover"
+                      />
+                      <span class="text-muted small">
+                        <i class="fa-solid fa-circle-check text-success me-1"></i
+                        >{{ 'candidate.photo' | translate }}
+                      </span>
+                    </div>
+                  </div>
+                }
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <label for="inputDepartmentId" class="form-label custom-form-label">
+                {{ 'candidate.departmentName' | translate }}
+              </label>
+              <div class="input-group custom-input-group">
+                <span class="input-group-text">
+                  @if (isLoadingDepartment()) {
+                    <span
+                      class="spinner-border spinner-border-sm text-primary"
+                      role="status"
+                    ></span>
+                  } @else {
+                    <i class="fa-solid fa-building"></i>
+                  }
+                </span>
+                <select
+                  class="form-select custom-form-select"
+                  id="inputDepartmentId"
+                  formControlName="departmentId"
+                  [appSelectLoading]="isLoadingDepartment()"
+                >
+                  <option value="">
+                    {{ 'common.selectDepartment' | translate }}
+                  </option>
+                  @for (dept of departments(); track dept.id) {
+                    <option [value]="dept.id">
+                      {{
+                        dept.departmentCode
+                          ? '[#' + dept.departmentCode + '] - ' + dept.departmentName
+                          : dept.departmentName
+                      }}
+                    </option>
+                  }
+                </select>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <label for="inputJobTitleId" class="form-label custom-form-label">
+                {{ 'candidate.jobTitleName' | translate }}
+              </label>
+              <div class="input-group custom-input-group">
+                <span class="input-group-text">
+                  @if (isLoadingJobTitle()) {
+                    <span
+                      class="spinner-border spinner-border-sm text-primary"
+                      role="status"
+                    ></span>
+                  } @else {
+                    <i class="fa-solid fa-briefcase"></i>
+                  }
+                </span>
+                <select
+                  class="form-select custom-form-select"
+                  id="inputJobTitleId"
+                  formControlName="jobTitleId"
+                  [appSelectLoading]="isLoadingJobTitle()"
+                >
+                  <option value="">
+                    {{ 'common.selectJobTitle' | translate }}
+                  </option>
+                  @for (job of jobTitles(); track job.id) {
+                    <option [value]="job.id">
+                      {{
+                        job.jobTitleCode
+                          ? '[#' + job.jobTitleCode + '] - ' + job.jobTitleName
+                          : job.jobTitleName
+                      }}
+                    </option>
+                  }
+                </select>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <label for="inputStoreId" class="form-label custom-form-label">
+                {{ 'candidate.storeName' | translate }}
+              </label>
+              <div class="input-group custom-input-group">
+                <span class="input-group-text"><i class="fa-solid fa-store"></i></span>
+                <input
+                  type="text"
+                  class="form-control custom-form-control"
+                  id="inputStoreId"
+                  formControlName="storeId"
+                  appAutoTrim
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Form Section 2: Evaluation, Metrics & Skills -->
+        <div class="form-section-card mb-4">
+          <div class="form-section-header">
+            <div class="d-flex align-items-center gap-2">
+              <i class="fa-solid fa-chart-line text-primary"></i>
+              <span class="fw-bold">
+                {{ 'candidate.evaluationAndSkills' | translate }}
+              </span>
+            </div>
+            <span class="badge-soft badge-purple">
+              <i class="fa-solid fa-list-check"></i> 5 {{ 'common.fields' | translate }}
+            </span>
+          </div>
+
+          <div class="row g-3">
+            <div class="col-md-4">
+              <label for="inputExpectedSalary" class="form-label custom-form-label">
+                {{ 'candidate.expectedSalary' | translate }}
+              </label>
+              <div class="input-group custom-input-group">
+                <span class="input-group-text"><i class="fa-solid fa-money-bill-wave"></i></span>
+                <input
+                  type="text"
+                  class="form-control custom-form-control"
+                  id="inputExpectedSalary"
+                  placeholder="e.g. 25000000"
+                  formControlName="expectedSalary"
+                  appNumberOnly
+                  [allowDecimal]="true"
+                  appAutoTrim
+                />
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <label for="inputExperienceYears" class="form-label custom-form-label">
+                {{ 'candidate.experienceYears' | translate }}
+              </label>
+              <div class="input-group custom-input-group">
+                <span class="input-group-text"><i class="fa-solid fa-award"></i></span>
+                <input
+                  type="text"
+                  class="form-control custom-form-control"
+                  id="inputExperienceYears"
+                  placeholder="e.g. 3.5"
+                  formControlName="experienceYears"
+                  appNumberOnly
+                  [allowDecimal]="true"
+                  appAutoTrim
+                />
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <label for="inputMatchScore" class="form-label custom-form-label">
+                {{ 'candidate.matchScore' | translate }} (%)
+              </label>
+              <div class="input-group custom-input-group">
+                <span class="input-group-text"><i class="fa-solid fa-sparkles"></i></span>
+                <input
+                  type="text"
+                  class="form-control custom-form-control"
+                  id="inputMatchScore"
+                  placeholder="0 - 100"
+                  formControlName="matchScore"
+                  appNumberOnly
+                  appAutoTrim
+                />
+              </div>
+            </div>
+
+            <div class="col-12">
+              <label for="inputSkills" class="form-label custom-form-label">
+                {{ 'candidate.skills' | translate }}
+              </label>
+              <div class="input-group custom-input-group">
+                <span class="input-group-text"><i class="fa-solid fa-code"></i></span>
+                <input
+                  type="text"
+                  class="form-control custom-form-control"
+                  id="inputSkills"
+                  placeholder="{{ 'candidate.skillsPlaceholder' | translate }}"
+                  maxlength="1000"
+                  formControlName="skills"
+                  appAutoTrim
+                />
+              </div>
+              <div class="form-text-hint">
+                <i class="fa-solid fa-circle-info"></i> {{ 'candidate.skillsHint' | translate }}
+              </div>
+            </div>
+
+            <div class="col-12">
+              <label for="inputFileAttach" class="form-label custom-form-label">
+                {{ 'candidate.fileAttach' | translate }}
+              </label>
+              <div class="input-group custom-input-group">
+                <span class="input-group-text"><i class="fa-solid fa-paperclip"></i></span>
+                <input
+                  type="file"
+                  #fileAttachInput
+                  class="form-control custom-form-control"
+                  id="inputFileAttach"
+                  (change)="handleFileSelect($event)"
+                />
+                @if (selectedFile() || candidateForm.controls.fileAttach.value) {
+                  <button
+                    type="button"
+                    class="btn-file-clear"
+                    (click)="handleRemoveFile()"
+                    [title]="'common.delete' | translate"
+                  >
+                    <i class="fa-solid fa-xmark"></i>
+                  </button>
+                }
+              </div>
+              @if (!selectedFile() && candidateForm.controls.fileAttach.value) {
+                <div class="form-text-hint">
+                  <i class="fa-solid fa-file-lines"></i>
+                  {{ candidateForm.controls.fileAttach.value }}
+                </div>
+              }
+            </div>
+          </div>
+        </div>
+
+        <!-- Form Section 3: Interviewer Notes & General Note -->
+        <div class="form-section-card">
+          <div class="form-section-header">
+            <div class="d-flex align-items-center gap-2">
+              <i class="fa-solid fa-align-left text-primary"></i>
+              <span class="fw-bold">
+                {{ 'candidate.notesAndEvaluation' | translate }}
+              </span>
+            </div>
+            <span class="badge-soft badge-teal">
+              <i class="fa-solid fa-list-check"></i> 2 {{ 'common.fields' | translate }}
+            </span>
+          </div>
+
+          <div class="row g-3">
+            <div class="col-12">
+              <label for="inputInterviewerNote" class="form-label custom-form-label">
+                {{ 'candidate.interviewerNote' | translate }}
+              </label>
+              <div class="input-group custom-input-group">
+                <span class="input-group-text"><i class="fa-solid fa-comments"></i></span>
+                <textarea
+                  class="form-control custom-form-control"
+                  id="inputInterviewerNote"
+                  rows="3"
+                  placeholder="{{ 'candidate.placeholderInterviewerNote' | translate }}"
+                  formControlName="interviewerNote"
+                  appAutoTrim
+                ></textarea>
+              </div>
+            </div>
+
+            <div class="col-12">
+              <label for="inputCandidateNote" class="form-label custom-form-label">
+                {{ 'common.note' | translate }}
+              </label>
+              <div class="input-group custom-input-group">
+                <span class="input-group-text"><i class="fa-solid fa-align-left"></i></span>
+                <textarea
+                  class="form-control custom-form-control"
+                  id="inputCandidateNote"
+                  rows="3"
+                  maxlength="500"
+                  placeholder="{{ 'common.placeholderNote' | translate }}"
+                  formControlName="note"
+                  appAutoTrim
+                ></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </ng-container>
+
+  <ng-container modal-actions>
+    <button
+      type="submit"
+      form="candidateEditorForm"
+      class="btn btn-sm btn-pastel-purple px-4 py-2 rounded-3"
+      [disabled]="isSaving()"
+    >
+      @if (isSaving()) {
+        <span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+        {{ 'common.saving' | translate }}
+      } @else {
+        <i class="fa-solid fa-floppy-disk me-1"></i> {{ 'common.save' | translate }}
+      }
+    </button>
+  </ng-container>
+</app-modal>

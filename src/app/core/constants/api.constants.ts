@@ -89,6 +89,16 @@ export const API_CONSTANTS = {
     import: 'Employee/Import',
     export: 'Employee/Export',
   },
+  candidate: {
+    create: 'Candidate/Create',
+    update: 'Candidate/Update',
+    softDelete: 'Candidate/SoftDelete',
+    hardDelete: 'Candidate/HardDelete',
+    getPaging: 'Candidate/GetPaging/Filter',
+    getById: 'Candidate/GetOne',
+    import: 'Candidate/Import',
+    export: 'Candidate/Export',
+  },
   contract: {
     create: 'Contract/Create',
     update: 'Contract/Update',

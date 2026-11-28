@@ -19,6 +19,7 @@ export const PERMISSIONS = {
   contract: createCrudPermissions('Contract'),
   leaveRequest: createCrudPermissions('LeaveRequest'),
   employee: createCrudPermissions('Employee'),
+  candidate: createCrudPermissions('Candidate'),
   user: createCrudPermissions('User'),
   role: createCrudPermissions('Role'),
 } as const;

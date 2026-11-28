@@ -20,6 +20,10 @@ import { Table } from '../../../shared/components/table/table';
 import { Toolbar } from '../../../shared/components/toolbar/toolbar';
 import { EmptyFallbackPipe } from '../../../shared/pipes/empty-fallback.pipe';
 import { MaskPipe } from '../../../shared/pipes/mask.pipe';
+import { DepartmentFacade } from '../../categories/department/data-access/department.facade';
+import { DepartmentModel } from '../../categories/department/data-access/department.model';
+import { JobTitleFacade } from '../../categories/job-title/data-access/job-title.facade';
+import { JobTitleModel } from '../../categories/job-title/data-access/job-title.model';
 import {
   EDUCATION_LEVEL_CONFIG,
   EDUCATION_LEVEL_OPTIONS,
@@ -55,6 +59,8 @@ import { BaseService } from '../../../core/services/base.service';
 })
 export class Employee {
   private readonly facade = inject(EmployeeFacade);
+  private readonly departmentFacade = inject(DepartmentFacade);
+  private readonly jobTitleFacade = inject(JobTitleFacade);
   private readonly modal = inject(NgbModal);
   private readonly injector = inject(Injector);
   private readonly dialogService = inject(DialogService);
@@ -100,7 +106,11 @@ export class Employee {
   readonly totalRecord = signal(0);
   readonly pageCount = signal(0);
   readonly employees = signal<EmployeeModel[]>([]);
+  readonly departments = signal<DepartmentModel[]>([]);
+  readonly jobTitles = signal<JobTitleModel[]>([]);
   readonly searchText = signal('');
+  readonly filterDepartmentId = signal('');
+  readonly filterJobTitleId = signal('');
   readonly filterEmploymentStatus = signal('');
   readonly filterGender = signal('');
   readonly filterEducationLevel = signal('');
@@ -112,6 +122,8 @@ export class Employee {
   readonly pageIndex = linkedSignal({
     source: () => ({
       search: this.searchText(),
+      departmentId: this.filterDepartmentId(),
+      jobTitleId: this.filterJobTitleId(),
       status: this.filterEmploymentStatus(),
       gender: this.filterGender(),
       educationLevel: this.filterEducationLevel(),
@@ -128,15 +140,51 @@ export class Employee {
     return list.length > 0 && list.every((item) => ids.has(item.id));
   });
 
+  readonly departmentMap = computed(() => {
+    const map = new Map<string, string>();
+    for (const dept of this.departments()) {
+      map.set(dept.id, dept.departmentName);
+    }
+    return map;
+  });
+
+  readonly jobTitleMap = computed(() => {
+    const map = new Map<string, string>();
+    for (const job of this.jobTitles()) {
+      map.set(job.id, job.jobTitleName);
+    }
+    return map;
+  });
+
   //#endregion
 
   constructor() {
+    this.loadComboboxData();
     effect(() => {
       this.loadListData();
     });
   }
 
   //#region //@ HELPERS
+
+  private async loadComboboxData() {
+    const [deptResult, jobResult] = await Promise.allSettled([
+      this.departmentFacade.getPaging({ allowPaging: false }),
+      this.jobTitleFacade.getPaging({ allowPaging: false }),
+    ]);
+
+    if (deptResult.status === BASE_CONSTANTS.promiseFulfilled) {
+      this.departments.set(deptResult.value.result?.items || []);
+    } else {
+      this.departments.set([]);
+    }
+
+    if (jobResult.status === BASE_CONSTANTS.promiseFulfilled) {
+      this.jobTitles.set(jobResult.value.result?.items || []);
+    } else {
+      this.jobTitles.set([]);
+    }
+  }
 
   private buildFilter(): PagingRequest {
     const filter: PagingRequest = {
@@ -147,6 +195,8 @@ export class Employee {
 
     const filterText = this.searchText().trim();
     const filterIsDeleted = this.filterIsDelete();
+    const filterDepartment = this.filterDepartmentId();
+    const filterJobTitle = this.filterJobTitleId();
     const filterEmploymentStatus = this.filterEmploymentStatus().trim();
 
     filter.filters = [];
@@ -163,6 +213,22 @@ export class Employee {
         filterValue: filterText,
         filterType: FilterType.string,
         filterOperator: FilterOperator.like,
+      });
+
+    if (filterDepartment)
+      filter.filters.push({
+        filterName: EmployeeFields.departmentId,
+        filterValue: filterDepartment,
+        filterType: FilterType.guid,
+        filterOperator: FilterOperator.contains,
+      });
+
+    if (filterJobTitle)
+      filter.filters.push({
+        filterName: EmployeeFields.jobTitleId,
+        filterValue: filterJobTitle,
+        filterType: FilterType.guid,
+        filterOperator: FilterOperator.contains,
       });
 
     if (filterEmploymentStatus)
@@ -230,6 +296,8 @@ export class Employee {
   handleClearFilter() {
     this.filterIsDelete.set(false);
     this.searchText.set('');
+    this.filterDepartmentId.set('');
+    this.filterJobTitleId.set('');
     this.filterEmploymentStatus.set('');
     this.filterGender.set('');
     this.filterEducationLevel.set('');

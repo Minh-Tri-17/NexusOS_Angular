@@ -4,8 +4,8 @@ app-table {
 }
 
 #empListView .table-responsive,
-#leaveListView .table-responsive,
-#recruitmentListView .table-responsive,
+#leaListView .table-responsive,
+#recListView .table-responsive,
 .app-table-scroll {
   max-height: 480px;
   overflow: auto;
@@ -34,8 +34,8 @@ app-table {
 
 [data-theme='dark'] {
   #empListView .table-responsive,
-  #leaveListView .table-responsive,
-  #recruitmentListView .table-responsive,
+  #leaListView .table-responsive,
+  #recListView .table-responsive,
   .app-table-scroll {
     background-color: var(--bg-surface);
   }
@@ -124,5 +124,28 @@ tr:hover td.col-pin,
     font-size: 0.83rem;
     color: var(--text-main);
     vertical-align: middle;
+  }
+}
+
+.btn-action-eye {
+  border: none;
+  background: transparent;
+  color: var(--primary-600, #2563eb);
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  transition: all 0.18s ease;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+
+  &:hover {
+    background: var(--bg-hover, #f1f5f9);
+    color: var(--primary-700, #1d4ed8);
+    transform: scale(1.15);
   }
 }

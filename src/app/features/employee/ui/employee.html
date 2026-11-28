@@ -14,6 +14,22 @@
     [(filterIsDelete)]="filterIsDelete"
   >
     <ng-container active-filters>
+      @if (filterDepartmentId()) {
+        <span class="filter-chip">
+          <i class="fa-solid fa-building chip-icon"></i>
+          {{ 'employee.departmentName' | translate }}:
+          <strong>{{ departmentMap().get(filterDepartmentId()) ?? filterDepartmentId() }}</strong>
+          <i class="fa-solid fa-xmark chip-remove-btn" (click)="filterDepartmentId.set('')"></i>
+        </span>
+      }
+      @if (filterJobTitleId()) {
+        <span class="filter-chip">
+          <i class="fa-solid fa-user-tie chip-icon"></i>
+          {{ 'employee.jobTitleName' | translate }}:
+          <strong>{{ jobTitleMap().get(filterJobTitleId()) ?? filterJobTitleId() }}</strong>
+          <i class="fa-solid fa-xmark chip-remove-btn" (click)="filterJobTitleId.set('')"></i>
+        </span>
+      }
       @if (filterEmploymentStatus()) {
         <span class="filter-chip">
           <i class="fa-solid fa-briefcase chip-icon"></i>
@@ -141,6 +157,46 @@
     <ng-container filter-matrix>
       <div class="col-md-3">
         <label class="form-label small fw-semibold text-muted">{{
+          'employee.departmentName' | translate
+        }}</label>
+        <select
+          class="form-select form-select-sm rounded-3 filter-select w-100"
+          [value]="filterDepartmentId()"
+          (change)="filterDepartmentId.set($any($event.target).value || '')"
+        >
+          <option [selected]="!filterDepartmentId()" value="">
+            {{ 'common.all' | translate }}
+          </option>
+          @for (dept of departments(); track dept.id) {
+            <option [selected]="filterDepartmentId() === dept.id" [value]="dept.id">
+              {{ dept.departmentName }}
+            </option>
+          }
+        </select>
+      </div>
+
+      <div class="col-md-3">
+        <label class="form-label small fw-semibold text-muted">{{
+          'employee.jobTitleName' | translate
+        }}</label>
+        <select
+          class="form-select form-select-sm rounded-3 filter-select w-100"
+          [value]="filterJobTitleId()"
+          (change)="filterJobTitleId.set($any($event.target).value || '')"
+        >
+          <option [selected]="!filterJobTitleId()" value="">
+            {{ 'common.all' | translate }}
+          </option>
+          @for (job of jobTitles(); track job.id) {
+            <option [selected]="filterJobTitleId() === job.id" [value]="job.id">
+              {{ job.jobTitleName }}
+            </option>
+          }
+        </select>
+      </div>
+
+      <div class="col-md-3">
+        <label class="form-label small fw-semibold text-muted">{{
           'employee.employmentStatus' | translate
         }}</label>
         <select
@@ -202,8 +258,19 @@
   </app-toolbar>
 
   @if (isCardView()) {
-    <div id="empCardView" class="emp-card-grid">
-      @for (employee of employees(); track employee.id; let idx = $index) {
+    @if (isLoading()) {
+      <div class="empty-column-placeholder my-3">
+        <span class="spinner-border spinner-border-sm text-primary mb-2" role="status"></span>
+        <div>{{ 'common.loading' | translate }}</div>
+      </div>
+    } @else if (employees().length === 0) {
+      <div class="empty-column-placeholder my-3">
+        <i class="fa-solid fa-inbox fs-3 mb-2 text-muted"></i>
+        <div>{{ 'common.noRecordsFound' | translate }}</div>
+      </div>
+    } @else {
+      <div class="emp-card-grid">
+        @for (employee of employees(); track employee.id; let idx = $index) {
         <div class="emp-card">
           <div class="emp-card-top-bar">
             <input
@@ -318,8 +385,9 @@
             </div>
           </div>
         </div>
-      }
-    </div>
+        }
+      </div>
+    }
   } @else {
     <div id="empListView">
       <app-table>

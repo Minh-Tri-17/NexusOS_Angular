@@ -212,9 +212,10 @@
   </app-toolbar>
 
   @if (isScheduleView()) {
-    <!-- SCHEDULE PLANNER VIEW -->
-    <div id="leaveScheduleView">
-      <div class="schedule-nav-bar d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3">
+    <div>
+      <div
+        class="schedule-nav-bar d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3"
+      >
         <div class="d-flex align-items-center gap-2">
           <button
             type="button"
@@ -270,7 +271,7 @@
             </div>
           </div>
         } @else {
-          <table class="leave-planner-table" id="leavePlannerTable">
+          <table class="leave-planner-table">
             <thead>
               <tr>
                 <th class="col-employee">{{ 'leaveRequest.employeeName' | translate }}</th>
@@ -314,7 +315,9 @@
                           [class]="cell.pillClass"
                           [class.is-selected]="isSelected(cell.request.id)"
                           [title]="
-                            (cell.request.leaveRequestCode ? '#' + cell.request.leaveRequestCode + ' - ' : '') +
+                            (cell.request.leaveRequestCode
+                              ? '#' + cell.request.leaveRequestCode + ' - '
+                              : '') +
                             cell.leaveTypeName +
                             ' (' +
                             cell.dateRangeLabel +
@@ -340,218 +343,221 @@
       </div>
     </div>
   } @else {
-    <!-- LIST / TABLE VIEW -->
-    <app-table>
-      <ng-container table-header>
-        <tr>
-          <th class="col-pin" style="width: 36px; min-width: 36px">
-            <input
-              type="checkbox"
-              aria-label="Select all"
-              [checked]="isSelectedAll()"
-              (click)="handleToggleSelectAll()"
-            />
-          </th>
-          <th class="text-center" style="width: 50px">#</th>
-          @for (column of leaveRequestColumns; track column) {
-            <th>{{ 'leaveRequest.' + column | translate }}</th>
-          }
-          <th style="min-width: 220px">{{ 'common.note' | translate }}</th>
-          <th>{{ 'common.createdAt' | translate }}</th>
-          <th>{{ 'common.createdBy' | translate }}</th>
-          <th>{{ 'common.updatedAt' | translate }}</th>
-          <th>{{ 'common.updatedBy' | translate }}</th>
-        </tr>
-      </ng-container>
+    <div id="leaListView">
+      <app-table>
+        <ng-container table-header>
+          <tr>
+            <th class="col-pin" style="width: 36px; min-width: 36px">
+              <input
+                type="checkbox"
+                aria-label="Select all"
+                [checked]="isSelectedAll()"
+                (click)="handleToggleSelectAll()"
+              />
+            </th>
+            <th class="text-center" style="width: 50px">#</th>
+            @for (column of leaveRequestColumns; track column) {
+              <th>{{ 'leaveRequest.' + column | translate }}</th>
+            }
+            <th style="min-width: 220px">{{ 'common.note' | translate }}</th>
+            <th>{{ 'common.createdAt' | translate }}</th>
+            <th>{{ 'common.createdBy' | translate }}</th>
+            <th>{{ 'common.updatedAt' | translate }}</th>
+            <th>{{ 'common.updatedBy' | translate }}</th>
+          </tr>
+        </ng-container>
 
-      <ng-container table-body>
-        @if (isLoading()) {
-          <app-placeholder [modelColumns]="leaveRequestColumns"></app-placeholder>
-        } @else {
-          @for (item of leaveRequests(); track item.id; let idx = $index) {
-            <tr [class.deleted-row]="filterIsDelete()">
-              <td class="col-pin">
-                <input
-                  type="checkbox"
-                  [aria-label]="item.leaveRequestCode || item.id"
-                  [checked]="isSelected(item.id)"
-                  (click)="handleToggleSelect(item.id)"
-                />
-              </td>
-              <td class="td-cell text-center">{{ fromRecord() + idx }}</td>
+        <ng-container table-body>
+          @if (isLoading()) {
+            <app-placeholder [modelColumns]="leaveRequestColumns"></app-placeholder>
+          } @else {
+            @for (item of leaveRequests(); track item.id; let idx = $index) {
+              <tr [class.deleted-row]="filterIsDelete()">
+                <td class="col-pin">
+                  <input
+                    type="checkbox"
+                    [aria-label]="item.leaveRequestCode || item.id"
+                    [checked]="isSelected(item.id)"
+                    (click)="handleToggleSelect(item.id)"
+                  />
+                </td>
+                <td class="td-cell text-center">{{ fromRecord() + idx }}</td>
 
-              <td class="text-nowrap">
-                @if (item.leaveRequestCode) {
-                  <span class="badge-soft badge-blue">#{{ item.leaveRequestCode }}</span>
-                } @else {
-                  <span class="text-muted opacity-50">—</span>
-                }
-              </td>
-
-              <td class="text-nowrap">
-                @if (
-                  item.employeeName ||
-                  item.employee?.employeeName ||
-                  (item.employeeId && employeeMap().get(item.employeeId))
-                ) {
-                  <div
-                    class="fw-semibold text-main"
-                    [class.text-decoration-line-through]="filterIsDelete()"
-                  >
-                    <i class="fa-solid fa-user me-1 text-secondary opacity-75"></i>
-                    {{
-                      item.employeeName ||
-                        item.employee?.employeeName ||
-                        employeeMap().get(item.employeeId!)
-                    }}
-                  </div>
-                  @if (filterIsDelete()) {
-                    <span
-                      class="badge bg-danger-subtle text-danger border border-danger-subtle fs-xs rounded-pill px-2 py-0.5 mt-1"
-                    >
-                      <i class="fa-solid fa-trash-can me-1"></i>
-                      {{ 'common.softDeleted' | translate }}
-                    </span>
+                <td class="text-nowrap">
+                  @if (item.leaveRequestCode) {
+                    <span class="badge-soft badge-blue">#{{ item.leaveRequestCode }}</span>
+                  } @else {
+                    <span class="text-muted opacity-50">—</span>
                   }
-                } @else {
-                  <span class="text-muted opacity-50">—</span>
-                }
-              </td>
+                </td>
 
-              <td class="text-nowrap">
-                @if (
-                  item.leaveTypeName ||
-                  item.leaveType?.leaveTypeName ||
-                  (item.leaveTypeId && leaveTypeMap().get(item.leaveTypeId))
-                ) {
-                  <span class="text-muted small">
-                    <i class="fa-solid fa-calendar-check me-1 text-secondary opacity-75"></i>
-                    {{
-                      item.leaveTypeName ||
-                        item.leaveType?.leaveTypeName ||
-                        leaveTypeMap().get(item.leaveTypeId!)
-                    }}
-                  </span>
-                } @else {
-                  <span class="text-muted opacity-50">—</span>
-                }
-              </td>
-
-              <td class="text-nowrap">
-                @if (item.startDate) {
-                  <span class="text-muted small">{{ item.startDate | date }}</span>
-                } @else {
-                  <span class="text-muted opacity-50">—</span>
-                }
-              </td>
-
-              <td class="text-nowrap">
-                @if (item.endDate) {
-                  <span class="text-muted small">{{ item.endDate | date }}</span>
-                } @else {
-                  <span class="text-muted opacity-50">—</span>
-                }
-              </td>
-
-              <td class="text-nowrap">
-                @if (item.totalDays != null) {
-                  <span class="badge-soft badge-indigo">
-                    {{ item.totalDays }} {{ 'leaveRequest.days' | translate }}
-                  </span>
-                } @else {
-                  <span class="text-muted opacity-50">—</span>
-                }
-              </td>
-
-              <td style="min-width: 220px">
-                <span class="text-muted small">{{ item.reason | fallback }}</span>
-              </td>
-
-              <td class="text-nowrap">
-                @if (item.fileAttach) {
-                  <a
-                    class="badge-soft badge-blue text-decoration-none"
-                    [href]="item.fileAttach"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <i class="fa-solid fa-paperclip me-1"></i>
-                    {{ 'leaveRequest.viewAttachment' | translate }}
-                  </a>
-                } @else {
-                  <span class="text-muted opacity-50">—</span>
-                }
-              </td>
-
-              <td class="text-nowrap">
-                @if (item.approvalStatus) {
-                  <span
-                    class="badge-soft"
-                    [class]="approvalStatusConfig[item.approvalStatus]?.cssClass ?? 'badge-secondary'"
-                  >
-                    @if (approvalStatusConfig[item.approvalStatus]?.icon) {
-                      <i
-                        class="fa-solid"
-                        [class]="approvalStatusConfig[item.approvalStatus]!.icon"
-                      ></i>
+                <td class="text-nowrap">
+                  @if (
+                    item.employeeName ||
+                    item.employee?.employeeName ||
+                    (item.employeeId && employeeMap().get(item.employeeId))
+                  ) {
+                    <div
+                      class="fw-semibold text-main"
+                      [class.text-decoration-line-through]="filterIsDelete()"
+                    >
+                      <i class="fa-solid fa-user me-1 text-secondary opacity-75"></i>
+                      {{
+                        item.employeeName ||
+                          item.employee?.employeeName ||
+                          employeeMap().get(item.employeeId!)
+                      }}
+                    </div>
+                    @if (filterIsDelete()) {
+                      <span
+                        class="badge bg-danger-subtle text-danger border border-danger-subtle fs-xs rounded-pill px-2 py-0.5 mt-1"
+                      >
+                        <i class="fa-solid fa-trash-can me-1"></i>
+                        {{ 'common.softDeleted' | translate }}
+                      </span>
                     }
-                    {{
-                      approvalStatusConfig[item.approvalStatus]?.label
-                        ? (approvalStatusConfig[item.approvalStatus]!.label | translate)
-                        : item.approvalStatus
-                    }}
-                  </span>
-                } @else {
-                  <span class="text-muted opacity-50">—</span>
-                }
-              </td>
+                  } @else {
+                    <span class="text-muted opacity-50">—</span>
+                  }
+                </td>
 
-              <td>
-                <span class="text-muted small fst-italic">{{ item.note | fallback }}</span>
-              </td>
+                <td class="text-nowrap">
+                  @if (
+                    item.leaveTypeName ||
+                    item.leaveType?.leaveTypeName ||
+                    (item.leaveTypeId && leaveTypeMap().get(item.leaveTypeId))
+                  ) {
+                    <span class="text-muted small">
+                      <i class="fa-solid fa-calendar-check me-1 text-secondary opacity-75"></i>
+                      {{
+                        item.leaveTypeName ||
+                          item.leaveType?.leaveTypeName ||
+                          leaveTypeMap().get(item.leaveTypeId!)
+                      }}
+                    </span>
+                  } @else {
+                    <span class="text-muted opacity-50">—</span>
+                  }
+                </td>
 
-              <td class="text-nowrap">
-                @if (item.createdAt) {
-                  <span class="text-muted small">{{ item.createdAt | date }}</span>
-                } @else {
-                  <span class="text-muted opacity-50">—</span>
-                }
-              </td>
+                <td class="text-nowrap">
+                  @if (item.startDate) {
+                    <span class="text-muted small">{{ item.startDate | date }}</span>
+                  } @else {
+                    <span class="text-muted opacity-50">—</span>
+                  }
+                </td>
 
-              <td class="text-nowrap">
-                @if (item.createdBy) {
-                  <span class="text-muted small">
-                    <i class="fa-regular fa-user me-1 text-secondary opacity-75"></i
-                    >{{ item.createdBy }}</span
-                  >
-                } @else {
-                  <span class="text-muted opacity-50">—</span>
-                }
-              </td>
+                <td class="text-nowrap">
+                  @if (item.endDate) {
+                    <span class="text-muted small">{{ item.endDate | date }}</span>
+                  } @else {
+                    <span class="text-muted opacity-50">—</span>
+                  }
+                </td>
 
-              <td class="text-nowrap">
-                @if (item.updatedAt) {
-                  <span class="text-muted small">{{ item.updatedAt | date }}</span>
-                } @else {
-                  <span class="text-muted opacity-50">—</span>
-                }
-              </td>
+                <td class="text-nowrap">
+                  @if (item.totalDays != null) {
+                    <span class="badge-soft badge-indigo">
+                      {{ item.totalDays }} {{ 'leaveRequest.days' | translate }}
+                    </span>
+                  } @else {
+                    <span class="text-muted opacity-50">—</span>
+                  }
+                </td>
 
-              <td class="text-nowrap">
-                @if (item.updatedBy) {
-                  <span class="text-muted small">
-                    <i class="fa-regular fa-user me-1 text-secondary opacity-75"></i
-                    >{{ item.updatedBy }}</span
-                  >
-                } @else {
-                  <span class="text-muted opacity-50">—</span>
-                }
-              </td>
-            </tr>
+                <td style="min-width: 220px">
+                  <span class="text-muted small">{{ item.reason | fallback }}</span>
+                </td>
+
+                <td class="text-nowrap">
+                  @if (item.fileAttach) {
+                    <a
+                      class="badge-soft badge-blue text-decoration-none"
+                      [href]="item.fileAttach"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <i class="fa-solid fa-paperclip me-1"></i>
+                      {{ 'leaveRequest.viewAttachment' | translate }}
+                    </a>
+                  } @else {
+                    <span class="text-muted opacity-50">—</span>
+                  }
+                </td>
+
+                <td class="text-nowrap">
+                  @if (item.approvalStatus) {
+                    <span
+                      class="badge-soft"
+                      [class]="
+                        approvalStatusConfig[item.approvalStatus]?.cssClass ?? 'badge-secondary'
+                      "
+                    >
+                      @if (approvalStatusConfig[item.approvalStatus]?.icon) {
+                        <i
+                          class="fa-solid"
+                          [class]="approvalStatusConfig[item.approvalStatus]!.icon"
+                        ></i>
+                      }
+                      {{
+                        approvalStatusConfig[item.approvalStatus]?.label
+                          ? (approvalStatusConfig[item.approvalStatus]!.label | translate)
+                          : item.approvalStatus
+                      }}
+                    </span>
+                  } @else {
+                    <span class="text-muted opacity-50">—</span>
+                  }
+                </td>
+
+                <td>
+                  <span class="text-muted small fst-italic">{{ item.note | fallback }}</span>
+                </td>
+
+                <td class="text-nowrap">
+                  @if (item.createdAt) {
+                    <span class="text-muted small">{{ item.createdAt | date }}</span>
+                  } @else {
+                    <span class="text-muted opacity-50">—</span>
+                  }
+                </td>
+
+                <td class="text-nowrap">
+                  @if (item.createdBy) {
+                    <span class="text-muted small">
+                      <i class="fa-regular fa-user me-1 text-secondary opacity-75"></i
+                      >{{ item.createdBy }}</span
+                    >
+                  } @else {
+                    <span class="text-muted opacity-50">—</span>
+                  }
+                </td>
+
+                <td class="text-nowrap">
+                  @if (item.updatedAt) {
+                    <span class="text-muted small">{{ item.updatedAt | date }}</span>
+                  } @else {
+                    <span class="text-muted opacity-50">—</span>
+                  }
+                </td>
+
+                <td class="text-nowrap">
+                  @if (item.updatedBy) {
+                    <span class="text-muted small">
+                      <i class="fa-regular fa-user me-1 text-secondary opacity-75"></i
+                      >{{ item.updatedBy }}</span
+                    >
+                  } @else {
+                    <span class="text-muted opacity-50">—</span>
+                  }
+                </td>
+              </tr>
+            }
           }
-        }
-      </ng-container>
-    </app-table>
+        </ng-container>
+      </app-table>
+    </div>
   }
 
   <app-pagination

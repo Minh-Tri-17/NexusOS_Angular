@@ -1,0 +1,1107 @@
+<app-summary>
+  <ng-container title-header>
+    {{ 'candidate.title' | translate }}
+  </ng-container>
+  <ng-container description>
+    {{ 'candidate.description' | translate }}
+  </ng-container>
+</app-summary>
+
+<div class="erp-card p-4 shadow-sm rounded-4">
+  <app-toolbar
+    [(searchText)]="searchText"
+    (clearFilters)="handleClearFilter()"
+    [(filterIsDelete)]="filterIsDelete"
+  >
+    <ng-container active-filters>
+      @if (filterDepartmentId()) {
+        <span class="filter-chip">
+          <i class="fa-solid fa-building chip-icon"></i>
+          {{ 'candidate.departmentName' | translate }}:
+          <strong>{{ departmentMap().get(filterDepartmentId()) ?? filterDepartmentId() }}</strong>
+          <i class="fa-solid fa-xmark chip-remove-btn" (click)="filterDepartmentId.set('')"></i>
+        </span>
+      }
+      @if (filterJobTitleId()) {
+        <span class="filter-chip">
+          <i class="fa-solid fa-user-tie chip-icon"></i>
+          {{ 'candidate.jobTitleName' | translate }}:
+          <strong>{{ jobTitleMap().get(filterJobTitleId()) ?? filterJobTitleId() }}</strong>
+          <i class="fa-solid fa-xmark chip-remove-btn" (click)="filterJobTitleId.set('')"></i>
+        </span>
+      }
+      @if (filterStage()) {
+        <span class="filter-chip">
+          <i class="fa-solid fa-layer-group chip-icon"></i>
+          {{ 'candidate.stage' | translate }}:
+          <strong>{{
+            stageConfig[filterStage()]?.label
+              ? (stageConfig[filterStage()].label | translate)
+              : filterStage()
+          }}</strong>
+          <i class="fa-solid fa-xmark chip-remove-btn" (click)="filterStage.set('')"></i>
+        </span>
+      }
+      @if (filterMatchLevel()) {
+        <span class="filter-chip">
+          <i class="fa-solid fa-sparkles chip-icon"></i>
+          {{ 'candidate.matchScoreLevel' | translate }}:
+          <strong>{{
+            matchLevelConfig[filterMatchLevel()]?.label
+              ? (matchLevelConfig[filterMatchLevel()].label | translate)
+              : filterMatchLevel()
+          }}</strong>
+          <i class="fa-solid fa-xmark chip-remove-btn" (click)="filterMatchLevel.set('')"></i>
+        </span>
+      }
+      @if (filterGender()) {
+        <span class="filter-chip">
+          <i class="fa-solid fa-venus-mars chip-icon"></i>
+          {{ 'candidate.gender' | translate }}:
+          <strong>{{
+            genderConfig[filterGender()]?.label
+              ? (genderConfig[filterGender()].label | translate)
+              : filterGender()
+          }}</strong>
+          <i class="fa-solid fa-xmark chip-remove-btn" (click)="filterGender.set('')"></i>
+        </span>
+      }
+    </ng-container>
+
+    <ng-container action-buttons>
+      <div class="view-toggle-group" role="group" aria-label="View mode">
+        <button
+          type="button"
+          class="view-toggle-btn"
+          [title]="'candidate.kanbanView' | translate"
+          [class.active]="isKanbanView()"
+          (click)="handleViewKanban()"
+        >
+          <i class="fa-solid fa-table-columns"></i>
+          <span class="d-none d-md-inline">{{ 'candidate.kanbanView' | translate }}</span>
+        </button>
+
+        <button
+          type="button"
+          class="view-toggle-btn"
+          [title]="'common.listView' | translate"
+          [class.active]="!isKanbanView()"
+          (click)="handleViewList()"
+        >
+          <i class="fa-solid fa-list"></i>
+          <span class="d-none d-md-inline">{{ 'common.listView' | translate }}</span>
+        </button>
+      </div>
+
+      <div class="action-bar-divider mx-1"></div>
+
+      <div class="d-flex align-items-center gap-2">
+        @if (authService.hasPermission(permissions.create)) {
+          <button
+            type="button"
+            class="btn btn-sm btn-pastel-green d-inline-flex align-items-center gap-2 px-3 py-2 rounded-3 shadow-xs"
+            (click)="handleOpenCreate()"
+          >
+            <i class="fa-solid fa-user-plus"></i> {{ 'common.create' | translate }}
+          </button>
+        }
+        @if (authService.hasPermission(permissions.update)) {
+          <button
+            type="button"
+            class="btn btn-sm btn-pastel-orange d-inline-flex align-items-center gap-2 px-3 py-2 rounded-3 shadow-xs"
+            [disabled]="selectedIds().size !== 1"
+            (click)="handleOpenUpdate()"
+          >
+            <i class="fa-solid fa-pen-to-square"></i> {{ 'common.edit' | translate }}
+          </button>
+        }
+        @if (authService.hasPermission(permissions.delete)) {
+          <button
+            type="button"
+            class="btn btn-sm btn-pastel-red d-inline-flex align-items-center gap-2 px-3 py-2 rounded-3 shadow-xs"
+            [disabled]="selectedIds().size < 1"
+            (click)="handleDeleteSelected()"
+          >
+            <i class="fa-solid fa-trash-can"></i> {{ 'common.delete' | translate }}
+          </button>
+        }
+      </div>
+
+      @if (
+        authService.hasAnyPermission([permissions.import, permissions.export]) &&
+        authService.hasAnyPermission([permissions.create, permissions.update, permissions.delete])
+      ) {
+        <div class="action-bar-divider mx-1"></div>
+      }
+
+      <div class="d-flex align-items-center gap-2">
+        @if (authService.hasPermission(permissions.import)) {
+          <button
+            type="button"
+            class="btn btn-sm btn-pastel-indigo d-inline-flex align-items-center gap-2 px-3 py-2 rounded-3 shadow-xs"
+            (click)="openImportModal()"
+          >
+            <i class="fa-solid fa-file-import"></i> {{ 'common.import' | translate }}
+          </button>
+        }
+        @if (authService.hasPermission(permissions.export)) {
+          <button
+            type="button"
+            class="btn btn-sm btn-pastel-indigo d-inline-flex align-items-center gap-2 px-3 py-2 rounded-3 shadow-xs"
+            (click)="openExportModal()"
+          >
+            <i class="fa-solid fa-file-export"></i> {{ 'common.export' | translate }}
+          </button>
+        }
+      </div>
+    </ng-container>
+
+    <ng-container filter-matrix>
+      <div class="col-md-3">
+        <label class="form-label small fw-semibold text-muted">{{
+          'candidate.departmentName' | translate
+        }}</label>
+        <select
+          class="form-select form-select-sm rounded-3 filter-select w-100"
+          [value]="filterDepartmentId()"
+          (change)="filterDepartmentId.set($any($event.target).value || '')"
+        >
+          <option [selected]="!filterDepartmentId()" value="">
+            {{ 'common.all' | translate }}
+          </option>
+          @for (dept of departments(); track dept.id) {
+            <option [selected]="filterDepartmentId() === dept.id" [value]="dept.id">
+              {{ dept.departmentName }}
+            </option>
+          }
+        </select>
+      </div>
+
+      <div class="col-md-3">
+        <label class="form-label small fw-semibold text-muted">{{
+          'candidate.jobTitleName' | translate
+        }}</label>
+        <select
+          class="form-select form-select-sm rounded-3 filter-select w-100"
+          [value]="filterJobTitleId()"
+          (change)="filterJobTitleId.set($any($event.target).value || '')"
+        >
+          <option [selected]="!filterJobTitleId()" value="">
+            {{ 'common.all' | translate }}
+          </option>
+          @for (job of jobTitles(); track job.id) {
+            <option [selected]="filterJobTitleId() === job.id" [value]="job.id">
+              {{ job.jobTitleName }}
+            </option>
+          }
+        </select>
+      </div>
+
+      <div class="col-md-3">
+        <label class="form-label small fw-semibold text-muted">{{
+          'candidate.stage' | translate
+        }}</label>
+        <select
+          class="form-select form-select-sm rounded-3 filter-select w-100"
+          [value]="filterStage()"
+          (change)="filterStage.set($any($event.target).value || '')"
+        >
+          <option [selected]="!filterStage()" value="">
+            {{ 'common.all' | translate }}
+          </option>
+          @for (stage of stages; track stage.value) {
+            <option [selected]="filterStage() === stage.value" [value]="stage.value">
+              {{ stage.label | translate }}
+            </option>
+          }
+        </select>
+      </div>
+
+      <div class="col-md-3">
+        <label class="form-label small fw-semibold text-muted">{{
+          'candidate.matchScoreLevel' | translate
+        }}</label>
+        <select
+          class="form-select form-select-sm rounded-3 filter-select w-100"
+          [value]="filterMatchLevel()"
+          (change)="filterMatchLevel.set($any($event.target).value || '')"
+        >
+          <option [selected]="!filterMatchLevel()" value="">
+            {{ 'common.all' | translate }}
+          </option>
+          @for (level of matchLevels; track level.value) {
+            <option [selected]="filterMatchLevel() === level.value" [value]="level.value">
+              {{ level.label | translate }}
+            </option>
+          }
+        </select>
+      </div>
+
+      <div class="col-md-3">
+        <label class="form-label small fw-semibold text-muted">{{
+          'candidate.gender' | translate
+        }}</label>
+        <select
+          class="form-select form-select-sm rounded-3 filter-select w-100"
+          [value]="filterGender()"
+          (change)="filterGender.set($any($event.target).value || '')"
+        >
+          <option [selected]="!filterGender()" value="">
+            {{ 'common.all' | translate }}
+          </option>
+          @for (gender of genders; track gender.value) {
+            <option [selected]="filterGender() === gender.value" [value]="gender.value">
+              {{ gender.label | translate }}
+            </option>
+          }
+        </select>
+      </div>
+    </ng-container>
+  </app-toolbar>
+
+  @if (isKanbanView()) {
+    <div class="pipeline-board-container">
+      @for (col of pipelineColumns(); track col.stage) {
+        <div
+          class="pipeline-column"
+          [class]="col.config.columnClass"
+          [class.drag-over]="dragOverStage() === col.stage"
+          [attr.data-stage]="col.config.key"
+          (dragover)="handleDragOver($event, col.stage)"
+          (dragleave)="handleDragLeave(col.stage)"
+          (drop)="handleDrop($event, col.stage)"
+        >
+          <div class="column-header">
+            <div class="d-flex align-items-center justify-content-between">
+              <div class="d-flex align-items-center gap-2">
+                <span class="column-dot" [class]="col.config.dotClass"></span>
+                <h3 class="column-title" [class]="col.config.textClass">
+                  {{ col.config.label | translate }}
+                </h3>
+              </div>
+              <span class="column-count-badge" [class]="col.config.cssClass">
+                {{ col.totalCount }}
+              </span>
+            </div>
+          </div>
+
+          <div class="column-body">
+            @if (isLoading()) {
+              <div class="empty-column-placeholder">
+                <span
+                  class="spinner-border spinner-border-sm text-primary mb-2"
+                  role="status"
+                ></span>
+                <div>{{ 'common.loading' | translate }}</div>
+              </div>
+            } @else if (col.visibleItems.length === 0) {
+              <div class="empty-column-placeholder">
+                <i class="fa-solid fa-inbox fs-3 mb-2 text-muted"></i>
+                <div>{{ 'candidate.noCandidatesInStage' | translate }}</div>
+              </div>
+            } @else {
+              @for (candidate of col.visibleItems; track candidate.id) {
+                <div
+                  class="candidate-card"
+                  [class.dragging]="draggedCandidateId() === candidate.id"
+                  [class.selected-card]="isSelected(candidate.id)"
+                  draggable="true"
+                  (dragstart)="handleDragStart($event, candidate)"
+                  (dragend)="handleDragEnd()"
+                >
+                  <div
+                    class="candidate-card-header d-flex align-items-center justify-content-between mb-2"
+                  >
+                    <input
+                      type="checkbox"
+                      class="form-check-input m-0"
+                      [aria-label]="candidate.candidateName"
+                      [checked]="isSelected(candidate.id)"
+                      (click)="$event.stopPropagation(); handleToggleSelect(candidate.id)"
+                    />
+                    <div class="d-flex align-items-center gap-1 ms-auto">
+                      @if (filterIsDelete()) {
+                        <span
+                          class="badge bg-danger-subtle text-danger border border-danger-subtle fs-xs rounded-pill"
+                        >
+                          <i class="fa-solid fa-trash-can me-1"></i>
+                          {{ 'common.softDeleted' | translate }}
+                        </span>
+                      }
+                      <button
+                        type="button"
+                        class="btn-star-candidate"
+                        [class.starred]="candidate.isBookmarked"
+                        [title]="'candidate.starCandidate' | translate"
+                        (click)="handleToggleStar($event, candidate)"
+                      >
+                        <i
+                          [class]="
+                            candidate.isBookmarked ? 'fa-solid fa-star' : 'fa-regular fa-star'
+                          "
+                        ></i>
+                      </button>
+                      <button
+                        type="button"
+                        class="card-action-btn"
+                        [title]="'candidate.viewProfile' | translate"
+                        (click)="openDetailModal(candidateDetailModalTpl, candidate)"
+                      >
+                        <i class="fa-regular fa-eye text-primary"></i>
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="d-flex align-items-center gap-2.5 mb-2">
+                    <img
+                      [src]="
+                        candidate.gender === Gender.Male
+                          ? '/images/avatar-male.jpg'
+                          : '/images/avatar-female.jpg'
+                      "
+                      [alt]="candidate.candidateName"
+                      class="candidate-avatar"
+                    />
+                    <div class="min-w-0">
+                      <h4
+                        class="candidate-name text-truncate"
+                        [class.text-decoration-line-through]="filterIsDelete()"
+                        (click)="openDetailModal(candidateDetailModalTpl, candidate)"
+                      >
+                        {{ candidate.candidateName }}
+                      </h4>
+                      <div class="candidate-role text-truncate">
+                        {{ getJobTitleName(candidate) | fallback }}
+                      </div>
+                      @if (candidate.matchScore != null) {
+                        <div
+                          class="match-score-pill"
+                          [class]="getMatchScoreClass(candidate.matchScore)"
+                        >
+                          <i class="fa-solid fa-sparkles"></i>
+                          <span
+                            >{{ candidate.matchScore }}% {{ 'candidate.match' | translate }}</span
+                          >
+                        </div>
+                      }
+                    </div>
+                  </div>
+
+                  <div class="candidate-card-footer">
+                    <span class="status-tag" [class]="col.config.tagClass">
+                      <i class="fa-regular fa-clock"></i>
+                      <span>
+                        @if (candidate.appliedDate) {
+                          {{ candidate.appliedDate | date: 'MMM d, y' }}
+                        } @else {
+                          {{ col.config.subtextKey | translate }}
+                        }
+                      </span>
+                    </span>
+                    @if (candidate.candidateCode) {
+                      <span class="text-muted fw-semibold">#{{ candidate.candidateCode }}</span>
+                    }
+                  </div>
+                </div>
+              }
+            }
+          </div>
+
+          <div class="column-footer">
+            <button
+              type="button"
+              class="btn-more-candidates"
+              [class]="col.config.textClass"
+              (click)="openStageCandidatesModal(stageCandidatesModalTpl, col.stage)"
+            >
+              <i class="fa-solid fa-plus me-1"></i>
+              <span>+ {{ col.moreCount }} {{ 'candidate.moreCandidates' | translate }}</span>
+            </button>
+          </div>
+        </div>
+      }
+    </div>
+  } @else {
+    <div id="recListView">
+      <app-table>
+        <ng-container table-header>
+          <tr>
+            <th class="col-pin" style="width: 36px; min-width: 36px">
+              <input
+                type="checkbox"
+                aria-label="Select all"
+                [checked]="isSelectedAll()"
+                (click)="handleToggleSelectAll()"
+              />
+            </th>
+            <th class="text-center" style="width: 50px">#</th>
+            <th class="text-center" style="width: 60px">{{ 'candidate.action' | translate }}</th>
+            @for (column of candidateColumns; track column) {
+              <th>{{ 'candidate.' + column | translate }}</th>
+            }
+            <th style="min-width: 220px">{{ 'common.note' | translate }}</th>
+            <th>{{ 'common.createdAt' | translate }}</th>
+            <th>{{ 'common.createdBy' | translate }}</th>
+            <th>{{ 'common.updatedAt' | translate }}</th>
+            <th>{{ 'common.updatedBy' | translate }}</th>
+          </tr>
+        </ng-container>
+
+        <ng-container table-body>
+          @if (isLoading()) {
+            <app-placeholder [modelColumns]="candidateColumns"></app-placeholder>
+          } @else {
+            @for (candidate of candidates(); track candidate.id; let idx = $index) {
+              <tr [class.deleted-row]="filterIsDelete()">
+                <td class="col-pin">
+                  <input
+                    type="checkbox"
+                    [aria-label]="candidate.candidateName"
+                    [checked]="isSelected(candidate.id)"
+                    (click)="handleToggleSelect(candidate.id)"
+                  />
+                </td>
+                <td class="td-cell text-center">{{ fromRecord() + idx }}</td>
+
+                <td class="text-center">
+                  <button
+                    type="button"
+                    class="btn-action-eye"
+                    [title]="'candidate.viewProfile' | translate"
+                    (click)="openDetailModal(candidateDetailModalTpl, candidate)"
+                  >
+                    <i class="fa-regular fa-eye"></i>
+                  </button>
+                </td>
+
+                <td class="text-nowrap">
+                  @if (candidate.candidateCode) {
+                    <span class="badge-soft badge-blue">#{{ candidate.candidateCode }}</span>
+                  } @else {
+                    <span class="text-muted opacity-50">—</span>
+                  }
+                </td>
+
+                <td class="text-nowrap">
+                  @if (candidate.candidateName) {
+                    <div
+                      class="fw-semibold text-main cursor-pointer"
+                      [class.text-decoration-line-through]="filterIsDelete()"
+                      (click)="openDetailModal(candidateDetailModalTpl, candidate)"
+                    >
+                      {{ candidate.candidateName }}
+                    </div>
+                    @if (filterIsDelete()) {
+                      <span
+                        class="badge bg-danger-subtle text-danger border border-danger-subtle fs-xs rounded-pill px-2 py-0.5 mt-1"
+                      >
+                        <i class="fa-solid fa-trash-can me-1"></i>
+                        {{ 'common.softDeleted' | translate }}
+                      </span>
+                    }
+                  } @else {
+                    <span class="text-muted opacity-50">—</span>
+                  }
+                </td>
+
+                <td class="text-nowrap">
+                  @if (candidate.gender) {
+                    <span
+                      class="badge-soft"
+                      [class]="genderConfig[candidate.gender]?.cssClass ?? 'badge-secondary'"
+                    >
+                      @if (genderConfig[candidate.gender]?.icon) {
+                        <i class="fa-solid" [class]="genderConfig[candidate.gender]!.icon"></i>
+                      }
+                      {{
+                        genderConfig[candidate.gender]?.label
+                          ? (genderConfig[candidate.gender]!.label | translate)
+                          : candidate.gender
+                      }}
+                    </span>
+                  } @else {
+                    <span class="text-muted opacity-50">—</span>
+                  }
+                </td>
+
+                <td class="text-nowrap">
+                  @if (getDepartmentName(candidate)) {
+                    <span class="text-muted">{{ getDepartmentName(candidate) }}</span>
+                  } @else {
+                    <span class="text-muted opacity-50">—</span>
+                  }
+                </td>
+
+                <td class="text-nowrap">
+                  @if (getJobTitleName(candidate)) {
+                    <span class="text-muted">{{ getJobTitleName(candidate) }}</span>
+                  } @else {
+                    <span class="text-muted opacity-50">—</span>
+                  }
+                </td>
+
+                <td class="text-nowrap">
+                  @if (candidate.storeName) {
+                    <span class="text-muted">{{ candidate.storeName }}</span>
+                  } @else {
+                    <span class="text-muted opacity-50">—</span>
+                  }
+                </td>
+
+                <td class="text-nowrap">
+                  @if (candidate.photo) {
+                    <span class="text-muted">{{ candidate.photo }}</span>
+                  } @else {
+                    <span class="text-muted opacity-50">—</span>
+                  }
+                </td>
+
+                <td class="text-nowrap">
+                  <span class="text-muted small">{{ candidate.email | mask: 'email' }}</span>
+                </td>
+
+                <td class="text-nowrap">
+                  <span class="text-muted small">{{ candidate.phoneNumber | mask: 'phone' }}</span>
+                </td>
+
+                <td class="text-nowrap">
+                  <span class="text-muted small">
+                    @if (candidate.workLocation) {
+                      <i class="fa-solid fa-location-dot text-secondary opacity-75 me-1"></i>
+                    }
+                    {{ candidate.workLocation | fallback }}
+                  </span>
+                </td>
+
+                <td class="text-nowrap">
+                  @if (candidate.stage) {
+                    <span
+                      class="badge-soft"
+                      [class]="
+                        stageConfig[normalizeStage(candidate.stage)]?.cssClass ?? 'badge-secondary'
+                      "
+                    >
+                      @if (stageConfig[normalizeStage(candidate.stage)]?.icon) {
+                        <i
+                          class="fa-solid"
+                          [class]="stageConfig[normalizeStage(candidate.stage)]!.icon"
+                        ></i>
+                      }
+                      {{
+                        stageConfig[normalizeStage(candidate.stage)]?.label
+                          ? (stageConfig[normalizeStage(candidate.stage)]!.label | translate)
+                          : candidate.stage
+                      }}
+                    </span>
+                  } @else {
+                    <span class="text-muted opacity-50">—</span>
+                  }
+                </td>
+
+                <td class="text-nowrap">
+                  @if (candidate.appliedDate) {
+                    <span class="text-muted small">{{ candidate.appliedDate | date }}</span>
+                  } @else {
+                    <span class="text-muted opacity-50">—</span>
+                  }
+                </td>
+
+                <td class="text-nowrap">
+                  @if (candidate.expectedSalary != null) {
+                    <span class="fw-semibold text-main">
+                      {{ candidate.expectedSalary | currencyFormat }}
+                    </span>
+                  } @else {
+                    <span class="text-muted opacity-50">—</span>
+                  }
+                </td>
+
+                <td class="text-nowrap">
+                  @if (candidate.experienceYears != null) {
+                    <span class="badge-soft badge-indigo">
+                      {{ candidate.experienceYears }} {{ 'candidate.years' | translate }}
+                    </span>
+                  } @else {
+                    <span class="text-muted opacity-50">—</span>
+                  }
+                </td>
+
+                <td class="text-nowrap">
+                  @if (candidate.matchScore != null) {
+                    <div
+                      class="match-score-pill"
+                      [class]="getMatchScoreClass(candidate.matchScore)"
+                    >
+                      <i class="fa-solid fa-sparkles"></i>
+                      <span>{{ candidate.matchScore }}%</span>
+                    </div>
+                  } @else {
+                    <span class="text-muted opacity-50">—</span>
+                  }
+                </td>
+
+                <td style="min-width: 200px">
+                  <span class="text-muted small">{{ candidate.skills | fallback }}</span>
+                </td>
+
+                <td class="text-nowrap">
+                  @if (candidate.fileAttach) {
+                    <a
+                      class="badge-soft badge-blue text-decoration-none"
+                      [href]="candidate.fileAttach"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <i class="fa-solid fa-paperclip me-1"></i>
+                      {{ 'candidate.viewAttachment' | translate }}
+                    </a>
+                  } @else {
+                    <span class="text-muted opacity-50">—</span>
+                  }
+                </td>
+
+                <td style="min-width: 200px">
+                  <span class="text-muted small">{{ candidate.interviewerNote | fallback }}</span>
+                </td>
+
+                <td>
+                  <span class="text-muted small fst-italic">{{ candidate.note | fallback }}</span>
+                </td>
+
+                <td class="text-nowrap">
+                  @if (candidate.createdAt) {
+                    <span class="text-muted small">{{ candidate.createdAt | date }}</span>
+                  } @else {
+                    <span class="text-muted opacity-50">—</span>
+                  }
+                </td>
+
+                <td class="text-nowrap">
+                  @if (candidate.createdBy) {
+                    <span class="text-muted small">
+                      <i class="fa-regular fa-user me-1 text-secondary opacity-75"></i
+                      >{{ candidate.createdBy }}</span
+                    >
+                  } @else {
+                    <span class="text-muted opacity-50">—</span>
+                  }
+                </td>
+
+                <td class="text-nowrap">
+                  @if (candidate.updatedAt) {
+                    <span class="text-muted small">{{ candidate.updatedAt | date }}</span>
+                  } @else {
+                    <span class="text-muted opacity-50">—</span>
+                  }
+                </td>
+
+                <td class="text-nowrap">
+                  @if (candidate.updatedBy) {
+                    <span class="text-muted small">
+                      <i class="fa-regular fa-user me-1 text-secondary opacity-75"></i
+                      >{{ candidate.updatedBy }}</span
+                    >
+                  } @else {
+                    <span class="text-muted opacity-50">—</span>
+                  }
+                </td>
+              </tr>
+            }
+          }
+        </ng-container>
+      </app-table>
+    </div>
+
+    <app-pagination
+      [(pageIndex)]="pageIndex"
+      [(pageSize)]="pageSize"
+      [totalRecord]="totalRecord()"
+      [recordRange]="recordRange()"
+      [pageCount]="pageCount()"
+    ></app-pagination>
+  }
+</div>
+
+<!-- ==========================================
+     1. CANDIDATE DETAIL PROFILE MODAL
+     ========================================== -->
+<ng-template #candidateDetailModalTpl let-modal>
+  @if (detailCandidate(); as item) {
+    <div class="candidate-detail-modal-shell">
+      <div class="modal-bg-glow"></div>
+      <div class="modal-top-accent-bar"></div>
+
+      <div
+        class="modal-header border-0 px-4 pt-4 pb-3 position-relative d-flex align-items-start justify-content-between z-1"
+      >
+      <div class="d-flex align-items-center gap-3">
+        <div class="app-modal-avatar-wrap">
+          <img
+            [src]="
+              item.gender === Gender.Male
+                ? '/images/avatar-male.jpg'
+                : '/images/avatar-female.jpg'
+            "
+            [alt]="item.candidateName"
+          />
+        </div>
+        <div>
+          <div class="modal-eyebrow-tag mb-1">
+            <span class="eyebrow-dot"></span> {{ 'candidate.detailProfileEyebrow' | translate }}
+          </div>
+          <h5 class="modal-title fw-bold text-dark mb-0 d-flex align-items-center gap-2">
+            <span>{{ item.candidateName }}</span>
+            @if (item.candidateCode) {
+              <span class="badge-soft badge-blue fs-xs">#{{ item.candidateCode }}</span>
+            }
+          </h5>
+          <div class="d-flex align-items-center flex-wrap gap-2 mt-1">
+            <span class="text-muted small fw-medium">{{ getJobTitleName(item) | fallback }}</span>
+            <div class="app-modal-hero-badges d-inline-flex align-items-center gap-2 ms-1">
+              @if (item.matchScore != null) {
+                <span class="match-score-pill" [class]="getMatchScoreClass(item.matchScore)">
+                  <i class="fa-solid fa-sparkles"></i>
+                  <span>{{ item.matchScore }}% {{ 'candidate.match' | translate }}</span>
+                </span>
+              }
+              @if (item.stage) {
+                <span
+                  class="badge-soft"
+                  [class]="stageConfig[normalizeStage(item.stage)]?.cssClass ?? 'badge-green'"
+                >
+                  @if (stageConfig[normalizeStage(item.stage)]?.icon) {
+                    <i class="fa-solid" [class]="stageConfig[normalizeStage(item.stage)]!.icon"></i>
+                  }
+                  {{
+                    stageConfig[normalizeStage(item.stage)]?.label
+                      ? (stageConfig[normalizeStage(item.stage)]!.label | translate)
+                      : item.stage
+                  }}
+                </span>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="d-flex align-items-center gap-2">
+        <button
+          type="button"
+          class="custom-btn-close ms-1"
+          (click)="modal.dismiss()"
+          aria-label="Close"
+        >
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="modal-body px-4 py-3 position-relative z-1 app-modal-body">
+      <p class="app-modal-section-title">
+        {{ 'candidate.contactAndApplication' | translate }}
+      </p>
+      <div class="app-modal-info-grid">
+        <div class="app-modal-info-item">
+          <div class="app-modal-info-icon blue"><i class="fa-solid fa-envelope"></i></div>
+          <div class="app-modal-info-text">
+            <div class="app-modal-info-label">{{ 'candidate.email' | translate }}</div>
+            <div class="app-modal-info-value">{{ item.email | fallback }}</div>
+          </div>
+        </div>
+        <div class="app-modal-info-item">
+          <div class="app-modal-info-icon green"><i class="fa-solid fa-phone"></i></div>
+          <div class="app-modal-info-text">
+            <div class="app-modal-info-label">{{ 'candidate.phoneNumber' | translate }}</div>
+            <div class="app-modal-info-value">{{ item.phoneNumber | fallback }}</div>
+          </div>
+        </div>
+        <div class="app-modal-info-item">
+          <div class="app-modal-info-icon purple"><i class="fa-solid fa-building"></i></div>
+          <div class="app-modal-info-text">
+            <div class="app-modal-info-label">{{ 'candidate.departmentName' | translate }}</div>
+            <div class="app-modal-info-value">{{ getDepartmentName(item) | fallback }}</div>
+          </div>
+        </div>
+        <div class="app-modal-info-item">
+          <div class="app-modal-info-icon rose"><i class="fa-solid fa-location-dot"></i></div>
+          <div class="app-modal-info-text">
+            <div class="app-modal-info-label">{{ 'candidate.workLocation' | translate }}</div>
+            <div class="app-modal-info-value">{{ item.workLocation | fallback }}</div>
+          </div>
+        </div>
+        <div class="app-modal-info-item">
+          <div class="app-modal-info-icon amber"><i class="fa-solid fa-money-bill-wave"></i></div>
+          <div class="app-modal-info-text">
+            <div class="app-modal-info-label">{{ 'candidate.expectedSalary' | translate }}</div>
+            <div class="app-modal-info-value">{{ item.expectedSalary | currencyFormat }}</div>
+          </div>
+        </div>
+        <div class="app-modal-info-item">
+          <div class="app-modal-info-icon teal"><i class="fa-solid fa-calendar-check"></i></div>
+          <div class="app-modal-info-text">
+            <div class="app-modal-info-label">{{ 'candidate.appliedDate' | translate }}</div>
+            <div class="app-modal-info-value">
+              @if (item.appliedDate) {
+                {{ item.appliedDate | date: 'mediumDate' }}
+              } @else {
+                —
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <p class="app-modal-section-title">
+        {{ 'candidate.aiMatchingAndMetrics' | translate }}
+      </p>
+      <div class="app-modal-stat-row">
+        <div class="app-modal-stat-card">
+          <div class="app-modal-stat-val text-primary">
+            {{ item.matchScore != null ? item.matchScore + '%' : '—' }}
+          </div>
+          <div class="app-modal-stat-lbl">{{ 'candidate.matchScore' | translate }}</div>
+        </div>
+        <div class="app-modal-stat-card">
+          <div class="app-modal-stat-val">
+            {{
+              item.experienceYears != null
+                ? item.experienceYears + ' ' + ('candidate.years' | translate)
+                : '—'
+            }}
+          </div>
+          <div class="app-modal-stat-lbl">{{ 'candidate.experienceYears' | translate }}</div>
+        </div>
+        <div class="app-modal-stat-card">
+          <div class="app-modal-stat-val">{{ getSkillsList(item.skills).length }}</div>
+          <div class="app-modal-stat-lbl">{{ 'candidate.matchedSkills' | translate }}</div>
+        </div>
+      </div>
+
+      <p class="app-modal-section-title">{{ 'candidate.skills' | translate }}</p>
+      <div class="app-modal-skills mb-4">
+        @for (skill of getSkillsList(item.skills); track skill) {
+          <span class="app-modal-skill-chip">
+            <i class="fa-solid fa-check text-primary"></i> {{ skill }}
+          </span>
+        } @empty {
+          <span class="text-muted small">{{ 'common.noRecordsFound' | translate }}</span>
+        }
+      </div>
+
+      <p class="app-modal-section-title">
+        {{ 'candidate.notesAndAttachment' | translate }}
+      </p>
+      <div class="p-3 bg-light rounded-3 border mb-3">
+        <p class="small text-muted mb-0">
+          {{ item.interviewerNote || item.note | fallback }}
+        </p>
+      </div>
+
+      @if (item.fileAttach) {
+        <div
+          class="d-flex align-items-center justify-content-between p-3 rounded-3 border bg-surface"
+        >
+          <div class="d-flex align-items-center gap-2">
+            <i class="fa-solid fa-file-pdf text-danger fs-4"></i>
+            <div>
+              <div class="fw-semibold text-dark small">{{ item.fileAttach }}</div>
+              <div class="text-muted text-xs">{{ 'candidate.verifiedResume' | translate }}</div>
+            </div>
+          </div>
+          <a
+            class="btn btn-sm btn-pastel-indigo rounded-3 text-decoration-none"
+            [href]="item.fileAttach"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <i class="fa-solid fa-download me-1"></i>{{ 'candidate.downloadResume' | translate }}
+          </a>
+        </div>
+      }
+    </div>
+
+    <div
+      class="modal-footer px-4 py-3 border-top-0 d-flex align-items-center justify-content-between modal-footer-custom z-1"
+    >
+      <div class="d-none d-md-flex align-items-center gap-2 text-muted small">
+        <i class="fa-solid fa-shield-halved text-primary opacity-75"></i>
+        <span>{{ 'common.enterpriseEncrypted' | translate }}</span>
+        <span class="modal-footer-divider"></span>
+        <span class="d-inline-flex align-items-center gap-1">
+          <kbd class="kbd-badge">ESC</kbd> {{ 'common.close' | translate }}
+        </span>
+      </div>
+
+      <div class="d-flex align-items-center gap-2 ms-auto">
+        <button
+          type="button"
+          class="btn btn-sm btn-pastel-slate px-3 py-2 rounded-3"
+          (click)="modal.close()"
+        >
+          <i class="fa-solid fa-xmark me-1"></i> {{ 'common.close' | translate }}
+        </button>
+      </div>
+    </div>
+    </div>
+  }
+</ng-template>
+
+<!-- ==========================================
+     2. STAGE CANDIDATES LIST MODAL
+     ========================================== -->
+<ng-template #stageCandidatesModalTpl let-modal>
+  <div class="candidate-detail-modal-shell">
+    <div class="modal-bg-glow"></div>
+    <div class="modal-top-accent-bar"></div>
+
+    <div
+      class="modal-header border-0 px-4 pt-4 pb-3 position-relative d-flex align-items-start justify-content-between z-1"
+    >
+    <div class="d-flex align-items-center gap-3">
+      <div
+        class="app-modal-avatar-wrap d-flex align-items-center justify-content-center bg-primary-subtle text-primary rounded-circle"
+        style="width: 56px; height: 56px; background: var(--bg-hover)"
+      >
+        <i class="fa-solid fa-users fs-4 text-primary"></i>
+      </div>
+      <div>
+        <div class="modal-eyebrow-tag mb-1">
+          <span class="eyebrow-dot"></span> {{ 'candidate.pipelineStageEyebrow' | translate }}
+        </div>
+        <h5 class="modal-title fw-bold text-dark mb-0 d-flex align-items-center gap-2">
+          {{ stageConfig[activeStageModalStage()]?.label | translate }}
+        </h5>
+        <div class="d-flex align-items-center flex-wrap gap-2 mt-1">
+          <span class="text-muted small fw-medium">
+            {{ 'candidate.allCandidatesInStageDesc' | translate }}
+          </span>
+          <div class="app-modal-hero-badges d-inline-flex align-items-center gap-2 ms-1">
+            <span class="match-score-pill match-high">
+              {{ activeStageCandidates().length }} {{ 'candidate.candidatesCount' | translate }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="d-flex align-items-center gap-2">
+      <button
+        type="button"
+        class="custom-btn-close ms-1"
+        (click)="modal.dismiss()"
+        aria-label="Close"
+      >
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+  </div>
+
+  <div class="px-4 py-3 border-bottom border-light position-relative z-2 bg-subtle">
+    <div class="modal-search-box position-relative">
+      <i class="fa-solid fa-magnifying-glass modal-search-icon"></i>
+      <input
+        type="text"
+        class="form-control modal-search-input"
+        [placeholder]="'candidate.searchStagePlaceholder' | translate"
+        [value]="stageModalSearchText()"
+        (input)="stageModalSearchText.set($any($event.target).value || '')"
+      />
+      @if (stageModalSearchText()) {
+        <button
+          type="button"
+          class="modal-search-clear btn border-0 p-0"
+          [title]="'common.clearAll' | translate"
+          (click)="stageModalSearchText.set('')"
+        >
+          <i class="fa-solid fa-circle-xmark"></i>
+        </button>
+      }
+    </div>
+  </div>
+
+  <div class="modal-body px-4 py-4 position-relative z-1 app-modal-body">
+    <div class="d-flex flex-column gap-2">
+      @for (c of activeStageCandidates(); track c.id) {
+        <div
+          class="d-flex align-items-center justify-content-between rounded-4 border bg-surface stage-modal-item-card"
+        >
+          <div class="d-flex align-items-center gap-3">
+            <img
+              [src]="
+                c.gender === Gender.Male
+                  ? '/images/avatar-male.jpg'
+                  : '/images/avatar-female.jpg'
+              "
+              class="rounded-circle shadow-xs"
+              style="width: 48px; height: 48px; object-fit: cover"
+              [alt]="c.candidateName"
+            />
+            <div>
+              <div class="d-flex align-items-center gap-2 mb-1">
+                <h6
+                  class="fw-bold text-main mb-0 fs-6 cursor-pointer"
+                  (click)="openDetailFromStageModal(candidateDetailModalTpl, c)"
+                >
+                  {{ c.candidateName }}
+                </h6>
+                @if (getDepartmentName(c)) {
+                  <span class="badge-soft badge-blue">{{ getDepartmentName(c) }}</span>
+                }
+              </div>
+              <div class="text-muted small d-flex align-items-center flex-wrap gap-2">
+                <span>
+                  <i class="fa-solid fa-briefcase me-1 text-muted"></i
+                  >{{ getJobTitleName(c) | fallback }}
+                </span>
+                @if (c.matchScore != null) {
+                  <span>•</span>
+                  <span class="match-score-pill" [class]="getMatchScoreClass(c.matchScore)">
+                    <i class="fa-solid fa-sparkles"></i> {{ c.matchScore }}%
+                    {{ 'candidate.match' | translate }}
+                  </span>
+                }
+              </div>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            class="btn btn-sm btn-pastel-primary rounded-pill px-4 py-2 fw-semibold d-inline-flex align-items-center gap-1"
+            (click)="openDetailFromStageModal(candidateDetailModalTpl, c)"
+          >
+            <span class="mx-1">{{ 'candidate.viewProfile' | translate }}</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </div>
+      } @empty {
+        <div class="text-center py-4 text-muted">
+          <i class="fa-solid fa-folder-open fs-3 mb-2"></i>
+          <div>{{ 'candidate.noCandidatesInStage' | translate }}</div>
+        </div>
+      }
+    </div>
+  </div>
+
+  <div
+    class="modal-footer px-4 py-3 border-top-0 d-flex align-items-center justify-content-between modal-footer-custom z-1"
+  >
+    <div class="d-none d-md-flex align-items-center gap-2 text-muted small">
+      <i class="fa-solid fa-shield-halved text-primary opacity-75"></i>
+      <span>{{ 'common.enterpriseEncrypted' | translate }}</span>
+      <span class="modal-footer-divider"></span>
+      <span class="d-inline-flex align-items-center gap-1">
+        <kbd class="kbd-badge">ESC</kbd> {{ 'common.close' | translate }}
+      </span>
+    </div>
+
+    <div class="d-flex align-items-center gap-2 ms-auto">
+      <button
+        type="button"
+        class="btn btn-sm btn-pastel-slate px-3 py-2 rounded-3"
+        (click)="modal.close()"
+      >
+        <i class="fa-solid fa-xmark me-1"></i> {{ 'common.close' | translate }}
+      </button>
+    </div>
+  </div>
+  </div>
+</ng-template>

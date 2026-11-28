@@ -24,10 +24,17 @@
         <span>{{ 'sidebar.contracts' | translate }}</span>
       </a>
     }
-    <a class="nav-link" title="Recruitment" [routerLink]="['/']">
-      <i class="fa-solid fa-user-plus"></i>
-      <span>{{ 'sidebar.recruitment' | translate }}</span>
-    </a>
+    @if (authService.hasPermission(permissions.candidate.view)) {
+      <a
+        class="nav-link"
+        title="Recruitment"
+        [routerLink]="['/candidate']"
+        routerLinkActive="active"
+      >
+        <i class="fa-solid fa-user-plus"></i>
+        <span>{{ 'sidebar.recruitment' | translate }}</span>
+      </a>
+    }
     @if (authService.hasPermission(permissions.leaveRequest.view)) {
       <a
         class="nav-link"

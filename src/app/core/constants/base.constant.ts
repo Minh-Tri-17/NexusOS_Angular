@@ -9,4 +9,6 @@ export const BASE_CONSTANTS = {
   exportOptionAll: 'all',
   exportOptionCurrent: 'current',
   exportOptionSelect: 'select',
+  promiseFulfilled: 'fulfilled',
+  promiseRejected: 'rejected',
 } as const;
